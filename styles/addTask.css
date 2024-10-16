@@ -1,5 +1,6 @@
 .taskBackground {
     background-color: rgba(0, 0, 0, 0.1);
+    width: 1124.5px;
 }
 
 .taskLeftSide {
@@ -21,10 +22,4 @@
     width: 1px;
     height: 200px;
     margin-right: 10px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
