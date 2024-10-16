@@ -1,3 +1,6 @@
+.taskBackground {
+    background-color: rgba(0, 0, 0, 0.1);
+}
 
 .taskLeftSide {
     width: 440px;
