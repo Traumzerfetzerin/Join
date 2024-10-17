@@ -43,3 +43,11 @@
     left: 1044px;
     border-radius: 56px;
 }
+
+.assigned {
+    width: 112px;
+    height: 24px;
+    font-weight: 400px;
+    font-size: 20px;
+    line-height: 24px;
+}
