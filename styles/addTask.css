@@ -1,6 +1,10 @@
 .taskBackground {
     background-color: rgba(0, 0, 0, 0.1);
-    width: 1124.5px;
+    width: 1116px;
+    height: 870px;
+    top: -3975px;
+    left: -1012px;
+    border-radius: 30px;
 }
 
 .taskLeftSide {
@@ -22,4 +26,20 @@
     width: 1px;
     height: 200px;
     margin-right: 10px;
+}
+
+.h1Task {
+    width: 466px;
+    height: 78px;
+    top: 64px;
+    left: 74px;
+    gap: 1px;
+}
+
+#closeTask {
+    width: 32px;
+    height: 32px;
+    top: 64px;
+    left: 1044px;
+    border-radius: 56px;
 }
