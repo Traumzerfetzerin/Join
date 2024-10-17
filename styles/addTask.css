@@ -51,3 +51,13 @@
     font-size: 20px;
     line-height: 24px;
 }
+
+#selectContacts {
+    width: 440px;
+    height: 48px;
+    border-radius: 10px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+}
