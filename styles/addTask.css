@@ -89,9 +89,20 @@ input::placeholder {
 }
 
 #textareaDescription {
-    height: 136px;
+    height: 136px !important;
     gap: 4px;
+    border-radius: 10px;
+    border: 1px;
 }
+
+textarea::placeholder {
+    width: 408px;
+    height: 24px;
+    font-weight: 400px;
+    font-size: 20px;
+    line-height: 24px;
+}
+
 
 .assignedTo {
     height: 80px;
@@ -102,4 +113,15 @@ input::placeholder {
 .assigned {
     width: 112px;
     height: 24px;
+}
+
+.required {
+    width: 170px;
+    height: 27px;
+    top: 779px;
+    left: 74px
+}
+
+.required span {
+    font-size: 16px;
 }
