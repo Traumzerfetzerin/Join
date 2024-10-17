@@ -44,20 +44,27 @@
     border-radius: 56px;
 }
 
+.titleAddTask {
+    height: 96px;
+    gap: 8px;
+}
+
+#inputTitle {
+    gap: 4px;
+}
+
+.descriptionTask {
+    width: 440px;
+}
+
+.assignedTo {
+    width: 440px;
+    height: 80px;
+    top: 296px;
+    gap: 8px;
+}
+
 .assigned {
     width: 112px;
     height: 24px;
-    font-weight: 400px;
-    font-size: 20px;
-    line-height: 24px;
-}
-
-#selectContacts {
-    width: 440px;
-    height: 48px;
-    border-radius: 10px;
-    padding-top: 12px;
-    padding-right: 16px;
-    padding-bottom: 12px;
-    padding-left: 16px;
 }

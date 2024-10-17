@@ -19,24 +19,25 @@
         <div class="flex">
 
             <div class="taskLeftSide">
-                <section>
+                <section class="titleAddTask width_440">
                     <div class="flex">
-                        <p>Title</p>
+                        <p class="fonts title">Title</p>
                         <p class="colorRed">*</p>
                     </div>
-                    <input type="text" placeholder="Enter a title">
+                    <input type="text" placeholder="Enter a title" class="width_440 height_64" id="inputTitle">
                 </section>
 
                 <section class="column">
-                    <p>Description</p>
+                    <p class="descriptionTask">Description</p>
                     <textarea name="" id="" cols="30" rows="10" placeholder="Enter a Description"></textarea>
                 </section>
 
-                <section>
-                    <p class="assigned">Assigned to</p>
-                    <div class="custom-select space-between">
+                <section class="assignedTo">
+                    <p class="assigned fonts">Assigned to</p>
+                    <div>
+                        <!-- ICON DROP DOWN !!! -->
                         <select>
-                            <option class="selectContacts" value="0">Select contacts to assign</option>
+                            <option value="0">Select contacts to assign</option>
                             <option value="1">#</option>
                             <option value="2">#</option>
                             <option value="3">#</option>
