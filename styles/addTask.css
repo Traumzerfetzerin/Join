@@ -8,24 +8,31 @@
 }
 
 .taskLeftSide {
-    width: 440px;
     height: 376px;
     top: 174px;
     left: 74px;
 }
 
 .taskRightSide {
-    width: 440px;
     height: 416px;
     top: 174px;
     left: 610.25px;
 }
 
+.taskBothSide {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .seperator {
     background-color: black;
     width: 1px;
-    height: 200px;
-    margin-right: 10px;
+    height: 424px;
+    top: 174px;
+    left: 562.25px;
+    border: 1px;
+    rotate: -0;
 }
 
 .h1Task {
@@ -54,8 +61,7 @@
 }
 
 #inputTitle {
-    height: 64px;
-    gap: 4px;
+    height: 58px;
 }
 
 .descriptionTask {
@@ -64,7 +70,11 @@
     gap: 8px;
 }
 
-.textareaDescription {
+.description {
+    height: 24px;
+}
+
+#textareaDescription {
     height: 136px;
     gap: 4px;
 }
