@@ -1,0 +1,25 @@
+.taskBackground {
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 1124.5px;
+}
+
+.taskLeftSide {
+    width: 440px;
+    height: 376px;
+    top: 174px;
+    left: 74px;
+}
+
+.taskRightSide {
+    width: 440px;
+    height: 416px;
+    top: 174px;
+    left: 610.25px;
+}
+
+.seperator {
+    background-color: black;
+    width: 1px;
+    height: 200px;
+    margin-right: 10px;
+}
