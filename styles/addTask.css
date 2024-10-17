@@ -61,7 +61,21 @@
 }
 
 #inputTitle {
-    height: 58px;
+    border-radius: 10px;
+    border: 1px;
+    padding-top: 12px;
+    padding-right: 21px;
+    padding-bottom: 12px;
+    padding-left: 21px;
+    gap: 10px;
+}
+
+input::placeholder {
+    width: 398px;
+    height: 24px;
+    font-weight: 400px;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 .descriptionTask {
