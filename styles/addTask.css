@@ -125,3 +125,28 @@ textarea::placeholder {
 .required span {
     font-size: 16px;
 }
+
+.buttons {
+    width: 334px;
+    height: 56px;
+    top: 750px;
+    left: 716.25px;
+    gap: 4px;
+}
+
+.cancelButton {
+    width: 126px;
+    height: 56px;
+    border-radius: 10px;
+    padding: 16px;
+    grid-area: 4px;
+}
+
+.createButton {
+    width: 183px;
+    height: 56px;
+    border-radius: 10px;
+    padding: 16px;
+    gap: 4px;
+    background-color: #2a3647;
+}
