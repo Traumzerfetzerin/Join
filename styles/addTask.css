@@ -44,21 +44,32 @@
     border-radius: 56px;
 }
 
-.titleAddTask {
+.titleTask {
     height: 96px;
     gap: 8px;
 }
 
+.title {
+    height: 24px;
+}
+
 #inputTitle {
+    height: 64px;
     gap: 4px;
 }
 
 .descriptionTask {
-    width: 440px;
+    height: 168px;
+    top: 112px;
+    gap: 8px;
+}
+
+.textareaDescription {
+    height: 136px;
+    gap: 4px;
 }
 
 .assignedTo {
-    width: 440px;
     height: 80px;
     top: 296px;
     gap: 8px;
