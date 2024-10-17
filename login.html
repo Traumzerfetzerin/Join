@@ -3,9 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Join Program</title>
+    <link rel="stylesheet" href="./styles/login.css">
+    <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/signup.js" defer></script>
 </head>
 <body>
-    
+    <div class="join-login">
+        <div class="joinLogo" id="login-logoContainer">
+            <img src="Assests/joinLogo.svg" alt="">
+        </div>
+        <div class="login-signup-button">
+            <span>Not a Join User</span>
+            <a href="sign_up.html">
+                <button class="login-button">Sign Up</button>
+            </a>
+        </div>
+        <div class="login-joinContainer">
+            <h1>Log in</h1>
+            <form id="join-form" onsubmit="logIn(event)">
+
+                <div class="input-group">
+                    <input type="text" id="name" name="name" placeholder="Email" required>
+                    <span class="icon">
+                        <img id="passwordImg" src="Assests/mail.svg" alt="">
+                    </span>
+                </div>
+                
+                <div class="input-group">                
+                    <input type="password" id="login-password" name="password" placeholder="Password" required autocomplete="new-password">
+                    <span class="icon" onclick="togglePasswordVisibility('login-password', 'loginTogglePasswordIcon')">
+                        <img id="loginTogglePasswordIcon" src="Assests/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
+                    </span>
+                </div>
+        
+                <div class="checkbox">
+                    <input type="checkbox" id="passCheckBox">
+                    <label for="passCheckBox">Remind me</label>
+                </div>
+                
+                <div class="buttons User-Guest">
+                    <button type="submit" class="btn login-button">Log in</button>
+                    <button type="button" class="login-button guest-btn" onclick="guestLogin()">Guest log in</button>
+                    <p id="response-message" class="response-message"></p>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
