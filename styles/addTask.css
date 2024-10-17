@@ -7,6 +7,16 @@
     border-radius: 30px;
 }
 
+.seperator {
+    background-color: black;
+    width: 1px;
+    height: 424px;
+    top: 174px;
+    left: 562.25px;
+    border: 1px;
+    rotate: -0;
+}
+
 .taskLeftSide {
     height: 376px;
     top: 174px;
@@ -25,16 +35,6 @@
     align-items: center;
 }
 
-.seperator {
-    background-color: black;
-    width: 1px;
-    height: 424px;
-    top: 174px;
-    left: 562.25px;
-    border: 1px;
-    rotate: -0;
-}
-
 .h1Task {
     width: 466px;
     height: 78px;
@@ -51,6 +51,7 @@
     border-radius: 56px;
 }
 
+/* LEFT SIDE  */
 .titleTask {
     height: 96px;
     gap: 8px;
@@ -103,7 +104,6 @@ textarea::placeholder {
     line-height: 24px;
 }
 
-
 .assignedTo {
     height: 80px;
     top: 296px;
@@ -149,4 +149,15 @@ textarea::placeholder {
     padding: 16px;
     gap: 4px;
     background-color: #2a3647;
+}
+
+/* RIGHT SIDE */
+.calendar {
+    height: 48px;
+    border-radius: 10px;
+    border: 1px;
+    padding-top: 12px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+    padding-left: 16px;
 }
