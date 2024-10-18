@@ -1,0 +1,48 @@
+*{
+    background-color:#F6F7F8;
+}
+
+header{
+    width: 1440px;
+    height: 96px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#boardHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 1208px;
+    height: 232px;
+    top: 96px;
+    left: 232px;
+}
+
+h2{
+    font-size: 61px;
+}
+
+#searchAndAdd{
+    width: 504px;
+    height: 48px;
+}
+
+#boardSearchbar{
+    width: 312px;
+    height: 48px;
+    border-radius: 10px;
+    border: solid 1px;
+    padding: 8px 16px 8px 16px;
+    gap: 10px;
+}
+
+button{
+    width: 160px;
+    height: 48px;
+    border-radius: 10px;
+    border: solid 1px;
+    border-color: #2A3647;
+    padding: 8px 16px 8px 16px;
+    gap: 4px;
+    color: #2A3647;
+}
