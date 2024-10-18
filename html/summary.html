@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/addTask.css">
+    <script src="../script/header.js"></script>
+    <script src="../script/login.js"></script>
+    
+    
+</head>
+<body onload="loadContent('summary.html')">
+    <header w3-include-html="/templates/header.html"></header>
+    <aside w3-include-html="/templates/navbar.html"></aside>
+
+
+
+    <main id="main-content"> 
+    <!-- Default content can be loaded here if needed -->
+    <div>Welcome to the summary page!</div>
+</main>
+
+
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>
+        w3.includeHTML();
+    </script> 
+</body>
+</html>

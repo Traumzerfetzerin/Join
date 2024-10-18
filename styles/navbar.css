@@ -1,0 +1,129 @@
+body {
+    margin: 0;
+}
+
+#sidebar {
+    background-color: #2A3647;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 232px;
+    position: fixed;
+    z-index: 1;
+    overflow: hidden;
+    top: 0;
+    justify-content: space-around;
+}
+
+.sidebarlogo {
+    height: 121px;
+    width: 100px;
+    padding-top: 64px;
+    padding-bottom: 0px;
+}
+
+#sidebarimg {
+    padding: 64px;
+}
+
+.sidebarimg {
+    height: 30px;
+    width: 30px;
+    margin-right: 8px;
+}
+
+#widget_1,
+#widget_2,
+#widget_3,
+#widget_4 {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 130px;
+}
+
+.sidebartext {
+    text-decoration: none;
+    color: #CDCDCD;
+    font-family: 'PT Sans';
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.sidelinks {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 5px;
+    height: 229px;
+}
+
+.widget {
+    cursor: pointer;
+    width: 232px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Hover and active state for the widget */
+.widget:hover, 
+.widget.active{
+    background: #2A3D59;  /* Retain hover background color */
+}
+
+/* Active state using :target */
+.widget:target {
+    background: #2A3D59;  /* Active background color */
+}
+
+/* Other styles remain unchanged */
+
+
+
+/* To ensure active text color also changes */
+
+
+/* Footer structure */
+#sidefoot {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Reduce gap between the footer links */
+}
+
+#sidefoot a {
+    text-decoration: none;
+    color: #CDCDCD;
+    font-family: 'PT Sans';
+    font-size: 16px;
+    margin: 2px 0;  /* Reduce margin to bring items closer */
+    padding: 6px 8px;  /* Adjust padding to reduce overall space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sidefoot a:hover {
+    background: #2A3D59;
+    color: white;
+    font-weight: 700;
+}
+.sidefoot a :focus{
+    background: #2A3D59;
+
+}
+
+.menuIcons p {
+    margin: 0;
+}
+
+.sidelinks a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
