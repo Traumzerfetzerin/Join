@@ -3,6 +3,7 @@ function validateSignUp(event) {
     event.preventDefault(); // Prevent the form from submitting
 
     // Get form data
+    let name = document.getElementById('name').value.trim(); // Get the name input
     let email = document.getElementById('email').value.trim(); // Trimming input
     let password = document.getElementById('password').value.trim();
     let confirmPassword = document.getElementById('confirm-password').value.trim();
@@ -43,10 +44,10 @@ function validateSignUp(event) {
             }
 
             // Store user data in Firebase Realtime Database
-            saveUserData(email, password)
+            saveUserData(name, email, password)
                 .then(() => {
                     // Show success message and clear form fields after successful sign-up
-                    responseMessage.textContent = 'Sign up successful! ';
+                    responseMessage.textContent = 'Sign up successful!';
                     responseMessage.style.color = 'green';
 
                     // Clear the form after successful sign-up
@@ -78,10 +79,11 @@ function validatePassword(password) {
 }
 
 // Save user data in Firebase Realtime Database
-async function saveUserData(email, password) {
+async function saveUserData(name, email, password) {
     const userData = {
+        name: name,    // Add the name field
         email: email,
-        password: password // In a real app, store a hashed password!
+        password: password, // In a real app, store a hashed password!
     };
     
     return fetch('https://join382-19b27-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
@@ -110,11 +112,13 @@ async function isEmailExists(email) {
 
 // Clear all input fields in the form
 function clearForm() {
+    const nameField = document.getElementById('name');
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
     const confirmPasswordField = document.getElementById('confirm-password');
 
-    if (emailField && passwordField && confirmPasswordField) {
+    if (nameField && emailField && passwordField && confirmPasswordField) {
+        nameField.value = '';
         emailField.value = '';
         passwordField.value = '';
         confirmPasswordField.value = '';
@@ -126,7 +130,6 @@ window.onload = function() {
     clearForm();
 };
 
-// Function to toggle password visibility
 // Function to toggle password visibility
 function togglePasswordVisibility(inputId, toggleIconId) {
     const passwordInput = document.getElementById(inputId);
@@ -159,3 +162,22 @@ function togglePasswordVisibility(inputId, toggleIconId) {
         console.log('Password is now hidden.'); // Debugging log
     }
 }
+/**
+ * Toggle password visibility.
+ * @param {string} inputId - The ID of the password input field
+ * @param {string} toggleIconId - The ID of the eye icon for toggling
+ */
+function togglePasswordVisibility(inputId, toggleIconId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = document.getElementById(toggleIconId);
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        toggleIcon.src = '../Assests/visibility.svg'; // Show password icon
+    } else {
+        passwordInput.type = 'password';
+        toggleIcon.src = '../Assests/visibility_off - Copy.svg'; // Hide password icon
+    }
+}
+
+

@@ -89,19 +89,20 @@ function logIn(event) {
         })
         .then(user => {
             if (user && user.password === password) {
-                const firstLetter = user.email.charAt(0).toUpperCase();
-                localStorage.setItem('currentUserInitial', firstLetter);
+                // Extract the initials from the user's name
+                const initials = getInitials(user.name || user.email);
+                localStorage.setItem('currentUserInitial', initials);
 
                 const userIcon = document.getElementById('name_menu');
                 if (userIcon) {
-                    userIcon.textContent = firstLetter; // Update UI
+                    userIcon.textContent = initials; // Update UI with initials
                 }
 
                 responseMessage.textContent = 'Login successful! Redirecting...';
                 responseMessage.style.color = 'green';
 
                 setTimeout(() => {
-                    window.location.href = 'board.html';
+                    window.location.href = 'summary.html';
                 }, 1500);
             } else {
                 responseMessage.textContent = 'Invalid password';
@@ -113,6 +114,26 @@ function logIn(event) {
             responseMessage.textContent = 'An error occurred. Please try again.';
             responseMessage.style.color = 'red';
         });
+}
+
+/**
+ * Function to extract initials from a user's name or email.
+ * If the name is available, use the initials from the name.
+ * Otherwise, use the first letter of the email address.
+ * @param {string} nameOrEmail - The user's name or email
+ * @returns {string} - The initials to display
+ */
+function getInitials(nameOrEmail) {
+    if (!nameOrEmail) return 'G'; // Return 'G' for guest
+
+    const nameParts = nameOrEmail.split(' '); // Split full name into parts
+    if (nameParts.length > 1) {
+        // Return initials from the first two parts of the name
+        return nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase();
+    } else {
+        // If only one name or using email, just return the first letter
+        return nameOrEmail.charAt(0).toUpperCase();
+    }
 }
 
 /**
@@ -154,7 +175,7 @@ async function fetchUserData(email) {
         .then(response => response.json())
         .then(data => {
             const user = Object.values(data || {}).find(user => user.email === email);
-            return user || null;
+            return user ? user : null;
         });
 }
 
@@ -193,143 +214,3 @@ function logout() {
     // Redirect to login page
     window.location.href = 'html/summary.html'; // Update the path if needed
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*// Function to toggle password visibility
-function togglePasswordVisibility(inputId, toggleIconId) {
-  var passwordInput = document.getElementById(inputId);
-  var toggleIcon = document.getElementById(toggleIconId);
-
-  if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      toggleIcon.src = 'login-img/visibility.svg'; // Change to show password icon
-  } else {
-      passwordInput.type = 'password';
-      toggleIcon.src = 'login-img/visibility_off.svg'; // Change to hide password icon
-  }
-}
-
-window.onload = function() {
-  // Retrieve the current logged-in user's initial from localStorage
-  let currentUserInitial = localStorage.getItem('currentUserInitial');
-
-  // Check if initials exist and set the text content
-  if (currentUserInitial) {
-      document.getElementById('name_menu').textContent = currentUserInitial; // Update the user icon with the initial
-  } else {
-      console.log("No logged-in user found.");
-  }
-};
-
-// Function to log in
-function logIn(event) {
-  event.preventDefault(); // Prevent the form from submitting
-
-  // Get login form data
-  let email = document.getElementById('name').value.trim(); // Trimming input
-  let password = document.getElementById('login-password').value.trim(); // Trimming input
-  let responseMessage = document.getElementById('response-message');
-
-  // Retrieve stored user data from localStorage
-  let users = JSON.parse(localStorage.getItem('users')) || [];
-  
-  // Find the user by email and password
-  let currentUser = users.find(user => user.email === email && user.password === password);
-
-  console.log("Email entered:", email); // Debugging
-  console.log("Password entered:", password); // Debugging
-  console.log("Stored Users:", users); // Debugging
-
-  // Validate login
-  if (currentUser) {
-      // Save the current user's first character for later use
-      localStorage.setItem('currentUserInitial', currentUser.email[0].toUpperCase()); // Save first letter in uppercase
-
-      // Show success message
-      responseMessage.textContent = 'Login successful! Redirecting...';
-      responseMessage.style.color = 'green';
-
-      // Redirect to the board page upon successful login
-      setTimeout(() => {
-          window.location.href = 'board.html'; // Redirect to board page
-      }, 1500);
-  } else {
-      responseMessage.textContent = 'Invalid email or password';
-      responseMessage.style.color = 'red';
-  }
-};
-
-window.onload = function() {
-  // Retrieve the current logged-in user's initial from localStorage
-  let currentUserInitial = localStorage.getItem('currentUserInitial');
-
-  if (currentUserInitial) {
-      document.getElementById('name_menu').textContent = currentUserInitial; // Update the user icon with the initial
-  } else {
-      console.log("No logged-in user found.");
-  }
-};
-
-
-
-
-
-// Function to run on page load
-/*window.onload = function() {
-  // Retrieve the current logged-in user from localStorage
-  let currentUserEmail = localStorage.getItem('currentUserEmail');
-
-  if (currentUserEmail) {
-      let initials = getInitialsFromEmail(currentUserEmail);
-      document.getElementById('name_menu').textContent = initials; // Update the user icon with initials
-  } else {
-      console.log("No logged-in user found.");
-  }
-};*/
-
-/*/ Function to extract initials from email
-function getInitialsFromEmail(email) {
-  let namePart = email.split('@')[0]; // Get the part before '@'
-  let nameSegments = namePart.split('.'); // Split by '.' (e.g., 'first.last')
-
-  // Handle the case where there may not be a '.' in the email's username part
-  let initials = nameSegments.length >= 2
-      ? nameSegments[0][0].toUpperCase() + nameSegments[1][0].toUpperCase()  // First letter of both parts
-      : nameSegments[0][0].toUpperCase();  // Just take the first letter of the single name
-
-  return initials;
-}*/

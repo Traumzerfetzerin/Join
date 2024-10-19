@@ -7,12 +7,18 @@
     <title>Board</title>
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
     <script src="../script/board.js"></script>
+    <script src="../script/header.js"></script>
 </head>
 
 <body>
+    <header w3-include-html="/templates/header.html"></header>
+    <aside w3-include-html="/templates/navbar.html"></aside>
+    <main>
 
-    <header>Kanban Project Management Tool</header>
+    
 
     <div id="boardHeader">
         <div>
@@ -41,8 +47,13 @@
         <div></div>
         <div></div>
     </div>
+    </main>
 
     <footer></footer>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>
+        w3.includeHTML();
+    </script> 
 </body>
 
 </html>

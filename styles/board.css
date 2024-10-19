@@ -1,22 +1,12 @@
-*{
-    background-color:#F6F7F8;
+body{
+    background-color:white;
+}
+main{
+    margin-top: 120px;
+    margin-left: 260px;
 }
 
-header{
-    width: 1440px;
-    height: 96px;
-    display: flex;
-    justify-content: space-between;
-}
 
-#boardHeader {
-    display: flex;
-    justify-content: space-between;
-    width: 1208px;
-    height: 232px;
-    top: 96px;
-    left: 232px;
-}
 
 h2{
     font-size: 61px;
