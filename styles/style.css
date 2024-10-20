@@ -4,9 +4,7 @@ body {
 }
 
 /* Alle Style-Informationen werden mit berücksichtigt, *= zählt für alles*/
-* {
-    box-sizing: border-box;
-}
+
 
 input {
     border-color: #D1D1D1;
@@ -22,23 +20,10 @@ html {
     font-family: "Inter";
 }
 
-/* SCROLLBAR */
-::-webkit-scrollbar {
-    width: 10px;
+main{
+    overflow: hidden;
 }
 
-::-webkit-scrollbar-track {
-    background: #2A3647;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #29ABE2;
-    border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
 
 .cursorPointer {
     cursor: pointer;
