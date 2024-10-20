@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacts</title>
-    <link rel="shortcut icon" href="/Assets/joinLogo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../styles/navbar.css">
-    <link rel="shortcut icon" href="/Assets/joinLogo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="./font.css">
     <script src="./scripts/header.js"></script>
-    <script src="../script/contacts.js" defer></script> <!-- Use defer -->
+    <script src="./scripts/contacts.js" defer></script> <!-- Use defer -->
     <script src="./scripts/overlay.js" defer></script>
-    <script src="./scripts/script.js">defer</script>
+     <script src="./scripts/script.js">defer</script>
+    
 </head>
+
 <body>
-    <header w3-include-html="/templates/header.html"></header>
-    <aside w3-include-html="/templates/navbar.html"></aside>
+    <header w3-include-html="../templates/header.html"></header>
+    <aside w3-include-html="../templates/navbar.html"></aside>
 
     <div id="main-content">
         <div class="contacts-container">
             <div class="contact-list">
                 <h2>Contact List</h2>
                 <div class="contact-item">
-                    <div class="contact-initials" style="background-color: #F39C12;">JD</div> <!-- Initials with random color -->
+                    <div class="contact-initials" style="background-color: #F39C12;">JD</div>
+                    <!-- Initials with random color -->
                     <span class="contact-name">John Doe</span> <!-- Name -->
                     <span class="contact-email">john.doe@example.com</span> <!-- Email -->
                     <span>+123-456-7890</span> <!-- Phone Number -->
                 </div>
-                
+
                 <div class="contact-item">
                     <span class="contact-name">Jane Smith</span>
                     <span class="contact-email">jane@example.com</span>
@@ -45,7 +49,7 @@
                 </div>
                 <div class="add-contact-section">
                     <div class="add-contact-button" id="show-overlay">
-                        <img src="/Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
+                        <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
                         <span>Add New Contact</span>
                     </div>
                 </div>
@@ -55,6 +59,31 @@
 
     <!-- Overlay Element -->
     <div id="overlay" class="overlay">
+<<<<<<< HEAD
+        <div class="overlay-content">
+            <div class="left-section">
+                <img src="../login-img/JoinLogoWhite.svg" alt="">
+                <h2>Add Contact</h2>
+                <p>Task are easier with a team!</p>
+            </div>
+            <div class="right-section">
+                <a href="" id="close-overlay" class="close-button">X</a>
+                <img src="../login-img/person.svg" alt="">
+                <form id="contact-form">
+                    <input type="text" id="name" placeholder="Enter Name" />
+                    <input type="email" id="email" placeholder="Enter Email" />
+                    <button id="add-contact-button">Create Contact</button>
+                    <!-- Close button -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="contact-overlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="left-section">
+                <img src="../login-img/JoinLogoWhite.svg" alt="">
+                <h2>Contact Details</h2>
+=======
     <div class="overlay-content">
         <div class="left-section">
             <img src="/Assets/JoinLogoWhite.svg" alt="">
@@ -75,30 +104,28 @@
         </div>
     </div>
 </div>
+<div id="contact-overlay" class="overlay" style="display: none;">
+    <div class="overlay-content">
+        <div class="left-section">
+            <img src="/Assets/JoinLogoWhite.svg" alt="">
+            <h2>Contact Details</h2>
+                       
+        </div>
+        <div class="right-section">
+            <a href="#" id="close-contact-overlay" class="close-button">X</a>
 
-
-    <div id="contact-overlay" class="overlay" style="display: none;">
-        <div class="overlay-content">
-            <div class="left-section">
-                <img src="/Assets/JoinLogoWhite.svg" alt="">
-                <h2>Contact Details</h2>
-            </div>
-            <div class="right-section">
-                <a href="#" id="close-contact-overlay" class="close-button">X</a>
-                <p id="contact-details-name"></p>
-                <p id="contact-details-email"></p>
-                <p id="contact-details-phone"></p> <!-- Phone Number Display -->
-                <div class="edit-section">
-                    <button id="delete-contact-button">Delete</button>
-                    <button id="edit-contact">Edit</button>
-                </div>
-            </div>
+            <p id="contact-details-name"></p>
+            <p id="contact-details-email"></p>
+            <button id="delete-contact-button" >Delete Contact</button>
         </div>
     </div>
+</div>
+
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML();
     </script>
 </body>
+
 </html>
