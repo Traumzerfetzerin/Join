@@ -120,6 +120,9 @@ textarea::placeholder {
     border-radius: 10px;
     padding: 16px;
     grid-area: 4px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 .createButton {
@@ -130,6 +133,9 @@ textarea::placeholder {
     gap: 4px;
     background-color: #2a3647;
     color: #FFF;
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 24px;
 }
 
 /* RIGHT SIDE */
