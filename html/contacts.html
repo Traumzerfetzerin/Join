@@ -11,10 +11,9 @@
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="./font.css">
     <script src="./scripts/header.js"></script>
-    <script src="./scripts/contacts.js" defer></script> <!-- Use defer -->
+    <script src="../script/contacts.js" defer></script> <!-- Use defer -->
     <script src="./scripts/overlay.js" defer></script>
-     <script src="./scripts/script.js">defer</script>
-    
+    <script src="./scripts/script.js">defer</script>
 </head>
 <body>
     <header w3-include-html="/templates/header.html"></header>
@@ -28,11 +27,13 @@
                     <div class="contact-initials" style="background-color: #F39C12;">JD</div> <!-- Initials with random color -->
                     <span class="contact-name">John Doe</span> <!-- Name -->
                     <span class="contact-email">john.doe@example.com</span> <!-- Email -->
+                    <span>+123-456-7890</span> <!-- Phone Number -->
                 </div>
                 
                 <div class="contact-item">
                     <span class="contact-name">Jane Smith</span>
                     <span class="contact-email">jane@example.com</span>
+                    <span>+987-654-3210</span> <!-- Phone Number -->
                 </div>
                 <!-- Add more contacts here -->
             </div>
@@ -53,13 +54,12 @@
     </div>
 
     <!-- Overlay Element -->
-    <!-- Overlay Element -->
     <div id="overlay" class="overlay">
     <div class="overlay-content">
         <div class="left-section">
             <img src="/Assets/JoinLogoWhite.svg" alt="">
-            <h2>Add Contact</h2>
-            <p>Task are easier  with a team!</p>
+            <h2 id="overlay-title">Add Contact</h2> <!-- Title will change based on action -->
+            <p>Tasks are easier with a team!</p>
         </div>
         <div class="right-section">
             <a href="" id="close-overlay" class="close-button">X</a>
@@ -67,29 +67,34 @@
             <form id="contact-form">
                 <input type="text" id="name" placeholder="Enter Name" />
                 <input type="email" id="email" placeholder="Enter Email" />
-                <button id="add-contact-button">Create Contact</button>
-                 <!-- Close button -->
+                <input type="tel" id="phone" placeholder="Enter Phone Number" /> <!-- Phone Number Input -->
+                <button class="add-contact" id="add-contact-button" style="display: block;">Create Contact</button> <!-- Initially visible -->
+                <button class="update" id="update-contact-button" style="display: none;">save</button> <!-- Initially hidden -->
+                <button id="delete-contact-button" style="display: none;">delete</button> <!-- Initially hidden -->
             </form>
         </div>
     </div>
 </div>
-<div id="contact-overlay" class="overlay" style="display: none;">
-    <div class="overlay-content">
-        <div class="left-section">
-            <img src="/Assets/JoinLogoWhite.svg" alt="">
-            <h2>Contact Details</h2>
-                       
-        </div>
-        <div class="right-section">
-            <a href="#" id="close-contact-overlay" class="close-button">X</a>
 
-            <p id="contact-details-name"></p>
-            <p id="contact-details-email"></p>
-            <button id="delete-contact-button" >Delete Contact</button>
+
+    <div id="contact-overlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="left-section">
+                <img src="/Assets/JoinLogoWhite.svg" alt="">
+                <h2>Contact Details</h2>
+            </div>
+            <div class="right-section">
+                <a href="#" id="close-contact-overlay" class="close-button">X</a>
+                <p id="contact-details-name"></p>
+                <p id="contact-details-email"></p>
+                <p id="contact-details-phone"></p> <!-- Phone Number Display -->
+                <div class="edit-section">
+                    <button id="delete-contact-button">Delete</button>
+                    <button id="edit-contact">Edit</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>

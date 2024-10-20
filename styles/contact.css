@@ -256,13 +256,24 @@ form button{
     border-radius: 20px;
 }
 #contact-details-name,
-#contact-details-email {
+#contact-details-email,
+#contact-details-phone {
     margin: 10px 0; /* Margin around details */
     font-size: 28px; /* Font size for details */
     color: #131212; /* Lighter gray color */
     margin-left:30px;
 }
 #delete-contact-button {
+    padding: 10px 15px; /* Padding around the button */
+    background-color:#3498db;/* Red background color */
+    color:#fff; /* White text color */
+    border:2px solid  #3498db; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition effect on hover */
+}
+#edit-contact {
     padding: 10px 15px; /* Padding around the button */
     background-color:#3498db;/* Red background color */
     color:#fff; /* White text color */
@@ -279,5 +290,15 @@ form button{
     background-color: #fff;
     color: #3498db;
     transform: scale(1.1);
+}
+#edit-contact:hover{
+    background-color: #fff;
+    color: #3498db;
+    transform: scale(1.1);
+}
+.edit-section{
+    display: flex;
+    gap: 30px;
+    padding-top: auto;
 }
 
