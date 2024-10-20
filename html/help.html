@@ -16,42 +16,126 @@
     <title>Document</title>
 </head>
 <body>
+<<<<<<< HEAD
     <h1>Help</h1>
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
+=======
+    
+    <header w3-include-html="/templates/header.html"></header>
+    <aside w3-include-html="/templates/navbar.html"></aside>
+>>>>>>> 62b3e6964a772d6ac15356a64d8987eb11e291d0
     <main>
-    <div>
-        Welcome to the help page for Join, your guide to using our kanban project management tool. Here, we'll provide an overview of what Join is, how it can benefit you, and how to use it.
-        What is Join?
-        Join is a kanban-based project management tool designed and built by a group of dedicated students as part of their web development bootcamp at the Developer Akademie.
+        <main class="help-content">
+            <div class="headline-nav">
+                <h1>Help</h1>
+                <button onclick="pageBack()" class="back-arrow">
+                    <img src="/Assets/arrowLeft.svg" alt="Back Arrow">
+                </button>
+            </div>
+            <div class="text-container">
+                <p>
+                    Welcome to the <b>About</b> page for <mark>Join</mark>,Here, we'll provide an overview of what Join is, and guide on how to use our kanban project management tool.
+                     
+                </p>
+            </div>
+            <div class="text-container">
+                <h3>What is Join</h3>
+    
+                <p><mark>Join</mark> is a kanban-based project management tool designed and built by a group of dedicated
+                    students as
+                    part of their web development bootcamp at the Developer Akademie.</p>
+    
+                <p>Kanban, a Japanese term meaning "billboard", is a highly effective method to visualize work, limit
+                    work-in-progress, and maximize efficiency (or flow). <mark>Join</mark> leverages the principles of
+                    kanban to help
+                    users manage their tasks and projects in an intuitive, visual interface.</p>
+    
+                <p>It is important to note that <mark>Join</mark> is designed as an educational exercise and is not intended
+                    for
+                    extensive business usage. While we strive to ensure the best possible user experience, we cannot
+                    guarantee consistent availability, reliability, accuracy, or other aspects of quality regarding
+                    <mark>Join</mark>.
+                </p>
+            </div>
+            <h3>How to use it</h3>
+            <div class="text-container">
+                <p>Here is a step-by-step guide on how to use <mark>Join</mark>:</p>
+                <div class="step-content">
+                    <h3>1.</h3>
+                    <div>
+                        <h4>Exploring the Board</h4>
+                        <p>When you log in to <mark>Join</mark>, you'll find a default board. This board represents your
+                            project and
+                            contains four default lists: "To Do", "In Progress", “Await feedback” and "Done".</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h3>2.</h3>
+                    <div>
+                        <h4>Creating Contacts</h4>
+                        <p>In <mark>Join</mark>, you can add contacts to collaborate on your projects. Go to the "Contacts"
+                            section,
+                            click on "New contact", and fill in the required information. Once added, these contacts can be
+                            assigned tasks and they can interact with the tasks on the board.</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h3>3.</h3>
+                    <div>
+                        <h4>Adding Cards</h4>
+                        <p>Now that you've added your contacts, you can start adding cards. Cards represent individual
+                            tasks. Click the "+" button under the appropriate list to create a new card. Fill in the task
+                            details in the card, like task name, description, due date, assignees, etc.</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h3>4.</h3>
+                    <div>
+                        <h4>Moving Cards</h4>
+                        <p>As the task moves from one stage to another, you can reflect that on the board by
+                            dragging and dropping the card from one list to another.</p>
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h3>5.</h3>
+                    <div>
+                        <h4>Deleting Cards</h4>
+                        <div class="text-container">
+                            <p>Once a task is completed, you can either move it to the "Done" list or delete it.
+                                Deleting a card will permanently remove it from the board. Please exercise caution when
+                                deleting
+                                cards, as this action is irreversible.
+                            </p>
+                            <p>
+                                Remember that using <mark>Join</mark> effectively requires consistent
+                                updates from you and your team to ensure the board reflects the current state of your
+                                project.
+                            </p>
+                            <p>
+                                Have more questions about <mark>Join</mark>? Feel free to contact us at <a
+                                    class="email-link" href="mailto:example@example.com">example@example.com</a>.
+                                We're here to
+                                help you!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3>Enjoy using Join!</h3>
+    
+            <div id="landscapeWarningMobile" class="landscape-warning"></div>
+    
+            <!-- Additional help content here -->
+        </main>
+    
+
+
+
+
         
-        Kanban, a Japanese term meaning "billboard", is a highly effective method to visualize work, limit work-in-progress, and maximize efficiency (or flow). Join leverages the principles of kanban to help users manage their tasks and projects in an intuitive, visual interface.
+       
         
-        It is important to note that Join is designed as an educational exercise and is not intended for extensive business usage. While we strive to ensure the best possible user experience, we cannot guarantee consistent availability, reliability, accuracy, or other aspects of quality regarding Join.
-        How to use it
-        Here is a step-by-step guide on how to use Join:
-        1.
-        Exploring the Board
-        When you log in to Join, you'll find a default board. This board represents your project and contains four default lists: "To Do", "In Progress", “Await feedback” and "Done".
-        2.
-        Creating Contacts
-        In Join, you can add contacts to collaborate on your projects. Go to the "Contacts" section, click on "New contact", and fill in the required information. Once added, these contacts can be assigned tasks and they can interact with the tasks on the board.
-        3.
-        Adding Cards
-        Now that you've added your contacts, you can start adding cards. Cards represent individual tasks. Click the "+" button under the appropriate list to create a new card. Fill in the task details in the card, like task name, description, due date, assignees, etc.
-        4.
-        Moving Cards
-        As the task moves from one stage to another, you can reflect that on the board by dragging and dropping the card from one list to another.
-        5.
-        Deleting Cards
-        Once a task is completed, you can either move it to the "Done" list or delete it. Deleting a card will permanently remove it from the board. Please exercise caution when deleting cards, as this action is irreversible.
-        
-        Remember that using Join effectively requires consistent updates from you and your team to ensure the board reflects the current state of your project.
-        
-        Have more questions about Join? Feel free to contact us at [Your Contact Email]. We're here to help you!
-        
-        Enjoy using Join!
-        </div>
     </main>
         <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
