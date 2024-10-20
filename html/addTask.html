@@ -7,14 +7,10 @@
     <title>Add Task</title>
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/addTask.css">
-<<<<<<< HEAD
-    <script src="addTask.html"></script>
-=======
+    <script src="../script/addTask.js"></script>
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/navbar.css">
     <script src="../script/header.js"></script>
-
->>>>>>> 3c321f495dc7e7620dad95e849729e748f504322
 </head>
 
 <body>
@@ -22,118 +18,118 @@
     <aside w3-include-html="/templates/navbar.html"></aside>
     <main>
 
-    <div class="taskBackground">
-        <div class="space-between">
-            <h1 class="h1Task">Add Task</h1>
-            <p id="closeTask">X</p>
+        <div class="taskBackground">
+            <div class="space-between">
+                <h1 class="h1Task">Add Task</h1>
+                <p id="closeTask">X</p>
+            </div>
+
+            <div class="flex taskBothSide">
+
+                <div class="taskLeftSide width_440">
+                    <section class="titleTask fonts">
+                        <div class="flex">
+                            <p class="title">Title</p>
+                            <p class="colorRed">*</p>
+                        </div>
+                        <input id="inputTitle" class="width_440" type="text" placeholder="Enter a title" required>
+                    </section>
+
+                    <section class="descriptionTask column">
+                        <p class="fonts description">Description</p>
+                        <textarea class="width_440" id="textareaDescription" name=""
+                            placeholder="Enter a Description"></textarea>
+                    </section>
+
+                    <section class="assignedTo">
+                        <p class="assigned fonts">Assigned to</p>
+                        <div>
+                            <!-- ICON DROP DOWN !!! -->
+                            <select>
+                                <option value="0">Select contacts to assign</option>
+                                <option value="1">#</option>
+                                <option value="2">#</option>
+                                <option value="3">#</option>
+                                <option value="4">#</option>
+                                <option value="5">#</option>
+                                <option value="6">#</option>
+                                <option value="7">#</option>
+                                <option value="8">#</option>
+                                <option value="9">#</option>
+                                <option value="10">#</option>
+                            </select>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="seperator"></div>
+
+                <div class="taskRightSide width_440">
+                    <section>
+                        <div class="flex fonts">
+                            <p>Due date</p>
+                            <p class="colorRed">*</p>
+                        </div>
+                        <input class="calendar width_440" type="date">
+                    </section>
+
+                    <section>
+                        <p class="fonts">Prio</p>
+                        <div class="flex">
+                            <img src="" alt="">#
+                            <img src="" alt="">#
+                            <img src="" alt="">#
+                        </div>
+                    </section>
+
+                    <section>
+                        <div class="flex fonts">
+                            <p>Category</p>
+                            <p class="colorRed">*</p>
+                        </div>
+                        <div class="custom-select">
+                            <select>
+                                <option value="0">Select task category</option>
+                                <option value="1">#</option>
+                                <option value="2">#</option>
+                                <option value="3">#</option>
+                                <option value="4">#</option>
+                                <option value="5">#</option>
+                                <option value="6">#</option>
+                                <option value="7">#</option>
+                                <option value="8">#</option>
+                                <option value="9">#</option>
+                                <option value="10">#</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <section class="fonts">
+                        <p>Subtasks</p>
+                        <input type="text" name="" id="" placeholder="Add new subtask">
+                        <button>X</button>
+                    </section>
+                </div>
+            </div>
+
+            <div class="space-between">
+                <div class="flex fonts required">
+                    <p class="colorRed">*</p>
+                    <span class="font_16">This field is required</span>
+                </div>
+                <!-- ICON BUTTON -->
+                <div class="buttons">
+                    <button class="cancelButton">Cancel</button>
+                    <button class="createButton">Create Task</button>
+                </div>
+            </div>
         </div>
-
-        <div class="flex taskBothSide">
-
-            <div class="taskLeftSide width_440">
-                <section class="titleTask fonts">
-                    <div class="flex">
-                        <p class="title">Title</p>
-                        <p class="colorRed">*</p>
-                    </div>
-                    <input id="inputTitle" class="width_440" type="text" placeholder="Enter a title">
-                </section>
-
-                <section class="descriptionTask column">
-                    <p class="fonts description">Description</p>
-                    <textarea id="textareaDescription" name="" cols="30" rows="10"
-                        placeholder="Enter a Description"></textarea>
-                </section>
-
-                <section class="assignedTo">
-                    <p class="assigned fonts">Assigned to</p>
-                    <div>
-                        <!-- ICON DROP DOWN !!! -->
-                        <select>
-                            <option value="0">Select contacts to assign</option>
-                            <option value="1">#</option>
-                            <option value="2">#</option>
-                            <option value="3">#</option>
-                            <option value="4">#</option>
-                            <option value="5">#</option>
-                            <option value="6">#</option>
-                            <option value="7">#</option>
-                            <option value="8">#</option>
-                            <option value="9">#</option>
-                            <option value="10">#</option>
-                        </select>
-                    </div>
-                </section>
-            </div>
-
-            <div class="seperator"></div>
-
-            <div class="taskRightSide width_440">
-                <section>
-                    <div class="flex fonts">
-                        <p>Due date</p>
-                        <p class="colorRed">*</p>
-                    </div>
-                    <input class="calendar width_440" type="date">
-                </section>
-
-                <section>
-                    <p class="fonts">Prio</p>
-                    <div class="flex">
-                        <img src="" alt="">#
-                        <img src="" alt="">#
-                        <img src="" alt="">#
-                    </div>
-                </section>
-
-                <section>
-                    <div class="flex fonts">
-                        <p>Category</p>
-                        <p class="colorRed">*</p>
-                    </div>
-                    <div class="custom-select">
-                        <select>
-                            <option value="0">Select task category</option>
-                            <option value="1">#</option>
-                            <option value="2">#</option>
-                            <option value="3">#</option>
-                            <option value="4">#</option>
-                            <option value="5">#</option>
-                            <option value="6">#</option>
-                            <option value="7">#</option>
-                            <option value="8">#</option>
-                            <option value="9">#</option>
-                            <option value="10">#</option>
-                        </select>
-                    </div>
-                </section>
-
-                <section class="fonts">
-                    <p>Subtasks</p>
-                    <input type="text" name="" id="" placeholder="Add new subtask">
-                    <button>X</button>
-                </section>
-            </div>
-        </div>
-
-        <div class="space-between">
-            <div class="flex fonts required">
-                <p class="colorRed">*</p>
-                <span class="font_16">This field is required</span>
-            </div>
-            <!-- ICON BUTTON -->
-            <div class="buttons">
-                <button class="cancelButton">Cancel</button>
-                <button class="createButton">Create Task</button>
-            </div>
-        </div>
-    </div>
     </main>
-    
+
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML();
-    </script> 
+    </script>
 </body>
 
 </html>

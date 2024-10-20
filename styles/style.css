@@ -1,7 +1,7 @@
 /* FONT */
 @font-face {
     font-family: Inter;
-    src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf');
+    src: url('../fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
 }
 
 html {
@@ -15,11 +15,11 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-    background: #29ABE2;
+    background: #2A3647;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #2A3647;
+    background: #29ABE2;
     border-radius: 8px;
 }
 
