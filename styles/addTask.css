@@ -129,6 +129,7 @@ textarea::placeholder {
     padding: 16px;
     gap: 4px;
     background-color: #2a3647;
+    color: #FFF;
 }
 
 /* RIGHT SIDE */
