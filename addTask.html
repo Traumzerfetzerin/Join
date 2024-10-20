@@ -7,48 +7,34 @@
     <title>Add Task</title>
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/addTask.css">
-<<<<<<< HEAD
-    <script src="addTask.html"></script>
-=======
-    <link rel="stylesheet" href="../styles/header.css">
-    <link rel="stylesheet" href="../styles/navbar.css">
-    <script src="../script/header.js"></script>
-
->>>>>>> 3c321f495dc7e7620dad95e849729e748f504322
 </head>
 
 <body>
-    <header w3-include-html="/templates/header.html"></header>
-    <aside w3-include-html="/templates/navbar.html"></aside>
-    <main>
-
     <div class="taskBackground">
         <div class="space-between">
-            <h1 class="h1Task">Add Task</h1>
-            <p id="closeTask">X</p>
+            <h1>Add Task</h1>
+            <p>X</p>
         </div>
 
-        <div class="flex taskBothSide">
+        <div class="flex">
 
-            <div class="taskLeftSide width_440">
-                <section class="titleTask fonts">
+            <div class="taskLeftSide">
+                <section>
                     <div class="flex">
-                        <p class="title">Title</p>
+                        <p>Title</p>
                         <p class="colorRed">*</p>
                     </div>
-                    <input id="inputTitle" class="width_440" type="text" placeholder="Enter a title">
+                    <input type="text" placeholder="Enter a title">
                 </section>
 
-                <section class="descriptionTask column">
-                    <p class="fonts description">Description</p>
-                    <textarea id="textareaDescription" name="" cols="30" rows="10"
-                        placeholder="Enter a Description"></textarea>
+                <section class="column">
+                    <p>Description</p>
+                    <textarea name="" id="" cols="30" rows="10" placeholder="Enter a Description"></textarea>
                 </section>
 
-                <section class="assignedTo">
-                    <p class="assigned fonts">Assigned to</p>
-                    <div>
-                        <!-- ICON DROP DOWN !!! -->
+                <section>
+                    <p>Assigned to</p>
+                    <div class="custom-select">
                         <select>
                             <option value="0">Select contacts to assign</option>
                             <option value="1">#</option>
@@ -68,17 +54,17 @@
 
             <div class="seperator"></div>
 
-            <div class="taskRightSide width_440">
+            <div class="taskRightSide">
                 <section>
-                    <div class="flex fonts">
+                    <div class="flex">
                         <p>Due date</p>
                         <p class="colorRed">*</p>
                     </div>
-                    <input class="calendar width_440" type="date">
+                    <input type="text" placeholder="CALENDAR">
                 </section>
 
                 <section>
-                    <p class="fonts">Prio</p>
+                    <p>Prio</p>
                     <div class="flex">
                         <img src="" alt="">#
                         <img src="" alt="">#
@@ -87,7 +73,7 @@
                 </section>
 
                 <section>
-                    <div class="flex fonts">
+                    <div class="flex">
                         <p>Category</p>
                         <p class="colorRed">*</p>
                     </div>
@@ -108,7 +94,7 @@
                     </div>
                 </section>
 
-                <section class="fonts">
+                <section>
                     <p>Subtasks</p>
                     <input type="text" name="" id="" placeholder="Add new subtask">
                     <button>X</button>
@@ -117,23 +103,16 @@
         </div>
 
         <div class="space-between">
-            <div class="flex fonts required">
+            <div class="flex">
                 <p class="colorRed">*</p>
-                <span class="font_16">This field is required</span>
+                <p>This field is required</p>
             </div>
-            <!-- ICON BUTTON -->
-            <div class="buttons">
-                <button class="cancelButton">Cancel</button>
-                <button class="createButton">Create Task</button>
+            <div>
+                <button>Cancel</button>
+                <button>Create Task</button>
             </div>
         </div>
     </div>
-    </main>
-    
-    <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <script>
-        w3.includeHTML();
-    </script> 
 </body>
 
 </html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+    <link rel="shortcut icon" href="../Assests/joinLogo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/contact.css">
+    <script src="../script/board.js"></script>
+    <script src="../script/header.js"></script>
+</head>
+
+<body>
+    <header w3-include-html="/templates/header.html"></header>
+    <aside w3-include-html="/templates/navbar.html"></aside>
+    <main>
+
+    
+
+    <div id="boardHeader">
+        <div>
+            <h2>Board</h2>
+        </div>
+        <div id="searchAndAdd">
+            <input type="search" placeholder="Find task" id="boardSearchbar"></input>
+            <button type="submit">Add task +</button>
+        </div>
+
+        <div id="columnTitles">
+            <div>To do</div>
+            <div>In progress</div>
+            <div>Await feedback</div>
+            <div>Done</div>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <h4>User Story</h4>
+            <span></span>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    </main>
+
+    <footer></footer>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>
+        w3.includeHTML();
+    </script> 
+</body>
+
+</html>

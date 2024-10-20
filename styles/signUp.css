@@ -27,6 +27,7 @@ body {
     align-items: center;
     width: 100%;
     height: 100vh;
+    overflow: hidden;
 }
 
 /* Join logo container styling */
@@ -45,25 +46,15 @@ body {
     height: 120px;
 }
 
-/* Keyframe animation for moving the logo *
+/* Keyframe animation for moving the logo */
 @keyframes move-logo {
     0% {
         transform: translate(-50%, -50%) scale(3);
     }
     100% {
-        transform: translate(-50vw, -50vh) scale(1);
-    }
-}*/
-@keyframes move-logo {
-    0% {
-        transform: translate(-50%, -50%) scale(3); /* Start: center with scaling */
-    }
-    100% {
-        /* Adjust translation to align with the arrow's height */
         transform: translate(-40vw, -45vh) scale(1); /* Move to near top-left */
     }
 }
-
 
 /* Signup container styling */
 .signup-joinContainer {
@@ -74,6 +65,7 @@ body {
     width: 100%;
     max-width: 500px; /* Responsive width */
     height: auto;
+    
 }
 
 /* Signup title styling */
@@ -148,4 +140,77 @@ body {
 #togglePasswordIcon,
 #toggleConfirmPasswordIcon {
     cursor: pointer;
+}
+
+/* Media Queries for responsiveness */
+
+/* For tablets (width less than 768px) */
+@media (max-width: 768px) {
+    #signup-logoContainer {
+        position: absolute;
+        top: 93%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3000;
+        animation: move-logo 1.5s ease forwards;
+    }
+    .join{
+        overflow: hidden;
+    }
+    @keyframes move-logo {
+        0% {
+            transform: translate(-50%, -50%) scale(3);
+        }
+        100% {
+            transform: translate(-50%, -90vh) scale(1); /* Move up while staying in the center */
+        }
+    }
+    
+    .signup-joinContainer {
+        padding: 30px;
+        max-width: 400px;
+        margin-top: 150px;
+    }
+
+    .signup-joinContainer h1 {
+        font-size: 40px;
+    }
+
+    .input-group input {
+        font-size: 14px;
+        padding: 10px 35px 10px 8px;
+    }
+}
+
+/* For mobile devices (width less than 480px) */
+@media (max-width: 480px) {
+    .signup-joinContainer {
+        padding: 20px;
+        max-width: 100%;
+        top: 20%; /* Move form lower for mobile */
+    }
+
+    .signup-joinContainer h1 {
+        font-size: 30px;
+    }
+
+    .input-group input {
+        font-size: 12px;
+        padding: 8px 30px 8px 5px;
+    }
+
+    .signup-button button {
+        padding: 8px 15px;
+        font-size: small;
+    }
+
+    #signup-logoContainer img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .go-to-login {
+        top: 20px;
+        right: 10px;
+    }
 }

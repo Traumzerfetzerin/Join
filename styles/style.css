@@ -1,3 +1,4 @@
+/* FONT */
 @font-face {
     font-family: Inter;
     src: url('fonts/Inter-Italic-VariableFont_opsz,wght.ttf');
@@ -7,6 +8,8 @@ html {
     font-family: "Inter";
 }
 
+
+/* SCROLLBAR */
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -23,6 +26,7 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
 
 .colorRed {
     color: red;
