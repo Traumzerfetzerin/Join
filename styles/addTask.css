@@ -3,31 +3,16 @@ main {
     margin-left: 260px;
 }
 
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 .taskBackground {
     background-color: #FFF;
     border-radius: 30px;
     max-width: 1116px;
-}
-
-.seperator {
-    background-color: #D1D1D1;
-    width: 1px;
-    height: 424px;
-    rotate: -0;
-}
-
-.taskLeftSide {
-    height: 376px;
-}
-
-.taskRightSide {
-    height: 416px;
-}
-
-.taskBothSide {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
 }
 
 .h1Task {
@@ -37,13 +22,16 @@ main {
     font-size: 61px;
 }
 
-#closeTask {
-    width: 32px;
-    height: 32px;
-    border-radius: 56px;
+.taskBothSide {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
-/* LEFT SIDE  */
+.taskLeftSide {
+    height: 376px;
+}
+
 .titleTask {
     height: 96px;
     gap: 8px;
@@ -97,6 +85,23 @@ textarea::placeholder {
     height: 24px;
 }
 
+.seperator {
+    background-color: #D1D1D1;
+    width: 1px;
+    height: 424px;
+    rotate: -0;
+}
+
+.taskRightSide {
+    height: 416px;
+}
+
+.subtaskImg {
+    position: absolute;
+    top: 17px;
+    right: 12px;
+}
+
 .required {
     width: 170px;
     height: 27px;
@@ -112,7 +117,7 @@ textarea::placeholder {
     gap: 4px;
 }
 
-.cancelButton {
+.clearButton {
     width: 126px;
     height: 56px;
     border-radius: 10px;
@@ -134,16 +139,4 @@ textarea::placeholder {
     font-weight: 700;
     font-size: 21px;
     line-height: 24px;
-}
-
-.subtaskImg {
-    position: absolute;
-    top: 17px;
-    right: 12px;
-}
-
-select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
 }
