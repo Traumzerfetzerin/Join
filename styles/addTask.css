@@ -6,6 +6,7 @@ main {
 .taskBackground {
     background-color: #FFF;
     border-radius: 30px;
+    max-width: 1116px;
 }
 
 .seperator {
@@ -145,8 +146,4 @@ select {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
-}
-
-input[type=date]::-webkit-calendar-picker-indicator {
-    display: none;
 }

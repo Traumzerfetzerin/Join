@@ -1,0 +1,100 @@
+<div class="taskBackground">
+    <div class="space-between">
+        <h1 class="h1Task">Add Task</h1>
+        <div id="closeTask">x</div>
+    </div>
+
+    <form>
+        <div class="flex taskBothSide">
+
+            <div class="taskLeftSide width_440">
+                <section class="titleTask fonts">
+                    <div class="flex">
+                        <div class="title">Title</div>
+                        <div class="colorRed">*</div>
+                    </div>
+                    <input id="inputTitle" type="text" placeholder="Enter a title" required>
+                </section>
+
+                <section class="descriptionTask column">
+                    <div class="fonts description">Description</div>
+                    <textarea id="textareaDescription" name="" placeholder="Enter a Description"></textarea>
+                </section>
+
+                <section class="assignedTo">
+                    <div class="assigned fonts">Assigned to</div>
+                    <div>
+                        <select class="input_12_16">
+                            <option>Select contacts to assign</option>
+                        </select>
+                    </div>
+                </section>
+            </div>
+
+            <div class="seperator"></div>
+
+            <div class="taskRightSide width_440">
+                <section>
+                    <div class="flex fonts">
+                        <div>Due date</div>
+                        <div class="colorRed">*</div>
+                    </div>
+                    <input class="input_12_16 width_440" type="date" required>
+                </section>
+
+                <section>
+                    <div class="fonts">Prio</div>
+                    <div class="flex">
+                        <button>Urgent
+                            <img src="../Assets/addTask/Prio alta.svg" alt="">
+                        </button>
+                        <button>Medium
+                            <img src="../Assets/addTask/Prio media.svg" alt="">
+                        </button>
+                        <button>Low
+                            <img src="../Assets/addTask/Prio baja.svg" alt="">
+                        </button>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="flex fonts">
+                        <div>Category</div>
+                        <div class="colorRed">*</div>
+                    </div>
+                    <div class="custom-select">
+                        <select class="input_12_16">
+                            <option value="0">Select task category</option>
+                            <option value="1">Technical Task</option>
+                            <option value="2">User Story</option>
+                        </select>
+                    </div>
+                </section>
+
+                <section class="fonts">
+                    <div>Subtasks</div>
+                    <div class="relative">
+                        <input class="input_12_16" type="text" name="" id="inputSubtasks" placeholder="Add new subtask">
+                        <img class="subtaskImg" src="../Assets/addTask/close.svg" alt="">
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="space-between">
+            <div class="flex fonts required">
+                <div class="colorRed">*</div>
+                <span class="font_16">This field is required</span>
+            </div>
+            <!-- ICON BUTTON -->
+            <div class="buttons">
+                <button class="cancelButton">Cancel
+                    <img src="../Assets/addTask/Vector.svg" alt="">
+                </button>
+                <button class="createButton">Create Task
+                    <img src="../Assets/addTask/check.svg" alt="">
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
