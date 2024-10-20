@@ -85,6 +85,12 @@ textarea::placeholder {
     height: 24px;
 }
 
+.assignedToImg {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
 .seperator {
     background-color: #D1D1D1;
     width: 1px;
@@ -94,6 +100,13 @@ textarea::placeholder {
 
 .taskRightSide {
     height: 416px;
+}
+
+.prioButton {
+    border-radius: 10px;
+    padding: 10px 16px;
+    background-color: #FFF;
+    border-color: #D1D1D1;
 }
 
 .subtaskImg {
@@ -126,6 +139,7 @@ textarea::placeholder {
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+    background-color: #FFF;
 }
 
 .createButton {
