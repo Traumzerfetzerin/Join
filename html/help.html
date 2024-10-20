@@ -5,17 +5,21 @@
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="./font.css">
+    <link rel="stylesheet" href="../styles/help.css">
     <script src="./scripts/header.js"></script>
     <script src="./scripts/contacts.js" defer></script> <!-- Use defer -->
     <script src="./scripts/overlay.js" defer></script>
      <script src="./scripts/script.js">defer</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/Assests/joinLogo.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="/Assets/joinLogo.svg" type="image/x-icon">
     <title>Document</title>
 </head>
 <body>
     <h1>Help</h1>
+    <header w3-include-html="/templates/header.html"></header>
+    <aside w3-include-html="/templates/navbar.html"></aside>
+    <main>
     <div>
         Welcome to the help page for Join, your guide to using our kanban project management tool. Here, we'll provide an overview of what Join is, how it can benefit you, and how to use it.
         What is Join?
@@ -48,5 +52,10 @@
         
         Enjoy using Join!
         </div>
+    </main>
+        <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>
+        w3.includeHTML();
+    </script> 
 </body>
 </html>
