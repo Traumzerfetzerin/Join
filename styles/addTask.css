@@ -85,14 +85,14 @@ textarea::placeholder {
     height: 24px;
 }
 
-.assignedToImg {
+.dropDown {
     position: absolute;
     top: 12px;
     right: 12px;
 }
 
-.assignedToImg:hover {
-    transform: scale(1.2);
+.dropDown:hover {
+    transform: scale(1.1);
     /* Vergrößerung um 20% beim Hover */
     transition: transform 4s ease-out;
     /* Animation für den Hover-Effekt */
@@ -122,6 +122,10 @@ textarea::placeholder {
     border-color: #D1D1D1;
 }
 
+.prioButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
 .subtaskImg {
     position: absolute;
     top: 13px;
@@ -129,7 +133,7 @@ textarea::placeholder {
 }
 
 .subtaskImg:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     /* Vergrößerung um 20% beim Hover */
     transition: transform 4s ease-out;
     /* Animation für den Hover-Effekt */
@@ -168,6 +172,12 @@ textarea::placeholder {
     background-color: #FFF;
 }
 
+.clearButton:hover {
+    border-color: #29ABE2;
+    color: #29ABE2;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
 .createButton {
     width: 183px;
     height: 56px;
@@ -179,4 +189,10 @@ textarea::placeholder {
     font-weight: 700;
     font-size: 21px;
     line-height: 24px;
+}
+
+.createButton:hover {
+    background-color: #29ABE2;
+    border-color: #29ABE2;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
