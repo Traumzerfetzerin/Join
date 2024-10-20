@@ -22,108 +22,96 @@
         <div class="taskBackground">
             <div class="space-between">
                 <h1 class="h1Task">Add Task</h1>
-                <p id="closeTask">x</p>
+                <div id="closeTask">x</div>
             </div>
 
-            <div class="flex taskBothSide">
+            <form>
+                <div class="flex taskBothSide">
 
-                <div class="taskLeftSide width_440">
-                    <section class="titleTask fonts">
-                        <div class="flex">
-                            <p class="title">Title</p>
-                            <p class="colorRed">*</p>
-                        </div>
-                        <input id="inputTitle" class="width_440" type="text" placeholder="Enter a title" required>
-                    </section>
+                    <div class="taskLeftSide width_440">
+                        <section class="titleTask fonts">
+                            <div class="flex">
+                                <div class="title">Title</div>
+                                <div class="colorRed">*</div>
+                            </div>
+                            <input id="inputTitle" type="text" placeholder="Enter a title" required>
+                        </section>
 
-                    <section class="descriptionTask column">
-                        <p class="fonts description">Description</p>
-                        <textarea class="width_440" id="textareaDescription" name=""
-                            placeholder="Enter a Description"></textarea>
-                    </section>
+                        <section class="descriptionTask column">
+                            <div class="fonts description">Description</div>
+                            <textarea class="width_440" id="textareaDescription" name=""
+                                placeholder="Enter a Description"></textarea>
+                        </section>
 
-                    <section class="assignedTo">
-                        <p class="assigned fonts">Assigned to</p>
-                        <div>
-                            <!-- ICON DROP DOWN !!! -->
-                            <select>
-                                <option value="0">Select contacts to assign</option>
-                                <option value="1">#</option>
-                                <option value="2">#</option>
-                                <option value="3">#</option>
-                                <option value="4">#</option>
-                                <option value="5">#</option>
-                                <option value="6">#</option>
-                                <option value="7">#</option>
-                                <option value="8">#</option>
-                                <option value="9">#</option>
-                                <option value="10">#</option>
-                            </select>
-                        </div>
-                    </section>
+                        <section class="assignedTo">
+                            <div class="assigned fonts">Assigned to</div>
+                            <div>
+                                <select>
+                                    <option>Select contacts to assign</option>
+                                </select>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="seperator"></div>
+
+                    <div class="taskRightSide width_440">
+                        <section>
+                            <div class="flex fonts">
+                                <div>Due date</div>
+                                <div class="colorRed">*</div>
+                            </div>
+                            <input class="calendar width_440" type="date" required>
+                        </section>
+
+                        <section>
+                            <div class="fonts">Prio</div>
+                            <div class="flex">
+                                <img src="" alt="">#
+                                <img src="" alt="">#
+                                <img src="" alt="">#
+                            </div>
+                        </section>
+
+                        <section>
+                            <div class="flex fonts">
+                                <div>Category</div>
+                                <div class="colorRed">*</div>
+                            </div>
+                            <div class="custom-select">
+                                <select>
+                                    <option value="0">Select task category</option>
+                                    <option value="1">Technical Task</option>
+                                    <option value="2">User Story</option>
+                                </select>
+                            </div>
+                        </section>
+
+                        <section class="fonts">
+                            <div>Subtasks</div>
+                            <div class="relative">
+                                <input type="text" name="" id="" placeholder="Add new subtask">
+                                <img class="subtaskImg" src="../Assets/addTask/close.svg" alt="">
+                            </div>
+                        </section>
+                    </div>
                 </div>
 
-                <div class="seperator"></div>
-
-                <div class="taskRightSide width_440">
-                    <section>
-                        <div class="flex fonts">
-                            <p>Due date</p>
-                            <p class="colorRed">*</p>
-                        </div>
-                        <input class="calendar width_440" type="date" required>
-                    </section>
-
-                    <section>
-                        <p class="fonts">Prio</p>
-                        <div class="flex">
-                            <img src="" alt="">#
-                            <img src="" alt="">#
-                            <img src="" alt="">#
-                        </div>
-                    </section>
-
-                    <section>
-                        <div class="flex fonts">
-                            <p>Category</p>
-                            <p class="colorRed">*</p>
-                        </div>
-                        <div class="custom-select">
-                            <select>
-                                <option value="0">Select task category</option>
-                                <option value="1">#</option>
-                                <option value="2">#</option>
-                                <option value="3">#</option>
-                                <option value="4">#</option>
-                                <option value="5">#</option>
-                                <option value="6">#</option>
-                                <option value="7">#</option>
-                                <option value="8">#</option>
-                                <option value="9">#</option>
-                                <option value="10">#</option>
-                            </select>
-                        </div>
-                    </section>
-
-                    <section class="fonts">
-                        <p>Subtasks</p>
-                        <input type="text" name="" id="" placeholder="Add new subtask">
-                        <button>X</button>
-                    </section>
+                <div class="space-between">
+                    <div class="flex fonts required">
+                        <div class="colorRed">*</div>
+                        <span class="font_16">This field is required</span>
+                    </div>
+                    <!-- ICON BUTTON -->
+                    <div class="buttons">
+                        <button class="cancelButton">Cancel</button>
+                        <button class="createButton">Create Task
+                            <img src="../Assets/addTask/check.svg" alt="">
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
 
-            <div class="space-between">
-                <div class="flex fonts required">
-                    <p class="colorRed">*</p>
-                    <span class="font_16">This field is required</span>
-                </div>
-                <!-- ICON BUTTON -->
-                <div class="buttons">
-                    <button class="cancelButton">Cancel</button>
-                    <button class="createButton">Create Task</button>
-                </div>
-            </div>
         </div>
     </main>
 

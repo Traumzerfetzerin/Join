@@ -1,33 +1,26 @@
-main{
+main {
     margin-top: 120px;
     margin-left: 260px;
 }
 
-
 .taskBackground {
-    background-color: rgba(0, 0, 0, 0.1);  
+    background-color: #FFF;
+    border-radius: 30px;
 }
 
 .seperator {
-    background-color: black;
+    background-color: #D1D1D1;
     width: 1px;
     height: 424px;
-    top: 174px;
-    left: 562.25px;
-    border: 1px;
     rotate: -0;
 }
 
 .taskLeftSide {
     height: 376px;
-    top: 174px;
-    left: 74px;
 }
 
 .taskRightSide {
     height: 416px;
-    top: 174px;
-    left: 610.25px;
 }
 
 .taskBothSide {
@@ -39,16 +32,13 @@ main{
 .h1Task {
     width: 466px;
     height: 78px;
-    top: 64px;
-    left: 74px;
-    gap: 1px;
+    margin: 0;
+    font-size: 61px;
 }
 
 #closeTask {
     width: 32px;
     height: 32px;
-    top: 64px;
-    left: 1044px;
     border-radius: 56px;
 }
 
@@ -64,12 +54,11 @@ main{
 
 #inputTitle {
     border-radius: 10px;
-    border: 1px;
     padding-top: 12px;
     padding-right: 21px;
     padding-bottom: 12px;
     padding-left: 21px;
-    gap: 10px;
+    width: 100%;
 }
 
 input::placeholder {
@@ -82,19 +71,14 @@ input::placeholder {
 
 .descriptionTask {
     height: 168px;
-    top: 112px;
     gap: 8px;
 }
 
-.description {
-    height: 24px;
-}
-
 #textareaDescription {
-    height: 136px !important;
+    height: 120px;
     gap: 4px;
     border-radius: 10px;
-    border: 1px;
+
 }
 
 textarea::placeholder {
@@ -107,7 +91,6 @@ textarea::placeholder {
 
 .assignedTo {
     height: 80px;
-    top: 296px;
     gap: 8px;
 }
 
@@ -119,8 +102,6 @@ textarea::placeholder {
 .required {
     width: 170px;
     height: 27px;
-    top: 779px;
-    left: 74px
 }
 
 .required span {
@@ -130,8 +111,6 @@ textarea::placeholder {
 .buttons {
     width: 334px;
     height: 56px;
-    top: 750px;
-    left: 716.25px;
     gap: 4px;
 }
 
@@ -156,9 +135,14 @@ textarea::placeholder {
 .calendar {
     height: 48px;
     border-radius: 10px;
-    border: 1px;
     padding-top: 12px;
     padding-right: 16px;
     padding-bottom: 12px;
     padding-left: 16px;
+}
+
+.subtaskImg {
+    position: absolute;
+    top: 12px;
+    right: 12px;
 }
