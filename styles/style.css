@@ -44,6 +44,11 @@ html {
     cursor: pointer;
 }
 
+.d-none {
+    display: none;
+}
+
+
 .colorRed {
     color: red;
 }
