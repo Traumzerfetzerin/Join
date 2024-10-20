@@ -91,6 +91,19 @@ textarea::placeholder {
     right: 12px;
 }
 
+.assignedToImg:hover {
+    transform: scale(1.2);
+    /* Vergrößerung um 20% beim Hover */
+    transition: transform 4s ease-out;
+    /* Animation für den Hover-Effekt */
+    transition-behavior: normal;
+    transition-duration: 0.5s;
+    transition-delay: 0s;
+    transition-property: transform;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
 .seperator {
     background-color: #D1D1D1;
     width: 1px;
