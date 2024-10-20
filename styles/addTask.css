@@ -9,11 +9,11 @@ select {
     appearance: none;
 }
 
-.taskBackground {
+/* .taskBackground {
     background-color: #FFF;
     border-radius: 30px;
     max-width: 1116px;
-}
+} */
 
 .h1Task {
     width: 466px;
@@ -111,8 +111,21 @@ textarea::placeholder {
 
 .subtaskImg {
     position: absolute;
-    top: 17px;
+    top: 13px;
     right: 12px;
+}
+
+.subtaskImg:hover {
+    transform: scale(1.2);
+    /* Vergrößerung um 20% beim Hover */
+    transition: transform 4s ease-out;
+    /* Animation für den Hover-Effekt */
+    transition-behavior: normal;
+    transition-duration: 0.5s;
+    transition-delay: 0s;
+    transition-property: transform;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 }
 
 .required {

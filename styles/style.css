@@ -40,6 +40,10 @@ html {
     background: #555;
 }
 
+.cursorPointer {
+    cursor: pointer;
+}
+
 .colorRed {
     color: red;
 }
