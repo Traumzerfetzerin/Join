@@ -108,3 +108,6 @@ function logout() {
     localStorage.removeItem('userId'); // Clear user ID from local storage
     window.location.href = '/html/login.html'; // Ensure the correct path for your login page
 }
+function pageBack() {
+    window.history.back();
+}
