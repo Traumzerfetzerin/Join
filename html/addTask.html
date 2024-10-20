@@ -39,14 +39,14 @@
 
                         <section class="descriptionTask column">
                             <div class="fonts description">Description</div>
-                            <textarea class="width_440" id="textareaDescription" name=""
+                            <textarea id="textareaDescription" name=""
                                 placeholder="Enter a Description"></textarea>
                         </section>
 
                         <section class="assignedTo">
                             <div class="assigned fonts">Assigned to</div>
                             <div>
-                                <select>
+                                <select class="input_12_16">
                                     <option>Select contacts to assign</option>
                                 </select>
                             </div>
@@ -61,15 +61,21 @@
                                 <div>Due date</div>
                                 <div class="colorRed">*</div>
                             </div>
-                            <input class="calendar width_440" type="date" required>
+                            <input class="input_12_16 width_440" type="date" required>
                         </section>
 
                         <section>
                             <div class="fonts">Prio</div>
                             <div class="flex">
-                                <img src="" alt="">#
-                                <img src="" alt="">#
-                                <img src="" alt="">#
+                                <button>Urgent
+                                    <img src="../Assets/addTask/Prio alta.svg" alt="">
+                                </button>
+                                <button>Medium
+                                    <img src="../Assets/addTask/Prio media.svg" alt="">
+                                </button>
+                                <button>Low
+                                    <img src="../Assets/addTask/Prio baja.svg" alt="">
+                                </button>
                             </div>
                         </section>
 
@@ -79,7 +85,7 @@
                                 <div class="colorRed">*</div>
                             </div>
                             <div class="custom-select">
-                                <select>
+                                <select class="input_12_16">
                                     <option value="0">Select task category</option>
                                     <option value="1">Technical Task</option>
                                     <option value="2">User Story</option>
@@ -90,7 +96,8 @@
                         <section class="fonts">
                             <div>Subtasks</div>
                             <div class="relative">
-                                <input type="text" name="" id="" placeholder="Add new subtask">
+                                <input class="input_12_16" type="text" name="" id="inputSubtasks"
+                                    placeholder="Add new subtask">
                                 <img class="subtaskImg" src="../Assets/addTask/close.svg" alt="">
                             </div>
                         </section>

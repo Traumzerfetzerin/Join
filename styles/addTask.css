@@ -54,10 +54,7 @@ main {
 
 #inputTitle {
     border-radius: 10px;
-    padding-top: 12px;
-    padding-right: 21px;
-    padding-bottom: 12px;
-    padding-left: 21px;
+    padding: 12px 21px;
     width: 100%;
 }
 
@@ -76,15 +73,15 @@ input::placeholder {
 
 #textareaDescription {
     height: 120px;
-    gap: 4px;
     border-radius: 10px;
-
+    padding: 18px 15px;
+    width: 100%;
 }
 
 textarea::placeholder {
     width: 408px;
     height: 24px;
-    font-weight: 400px;
+    font-weight: 400;
     font-size: 20px;
     line-height: 24px;
 }
@@ -138,18 +135,18 @@ textarea::placeholder {
     line-height: 24px;
 }
 
-/* RIGHT SIDE */
-.calendar {
-    height: 48px;
-    border-radius: 10px;
-    padding-top: 12px;
-    padding-right: 16px;
-    padding-bottom: 12px;
-    padding-left: 16px;
-}
-
 .subtaskImg {
     position: absolute;
-    top: 12px;
+    top: 17px;
     right: 12px;
+}
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type=date]::-webkit-calendar-picker-indicator {
+    display: none;
 }
