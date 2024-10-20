@@ -1,0 +1,283 @@
+*{
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    background-color: white; /* Set the body background */
+    
+}
+
+#main-content {
+    margin-left: 232px; /* Leave space for the sidebar */
+    margin-top: 95px; /* Leave space for the header */
+    flex-grow: 1; /* Allow the main content to grow */
+    display: flex; /* Use flexbox for layout */
+}
+
+.contacts-container {
+    display: flex; /* Arrange two columns */
+    width: 100%; /* Full width */
+}
+
+
+.contact-list {
+    flex:0 0 30%; /* Take half of the remaining space */
+    padding: 10px; /* Add padding */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add clear box shadow */
+    border-radius: 8px; /* Optional: round the corners */
+    background-color: white; /* Ensure the background is white */
+    border-left: 4px solid #007BFF; /* Add a left border */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center align items horizontally */
+    overflow-x: hidden;
+    
+}
+
+.contact-item {
+    width: calc(100% + 20px); /* Extend width to account for padding */
+    padding: 10px 0;
+    margin-left: -10px; /* Offset to align with the edge of .contact-list */
+    border-bottom: 1px solid #ddd; /* Border below each contact */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.contact-name {
+    font-weight: bold; /* Make the name bold */
+}
+
+.contact-email {
+    color: gray; /* Color for the email */
+}
+
+.contact {
+    display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 140px; /* Add some space below the contact section */
+    padding-top: 20px;
+}
+
+.contact h1 {
+    margin: 0; 
+    font-size: 54px;
+}
+
+.contact h3 {
+    margin: 0; /* Remove default margin */
+    font-size:24 ;
+}
+
+
+.separator {
+    width: 3px; /* Width of the separator */
+    height: 30px; /* Height of the separator */
+    background-color: #3498db; /* Blue color for the separator */
+    margin: 0 15px; /* Space around the separator */
+}
+
+.add-contact {
+    flex: 1; /* Take the other half of the remaining space */
+    padding: 20px; /* Add padding */
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Arrange elements vertically */
+    align-items: center; /* Center align items */
+    justify-content: center; /* Center align items */
+}
+
+
+.add-contact-section {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    ; /* Space between elements */
+}
+
+.add-contact-button {
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    background-color: #2A3647; /* Background color for the button area */
+    color: white; /* Text color */
+    padding: 10px 45px; /* Padding for the button area */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.add-icon {
+    width: 34px; /* Adjust icon size as needed */
+    height: 34px; /* Adjust icon size as needed */
+    margin-right: 8px; /* Space between icon and text */
+}
+.add-contact-button span{
+    font-size: 18px;
+}
+.add-contact-button:hover{
+    cursor: pointer;
+    background-color: #3498db;
+    transform: scaleY(1.1);
+    box-shadow: #2A3647;
+    
+}
+/* Overlay styles */
+.overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; /* Cover the entire height */
+    left: 0; /* Cover the entire width */
+    width: 700px; /* Full width */
+    height: 500px; /* Full height */
+    background-color: rgba(255, 255, 255, 1); /* White background */
+    z-index: 1001; /* Ensure overlay is on top */
+    margin-left: 40%; 
+    margin-right: 0px;
+    margin-top: 80px;
+    margin-bottom: 100px;
+    box-sizing: border-box; 
+    border: 2px solid gray;/* Include padding in total width/height */
+    border-radius: 20px;
+    
+}
+
+/* Overlay content styles */
+.overlay-content {
+    display: flex;
+    height: 100%;
+}
+
+/* Close button styles */
+.close-button {
+    margin-top: 10px; /* Space above the button */
+    cursor: pointer; /* Show pointer on hover */
+}
+.left-section {
+    background-color: #2A3647;
+    
+    flex: 1; /* Take 50% of the width */
+    padding: 20px; /* Add some padding */
+     /* Enable flex for centering */
+    flex-direction: column; /* Stack items vertically */
+    justify-content:flex-start; /* Center items vertically */
+    align-items: center;
+    border-radius: 20px 0 0 20px; /* Center items horizontally */
+}
+.left-section img{
+    padding-left: 10px;
+}
+.left-section h2 {
+    font-size: 54px; /* Font size for heading */
+    color: #fff;
+    text-align: center;
+    position: relative; /* Position for the underline */
+}
+.left-section p {
+    position: relative;
+    margin: 0;
+    color: #fff;
+    font-size: 24px;
+}
+
+.left-section p::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Adjust the space between the text and the border */
+    width: 30%;   /* Set the width of the border */
+    border-bottom: 4px solid #3498db;
+}
+
+
+/* Right Section Styles */
+.right-section {
+    flex: 1; /* Take the other 50% of the width */
+    padding: 20px; /* Add some padding */
+    display: flex; /* Enable flex for layout */
+    flex-direction: column;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+.right-section img{
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+/* Form Styles */
+#contact-form {
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 10px; /* Space between elements */
+    width: 100%; /* Full width of the right section */
+    max-width: 300px; /* Limit the width of the form */
+    padding: 20px; /* Add padding for spacing */
+    background-color: #fff; /* White background for the form */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for card effect */
+}
+
+/* Input Styles */
+#contact-form input {
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 16px; /* Font size for inputs */
+}
+#add-contact-button {
+    border: 2px solid #2a2a2a;
+    background-color:#2A3647 ;
+    border-radius: 8px;
+    color: white;
+    padding: 10px 50px;
+    font-size: medium;
+    font-weight: 600;
+    box-shadow: none;
+    width: 300px;
+}
+form button{
+    display: flex;
+    justify-content: center;
+}
+#add-contact-button:hover, .close-button:hover {
+    background-color: #3498db; /* Darker shade on hover */
+}
+.close-button{
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    background-color: #2A3647;
+    color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+}
+#contact-details-name,
+#contact-details-email {
+    margin: 10px 0; /* Margin around details */
+    font-size: 28px; /* Font size for details */
+    color: #131212; /* Lighter gray color */
+    margin-left:30px;
+}
+#delete-contact-button {
+    padding: 10px 15px; /* Padding around the button */
+    background-color:#3498db;/* Red background color */
+    color:#fff; /* White text color */
+    border:2px solid  #3498db; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition effect on hover */
+}
+#contact-details-name {
+    margin-right: 10px; /* Margin right for spacing */
+}
+#delete-contact-button:hover{
+    background-color: #fff;
+    color: #3498db;
+    transform: scale(1.1);
+}
+

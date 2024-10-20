@@ -6,11 +6,9 @@ main{
 
 .taskBackground {
     background-color: rgba(0, 0, 0, 0.1);
-    width: 1116px;
-    height: 870px;
-    top: -3975px;
-    left: -1012px;
-    border-radius: 30px;
+    
+    
+    
 }
 
 .seperator {
