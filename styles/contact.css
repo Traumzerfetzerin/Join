@@ -197,19 +197,33 @@ body {
     flex: 1; /* Take the other 50% of the width */
     padding: 20px; /* Add some padding */
     display: flex; /* Enable flex for layout */
-    flex-direction: column;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
+.contact-details {
+    margin: 20px 0; /* Space around contact details */
+    text-align: center; /* Center text */
+}
+
+.contact-detail {
+    font-size: 16px; /* Font size for contact details */
+    color: #333; /* Dark color for better readability */
+    margin: 5px 0; /* Space between each detail */
+}
+
 .right-section img{
-    width: 50px;
+    width:50px;
     height: 50px;
     margin-bottom: 20px;
 }
 
 /* Form Styles */
 /* Form Styles */
-#contact-form {
+.contact-form {
     display: flex; /* Enable flexbox */
     flex-direction: column; /* Stack form elements vertically */
     gap: 10px; /* Space between elements */
@@ -222,7 +236,7 @@ body {
 }
 
 /* Input Styles */
-#contact-form input {
+.contact-form input {
     padding: 10px; /* Padding inside input fields */
     border: 1px solid #ccc; /* Light gray border */
     border-radius: 5px; /* Slightly rounded corners */
@@ -263,7 +277,7 @@ form button{
     color: #131212; /* Lighter gray color */
     margin-left:30px;
 }
-#delete-contact-button {
+#delete-contact-button,#save-contact-button{
     padding: 10px 15px; /* Padding around the button */
     background-color:#3498db;/* Red background color */
     color:#fff; /* White text color */
@@ -273,32 +287,84 @@ form button{
     cursor: pointer; /* Pointer cursor on hover */
     transition: background-color 0.3s; /* Transition effect on hover */
 }
-#edit-contact {
-    padding: 10px 15px; /* Padding around the button */
-    background-color:#3498db;/* Red background color */
-    color:#fff; /* White text color */
-    border:2px solid  #3498db; /* No border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Font size for the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s; /* Transition effect on hover */
-}
+
 #contact-details-name {
     margin-right: 10px; /* Margin right for spacing */
+}
+#edit-contact-button{
+    padding: 10px 15px; /* Padding around the button */
+    background-color:white;/* Red background color */
+    color:#3498db; /* White text color */
+    border:2px solid  #3498db; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Transition effect on hover */
 }
 #delete-contact-button:hover{
     background-color: #fff;
     color: #3498db;
     transform: scale(1.1);
 }
-#edit-contact:hover{
-    background-color: #fff;
-    color: #3498db;
+#edit-contact-button:hover{
+    background-color: #3498db;
+    color: #fff;
     transform: scale(1.1);
+
 }
-.edit-section{
+
+.contact-details-buttons{
     display: flex;
     gap: 30px;
     padding-top: auto;
 }
+#edi-name,#edid-email,#edit-phone input{
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 16px; /* Font size for inputs */
+}
+.edit-form{
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 10px; /* Space between elements */
+    width: 100%; /* Full width of the right section */
+    max-width: 300px; /* Limit the width of the form */
+    padding: 20px; /* Add padding for spacing */
+    background-color: #fff; /* White background for the form */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for card effect */
+}
+/* Toast container */
+.toast {
+    visibility: hidden; /* Hidden by default */
+    min-width: 250px; /* Minimum width */
+    background-color: #333; /* Dark background */
+    color: white; /* White text */
+    text-align: center; /* Center text */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside the toast */
+    position: fixed; /* Fixed position */
+    z-index: 2000; /* On top of other elements */
+    right: 0; /* Start on the right */
+    top: 50%; /* Center vertically */
+    transform: translate(100%, -50%); /* Start hidden on the right */
+    opacity: 0; /* Start invisible */
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+}
 
+/* Show the toast with sliding in effect */
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-80%, -80%); /* Move to the center of the screen */
+}
+
+/* Toast types: success and error */
+.toast.success {
+    background-color: #3498db; /* Green for success */
+}
+
+.toast.error {
+    background-color: #dc3545; /* Red for error */
+}
