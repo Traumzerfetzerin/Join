@@ -18,7 +18,7 @@ async function fetchTasks() {
 
 /** function to load tasks and put them into the appropriate column */
 function loadTasks(tasks) {
-    // Clear the columns
+   
     document.getElementById("toDoColumn").innerHTML = "";
     document.getElementById("inProgressColumn").innerHTML = "";
     document.getElementById("awaitFeedbackColumn").innerHTML = "";
@@ -29,8 +29,7 @@ function loadTasks(tasks) {
 
         for (let title in categoryTasks) {
             let description = categoryTasks[title];
-
-            // Add tasks to the toDoColumn by default
+                                                            
             document.getElementById("toDoColumn").innerHTML += getTaskBoardTemplate(category, title, description);
         }  
     }
