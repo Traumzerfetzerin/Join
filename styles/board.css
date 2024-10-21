@@ -6,8 +6,6 @@ main{
     margin-left: 260px;
 }
 
-
-
 h2{
     font-size: 61px;
 }
@@ -35,4 +33,48 @@ button{
     padding: 8px 16px 8px 16px;
     gap: 4px;
     color: #2A3647;
+}
+
+#columnTitles {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+#columnTitles div {
+    width: 22%; 
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#taskBoard {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.column {
+    width: 22%;
+    min-height: 200px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.task {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.column:hover {
+    background-color: #e0e0e0;
+}
+
+.task:hover {
+    cursor: pointer;
 }

@@ -1,0 +1,16 @@
+#policy {
+    margin-left: 238px; /* Leave space for the sidebar */
+    margin-top: 95px; /* Leave space for the header */
+    flex-grow: 1; /* Allow the main content to grow */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column;
+
+}
+
+.impressum {
+    margin-left: 238px; /* Leave space for the sidebar */
+    margin-top: 95px; /* Leave space for the header */
+    flex-grow: 1; /* Allow the main content to grow */
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column;
+}

@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/contact.css">
     <script src="../script/board.js"></script>
+    <script src="../templates/boardTemplate.js"></script>
     <script src="../script/header.js"></script>
 </head>
 
-<body>
+<body onload="fetchTasks()">
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
     <main>
@@ -39,15 +40,11 @@
         </div>
     </div>
 
-    <div>
-        <div>
-            <h4>User Story</h4>
-            <span></span>
-        </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+    <div id="taskBoard">
+        <div class="column" id="toDoColumn"></div>
+        <div class="column" id="inProgressColumn"></div>
+        <div class="column" id="awaitFeedbackColumn"></div>
+        <div class="column" id="doneColumn"></div>
     </div>
     </main>
 
