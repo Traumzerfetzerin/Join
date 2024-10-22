@@ -1,2 +1,0 @@
-let taskTitle = [];
-let descriptionTask = [];
