@@ -190,10 +190,10 @@ function togglePasswordVisibility(inputId, toggleIconId) {
 
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.src = '../Assests/visibility.svg'; // Show password icon
+        toggleIcon.src = '/Assets/visibility.svg'; // Show password icon
     } else {
         passwordInput.type = 'password';
-        toggleIcon.src = '../Assests/visibility_off - Copy.svg'; // Hide password icon
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; // Hide password icon
     }
 }
 

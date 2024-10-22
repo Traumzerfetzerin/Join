@@ -152,32 +152,16 @@ function togglePasswordVisibility(inputId, toggleIconId) {
     // Toggle password visibility
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text'; // Show the password
-        toggleIcon.src = '../Assests/visibility.svg'; // Show visible icon
+        toggleIcon.src = '/Assets/visibility.svg'; // Show visible icon
         toggleIcon.alt = 'Hide Password'; // Update alt text
         console.log('Password is now visible.'); // Debugging log
     } else {
         passwordInput.type = 'password'; // Hide the password
-        toggleIcon.src = '../Assests/visibility_off - Copy.svg'; // Show hidden icon
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; // Show hidden icon
         toggleIcon.alt = 'Show Password'; // Update alt text
         console.log('Password is now hidden.'); // Debugging log
     }
 }
-/**
- * Toggle password visibility.
- * @param {string} inputId - The ID of the password input field
- * @param {string} toggleIconId - The ID of the eye icon for toggling
- */
-function togglePasswordVisibility(inputId, toggleIconId) {
-    const passwordInput = document.getElementById(inputId);
-    const toggleIcon = document.getElementById(toggleIconId);
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.src = '../Assests/visibility.svg'; // Show password icon
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.src = '../Assests/visibility_off - Copy.svg'; // Hide password icon
-    }
-}
 
 
