@@ -24,7 +24,7 @@
                             <select class="input_12_16 cursorPointer fonts">
                                 <option>Select contacts to assign</option>
                             </select>
-                            <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt="">
+                            <!-- <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt=""> -->
                         </div>
                     </div>
                 </section>
@@ -44,17 +44,18 @@
                 <section>
                     <div class="fonts">Prio</div>
                     <div class="flex space-between">
-                        <button class="prioButton cursorPointer fonts">Urgent
+                        <button class="prioButton cursorPointer fonts" id="urgent" onclick="setPrio('Urgent')">Urgent
                             <img src="../Assets/addTask/Prio alta.svg" alt="">
                         </button>
-                        <button class="prioButton cursorPointer fonts">Medium
+                        <button class="prioButton cursorPointer fonts" id="medium" onclick="setPrio('Medium')">Medium
                             <img src="../Assets/addTask/Prio media.svg" alt="">
                         </button>
-                        <button class="prioButton cursorPointer fonts">Low
+                        <button class="prioButton cursorPointer fonts" id="low" onclick="setPrio('Low')">Low
                             <img src="../Assets/addTask/Prio baja.svg" alt="">
                         </button>
                     </div>
                 </section>
+                
 
                 <section>
                     <div class="flex fonts">
@@ -64,10 +65,10 @@
                     <div class="custom-select relative">
                         <select class="input_12_16 cursorPointer fonts">
                             <option value="0">Select task category</option>
-                            <option value="1">Technical Task</option>
-                            <option value="2">User Story</option>
+                            <option value="1" id="technicalTask">Technical Task</option>
+                            <option value="2" id="userStory">User Story</option>
                         </select>
-                        <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt="">
+                        <!-- <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt=""> -->
                     </div>
                 </section>
 
