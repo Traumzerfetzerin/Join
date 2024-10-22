@@ -4,7 +4,9 @@ body {
 }
 
 /* Alle Style-Informationen werden mit berücksichtigt, *= zählt für alles*/
-
+* {
+    box-sizing: border-box;
+}
 
 input {
     border-color: #D1D1D1;
