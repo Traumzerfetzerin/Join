@@ -38,7 +38,7 @@
                         <div>Due date</div>
                         <div class="colorRed">*</div>
                     </div>
-                    <input class="input_12_16 width_440 cursorPointer fonts" type="date" required>
+                    <input class="input_12_16 width_440 cursorPointer fonts" type="date" id="dueDate" required>
                 </section>
 
                 <section>
@@ -92,7 +92,7 @@
                 <button class="clearButton">Clear
                     <img src="../Assets/addTask/Vector.svg" alt="">
                 </button>
-                <button class="createButton">Create Task
+                <button class="createButton" id="createTask" onclick="createTasks()">Create Task
                     <img src="../Assets/addTask/check.svg" alt="">
                 </button>
             </div>
