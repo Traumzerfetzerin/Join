@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
-=======
-<<<<<<< HEAD
-=======
-const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks'
->>>>>>> d5a0b20df29ddf088896b39f733da546e28a9b28
+
 
 let selectedPrio = '';  // Variable zum Speichern der ausgewählten Prio
 
@@ -42,7 +37,6 @@ async function createTasks() {
             prio = button.innerText; // Nimm den Text des aktiven Buttons als Priorität
         }
     });
-<<<<<<< HEAD
 
     // Sicherstellen, dass alle Felder ausgefüllt sind
     if (!title || !dueDate || !prio) {
@@ -80,8 +74,6 @@ async function createTasks() {
     }
 }
 
-=======
+
     return responseToJson = await response.json();
-}
->>>>>>> 52ff07cb87ab488970cc38aa81e0f54d3c27deaa
->>>>>>> d5a0b20df29ddf088896b39f733da546e28a9b28
+
