@@ -12,11 +12,11 @@ input {
     border-color: #D1D1D1;
 }
 
-/* FONT */
+/* FONT 
 @font-face {
     font-family: Inter;
     src: url('../fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
-}
+}*/
 
 html {
     font-family: "Inter";
