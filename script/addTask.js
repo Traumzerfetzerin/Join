@@ -38,7 +38,7 @@ async function createTasks() {
         }
     });
 
-    // Sicherstellen, dass alle Felder ausgefüllt sind
+    // Sicherstellen, dass alle Felder ausgefüllt sind / Nur zum Testen, am Ende wird es wieder entfernt/ Task added to Board pop up muss eingetragen werden
     if (!title || !dueDate || !prio) {
         alert('Bitte alle erforderlichen Felder ausfüllen.');
         return;

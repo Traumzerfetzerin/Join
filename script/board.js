@@ -65,3 +65,7 @@ function drop(event) {
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
+
+
+//Anzeige anpassen, damit alle Daten stimmen
+//Prio, Title, Category, Date
