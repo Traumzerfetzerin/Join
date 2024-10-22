@@ -1,7 +1,10 @@
 body {
     margin: 0;
 }
-
+#sidebar, 
+#sidebar * {
+    box-sizing: content-box;
+}
 #sidebar {
     background-color: #2A3647;
     display: flex;
@@ -18,7 +21,7 @@ body {
 
 .sidebarlogo {
     height: 121px;
-    width: 100px;
+    width: 130px;
     padding-top: 64px;
     padding-bottom: 0px;
 }
