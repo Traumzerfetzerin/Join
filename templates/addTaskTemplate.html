@@ -44,13 +44,13 @@
                 <section>
                     <div class="fonts">Prio</div>
                     <div class="flex space-between">
-                        <button class="prioButton cursorPointer fonts" id="urgent" onclick="setPrio('Urgent')">Urgent
+                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Urgent', event)">Urgent
                             <img src="../Assets/addTask/Prio alta.svg" alt="">
                         </button>
-                        <button class="prioButton cursorPointer fonts" id="medium" onclick="setPrio('Medium')">Medium
+                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Medium', event)">Medium
                             <img src="../Assets/addTask/Prio media.svg" alt="">
                         </button>
-                        <button class="prioButton cursorPointer fonts" id="low" onclick="setPrio('Low')">Low
+                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Low', event)">Low
                             <img src="../Assets/addTask/Prio baja.svg" alt="">
                         </button>
                     </div>
@@ -63,10 +63,10 @@
                         <div class="colorRed">*</div>
                     </div>
                     <div class="custom-select relative">
-                        <select class="input_12_16 cursorPointer fonts">
+                        <select class="input_12_16 cursorPointer fonts" id="categorySelect">
                             <option value="0">Select task category</option>
-                            <option value="1" id="technicalTask">Technical Task</option>
-                            <option value="2" id="userStory">User Story</option>
+                            <option value="Technical Task" id="technicalTask">Technical Task</option>
+                            <option value="User Story" id="userStory">User Story</option>
                         </select>
                         <!-- <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt=""> -->
                     </div>
@@ -93,7 +93,7 @@
                 <button class="clearButton">Clear
                     <img src="../Assets/addTask/Vector.svg" alt="">
                 </button>
-                <button class="createButton" id="createTask" onclick="createTasks()">Create Task
+                <button type="button" class="createButton" id="createTask" onclick="createTasks(event)">Create Task
                     <img src="../Assets/addTask/check.svg" alt="">
                 </button>
             </div>

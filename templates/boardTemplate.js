@@ -1,10 +1,11 @@
 /** Template for each task */
-function getTaskBoardTemplate(category, title, description) {
+function getTaskBoardTemplate(category, task, taskId) {
     return `
-        <div class="task" draggable="true" ondragstart="drag(event)" id="${title}">
+        <div class="task" id="${taskId}" draggable="true" ondragstart="drag(event)">
             <h3>${category}</h3>
-            <h4>${title}</h4>
-            <p>${description}</p>
+            <h4>${task.title}</h4>
+            <p>${task.description}</p>
         </div>
     `;
 }
+

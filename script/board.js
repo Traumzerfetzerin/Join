@@ -24,24 +24,24 @@ function loadTasks(tasks) {
     document.getElementById("awaitFeedbackColumn").innerHTML = "";
     document.getElementById("doneColumn").innerHTML = "";
 
-    for (let category in tasks) {
-        let categoryTasks = tasks[category]; 
+   // Loop through the task categories (e.g., "User Story", "Technical Task")
+   for (let category in tasks) {
+    let categoryTasks = tasks[category];
 
-        for (let title in categoryTasks) {
-            let description = categoryTasks[title];
-                                                            
-            document.getElementById("toDoColumn").innerHTML += getTaskBoardTemplate(category, title, description);
-        }  
+    // Loop through each task in the category
+    for (let taskId in categoryTasks) {
+        let task = categoryTasks[taskId];
+        let taskHtml = getTaskBoardTemplate(category, task, taskId);
+        document.getElementById("toDoColumn").innerHTML += taskHtml;
     }
+}
 
-    // Enable drag-and-drop for the columns
-    enableDragAndDrop();
+enableDragAndDrop();
 }
 
 /** Enable drag and drop functionality for all columns */
 function enableDragAndDrop() {
     let columns = document.querySelectorAll('.column');
-
     columns.forEach(column => {
         column.ondragover = allowDrop;
         column.ondrop = drop;
@@ -58,14 +58,14 @@ function drop(event) {
     event.preventDefault();
     let taskId = event.dataTransfer.getData("text");
     let taskElement = document.getElementById(taskId);
-    event.target.appendChild(taskElement);
+    let column = event.target.id.replace("Column", "");
+
+    taskElement.remove();
+    document.getElementById(column + "Column").innerHTML += taskElement.outerHTML;
 }
+
 
 /** Handle the dragging of a task */
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
-
-
-//Anzeige anpassen, damit alle Daten stimmen
-//Prio, Title, Category, Date
