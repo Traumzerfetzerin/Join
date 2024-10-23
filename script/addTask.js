@@ -22,7 +22,23 @@ function setPrio(prio, event) {
 
     // Add 'active' class to the clicked button
     event.target.classList.add('active');
+
+    let priorityButton = event.target.id;
+    if (event.target.id == "low") {
+        document.getElementById(priorityButton).classList.add('lowWhite');
+        document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
+
+    } if (event.target.id == "medium") {
+        document.getElementById(priorityButton).classList.add('mediumWhite');
+        document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio media white.svg";
+
+    } if (event.target.id == "urgent") {
+        document.getElementById(priorityButton).classList.add('urgentWhite');
+        document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
+    }
 }
+
+
 let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
 
 /**
@@ -36,7 +52,7 @@ let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
  */
 async function createTasks(event) {
     // Prevent the form from reloading the page
-    event.preventDefault();  
+    event.preventDefault();
 
     // Collect task data
     let title = document.getElementById('inputTitle').value;

@@ -4,11 +4,11 @@ main {
 }
 
 
-/* .taskBackground {
+.taskBackground {
     background-color: #FFF;
     border-radius: 30px;
     max-width: 1116px;
-} */
+}
 
 .h1Task {
     width: 466px;
@@ -103,7 +103,6 @@ textarea::placeholder {
     background-color: #D1D1D1;
     width: 1px;
     height: 424px;
-    rotate: -0;
 }
 
 .taskRightSide {
@@ -113,12 +112,45 @@ textarea::placeholder {
 .prioButton {
     border-radius: 10px;
     padding: 10px 16px;
-    background-color: #FFF;
+    background-color: #FFFFFF;
     border-color: #D1D1D1;
 }
 
 .prioButton:hover {
     box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.lowWhite {
+    border-color: #7AE229;
+    color: #FFFFFF;
+    background-color: #7AE229;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    /* background: url(../Assets/addTask/Prio\baja\white.svg) no-repeat; */
+    /* background-position: 78px 17px; */
+    border-radius: 10px;
+    padding: 10px 16px;
+}
+
+.mediumWhite {
+    border-color: #FFA800;
+    color: #FFFFFF;
+    background-color: #FFA800;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    /* background: url(../Assets/addTask/Prio\baja\white.svg) no-repeat; */
+    /* background-position: 78px 17px; */
+    border-radius: 10px;
+    padding: 10px 16px;
+}
+
+.urgentWhite {
+    border-color: #FF3D00;
+    color: #FFFFFF;
+    background-color: #FF3D00;
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    /* background: url(../Assets/addTask/Prio\baja\white.svg) no-repeat; */
+    /* background-position: 78px 17px; */
+    border-radius: 10px;
+    padding: 10px 16px;
 }
 
 .subtaskImg {
@@ -127,18 +159,16 @@ textarea::placeholder {
     right: 12px;
 }
 
-.subtaskImg:hover {
+/* .subtaskImg:hover {
     transform: scale(1.1);
-    /* Vergrößerung um 20% beim Hover */
     transition: transform 4s ease-out;
-    /* Animation für den Hover-Effekt */
     transition-behavior: normal;
     transition-duration: 0.5s;
     transition-delay: 0s;
     transition-property: transform;
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 12px;
-}
+} */
 
 .required {
     width: 170px;

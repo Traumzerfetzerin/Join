@@ -44,18 +44,21 @@
                 <section>
                     <div class="fonts">Prio</div>
                     <div class="flex space-between">
-                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Urgent', event)">Urgent
-                            <img src="../Assets/addTask/Prio alta.svg" alt="">
+                        <button id="urgent" type="button" class="prioButton cursorPointer fonts"
+                            onclick="setPrio('urgent', event)">Urgent
+                            <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
                         </button>
-                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Medium', event)">Medium
-                            <img src="../Assets/addTask/Prio media.svg" alt="">
+                        <button id="medium" type="button" class="prioButton cursorPointer fonts"
+                            onclick="setPrio('medium', event)">Medium
+                            <img id="mediumSvg" src="../Assets/addTask/Prio media.svg" alt="">
                         </button>
-                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Low', event)">Low
-                            <img src="../Assets/addTask/Prio baja.svg" alt="">
+                        <button id="low" type="button" class="prioButton cursorPointer fonts"
+                            onclick="setPrio('low', event)">Low
+                            <img id="lowSvg" src="../Assets/addTask/Prio baja.svg" alt="">
                         </button>
                     </div>
                 </section>
-                
+
 
                 <section>
                     <div class="flex fonts">
