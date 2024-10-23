@@ -16,14 +16,17 @@ async function fetchTasks() {
     }
 }
 
-/** function to load tasks and put them into the appropriate column */
-function loadTasks(tasks) {
-   
+function clearColumns() {
     document.getElementById("toDoColumn").innerHTML = "";
     document.getElementById("inProgressColumn").innerHTML = "";
     document.getElementById("awaitFeedbackColumn").innerHTML = "";
     document.getElementById("doneColumn").innerHTML = "";
+}
 
+
+/** function to load tasks and put them into the appropriate column */
+function loadTasks(tasks) {
+    clearColumns();
    // Loop through the task categories (e.g., "User Story", "Technical Task")
    for (let category in tasks) {
     let categoryTasks = tasks[category];
@@ -35,7 +38,6 @@ function loadTasks(tasks) {
         document.getElementById("toDoColumn").innerHTML += taskHtml;
     }
 }
-
 enableDragAndDrop();
 }
 
@@ -45,6 +47,11 @@ function enableDragAndDrop() {
     columns.forEach(column => {
         column.ondragover = allowDrop;
         column.ondrop = drop;
+    });
+
+    let tasks = document.querySelectorAll('.task');
+    tasks.forEach(task => {
+        task.ondragstart = drag;
     });
 }
 
@@ -58,10 +65,20 @@ function drop(event) {
     event.preventDefault();
     let taskId = event.dataTransfer.getData("text");
     let taskElement = document.getElementById(taskId);
-    let column = event.target.id.replace("Column", "");
+    let target = event.target;
 
-    taskElement.remove();
-    document.getElementById(column + "Column").innerHTML += taskElement.outerHTML;
+    // Make sure the target is a column and not a task
+    while (!target.classList.contains('column') && target.parentNode) {
+        target = target.parentNode;
+    }
+
+    if (target.classList.contains('column')) {
+        // remove the task from the actual column
+        taskElement.remove();
+
+        // add the task to the new column
+        target.innerHTML += taskElement.outerHTML;
+    };
 }
 
 
