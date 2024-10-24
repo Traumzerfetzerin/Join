@@ -344,7 +344,7 @@ form button{
     
     color: white; /* White text */
     text-align: center; /* Center text */
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 15px; /* Rounded corners */
     padding: 15px; /* Padding inside the toast */
     position: fixed; /* Fixed position */
     z-index: 2000; /* On top of other elements */

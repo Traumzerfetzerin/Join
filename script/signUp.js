@@ -86,7 +86,7 @@ async function saveUserData(name, email, password) {
         password: password, // In a real app, store a hashed password!
     };
     
-    return fetch('https://join382-19b27-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+    return fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//users.json', {
         method: 'POST',
         body: JSON.stringify(userData),
         headers: {
@@ -102,7 +102,7 @@ async function saveUserData(name, email, password) {
 
 // Check if email already exists in Firebase
 async function isEmailExists(email) {
-    return fetch('https://join382-19b27-default-rtdb.europe-west1.firebasedatabase.app/users.json')
+    return fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//users.json')
         .then(response => response.json())
         .then(data => {
             // Check if any user has the same email

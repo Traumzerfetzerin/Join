@@ -88,7 +88,7 @@ async function createTasks(event) {
         if (response.ok) {
             let responseToJson = await response.json();
             console.log('Task successfully created:', responseToJson);
-            alert('Task successfully created under the category: ' + category);
+            showToast('Task successfully created under the category: ' + category);
         } else {
             console.error('Error creating task:', response.statusText);
         }
