@@ -100,13 +100,16 @@ textarea {
     height: auto;
 }
 
+
 /* Separator Styling */
 .seperator {
     background-color: #D1D1D1;
-    width: 1px;
-    height: 100%;
-    margin: 0 20px;
+    width: 2px;         /* Make the separator slightly thicker */
+    height: auto;       /* Adjusts to the height of the container */
+    margin: 0 20px;     /* Add spacing to the left and right */
+    align-self: stretch; /* Ensures it takes the full height of the container */
 }
+
 
 /* Priority Button Styles */
 .prioButton {
