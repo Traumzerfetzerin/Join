@@ -1,5 +1,5 @@
 // Base URL for Firebase
-const BASE_URL = "https://join382-19b27-default-rtdb.europe-west1.firebasedatabase.app/";
+const BASE_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
 // Store user data globally
 let users = [];
@@ -71,6 +71,18 @@ function displayUserInitials() {
  * Handles email validation, password checking, and updating the UI with the user's initials.
  * @param {Event} event - The form submit event
  */
+// Function to show a toast notification
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast show'; // Make the toast visible
+
+    // Hide the toast after 3 seconds
+    setTimeout(() => {
+        toast.className = toast.className.replace('show', '');
+    }, 3000);
+}
+
 function logIn(event) {
     event.preventDefault();
 
@@ -98,8 +110,8 @@ function logIn(event) {
                     userIcon.textContent = initials; // Update UI with initials
                 }
 
-                responseMessage.textContent = 'Login successful! Redirecting...';
-                responseMessage.style.color = 'green';
+                // Show toast for successful login
+                showToast('Login successful! Redirecting...');
 
                 setTimeout(() => {
                     window.location.href = 'summary.html';
@@ -115,6 +127,7 @@ function logIn(event) {
             responseMessage.style.color = 'red';
         });
 }
+
 
 /**
  * Function to extract initials from a user's name or email.

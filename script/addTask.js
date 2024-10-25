@@ -22,7 +22,23 @@ function setPrio(prio, event) {
 
     // Add 'active' class to the clicked button
     event.target.classList.add('active');
+
+    let priorityButton = event.target.id;
+    if (event.target.id == "low") {
+        document.getElementById(priorityButton).classList.add('lowWhite');
+        document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
+
+    } if (event.target.id == "medium") {
+        document.getElementById(priorityButton).classList.add('mediumWhite');
+        document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio media white.svg";
+
+    } if (event.target.id == "urgent") {
+        document.getElementById(priorityButton).classList.add('urgentWhite');
+        document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
+    }
 }
+
+
 let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
 
 /**
@@ -36,7 +52,7 @@ let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
  */
 async function createTasks(event) {
     // Prevent the form from reloading the page
-    event.preventDefault();  
+    event.preventDefault();
 
     // Collect task data
     let title = document.getElementById('inputTitle').value;
@@ -72,7 +88,7 @@ async function createTasks(event) {
         if (response.ok) {
             let responseToJson = await response.json();
             console.log('Task successfully created:', responseToJson);
-            alert('Task successfully created under the category: ' + category);
+            showToast('Task successfully created under the category: ' + category);
         } else {
             console.error('Error creating task:', response.statusText);
         }
@@ -82,3 +98,74 @@ async function createTasks(event) {
 }
 
 
+async function loadContactsForDropdown() {
+    try {
+        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
+        const contactsData = await response.json();
+        if (contactsData) {
+            contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+            populateCheckboxDropdown(); // Populate checkboxes
+        } else {
+            console.log('No contacts found');
+        }
+    } catch (error) {
+        console.error('Error fetching contacts:', error);
+    }
+}
+
+// Populate the custom dropdown with checkboxes for each contact
+function populateCheckboxDropdown() {
+    const dropdown = document.getElementById("assignTaskDropdown");
+    dropdown.innerHTML = ''; // Clear previous options
+
+    contacts.forEach(contact => {
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = contact.name; // Use contact name as value
+        checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(contact.name)); // Display contact name
+        dropdown.appendChild(label);
+        dropdown.appendChild(document.createElement('br')); // Line break for better UI
+    });
+}
+
+// Maintain an array of selected contacts
+let selectedContacts = [];
+
+// Update the selected contacts based on checked checkboxes
+function updateAssignedContacts() {
+    selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value);
+
+    // Update the input field with the selected contacts
+    document.getElementById('assigned-to').value = selectedContacts.join(', ');
+}
+
+// Toggle dropdown visibility
+function toggleDropdown() {
+    const dropdown = document.getElementById('assignTaskDropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block'; // Show dropdown
+    } else {
+        dropdown.style.display = 'none'; // Hide dropdown
+    }
+}
+
+// Close the dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('assignTaskDropdown');
+    const inputContainer = document.querySelector('.input-with-icon');
+
+    if (!inputContainer.contains(event.target)) {
+        dropdown.style.display = 'none';
+    }
+});
+
+// Call the function to load contacts when the page loads
+window.onload = function() {
+    loadContactsForDropdown();
+    setMinDueDate(); // Restore the date functionality
+};

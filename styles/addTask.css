@@ -1,200 +1,230 @@
+/* General Styles */
+body, input, textarea, select, button {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    box-sizing: border-b/* Ensure padding does not affect element width/height */
+}
+
+/* Main Content Adjustment */
 main {
     margin-top: 120px;
     margin-left: 260px;
 }
 
-
-/* .taskBackground {
+/* Task Background Container */
+.taskBackground {
     background-color: #FFF;
     border-radius: 30px;
     max-width: 1116px;
-} */
-
-.h1Task {
-    width: 466px;
-    height: 78px;
-    margin: 0;
-    font-size: 61px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Header Styling */
+.h1Task {
+    margin: 0;
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Layout for Task Sections */
 .taskBothSide {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.taskLeftSide {
-    height: 376px;
+.taskLeftSide, .taskRightSide {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
+/* Input Fields General Styling */
+input, textarea, select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 24px;
+    background-color: #FFF;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+/* Input Placeholder Style */
+::placeholder {
+    color: #999;
+    font-size: 16px;
+}
+
+/* Input Hover and Focus Effects */
+input:focus, textarea:focus, select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
+}
+
+/* Title Section */
 .titleTask {
-    height: 96px;
     gap: 8px;
 }
 
 .title {
-    height: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-#inputTitle {
-    border-radius: 10px;
-    padding: 12px 21px;
-    width: 100%;
+/* Textarea Styling */
+textarea {
+    resize: none;
+    min-height: 120px;
 }
 
-input::placeholder {
-    width: 398px;
-    height: 24px;
-    font-weight: 400px;
-    font-size: 20px;
-    line-height: 24px;
-}
-
-.descriptionTask {
-    height: 168px;
-    gap: 8px;
-}
-
-#textareaDescription {
-    height: 120px;
-    border-radius: 10px;
-    padding: 18px 15px;
-    width: 100%;
-}
-
-textarea::placeholder {
-    width: 408px;
-    height: 24px;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-}
-
+/* Assigned To Dropdown Styling */
 .assignedTo {
-    height: 80px;
     gap: 8px;
 }
 
 .assigned {
-    width: 112px;
-    height: 24px;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-.dropDown {
-    position: absolute;
-    top: 12px;
-    right: 12px;
+/* Dropdown Container */
+#assignTask {
+    display: block;
+    height: auto;
 }
 
-.dropDown:hover {
-    transform: scale(1.1);
-    /* Vergrößerung um 20% beim Hover */
-    transition: transform 4s ease-out;
-    /* Animation für den Hover-Effekt */
-    transition-behavior: normal;
-    transition-duration: 0.5s;
-    transition-delay: 0s;
-    transition-property: transform;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-}
 
+/* Separator Styling */
 .seperator {
     background-color: #D1D1D1;
-    width: 1px;
-    height: 424px;
-    rotate: -0;
+    width: 2px;         /* Make the separator slightly thicker */
+    height: auto;       /* Adjusts to the height of the container */
+    margin: 0 20px;     /* Add spacing to the left and right */
+    align-self: stretch; /* Ensures it takes the full height of the container */
 }
 
-.taskRightSide {
-    height: 416px;
-}
 
+/* Priority Button Styles */
 .prioButton {
-    border-radius: 10px;
+    display: inline-block;
     padding: 10px 16px;
+    border-radius: 10px;
     background-color: #FFF;
-    border-color: #D1D1D1;
+    border: 1px solid #D1D1D1;
+    font-weight: bold;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
 }
 
 .prioButton:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
 }
 
-.subtaskImg {
-    position: absolute;
-    top: 13px;
-    right: 12px;
+/* Priority Button Colors */
+.lowWhite {
+    border-color: #7AE229;
+    background-color: #7AE229;
+    color: #FFF;
 }
 
-.subtaskImg:hover {
-    transform: scale(1.1);
-    /* Vergrößerung um 20% beim Hover */
-    transition: transform 4s ease-out;
-    /* Animation für den Hover-Effekt */
-    transition-behavior: normal;
-    transition-duration: 0.5s;
-    transition-delay: 0s;
-    transition-property: transform;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
+.mediumWhite {
+    border-color: #FFA800;
+    background-color: #FFA800;
+    color: #FFF;
 }
 
-.required {
-    width: 170px;
-    height: 27px;
+.urgentWhite {
+    border-color: #FF3D00;
+    background-color: #FF3D00;
+    color: #FFF;
 }
 
-.required span {
-    font-size: 16px;
-}
-
+/* Button Container */
 .buttons {
-    width: 334px;
+    display: flex;
+    gap: 16px;
+}
+
+/* Clear and Create Button Styles */
+.clearButton, .createButton {
     height: 56px;
-    gap: 4px;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .clearButton {
-    width: 126px;
-    height: 56px;
-    border-radius: 10px;
-    padding: 16px;
-    grid-area: 4px;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
     background-color: #FFF;
+    border: 1px solid #D1D1D1;
+    color: #333;
 }
 
 .clearButton:hover {
     border-color: #29ABE2;
     color: #29ABE2;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-    background: url(../Assets/addTask/iconoir_cancel.svg) no-repeat;
-    background-position: 78px 17px;
-    padding-left: 0;
-}
-
-.clearButton:hover img {
-    display: none;
+    background-color: #FFF;
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
 }
 
 .createButton {
-    width: 183px;
-    height: 56px;
-    border-radius: 10px;
-    padding: 16px;
-    gap: 4px;
     background-color: #2a3647;
     color: #FFF;
-    font-weight: 700;
-    font-size: 21px;
-    line-height: 24px;
+    font-weight: bold;
+    border: none;
 }
 
 .createButton:hover {
     background-color: #29ABE2;
-    border-color: #29ABE2;
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
+}
+
+/* Input with Icon */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon input {
+    padding-right: 40px;
+}
+
+.input-with-icon img {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Dropdown Menu */
+.dropDown {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    transition: transform 0.3s, background-color 0.3s;
+    border-radius: 12px;
+}
+
+.dropDown:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Required Field Styling */
+.required {
+    font-size: 16px;
+    color: #FF3D00;
+}
+
+/* Adjust Hover Effects */
+.clearButton:hover img {
+    display: none;
 }

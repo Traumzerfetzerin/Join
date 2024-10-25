@@ -16,18 +16,22 @@
                     <textarea class="cursorPointer" id="textareaDescription" name=""
                         placeholder="Enter a Description"></textarea>
                 </section>
-
-                <section class="assignedTo">
-                    <div class="assigned fonts">Assigned to</div>
-                    <div>
-                        <div class="relative">
-                            <select class="input_12_16 cursorPointer fonts">
-                                <option>Select contacts to assign</option>
-                            </select>
-                            <!-- <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt=""> -->
+                <div class="input-group">
+                    <label for="assignTask" class="add-task-label">Assign Task (Select multiple) <span class="required">*</span></label>
+                    <div class="input-with-icon">
+                        <input type="text" name="assigned" class="add-task-title add-task-assigned-to" id="assigned-to" placeholder="Selected contacts" autocomplete="off" readonly>
+                        <div>
+                            <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown" class="cursor-pointer margin-right dropdownimg" onclick="toggleDropdown()">
                         </div>
                     </div>
-                </section>
+                    
+                    <!-- Custom Dropdown with checkboxes -->
+                    <div id="assignTaskDropdown" class="custom-dropdown" style="display: none; border: 1px solid #ccc; padding: 10px; max-height: 200px; overflow-y: scroll;">
+                        <!-- Options will be dynamically generated with checkboxes -->
+                    </div>
+                </div>
+
+                
             </div>
 
             <div class="seperator"></div>
@@ -44,18 +48,21 @@
                 <section>
                     <div class="fonts">Prio</div>
                     <div class="flex space-between">
-                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Urgent', event)">Urgent
-                            <img src="../Assets/addTask/Prio alta.svg" alt="">
+                        <button id="urgent" type="button" class="prioButton cursorPointer fonts"
+                            onclick="setPrio('urgent', event)">Urgent
+                            <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
                         </button>
-                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Medium', event)">Medium
-                            <img src="../Assets/addTask/Prio media.svg" alt="">
+                        <button id="medium" type="button" class="prioButton cursorPointer fonts"
+                            onclick="setPrio('medium', event)">Medium
+                            <img id="mediumSvg" src="../Assets/addTask/Prio media.svg" alt="">
                         </button>
-                        <button type="button" class="prioButton cursorPointer fonts" onclick="setPrio('Low', event)">Low
-                            <img src="../Assets/addTask/Prio baja.svg" alt="">
+                        <button id="low" type="button" class="prioButton cursorPointer fonts"
+                            onclick="setPrio('low', event)">Low
+                            <img id="lowSvg" src="../Assets/addTask/Prio baja.svg" alt="">
                         </button>
                     </div>
                 </section>
-                
+
 
                 <section>
                     <div class="flex fonts">

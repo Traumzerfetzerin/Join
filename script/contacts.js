@@ -9,7 +9,7 @@ window.addEventListener('load', function() {
 // Function to load contacts from Firebase and display them in the contact list
 async function loadContacts() {
     try {
-        const response = await fetch('https://join-c3b28-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
         const contactsData = await response.json();
 
         if (contactsData) {
@@ -115,7 +115,7 @@ async function saveContactData(name, email, phone) {
     };
 
     // Save the new contact and return the new contact's ID
-    const response = await fetch('https://join-c3b28-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
+    const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json', {
         method: 'POST',
         body: JSON.stringify(contactData),
         headers: {
@@ -138,7 +138,7 @@ async function saveContactData(name, email, phone) {
 
 // Function to check if a contact with the same email already exists in Firebase
 async function isContactExists(email) {
-    return fetch('https://join-c3b28-default-rtdb.europe-west1.firebasedatabase.app/contacts.json')
+    return fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json')
         .then(response => response.json())
         .then(data => {
             // Check if any contact has the same email
@@ -150,6 +150,8 @@ async function isContactExists(email) {
 function clearContactForm() {
     document.getElementById('name').value = '';
     document.getElementById('email').value = '';
+    document.getElementById('phone').value = '';
+
 }
 
 // Function to add a new contact to the contact list in the DOM
@@ -282,7 +284,7 @@ function showContactDetails(contactId) {
 
 // Function to delete a contact
 async function deleteContact(contactId) {
-    const url = `https://join-c3b28-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`; // Construct the URL
+    const url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts/${contactId}.json`; // Construct the URL
 
     try {
         const response = await fetch(url, {
@@ -306,7 +308,7 @@ async function updateContact(contactId, name, email, phone) {
         phone: phone // Include the updated phone number
     };
 
-    const url = `https://join-c3b28-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`; // Construct the URL
+    const url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts/${contactId}.json`; // Construct the URL
 
     return fetch(url, {
         method: 'PUT', // Use PUT to update the existing contact

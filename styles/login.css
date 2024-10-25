@@ -200,5 +200,46 @@ body {
         z-index: 1000;
         text-decoration: none;
     }
-
-
+    /* Toast Styles */
+    .toast {
+        visibility: hidden; /* Hidden by default */
+        min-width: 150px; /* Minimum width */
+        min-height:80px;
+        background-color: #2A3647; 
+        color: #f4f4f4;
+        
+         /* White text */
+        text-align: center; /* Center text */
+        border-radius: 15px; /* Rounded corners */
+        padding: 15px; /* Padding inside the toast */
+        position: fixed; /* Fixed position */
+        z-index: 2001; /* On top of other elements */
+        right: 0; /* Start on the right */
+        top: 50%; /* Center vertically */
+        transform: translate(100%, -80%); /* Start hidden on the right */
+        opacity: 0; /* Start invisible */
+        transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
+    }
+    
+    /* Show the toast with sliding in effect */
+    .toast.show {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-90%, -90%); /* Move to the center of the screen */
+    }
+    
+    /* Hide the toast with sliding out effect */
+    .toast.hide {
+        transform: translate(100%, -80%); /* Slide out to the right */
+        opacity: 0; /* Fade out */
+    }
+    
+    /* Toast types: success and error */
+    .toast.success {
+        background-color: #2A3647; /* Green for success */
+    }
+    
+    .toast.error {
+        background-color: #dc3545; /* Red for error */
+    }
+    
