@@ -22,6 +22,7 @@ function setPrio(prio, event) {
 
     // Add 'active' class to the clicked button
     event.target.classList.add('active');
+    
 
     let priorityButton = event.target.id;
     if (event.target.id == "low") {

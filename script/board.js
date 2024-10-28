@@ -16,6 +16,7 @@ async function fetchTasks() {
     }
 }
 
+
 function clearColumns() {
     document.getElementById("toDoColumn").innerHTML = "";
     document.getElementById("inProgressColumn").innerHTML = "";
@@ -41,6 +42,7 @@ function loadTasks(tasks) {
 enableDragAndDrop();
 }
 
+
 /** Enable drag and drop functionality for all columns */
 function enableDragAndDrop() {
     let columns = document.querySelectorAll('.column');
@@ -55,10 +57,12 @@ function enableDragAndDrop() {
     });
 }
 
+
 /** Allow dropping in the target column */
 function allowDrop(event) {
     event.preventDefault();
 }
+
 
 /** Handle dropping of a task in a column */
 function drop(event) {
@@ -86,3 +90,5 @@ function drop(event) {
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
+
+
