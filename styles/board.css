@@ -3,14 +3,17 @@ main{
     margin-left: 260px;
 }
 
-
-h2{
+#boardHeader h2{
     font-size: 61px;
 }
 
-#searchAndAdd{
-    width: 504px;
-    height: 48px;
+#boardHeader{
+    display: flex;
+    justify-content: space-between ;
+    width: 1056px;
+    height: 73px;
+    top: 79.5px;
+    left: 64px;  
 }
 
 #boardSearchbar{
@@ -44,28 +47,34 @@ button{
     text-align: center;
     font-size: 18px;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
 }
 
 #taskBoard {
+    width: 1208px;
+    height: 688;
+    top: 336px;
+    left: 232px;
+    padding-right:64px;
+    padding-left: 64px;
+    gap: 26px;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
 }
 
 .column {
-    width: 22%;
-    min-height: 200px;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 252px;
+    height: 688px;
+    gap: 16px;
 }
 
 .task {
-    background-color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    width: 252px;
+    height: 263px;
+    padding: 16px;
+    gap: 10px;
+    border-radius: 24px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
