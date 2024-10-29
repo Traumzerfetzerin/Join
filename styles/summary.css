@@ -49,7 +49,7 @@ main{
     width:  385px;
     height: 136px;
     top: 547.5px;
-    left: 840px;
+    left: 968px;
     gap: 3px;
     opacity: 0px;
 }
@@ -172,8 +172,8 @@ main{
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    left:20px;
-    width: 372px;
+    /* left:20px; */
+    width: 470px;
     height: 168px;
     top: 196px;
     padding: 28px 48px 28px 48px;

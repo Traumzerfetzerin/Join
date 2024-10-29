@@ -29,30 +29,30 @@
         </div>
         <div class="goodmorning">
             <p class="good">Good Morning,</p>
-            <p class="name">Sofia Müller</p>
+            <p class="name"></p>
         </div>
         <div class="details">
             <div class="checkpencil">
-                <div class="pencil">
+                <div class="pencil" onclick="navigateToToDo()">
                     <div><img class="summaryimg" src="../Assets/pencil.svg" alt="pencil"></div>
-                    <div class="summaryp">
-                        <p class="summarynmb">1</p>
+                    <div class="summaryp" >
+                        <p class="summarynmb"></p>
                         <p class="summarymission todo">To-Do</p>
                     </div>
                 </div>
-                <div class="pencil">
+                <div class="pencil" onclick="navigateToToDo()">
                     <div><img class="summaryimg" src="../Assets/Ckeck.svg" alt="pencil"></div>
-                    <div class="summaryp">
-                    <p class="summarynmb">1</p>
-                    <p class="summarymission">Done</p>
+                    <div class="summaryp" >
+                        <p class="summarynmb"></p>
+                        <p class="summarymission">Done</p>
                     </div>
                 </div>
             </div>
-            <div class="urgent">
-                <div class="numimg">
+            <div class="urgent" onclick="navigateToToDo()">
+                <div class="numimg" >
                     <img class="urgentimg" src="../Assets/Urgent.svg" alt="Urgent">
-                    <div class="nmbtext">
-                        <p class="urgentnmb">1</p>
+                    <div class="nmbtext" >
+                        <p class="urgentnmb"></p>
                         <p class="urgenttext">Urgent</p>
                     </div>
                 </div>
@@ -63,21 +63,21 @@
                 </div>
             </div>
             <div class="tasks">
-                <div class="undertask">
+                <div class="undertask" onclick="navigateToToDo()">
                     <div class="underundertask">
-                        <p class="tasknmb">5</p>
+                        <p class="tasknmb"></p>
                         <p class="tasktext">Tasks in Board</p>
                     </div>
                 </div>
-                <div class="undertask">
+                <div class="undertask" onclick="navigateToToDo()">
                     <div class="underundertask">
-                        <p class="tasknmb">2</p>
+                        <p class="tasknmb"></p>
                         <p class="tasktext">Tasks in Progress</p>
                     </div>
                 </div>
-                <div class="undertask">
+                <div class="undertask" onclick="navigateToToDo()">
                     <div class="underundertask">
-                        <p class="tasknmb">2</p>
+                        <p class="tasknmb"></p>
                         <p class="tasktext">Awaiting Feedback</p>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
         </div>
     </main>
 
-
+    <script src="../script/summary.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML();
