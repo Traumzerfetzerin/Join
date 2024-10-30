@@ -88,7 +88,8 @@ async function createTasks(event) {
         title: title,
         description: description,
         dueDate: dueDate,
-        prio: selectedPrio
+        prio: selectedPrio,
+        status: "to do"
     };
 
     // Send the task data to Firebase using the selected category as the key
