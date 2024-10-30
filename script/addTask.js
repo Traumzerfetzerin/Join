@@ -139,7 +139,7 @@ async function createTasks(event) {
 async function popUp() {
     document.getElementById('popUp').classList.remove('d-none');
     document.getElementById('popUp').innerHTML = /*HTML*/`
-    <div class="flex">
+    <div class="space-evently">
         <p>Task added to board</p>
         <img src="../Assets/addTask/Icons.svg" alt="">
     </div>`;

@@ -54,6 +54,12 @@ html {
     align-items: center;
 }
 
+.space-evently {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 .relative {
     position: relative;
 }
