@@ -248,3 +248,10 @@ textarea {
     font-size: 16px;
     color: #FF3D00;
 }
+
+#assignTaskDropdown {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    padding: 10px;
+    overflow-y: scroll;
+}

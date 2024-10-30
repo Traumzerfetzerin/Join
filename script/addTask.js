@@ -3,12 +3,14 @@ const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatab
 
 let selectedPrio = null;
 
+
 /**
  * Sets the selected priority and highlights the selected button.
  * 
  * @param {string} prio - The priority to be set (e.g., 'Urgent', 'Medium', 'Low').
  * @param {Event} event - The event to prevent default behavior.
  */
+
 function setPrio(prio, event) {
     // Prevent default action (in case it's triggering form submission or reset)
     event.preventDefault();
@@ -16,26 +18,39 @@ function setPrio(prio, event) {
     // Set the selected priority
     selectedPrio = prio;
 
-    // Remove 'active' class from all buttons
-    const prioButtons = document.querySelectorAll('.prioButton');
-    prioButtons.forEach(button => button.classList.remove('active'));
+    // // Remove 'active' class from all buttons
+    // const prioButtons = document.querySelectorAll('.prioButton');
+    // prioButtons.forEach(button => button.classList.remove('active'));
 
-    // Add 'active' class to the clicked button
-    event.target.classList.add('active');
-    
+    // // Add 'active' class to the clicked button
+    // event.target.classList.add('active');
+
 
     let priorityButton = event.target.id;
+
     if (event.target.id == "low") {
         document.getElementById(priorityButton).classList.add('lowWhite');
         document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
+        document.getElementById('medium').classList.remove('mediumWhite');
+        document.getElementById('urgent').classList.remove('urgentWhite');
+        document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
+        document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
 
     } if (event.target.id == "medium") {
         document.getElementById(priorityButton).classList.add('mediumWhite');
         document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio media white.svg";
+        document.getElementById('low').classList.remove('lowWhite');
+        document.getElementById('urgent').classList.remove('urgentWhite');
+        document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
+        document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
 
     } if (event.target.id == "urgent") {
         document.getElementById(priorityButton).classList.add('urgentWhite');
         document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
+        document.getElementById('low').classList.remove('lowWhite');
+        document.getElementById('medium').classList.remove('mediumWhite');
+        document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
+        document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
     }
 }
 
@@ -51,6 +66,7 @@ let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
  * 
  * @param {Event} event - The click event to prevent the default form submission.
  */
+
 async function createTasks(event) {
     // Prevent the form from reloading the page
     event.preventDefault();
@@ -114,6 +130,7 @@ async function loadContactsForDropdown() {
     }
 }
 
+
 // Populate the custom dropdown with checkboxes for each contact
 function populateCheckboxDropdown() {
     const dropdown = document.getElementById("assignTaskDropdown");
@@ -133,8 +150,10 @@ function populateCheckboxDropdown() {
     });
 }
 
+
 // Maintain an array of selected contacts
 let selectedContacts = [];
+
 
 // Update the selected contacts based on checked checkboxes
 function updateAssignedContacts() {
@@ -144,6 +163,7 @@ function updateAssignedContacts() {
     // Update the input field with the selected contacts
     document.getElementById('assigned-to').value = selectedContacts.join(', ');
 }
+
 
 // Toggle dropdown visibility
 function toggleDropdown() {
@@ -156,7 +176,7 @@ function toggleDropdown() {
 }
 
 // Close the dropdown when clicking outside
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const dropdown = document.getElementById('assignTaskDropdown');
     const inputContainer = document.querySelector('.input-with-icon');
 
@@ -166,7 +186,7 @@ document.addEventListener('click', function(event) {
 });
 
 // Call the function to load contacts when the page loads
-window.onload = function() {
+window.onload = function () {
     loadContactsForDropdown();
     setMinDueDate(); // Restore the date functionality
 };
