@@ -256,7 +256,7 @@ textarea {
     overflow-y: scroll;
 }
 
-#popUp {
+.popUp {
     background-color: #2a3647;
     border-radius: 20px;
     width: 326px;
@@ -267,24 +267,11 @@ textarea {
     left: calc(50vw - 50px);
 }
 
-#popUp p {
+.popUp p {
     width: 235px;
     height: 24px;
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
     color: #FFF;
-}
-
-#popUpRequired {
-    background-color: #2a3647;
-    border-radius: 20px;
-    width: 326px;
-    height: 74px;
-    position: absolute;
-    z-index: 1;
-    top: calc(50vh - 50px);
-    left: calc(50vw - 50px);
-    align-items: center;
-    justify-content: space-evenly;
 }

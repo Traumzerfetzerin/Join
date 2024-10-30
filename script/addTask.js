@@ -97,7 +97,7 @@ async function createTasks(event) {
 
     // Validate that all required fields are filled
     if (!title || !dueDate || !selectedPrio || category === '0') {
-        alert('Please fill in all required fields.');
+        await popUpRequired();
         return;
     }
 
@@ -132,13 +132,21 @@ async function createTasks(event) {
     } catch (error) {
         console.error('Error saving to Firebase:', error);
     }
-    await popUp();
+    await popUpAddTask();
 }
 
 
-async function popUp() {
-    document.getElementById('popUp').classList.remove('d-none');
-    document.getElementById('popUp').innerHTML = /*HTML*/`
+async function popUpRequired() {
+    document.getElementById('popUpRequired').classList.remove('d-none');
+    document.getElementById('popUpRequired').innerHTML = /*HTML*/`
+        <div class="space-evently">
+            <p>Please fill in all required fields.</p>
+        </div>`;
+}
+
+async function popUpAddTask() {
+    document.getElementById('popUpAddTask').classList.remove('d-none');
+    document.getElementById('popUpAddTask').innerHTML = /*HTML*/`
     <div class="space-evently">
         <p>Task added to board</p>
         <img src="../Assets/addTask/Icons.svg" alt="">
