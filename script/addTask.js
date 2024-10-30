@@ -135,15 +135,20 @@ async function createTasks(event) {
     await popUpAddTask();
 }
 
-
+// POP UP REQUIRED FIELDS
 async function popUpRequired() {
     document.getElementById('popUpRequired').classList.remove('d-none');
     document.getElementById('popUpRequired').innerHTML = /*HTML*/`
         <div class="space-evently">
-            <p>Please fill in all required fields.</p>
+            <p>Please, <br> fill in all required fields.</p>
         </div>`;
+
+    setTimeout(() => {
+        document.getElementById("popUpRequired").style.display = "none";
+    }, 1000);
 }
 
+// POP UP ADD TASK
 async function popUpAddTask() {
     document.getElementById('popUpAddTask').classList.remove('d-none');
     document.getElementById('popUpAddTask').innerHTML = /*HTML*/`
@@ -155,6 +160,10 @@ async function popUpAddTask() {
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
+
+    setTimeout(() => {
+        document.getElementById("popUpAddTask").style.display = "none";
+    }, 1000);
 }
 
 
