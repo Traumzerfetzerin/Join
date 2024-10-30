@@ -26,22 +26,22 @@ function clearColumns() {
 
 
 /** function to load tasks and put them into the appropriate column */
-function loadTasks(tasks) {
+function loadTasks(tasks) { 
     clearColumns();
-   // Loop through the task categories (e.g., "User Story", "Technical Task")
-   for (let category in tasks) {
-    let categoryTasks = tasks[category];
+    
+    for (let category in tasks) {
+        let categoryTasks = tasks[category];
 
-    // Loop through each task in the category
-    for (let taskId in categoryTasks) {
+        for (let taskId in categoryTasks) { 
         let task = categoryTasks[taskId];
-        let taskHtml = getTaskBoardTemplate(category, task, taskId);
-        document.getElementById("toDoColumn").innerHTML += taskHtml;
-    }
-}
-enableDragAndDrop();
-}
+        let contactList = ''; 
 
+        if (task.contacts) { 
+            contactList = task.contacts.map(contact => `<li>${contact}</li>`).join(''); }
+             let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList);
+              document.getElementById("toDoColumn").innerHTML += taskHtml; } } 
+              enableDragAndDrop();
+        }
 
 /** Enable drag and drop functionality for all columns */
 function enableDragAndDrop() {
