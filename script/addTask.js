@@ -143,8 +143,10 @@ async function popUp() {
         <p>Task added to board</p>
         <img src="../Assets/addTask/Icons.svg" alt="">
     </div>`;
-    document.getElementById('inputTitle').innerHTML = "";
-    document.getElementById('textareaDescription').innerHTML = "";
+    document.getElementById('inputTitle').value = "";
+    document.getElementById('textareaDescription').value = "";
+    document.getElementById('dueDate').value = "";
+    document.getElementById('categorySelect').value = "";
 }
 
 
