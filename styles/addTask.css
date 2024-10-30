@@ -265,7 +265,9 @@ textarea {
     z-index: 1;
     top: calc(50vh - 50px);
     left: calc(50vw - 50px);
-
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 #popUp p {
@@ -275,6 +277,17 @@ textarea {
     font-size: 20px;
     line-height: 24px;
     color: #FFF;
-    display: flex;
-    justify-content: center;
+}
+
+#popUpRequired {
+    background-color: #2a3647;
+    border-radius: 20px;
+    width: 326px;
+    height: 74px;
+    position: absolute;
+    z-index: 1;
+    top: calc(50vh - 50px);
+    left: calc(50vw - 50px);
+    align-items: center;
+    justify-content: space-evenly;
 }

@@ -138,9 +138,13 @@ async function createTasks(event) {
 
 async function popUp() {
     document.getElementById('popUp').classList.remove('d-none');
+    document.getElementById('popUp').innerHTML = /*HTML*/`
+    <div class="flex">
+        <p>Task added to board</p>
+        <img src="../Assets/addTask/Icons.svg" alt="">
+    </div>`;
     document.getElementById('inputTitle').innerHTML = "";
     document.getElementById('textareaDescription').innerHTML = "";
-
 }
 
 
