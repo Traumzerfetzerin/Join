@@ -132,6 +132,15 @@ async function createTasks(event) {
     } catch (error) {
         console.error('Error saving to Firebase:', error);
     }
+    await popUp();
+}
+
+
+async function popUp() {
+    document.getElementById('popUp').classList.remove('d-none');
+    document.getElementById('inputTitle').innerHTML = "";
+    document.getElementById('textareaDescription').innerHTML = "";
+
 }
 
 
