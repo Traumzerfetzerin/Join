@@ -122,7 +122,7 @@ function addTaskOnBoard() {
     document.getElementById('forAddTask').style.display = "none";
 }
 
-function closeTask() {
+async function closeTask() {
     document.getElementById('templateAddTask').style.display = "none";
     document.getElementById('forAddTask').classList.remove('d-none');
 }
