@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/contact.css">
+    <link rel="stylesheet" href="../styles/style.css">
     <script src="../script/board.js"></script>
     <script src="../templates/boardTemplate.js"></script>
     <script src="../script/header.js"></script>
@@ -19,10 +20,13 @@
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
     <main>
+
+        <div id="templateAddTask" class="taskBackground">TEST</div>
+
         <div id="boardHeader">
             <h2>Board</h2>
             <input type="search" placeholder="Find task" id="boardSearchbar"></input>
-            <button type="submit">Add task +</button>
+            <button id="buttonAddTask" type="submit" class="cursorPointer">Add task +</button>
         </div>
         <div id="columnTitles">
             <div>To do <img src="../Assets/board/plusButton.svg" alt="plus button"></div>
