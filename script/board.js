@@ -115,3 +115,14 @@ async function updateTaskColumn(taskId, column) {
         // Fehlerbehandlung
     }
 }
+
+
+function addTaskOnBoard() {
+    document.getElementById('templateAddTask').classList.remove('d-none');
+    document.getElementById('forAddTask').style.display = "none";
+}
+
+function closeTask() {
+    document.getElementById('templateAddTask').style.display = "none";
+    document.getElementById('forAddTask').classList.remove('d-none');
+}

@@ -1,22 +1,22 @@
-main{
+main {
     margin-top: 120px;
     margin-left: 260px;
 }
 
-#boardHeader h2{
+#boardHeader h2 {
     font-size: 61px;
 }
 
-#boardHeader{
+#boardHeader {
     display: flex;
-    justify-content: space-between ;
+    justify-content: space-between;
     width: 1056px;
     height: 73px;
     top: 79.5px;
-    left: 64px;  
+    left: 64px;
 }
 
-#boardSearchbar{
+#boardSearchbar {
     width: 312px;
     height: 48px;
     border-radius: 10px;
@@ -25,7 +25,7 @@ main{
     gap: 10px;
 }
 
-button{
+button {
     width: 160px;
     height: 48px;
     border-radius: 10px;
@@ -43,7 +43,7 @@ button{
 }
 
 #columnTitles div {
-    width: 22%; 
+    width: 22%;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
@@ -56,7 +56,7 @@ button{
     height: 688;
     top: 336px;
     left: 232px;
-    padding-right:64px;
+    padding-right: 64px;
     padding-left: 64px;
     gap: 26px;
     display: flex;

@@ -182,6 +182,8 @@ async function popUpAddTask() {
     setTimeout(() => {
         document.getElementById("popUpAddTask").style.display = "none";
     }, 1000);
+    
+    closeTask();
 }
 
 

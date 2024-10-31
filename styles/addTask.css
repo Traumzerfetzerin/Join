@@ -21,6 +21,7 @@ main {
     background-color: #FFF;
     border-radius: 30px;
     max-width: 1116px;
+    max-height: 870px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
