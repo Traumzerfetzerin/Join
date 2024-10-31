@@ -78,6 +78,9 @@ async function clearTasks() {
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
+    document.getElementById('inputSubtasks').value = "";
+    document.getElementById('assigned-to').value = "";
+    document.getElementById('categorySelect').selectedIndex = 0;
 }
 
 
