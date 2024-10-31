@@ -132,8 +132,10 @@ async function createTasks(event) {
     } catch (error) {
         console.error('Error saving to Firebase:', error);
     }
+    
     await popUpAddTask();
 }
+
 
 // POP UP REQUIRED FIELDS
 async function popUpRequired() {
@@ -147,6 +149,7 @@ async function popUpRequired() {
         document.getElementById("popUpRequired").style.display = "none";
     }, 1000);
 }
+
 
 // POP UP ADD TASK
 async function popUpAddTask() {
