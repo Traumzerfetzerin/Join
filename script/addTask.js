@@ -3,7 +3,6 @@ const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatab
 
 let selectedPrio = null;
 
-
 /**
  * Sets the selected priority and highlights the selected button.
  * 
@@ -72,6 +71,16 @@ function urgentPrioButton(priorityButton) {
     document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
 }
 
+
+// CLEAR BUTTON
+async function clearTasks() {
+    document.getElementById('inputTitle').value = "";
+    document.getElementById('textareaDescription').value = "";
+    document.getElementById('dueDate').value = "";
+    document.getElementById('categorySelect').value = "";
+}
+
+
 let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
 
 /**
@@ -83,7 +92,6 @@ let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
  * 
  * @param {Event} event - The click event to prevent the default form submission.
  */
-
 
 async function createTasks(event) {
     // Prevent the form from reloading the page
@@ -132,7 +140,7 @@ async function createTasks(event) {
     } catch (error) {
         console.error('Error saving to Firebase:', error);
     }
-    
+
     await popUpAddTask();
 }
 
