@@ -80,7 +80,11 @@ async function clearTasks() {
     document.getElementById('categorySelect').value = "";
     document.getElementById('inputSubtasks').value = "";
     document.getElementById('assigned-to').value = "";
+    document.getElementById('assignTaskDropdown').value = "";
     document.getElementById('categorySelect').selectedIndex = 0;
+    contacts.forEach(contact => {
+        document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`).checked = false;
+    });
 }
 
 
@@ -206,6 +210,7 @@ function populateCheckboxDropdown() {
         const label = document.createElement('label');
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
+        checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
         checkbox.value = contact.name; // Use contact name as value
         checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
 
