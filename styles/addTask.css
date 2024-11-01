@@ -274,3 +274,15 @@ textarea {
     line-height: 24px;
     color: #FFF;
 }
+
+input:required:invalid {
+    border: 2px solid #FF3D00;
+}
+
+#categorySelect {
+    border: 2px solid #FF3D00;
+}
+
+#assigned-to {
+    border: 2px solid #FF3D00;
+}
