@@ -89,7 +89,7 @@ button {
 #templateAddTask {
     position: absolute;
     top: calc(50vh - 350px);
-    left: calc(50vw - 650px);
+    left: calc(50vw - 680px);
     z-index: 1;
     position: absolute;
     right: 0;

@@ -1,6 +1,12 @@
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 
 
+function calculateDueDate() {
+    let duoDate = new Date();
+    let formattedDate = duoDate.toISOString().split('T')[0];
+    document.getElementById('dueDate').setAttribute('min', formattedDate);
+}
+
 let selectedPrio = null;
 
 /**
