@@ -95,3 +95,7 @@ button {
     right: 0;
     bottom: 0;
 }
+
+#clearButton {
+    width: 96.2px;
+}

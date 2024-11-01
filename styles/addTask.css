@@ -169,6 +169,7 @@ textarea {
 #clearButton,
 .createButton {
     height: 56px;
+
     padding: 16px;
     border-radius: 10px;
     font-size: 18px;
