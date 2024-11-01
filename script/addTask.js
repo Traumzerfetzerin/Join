@@ -85,6 +85,12 @@ async function clearTasks() {
     contacts.forEach(contact => {
         document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`).checked = false;
     });
+    clearPrioButtons();
+}
+
+
+// CLEAR PRIO BUTTON
+async function clearPrioButtons() {
     document.getElementById('low').classList.remove('lowWhite');
     document.getElementById('medium').classList.remove('mediumWhite');
     document.getElementById('urgent').classList.remove('urgentWhite');

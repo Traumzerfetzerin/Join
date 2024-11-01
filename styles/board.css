@@ -85,3 +85,13 @@ button {
 .task:hover {
     cursor: pointer;
 }
+
+#templateAddTask {
+    position: absolute;
+    top: calc(50vh - 350px);
+    left: calc(50vw - 650px);
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}

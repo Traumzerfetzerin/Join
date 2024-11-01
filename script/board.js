@@ -15,12 +15,14 @@ async function fetchTasks() {
     }
 }
 
+
 function clearColumns() {
     document.getElementById("toDoColumn").innerHTML = "";
     document.getElementById("inProgressColumn").innerHTML = "";
     document.getElementById("awaitFeedbackColumn").innerHTML = "";
     document.getElementById("doneColumn").innerHTML = "";
 }
+
 
 /** function to load tasks and put them into the appropriate column */
 function loadTasks(tasks) {
@@ -47,6 +49,7 @@ function loadTasks(tasks) {
     enableDragAndDrop();
 }
 
+
 /** Enable drag and drop functionality for all columns */
 function enableDragAndDrop() {
     let columns = document.querySelectorAll('.column');
@@ -60,10 +63,12 @@ function enableDragAndDrop() {
     });
 }
 
+
 /** Allow dropping in the target column */
 function allowDrop(event) {
     event.preventDefault();
 }
+
 
 /** Handle dropping of a task in a column */
 function drop(event) {
@@ -84,10 +89,12 @@ function drop(event) {
     }
 }
 
+
 /** Handle the dragging of a task */
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
+
 
 /** Update the task's column in the database */
 async function updateTaskColumn(taskId, column) {
@@ -119,8 +126,8 @@ async function updateTaskColumn(taskId, column) {
 
 function addTaskOnBoard() {
     document.getElementById('templateAddTask').classList.remove('d-none');
-    document.getElementById('forAddTask').style.display = "none";
 }
+
 
 async function closeTask() {
     document.getElementById('templateAddTask').style.display = "none";

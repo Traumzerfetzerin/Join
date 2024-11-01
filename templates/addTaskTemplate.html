@@ -11,7 +11,7 @@
                     <input class="cursorPointer" id="inputTitle" type="text" placeholder="Enter a title" required>
                 </section>
 
-                <section class="descriptionTask column">
+                <section class="descriptionTask fd-column">
                     <div class="fonts description">Description</div>
                     <textarea class="cursorPointer" id="textareaDescription" name=""
                         placeholder="Enter a Description"></textarea>
@@ -45,7 +45,7 @@
                         <div>Due date</div>
                         <div class="colorRed">*</div>
                     </div>
-                    <input placeholder="dd/mm/yyyy" class="input_12_16 width_440 cursorPointer fonts" type="date"
+                    <input placeholder="dd/mm/yyyy" class="input_12_16 width_440 cursorPointer fonts" type="date" min="2024-11-01"
                         id="dueDate" required>
                 </section>
 
@@ -102,7 +102,7 @@
         </div>
         <!-- ICON BUTTON -->
         <div class="buttons">
-            <button class="clearButton" onclick="clearTasks()">Clear
+            <button id="clearButton" class="clearButton" onclick="clearTasks()">Clear
                 <img src="../Assets/addTask/Vector.svg" alt="">
             </button>
             <button type="button" class="createButton" id="createTask" onclick="createTasks(event)">Create Task
