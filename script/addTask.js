@@ -85,6 +85,13 @@ async function clearTasks() {
     contacts.forEach(contact => {
         document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`).checked = false;
     });
+    document.getElementById('low').classList.remove('lowWhite');
+    document.getElementById('medium').classList.remove('mediumWhite');
+    document.getElementById('urgent').classList.remove('urgentWhite');
+    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg"
+    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media white.svg";
+    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
+    document.getElementById('medium').classList.add('mediumWhite');
 }
 
 

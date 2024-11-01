@@ -22,35 +22,37 @@
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
-
-
     <main>
+        <div>
+            <div id="templateAddTask" class="d-none">
+                    <section w3-include-html="../templates/addTaskTemplate.html"></section>
+            </div>
 
-        <div id="templateAddTask" class="d-none">
-            <section w3-include-html="../templates/addTaskTemplate.html"></section>
-        </div>
-
-        <div id="forAddTask">
-            <div id="boardHeader">
-                <h2>Board</h2>
-                <input type="search" placeholder="Find task" id="boardSearchbar"></input>
-                <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task
-                    +</button>
+            <div id="forAddTask">
+                <div id="boardHeader">
+                    <h2>Board</h2>
+                    <input type="search" placeholder="Find task" id="boardSearchbar"></input>
+                    <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task
+                        +</button>
+                </div>
+                <div id="columnTitles">
+                    <div>To do <img onclick="addTaskOnBoard()" class="cursorPointer"
+                            src="../Assets/board/plusButton.svg" alt="plus button"></div>
+                    <div>In progress <img onclick="addTaskOnBoard()" class="cursorPointer"
+                            src="../Assets/board/plusButton.svg" alt="plus button"></div>
+                    <div>Await feedback <img onclick="addTaskOnBoard()" class="cursorPointer"
+                            src="../Assets/board/plusButton.svg" alt="plus button"></div>
+                    <div>Done</div>
+                </div>
+                <div id="taskBoard">
+                    <div class="column" id="toDoColumn"></div>
+                    <div class="column" id="inProgressColumn"></div>
+                    <div class="column" id="awaitFeedbackColumn"></div>
+                    <div class="column" id="doneColumn"></div>
+                </div>
             </div>
-            <div id="columnTitles">
-                <div>To do <img onclick="addTaskOnBoard()" class="cursorPointer" src="../Assets/board/plusButton.svg" alt="plus button"></div>
-                <div>In progress <img onclick="addTaskOnBoard()" class="cursorPointer" src="../Assets/board/plusButton.svg" alt="plus button"></div>
-                <div>Await feedback <img onclick="addTaskOnBoard()" class="cursorPointer" src="../Assets/board/plusButton.svg" alt="plus button"></div>
-                <div>Done</div>
-            </div>
-            <div id="taskBoard">
-                <div class="column" id="toDoColumn"></div>
-                <div class="column" id="inProgressColumn"></div>
-                <div class="column" id="awaitFeedbackColumn"></div>
-                <div class="column" id="doneColumn"></div>
-            </div>
-        </div>
     </main>
+
     <footer></footer>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
