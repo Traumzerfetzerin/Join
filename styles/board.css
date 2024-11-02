@@ -84,7 +84,7 @@ button {
 
 .dialogBackground {
     background-color: rgba(0, 0, 0, 0.2);
-    z-index: 10;
+    z-index: 1000;
     position: fixed;
     top: 0;
     right: 0;
