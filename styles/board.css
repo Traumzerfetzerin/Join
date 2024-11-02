@@ -48,11 +48,8 @@ button {
 }
 
 #taskBoard {
-    top: 336px;
-    left: 232px;
     padding-right: 64px;
     padding-left: 64px;
-    gap: 26px;
     display: flex;
     justify-content: space-between;
 }
