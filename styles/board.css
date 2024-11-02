@@ -87,15 +87,29 @@ button {
 }
 
 #templateAddTask {
-    position: absolute;
-    top: calc(50vh - 350px);
-    left: calc(50vw - 680px);
+    background-color: rgba(0, 0, 0, 0.2);
+    /* position: absolute; */
+    /* top: calc(50vh - 350px);
+    left: calc(50vw - 680px); */
     z-index: 1;
-    position: absolute;
+    /* position: absolute; */
     right: 0;
     bottom: 0;
 }
 
 #clearButton {
     width: 96.2px;
+}
+
+.dialogBackground{
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
