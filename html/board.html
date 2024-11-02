@@ -22,12 +22,10 @@
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
-    <main>
-
-
+    <main class="mainBoard">
         <div id="popUpTaskOnBoard" class="flex">
             <div id="templateAddTask" class="d-none" onclick="closeTaskOnBoard()">
-                <div class="dialogBackground" >
+                <div class="dialogBackground">
                     <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
                     </section>
                 </div>
@@ -57,7 +55,6 @@
                 <div class="column" id="doneColumn"></div>
             </div>
         </div>
-
     </main>
 
     <footer></footer>
