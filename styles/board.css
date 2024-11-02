@@ -10,10 +10,6 @@ main {
 #boardHeader {
     display: flex;
     justify-content: space-between;
-    width: 1056px;
-    height: 73px;
-    top: 79.5px;
-    left: 64px;
 }
 
 #boardSearchbar {
@@ -84,17 +80,6 @@ button {
 
 .task:hover {
     cursor: pointer;
-}
-
-#templateAddTask {
-    background-color: rgba(0, 0, 0, 0.2);
-    /* position: absolute; */
-    /* top: calc(50vh - 350px);
-    left: calc(50vw - 680px); */
-    z-index: 1;
-    /* position: absolute; */
-    right: 0;
-    bottom: 0;
 }
 
 #clearButton {
