@@ -26,8 +26,11 @@
         <div id="popUpTaskOnBoard" class="flex">
             <div id="templateAddTask" class="d-none" onclick="closeTaskOnBoard()">
                 <div class="dialogBackground">
-                    <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
-                    </section>
+                    <div class="taskBackground">
+                        <div></div>
+                        <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
+                        </section>
+                    </div>
                 </div>
             </div>
         </div>

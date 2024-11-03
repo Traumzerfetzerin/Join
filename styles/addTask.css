@@ -16,6 +16,12 @@ main {
     margin-left: 260px;
 }
 
+.taskSide {
+    max-width: 1116px;
+    max-height: 870px;
+}
+
+
 /* Task Background Container */
 .taskBackground {
     background-color: #FFF;
