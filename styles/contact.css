@@ -1,7 +1,3 @@
-* {
-    text-decoration: none;
-}
-
 #main-content {
     margin-left: 232px;
     /* Leave space for the sidebar */
@@ -87,7 +83,6 @@
     font-size: 24;
 }
 
-
 .separator {
     width: 3px;
     /* Width of the separator */
@@ -113,7 +108,6 @@
     justify-content: center;
     /* Center align items */
 }
-
 
 .add-contact-section {
     display: flex;
@@ -246,7 +240,6 @@
     /* Set the width of the border */
     border-bottom: 4px solid #3498db;
 }
-
 
 /* Right Section Styles */
 .right-section {
