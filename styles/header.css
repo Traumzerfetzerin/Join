@@ -17,7 +17,6 @@ header {
 .user-info {
     display: flex;
     gap: 16px;
-    cursor: pointer;
     margin-right: 1em;
     align-items: center;
 }
@@ -35,17 +34,11 @@ header {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    cursor: pointer;
     margin-bottom: 2px;
 }
 
 header p {
-    font-family: 'PT Sans';
     font-size: 24px;
-}
-
-header a {
-    cursor: pointer;
 }
 
 .ser-icon {
