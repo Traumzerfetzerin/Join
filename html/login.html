@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,17 +13,18 @@
     <script src="../script/login.js"></script>
     <script src="../script/contacts.js"></script>
 </head>
+
 <body>
     <div class="join-login">
         <div class="joinLogo" id="login-logoContainer">
 
-            <img src="../Assets/joinLogo.svg" alt=""> <!-- Fixed 'Assets' typo -->           
+            <img src="../Assets/joinLogo.svg" alt=""> <!-- Fixed 'Assets' typo -->
 
         </div>
         <div class="login-signup-button">
             <span>Not a Join User</span>
             <a href="../html/signUp.html">
-                <button class="login-button">Sign Up</button>
+                <button class="login-button cursorPointer">Sign Up</button>
             </a>
         </div>
         <div class="login-joinContainer">
@@ -30,27 +32,30 @@
             <form id="join-form" onsubmit="logIn(event)">
                 <div class="input-group">
                     <input type="text" id="name" name="name" placeholder="Email" required>
-                    <span class="icon">
-                        <img id="passwordImg" src="../Assets/mail.svg" alt="">                    
+                    <span class="icon cursorPointer">
+                        <img id="passwordImg" src="../Assets/mail.svg" alt="">
 
                     </span>
                 </div>
-                
-                <div class="input-group">                
-                    <input type="password" id="login-password" name="password" placeholder="Password" required autocomplete="new-password">
+
+                <div class="input-group">
+                    <input type="password" id="login-password" name="password" placeholder="Password" required
+                        autocomplete="new-password">
                     <span class="icon" onclick="togglePasswordVisibility('login-password', 'loginTogglePasswordIcon')">
-                        <img id="loginTogglePasswordIcon" src="../Assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;"> 
+                        <img id="loginTogglePasswordIcon" src="../Assets/visibility_off - Copy.svg" alt="Show Password"
+                            style="cursor: pointer;">
                     </span>
                 </div>
-        
+
                 <div class="checkbox">
                     <input type="checkbox" id="passCheckBox">
                     <label for="passCheckBox">Remind me</label>
                 </div>
-                
+
                 <div class="buttons User-Guest">
                     <button type="submit" class="btn login-button">Log in</button>
-                    <button type="button" class="login-button guest-btn" onclick="guestLogin()">Guest log in</button>
+                    <button type="button" class="login-button guest-btn cursorPointer" onclick="guestLogin()">Guest log
+                        in</button>
                     <p id="response-message" class="response-message"></p>
                     <div id="toast" class="toast"></div>
                 </div>
@@ -58,4 +63,5 @@
         </div>
     </div>
 </body>
+
 </html>

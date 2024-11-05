@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,16 +13,17 @@
     <link rel="stylesheet" href="../styles/style.css">
     <script src="../script/header.js"></script>
     <script src="../script/login.js"></script>
-    
-    
+
+
 </head>
+
 <body onload="loadContent('summary.html')">
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
 
 
-    <main > 
+    <main>
         <div class="titeljoin">
             <h1>Join 360</h1>
             <div class="victor"></div>
@@ -33,25 +35,25 @@
         </div>
         <div class="details">
             <div class="checkpencil">
-                <div class="pencil" onclick="navigateToToDo()">
+                <div class="pencil cursorPointer" onclick="navigateToToDo()">
                     <div><img class="summaryimg" src="../Assets/pencil.svg" alt="pencil"></div>
-                    <div class="summaryp" >
+                    <div class="summaryp">
                         <p class="summarynmb"></p>
                         <p class="summarymission todo">To-Do</p>
                     </div>
                 </div>
                 <div class="pencil" onclick="navigateToToDo()">
                     <div><img class="summaryimg" src="../Assets/Ckeck.svg" alt="pencil"></div>
-                    <div class="summaryp" >
+                    <div class="summaryp">
                         <p class="summarynmb"></p>
-                        <p class="summarymission">Done</p>
+                        <p class="summarymission">Done</p>undertask
                     </div>
                 </div>
             </div>
-            <div class="urgent" onclick="navigateToToDo()">
-                <div class="numimg" >
+            <div class="urgent cursorPointer" onclick="navigateToToDo()">
+                <div class="numimg">
                     <img class="urgentimg" src="../Assets/Urgent.svg" alt="Urgent">
-                    <div class="nmbtext" >
+                    <div class="nmbtext">
                         <p class="urgentnmb"></p>
                         <p class="urgenttext">Urgent</p>
                     </div>
@@ -63,19 +65,19 @@
                 </div>
             </div>
             <div class="tasks">
-                <div class="undertask" onclick="navigateToToDo()">
+                <div class="undertask cursorPointer" onclick="navigateToToDo()">
                     <div class="underundertask">
                         <p class="tasknmb"></p>
                         <p class="tasktext">Tasks in Board</p>
                     </div>
                 </div>
-                <div class="undertask" onclick="navigateToToDo()">
+                <div class="undertask cursorPointer" onclick="navigateToToDo()">
                     <div class="underundertask">
                         <p class="tasknmb"></p>
                         <p class="tasktext">Tasks in Progress</p>
                     </div>
                 </div>
-                <div class="undertask" onclick="navigateToToDo()">
+                <div class="undertask cursorPointer" onclick="navigateToToDo()">
                     <div class="underundertask">
                         <p class="tasknmb"></p>
                         <p class="tasktext">Awaiting Feedback</p>
@@ -89,6 +91,7 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML();
-    </script> 
+    </script>
 </body>
+
 </html>
