@@ -1,26 +1,26 @@
-
-main{
+main {
     margin-top: 120px;
     margin-left: 260px;
-    
+
 }
-.titeljoin{
+
+.titeljoin {
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    
+
     height: 73px;
     width: 625px;
     gap: 30px;
 }
 
-.victor{
+.victor {
     height: 59px;
     border: 3px solid #29ABE2;
 }
 
-.titeljoin h1{
+.titeljoin h1 {
     font-weight: 700;
     font-size: 61px;
     line-height: 73.2px;
@@ -29,7 +29,7 @@ main{
     width: 264px;
 }
 
-.titeljoin p{
+.titeljoin p {
     width: 301px;
     height: 32px;
     gap: 0px;
@@ -42,9 +42,9 @@ main{
     color: #2A3647;
 }
 
-.goodmorning{
+.goodmorning {
     position: absolute;
-    width:  385px;
+    width: 385px;
     height: 136px;
     top: 547.5px;
     left: 968px;
@@ -52,7 +52,7 @@ main{
     opacity: 0px;
 }
 
-.good{
+.good {
     width: 338px;
     height: 56px;
     gap: 0px;
@@ -66,7 +66,7 @@ main{
     margin: 0;
 }
 
-.name{
+.name {
     width: 385px;
     height: 77px;
     gap: 0px;
@@ -80,7 +80,7 @@ main{
     margin: 0;
 }
 
-.details{
+.details {
     display: flex;
     justify-content: center;
     position: absolute;
@@ -92,17 +92,17 @@ main{
     opacity: 0px;
 }
 
-.checkpencil{
+.checkpencil {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 560px;
     height: 168px;
     gap: 32px;
-    opacity: 0px;  
+    opacity: 0px;
 }
 
-.pencil{
+.pencil {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -118,7 +118,7 @@ main{
     cursor: pointer;
 }
 
-.summaryimg{
+.summaryimg {
     width: 69px;
     height: 69px;
     gap: 10px;
@@ -127,7 +127,7 @@ main{
     color: #2A3647;
 }
 
-.summaryp{
+.summaryp {
     width: 50px;
     height: 101px;
     top: 33.5px;
@@ -136,7 +136,7 @@ main{
     opacity: 0px;
 }
 
-.summarynmb{
+.summarynmb {
     width: 50px;
     height: 77px;
     font-family: Inter;
@@ -147,7 +147,7 @@ main{
     margin: 0;
 }
 
-.summarymission{
+.summarymission {
     width: 50px;
     height: 24px;
     gap: 0px;
@@ -161,11 +161,11 @@ main{
     margin: 0;
 }
 
-.todo{
+.todo {
     width: 98px;
 }
 
-.urgent{
+.urgent {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,7 +183,7 @@ main{
     cursor: pointer;
 }
 
-.numimg{
+.numimg {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -193,13 +193,13 @@ main{
     opacity: 0px;
 }
 
-.urgentimg{
+.urgentimg {
     width: 60px;
     height: 60px;
     gap: 10px;
 }
 
-.urgentnmb{
+.urgentnmb {
     width: 50px;
     height: 77px;
     gap: 0px;
@@ -212,14 +212,14 @@ main{
     margin: 0;
 }
 
-.nmbtext{
+.nmbtext {
     width: 52px;
     height: 96px;
     gap: 0px;
     opacity: 0px;
 }
 
-.urgenttext{
+.urgenttext {
     width: 52px;
     height: 19px;
     gap: 0px;
@@ -233,12 +233,12 @@ main{
     margin: 0;
 }
 
-.vectorurgent{
+.vectorurgent {
     height: 102.02px;
     border: 2px solid #d1d1d1;
 }
 
-.datetext{
+.datetext {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -248,7 +248,7 @@ main{
     opacity: 0px;
 }
 
-.date{
+.date {
     width: 178px;
     height: 25px;
     gap: 0px;
@@ -262,7 +262,7 @@ main{
     margin: 0;
 }
 
-.underdate{
+.underdate {
     width: 148px;
     height: 19px;
     gap: 0px;
@@ -276,7 +276,7 @@ main{
     color: #2A3647;
 }
 
-.tasks{
+.tasks {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -289,7 +289,7 @@ main{
     opacity: 0px;
 }
 
-.undertask{
+.undertask {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -307,7 +307,7 @@ main{
     cursor: pointer;
 }
 
-.underundertask{
+.underundertask {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -316,7 +316,7 @@ main{
     height: 127px;
 }
 
-.tasknmb{
+.tasknmb {
     width: 40px;
     height: 77px;
     gap: 0px;
@@ -329,7 +329,7 @@ main{
     margin: 0;
 }
 
-.tasktext{
+.tasktext {
     width: 86px;
     height: 50px;
     gap: 0px;
@@ -339,5 +339,5 @@ main{
     font-weight: 400;
     line-height: 25.2px;
     text-align: center;
-    color: #2A3647; 
+    color: #2A3647;
 }
