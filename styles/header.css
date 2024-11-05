@@ -38,6 +38,7 @@ header {
     cursor: pointer;
     margin-bottom: 2px;
 }
+
 header p {
     font-family: 'PT Sans';
     font-size: 24px;
@@ -56,7 +57,7 @@ header a {
     display: none;
 }
 
-.helpme-icon{
+.helpme-icon {
     position: absolute;
     right: 55px;
 }
@@ -68,13 +69,17 @@ header a {
 }
 
 .mobile_headerNav {
-    position: fixed; /* Absolute Positionierung */
+    position: fixed;
+    /* Absolute Positionierung */
     display: flex;
     flex-direction: column;
-    top: 90px; /* Direkt unter dem Header */
-    right: 0 !important;   /* for the animation */
+    top: 90px;
+    /* Direkt unter dem Header */
+    right: 0 !important;
+    /* for the animation */
     background-color: #2A3647;
-    z-index: 1000; /* Höherer Z-Index, damit das Menü über anderen Inhalten liegt */
+    z-index: 1000;
+    /* Höherer Z-Index, damit das Menü über anderen Inhalten liegt */
     padding: 16px;
     border-radius: 20px;
     border-top-right-radius: 0;
@@ -83,24 +88,25 @@ header a {
     max-height: 140px;
     height: 130px;
     justify-content: space-evenly;
-    transform: translateX(100%); 
+    transform: translateX(100%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
-   }
+}
 
-   .active {
+.active {
     transform: translateX(0);
     opacity: 1;
 }
-   .mobile_headerNav a {
+
+.mobile_headerNav a {
     text-decoration: none;
-    color:  #CDCDCD;
+    color: #CDCDCD;
     padding: 5px 8px;
     font-size: 16px;
-    font-weight: 100; 
+    font-weight: 100;
     text-align: left;
-   }
+}
 
-   .mobile_headerNav a:hover {
+.mobile_headerNav a:hover {
     background-color: #2A3D59;
-   }
+}
