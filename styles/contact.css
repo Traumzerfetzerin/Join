@@ -153,7 +153,6 @@
 }
 
 .add-contact-button:hover {
-    cursor: pointer;
     background-color: #3498db;
     transform: scaleY(1.1);
     box-shadow: #2A3647;
@@ -387,8 +386,6 @@ form button {
     /* Rounded corners */
     font-size: 16px;
     /* Font size for the button */
-    cursor: pointer;
-    /* Pointer cursor on hover */
     transition: background-color 0.3s;
     /* Transition effect on hover */
 }
@@ -411,8 +408,6 @@ form button {
     /* Rounded corners */
     font-size: 16px;
     /* Font size for the button */
-    cursor: pointer;
-    /* Pointer cursor on hover */
     transition: background-color 0.3s;
     /* Transition effect on hover */
 }
