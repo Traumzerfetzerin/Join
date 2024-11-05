@@ -1,48 +1,54 @@
-main{
-    display: flex;
+main {
+  display: flex;
 }
 
 #policy {
-    margin-left: 238px; /* Leave space for the sidebar */
-    margin-top: 95px; /* Leave space for the header */
-    flex-grow: 1; /* Allow the main content to grow */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column;
+  margin-left: 238px;
+  /* Leave space for the sidebar */
+  margin-top: 95px;
+  /* Leave space for the header */
+  flex-grow: 1;
+  /* Allow the main content to grow */
+  display: flex;
+  /* Use flexbox for layout */
+  flex-direction: column;
 
 }
-main img{
-    width:32px;
-    height: 32px;
-    position: absolute;
-    top: 120px;
-    right: 3%;  
-    border: 2px solid;  
-    border-radius: 50%;
-    cursor: pointer;
-    
-}
-main img:hover{
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 60%;
-    border: 2px solid;
+
+main img {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 120px;
+  right: 3%;
+  border: 2px solid;
+  border-radius: 50%;
 
 }
-  
 
-  
-  .back-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .back-arrow:hover img {
-    transform: scale(1.1);
-  }
+main img:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 60%;
+  border: 2px solid;
 
+}
+
+.back-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.back-arrow:hover img {
+  transform: scale(1.1);
+}
 
 .impressum {
-    margin-left: 238px; /* Leave space for the sidebar */
-    margin-top: 95px; /* Leave space for the header */
-    flex-grow: 1; /* Allow the main content to grow */
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column;
+  margin-left: 238px;
+  /* Leave space for the sidebar */
+  margin-top: 95px;
+  /* Leave space for the header */
+  flex-grow: 1;
+  /* Allow the main content to grow */
+  display: flex;
+  /* Use flexbox for layout */
+  flex-direction: column;
 }
