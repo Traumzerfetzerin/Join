@@ -4,44 +4,50 @@
     padding: 0;
     box-sizing: border-box;
 }
-body {
-    font-family: 'Arial', sans-serif;
+
+.join-login {
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     position: relative;
-    margin: 0;
     
 }
+
 #login-logoContainer {
-    position: absolute; /* Make sure it's absolutely positioned */
+    position: absolute;
+    /* Make sure it's absolutely positioned */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 3000; /* Higher z-index to stay on top */
+    z-index: 3000;
+    /* Higher z-index to stay on top */
     animation: move-logo 1.5s ease forwards;
 }
 
-.joinLogo img{
+.joinLogo img {
     width: 100px;
     height: 100px;
 }
+
 @keyframes move-logo {
     0% {
-        transform: translate(-50%, -50%) scale(3);  
+        transform: translate(-50%, -50%) scale(3);
     }
+
     100% {
-        transform: translate(-50vw, -50vh) scale(1); 
-    }}
-    .signUp-button span{
-        text-decoration: none;
-        font-size: 18px;
-        color: rgb(16, 14, 14);
-        font-family:monospace;
-        padding-right: 30px;
+        transform: translate(-50vw, -50vh) scale(1);
     }
+}
+
+.signUp-button span {
+    text-decoration: none;
+    font-size: 18px;
+    color: rgb(16, 14, 14);
+    font-family: monospace;
+    padding-right: 30px;
+}
 
 
 
@@ -53,34 +59,36 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     width: 500px;
-    
     height: 550px;
 }
-.login-joinContainer h1{
+
+.login-joinContainer h1 {
     margin-bottom: 30px;
     text-align: center;
     font-size: 50px;
     text-decoration: underline;
     font-weight: 700;
     text-underline-offset: 18px;
-    text-decoration-color: #3498db; 
-    text-decoration-thickness: 2px; 
-    
-    
+    text-decoration-color: #3498db;
+    text-decoration-thickness: 2px;
+
+
 }
-.login-joinContainer .signUp{
-    margin-right: 0%!important;
+
+.login-joinContainer .signUp {
+    margin-right: 0% !important;
 }
-.login-signup-button{
-    position: absolute; 
-    right:5% ;
+
+.login-signup-button {
+    position: absolute;
+    right: 5%;
     top: 50;
-    
-    
+
+
 }
 
 
-.input-group{
+.input-group {
     padding-bottom: 20px;
     display: flex;
     max-width: 400px;
@@ -90,7 +98,7 @@ body {
 .input-group input {
     padding: 12PX;
     border-radius: 15px;
-    border: 1px solid #dddddd; 
+    border: 1px solid #dddddd;
     width: 100%;
     /* color: #f6f7f8; */
     font-size: 16px;
@@ -98,39 +106,43 @@ body {
 
 
 .input-group input:focus {
-    border-color: #3498db ; 
-    outline: none; 
+    border-color: #3498db;
+    outline: none;
 }
-.icon img{
-    cursor: pointer;;
+
+.icon img {
+    cursor: pointer;
+    ;
 }
 
 
-.checkbox{
+.checkbox {
     padding-bottom: 1em;
     padding-left: 1em;
 }
 
 /* Button styles */
-.buttons{
+.buttons {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
-.login-button{
+
+.login-button {
     border: 2px solid #2a2a2a;
-    background-color:#2A3647 ;
+    background-color: #2A3647;
     border-radius: 8px;
     color: white;
     padding: 10px 20px;
     font-size: medium;
     font-weight: 600;
     box-shadow: none;
-} 
-.login-button:hover{
+}
+
+.login-button:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: 2px solid #3498db;
-    background-color:#3498db;
+    background-color: #3498db;
     border-radius: 8px;
     color: white;
     padding: 10px 20px;
@@ -139,20 +151,21 @@ body {
     cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
-.login-button.guest-btn{
+
+.login-button.guest-btn {
     border: 2px solid #1a2b47;
-    background-color:wHITE;
-    color: #1a2b47; 
+    background-color: wHITE;
+    color: #1a2b47;
     padding: 10px 20px;
     border-radius: 8px;
     font-size: medium;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease;
-}  
+}
 
 
-    
+
 
 
 
@@ -161,12 +174,13 @@ body {
     position: relative;
     margin-bottom: 1rem;
 }
+
 .icon {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-     /* Prevent the icon from blocking clicks */
+    /* Prevent the icon from blocking clicks */
 }
 
 .icon img {
@@ -177,17 +191,20 @@ body {
 
 
 .login-button.guest-btn:hover {
-    background-color: transparent; 
-    border: 2px solid #3498db; /*  Blue border */
-    color: #3498db; /* White text on hover */
+    background-color: transparent;
+    border: 2px solid #3498db;
+    /*  Blue border */
+    color: #3498db;
+    /* White text on hover */
 }
 
-.joinLogo{
+.joinLogo {
     position: absolute;
     padding: 4.5em;
-    
+
 }
-#login-logoContainer{
+
+#login-logoContainer {
     top: 50%;
         left: 50%;
         transform: translate(-50%, -50%); 
@@ -243,105 +260,6 @@ body {
     .toast.error {
         background-color: #dc3545; /* Red for error */
     }
-    /* Media Query for Smaller Screens */
-    @media (max-width: 980px) {
-        .login-joinContainer {
-            padding: 100px; /* Reduced bottom padding */
-            padding-top: 20px;
-            width: 95%;
-            max-width: 450px;
-            height: 400px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            margin-top: 5px;
-        }
-        .buttons {
-            margin: 0; /* Remove any default margin */
-            padding-bottom: 10px; /* Add padding only if needed for aesthetics */
-        }
-    
-        .login-button, .login-button.guest-btn {
-            margin-bottom: 0; /* Ensure no extra margin below buttons */
-        }
-        @keyframes move-logo {
-            0% {
-                transform: translate(-50%, -50%) scale(3);  
-            }
-            100% {
-                transform: translate(-50vw, -20vh) scale(1); 
-            }}
-    
-    
-    
-        /* Adjust logo size */
-        #login-logoContainer {
-            width: 60px; /* Reduced size */
-            height: 60px;
-            top: 20%; 
-            transform: translate(-50%, -20%);
-        }
-    
-        .joinLogo img {
-            width: 100px;
-            height: 100px;
-        }
-    
-        /* Heading, inputs, and buttons */
-        .login-joinContainer h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-    
-        .input-group {
-            width:100%;
-            padding-bottom: 10px;
-        }
-    
-        .input-group input {
-            font-size: 15px;
-            padding: 10px 150px;
-        }
-    
-        .buttons {
-            flex-direction: column;
-            gap: 8px;
-        }
-    
-        .login-button, .login-button.guest-btn {
-            padding: 10px 18px;
-            font-size: 15px;
-        }
-    
-        /* Toast and notice link adjustments */
-        .toast {
-            min-width: 130px;
-            right: 10px;
-            transform: translate(10%, -80%);
-        }
-    
-        .notice_link {
-            margin-top: 40px;
-            padding-left: 20px;
-            font-size: 12px;
-        }
-        .login-signup-button {
-            position: absolute; /* Position it absolutely */
-            bottom: 30px; /* Adjust to desired distance from bottom */
-            left: 50%;
-            transform: translateX(-50%);
-             
-        }
-        .login-button,
-    .login-button.guest-btn {
-        width: 80%; /* Set the width for smaller screens */
-        max-width: 150px; /* Optional: set a maximum width */
-        margin: 0 auto; /* Center the button */
-    }
-    }
-    /* Media Query for Smaller Screens */
     @media (max-width: 768px) {
         .login-joinContainer {
             padding: 40px; /* Reduced padding */
@@ -356,6 +274,29 @@ body {
             margin-top: 20px; /* Adjusted margin */
         }
     
+        /* Adjust input field size */
+        .input-group {
+            width: 100%;
+            padding-bottom: 10px;
+        }
+    
+        .input-group input {
+            font-size: 14px; /* Reduce font size */
+            padding: 8px; /* Reduce padding */
+            width: 90%; /* Set width to a smaller percentage */
+            max-width: 350px; /* Optional: set a maximum width */
+        }
+    
+        /* Adjust button size */
+        .login-button,
+        .login-button.guest-btn {
+            width: 80%; /* Set width to a smaller percentage */
+            max-width: 120px; /* Optional: set a maximum width */
+            padding: 8px 10px; /* Reduce padding */
+            font-size: 14px; /* Reduce font size */
+            margin: 0 auto; /* Center the button */
+        }
+    
         /* Position the login-signup-button at the bottom of the viewport */
         .login-signup-button {
             position: fixed; /* Fixed position to stay at the bottom */
@@ -367,33 +308,17 @@ body {
             text-align: center; /* Center the button text */
         }
     
-        /* Adjust other elements if necessary */
-        .login-button,
-        .login-button.guest-btn {
-            width: 80%; /* Set the width for smaller screens */
-            max-width: 150px; /* Optional: set a maximum width */
-            margin: 0 auto; /* Center the button */
-        }
-    
         /* Adjust logo size */
         #login-logoContainer {
             width: 60px; /* Adjust size as needed */
             height: 60px;
-            top: 20%; 
-            transform: translate(-50%, -20%);
+            position: relative; /* Adjust for positioning */
+            margin: 0 auto; /* Center horizontally */
+            margin-bottom: 20px; /* Space between logo and container */
+            top: 20px; /* Adjust as necessary for spacing */
         }
     
         /* Adjust other styles */
-        .input-group {
-            width: 100%;
-            padding-bottom: 10px;
-        }
-    
-        .input-group input {
-            font-size: 15px;
-            padding: 10px;
-        }
-        
         .buttons {
             flex-direction: column;
             gap: 8px;
@@ -410,29 +335,13 @@ body {
             padding-left: 20px;
             font-size: 12px;
         }
-        .joinLogo img {
-            width: 80px;
-            height: 80px;
-        }
+    }
     
-        
-        
-    }
-    @media (max-width: 600px) {
-        @keyframes move-logo {
-            0% {
-                transform: translate(-90%, -50%) scale(3);
-            }
-            100% {
-                transform: translate(-60vw, -30vh) scale(1);
-            }
-        }
-    }
     @media (max-width: 400px) {
         .login-joinContainer {
-            padding: 40px; /* Reduced padding for a compact look */
-            width: 95%; /* Keep width responsive */
-            max-width: 400px; /* Set a maximum width for very small screens */
+            padding: 20px; /* Reduced padding for a compact look */
+            width: 90%; /* Keep width responsive */
+            max-width: 350px; /* Set a maximum width for very small screens */
             height: auto; /* Adjust height to fit content */
             margin: 0 auto;
             display: flex;
@@ -500,9 +409,5 @@ body {
             padding-left: 10px; /* Adjust padding */
             font-size: 10px; /* Smaller font size for very small screens */
         }
-        .joinLogo img {
-            width: 80px;
-            height: 80px;
-        }
-    
     }
+    

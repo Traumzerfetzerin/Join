@@ -129,7 +129,11 @@ function addTaskOnBoard() {
 }
 
 
-async function closeTask() {
-    document.getElementById('templateAddTask').style.display = "none";
-    document.getElementById('forAddTask').classList.remove('d-none');
+function closeTaskOnBoard() {
+    document.getElementById('templateAddTask').classList.add('d-none');
+}
+
+
+function dontClose(event) {
+    event.stopPropagation(); // stoppt Standardfunktionalität
 }

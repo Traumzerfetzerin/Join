@@ -22,6 +22,7 @@
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
+<<<<<<< HEAD
     <main class="main-content">
         <div class="board-header">
             <div>
@@ -53,7 +54,32 @@
                     <div class="column" id="doneColumn">Done</div>
                 </div>
                 
+=======
+    <main class="mainBoard">
+        <div id="popUpTaskOnBoard" class="flex">
+            <div id="templateAddTask" class="d-none" onclick="closeTaskOnBoard()">
+                <div class="dialogBackground">
+                    <div class="taskBackground">
+                        <div class="flex-end"><img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard()" class="cursorPointer" src="../Assets/addTask/close.svg"
+                                alt=""></div>
+                        <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
+                        </se
+            <div id="columnTitles">
+                <div>To do <img onclick="addTaskOnBoard()" class="cursorPointer" src="../Assets/board/plusButton.svg"
+                        alt="plus button"></div>
+                <div>In progress <img onclick="addTaskOnBoard()" class="cursorPointer"
+                        src="../Assets/board/plusButton.svg" alt="plus button"></div>
+                <div>Await feedback <img onclick="addTaskOnBoard()" class="cursorPointer"
+                        src="../Assets/board/plusButton.svg" alt="plus button"></div>
+                <div>Done</div>
             </div>
+            <div id="taskBoard">
+                <div class="column" id="toDoColumn"></div>
+                <div class="column" id="inProgressColumn"></div>
+                <div class="column" id="awaitFeedbackColumn"></div>
+                <div class="column" id="doneColumn"></div>
+            </div>
+        </div>
     </main>
 
     <footer></footer>

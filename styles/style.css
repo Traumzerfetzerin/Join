@@ -8,10 +8,6 @@ body {
     box-sizing: border-box;
 }
 
-input {
-    border-color: #D1D1D1;
-}
-
 /* FONT  */
 @font-face {
     font-family: Inter;
@@ -20,6 +16,24 @@ input {
 
 html {
     font-family: "Inter" !important;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #29ABE2;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2A3647;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .cursorPointer {
@@ -54,6 +68,12 @@ html {
 .space-evently {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
 }
 
