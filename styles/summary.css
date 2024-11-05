@@ -9,7 +9,6 @@ main {
     justify-content: space-between;
     align-items: center;
     position: absolute;
-
     height: 73px;
     width: 625px;
     gap: 30px;
@@ -115,7 +114,6 @@ main {
     opacity: 0px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 4px 0px #0000001A;
-    cursor: pointer;
 }
 
 .summaryimg {
@@ -180,7 +178,6 @@ main {
     opacity: 0px;
     background: #FFFFFF;
     box-shadow: 0px 0px 4px 0px #0000001A;
-    cursor: pointer;
 }
 
 .numimg {
@@ -304,7 +301,6 @@ main {
     opacity: 0px;
     background: #FFFFFF;
     box-shadow: 0px 0px 4px 0px #0000001A;
-    cursor: pointer;
 }
 
 .underundertask {
