@@ -75,10 +75,6 @@ button {
     background-color: #e0e0e0;
 }
 
-.task:hover {
-    cursor: pointer;
-}
-
 #clearButton {
     width: 96.2px;
 }

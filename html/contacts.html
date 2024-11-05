@@ -14,7 +14,7 @@
     <script src="../script/contacts.js" defer></script> <!-- Use defer -->
     <script src="./scripts/overlay.js" defer></script>
     <script src="./scripts/script.js" defer></script>
-    
+
 </head>
 
 <body>
@@ -27,13 +27,14 @@
         <div class="contacts-container">
             <div class="contact-list">
                 <h2>Contact List</h2>
-                <div class="contact-item">
-                    <div class="contact-initials" style="background-color: #F39C12;">JD</div> <!-- Initials with random color -->
+                <div class="contact-item cursorPointer">
+                    <div class="contact-initials" style="background-color: #F39C12;">JD</div>
+                    <!-- Initials with random color -->
                     <span class="contact-name">John Doe</span> <!-- Name -->
                     <span class="contact-email">john.doe@example.com</span> <!-- Email -->
                 </div>
-                
-                <div class="contact-item">
+
+                <div class="contact-item cursorPointer">
                     <span class="contact-name">Jane Smith</span>
                     <span class="contact-email">jane@example.com</span>
                 </div>
@@ -46,7 +47,7 @@
                     <h3>Better with Team</h3>
                 </div>
                 <div class="add-contact-section">
-                    <div class="add-contact-button" id="show-overlay">
+                    <div class="add-contact-button cursorPointer" id="show-overlay">
                         <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
                         <span>Add New Contact</span>
                     </div>
@@ -58,48 +59,48 @@
     <!-- Overlay Element -->
     <!-- Overlay Element -->
     <!-- Add Contact Overlay -->
-<div id="overlay" class="overlay">
-    <div class="overlay-content">
-        <div class="left-section">
-            <img src="../Assets/JoinLogoWhite.svg" alt="">
-            <h2>Add Contact</h2>
-            <p>Tasks are easier with a team!</p>
-        </div>
-        <div class="right-section">
-            <a href="" id="close-overlay" class="close-button">X</a>
-            <img src="../Assets/person.svg" alt="">
-            <form id="contact-form" class="contact-form">
-                <input type="text" id="name" placeholder="Enter Name" />
-                <input type="email" id="email" placeholder="Enter Email" />
-                <input type="tel" id="phone" placeholder="Enter Phone Number" /> <!-- Phone number input -->
-                <button id="add-contact-button">Create Contact</button>
-            </form>
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <div class="left-section">
+                <img src="../Assets/JoinLogoWhite.svg" alt="">
+                <h2>Add Contact</h2>
+                <p>Tasks are easier with a team!</p>
+            </div>
+            <div class="right-section">
+                <a href="" id="close-overlay" class="close-button cursorPointer">X</a>
+                <img src="../Assets/person.svg" alt="">
+                <form id="contact-form" class="contact-form">
+                    <input type="text" id="name" placeholder="Enter Name" />
+                    <input type="email" id="email" placeholder="Enter Email" />
+                    <input type="tel" id="phone" placeholder="Enter Phone Number" /> <!-- Phone number input -->
+                    <button id="add-contact-button">Create Contact</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="contact-overlay" class="overlay" style="display: none;">
-    <div class="overlay-content">
-        <div class="left-section">
-            <img src="../Assets/JoinLogoWhite.svg" alt="">
-            <h2>Contact Details</h2>
-                       
-        </div>
-        <div class="right-section">
-            <a href="#" id="close-contact-overlay" class="close-button">X</a>
-            <div class="contact-details">
-                <p id="contact-details-name" class="contact-detail"></p>
-                <p id="contact-details-email" class="contact-detail"></p>
-                <p id="contact-details-phone" class="contact-detail"></p>
+    <div id="contact-overlay" class="overlay" style="display: none;">
+        <div class="overlay-content">
+            <div class="left-section">
+                <img src="../Assets/JoinLogoWhite.svg" alt="">
+                <h2>Contact Details</h2>
+
             </div>
-            <div class="contact-details-buttons">
-                <button id="edit-contact-button" class="contact-button">Edit</button>
-                <button id="delete-contact-button" class="contact-button">Delete</button>
-                <button id="save-contact-button" class="contact-button" style="display:none;">Save</button>
+            <div class="right-section">
+                <a href="#" id="close-contact-overlay" class="close-button">X</a>
+                <div class="contact-details">
+                    <p id="contact-details-name" class="contact-detail"></p>
+                    <p id="contact-details-email" class="contact-detail"></p>
+                    <p id="contact-details-phone" class="contact-detail"></p>
+                </div>
+                <div class="contact-details-buttons">
+                    <button id="edit-contact-button" class="contact-button">Edit</button>
+                    <button id="delete-contact-button" class="contact-button">Delete</button>
+                    <button id="save-contact-button" class="contact-button" style="display:none;">Save</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 

@@ -54,7 +54,6 @@
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    cursor: pointer;
 }
 
 .contact-name {
@@ -138,8 +137,6 @@
     /* Padding for the button area */
     border-radius: 5px;
     /* Rounded corners */
-    cursor: pointer;
-    /* Pointer cursor on hover */
 }
 
 .add-icon {
@@ -201,8 +198,6 @@
 .close-button {
     margin-top: 10px;
     /* Space above the button */
-    cursor: pointer;
-    /* Show pointer on hover */
 }
 
 .left-section {
