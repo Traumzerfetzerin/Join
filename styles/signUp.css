@@ -107,7 +107,6 @@
     padding: 10px 20px;
     font-size: medium;
     font-weight: 600;
-    cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -116,12 +115,6 @@
     border-color: #3498db;
     background-color: #3498db;
     color: white;
-}
-
-/* Styling for the visibility toggle icons */
-#togglePasswordIcon,
-#toggleConfirmPasswordIcon {
-    cursor: pointer;
 }
 
 /* Media Queries for responsiveness */
