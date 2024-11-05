@@ -134,7 +134,7 @@ body {
     height: 500px; /* Full height */
     background-color: rgba(255, 255, 255, 1); /* White background */
     z-index: 1001; /* Ensure overlay is on top */
-    margin-left: 40%; 
+    margin-left: 45%; 
     margin-right: 0px;
     margin-top: 80px;
     margin-bottom: 100px;
@@ -376,3 +376,82 @@ form button{
 .toast.error {
     background-color: #dc3545; /* Red for error */
 }
+@media (max-width: 1100px) {
+    .overlay {
+        width: 90%; /* Make it take 90% of the screen width */
+         /* Height adjusts based on content */
+        margin-left: 5%; /* Center the overlay horizontally */
+         /* Some margin from the top */
+        margin-bottom: 10%; /* Margin at the bottom */
+        border-radius: 10px; /* Smaller border radius */
+    }
+    
+    .left-section {
+        background-color: #2A3647;
+        
+        flex: 1; /* Take 50% of the width */
+        padding: 20px; /* Add some padding */
+         /* Enable flex for centering */
+        flex-direction: column; /* Stack items vertically */
+        justify-content:flex-start; /* Center items vertically */
+        align-items: center;
+        border-radius: 20px 0 0 20px; /* Center items horizontally */
+    }
+    
+    
+}
+ @media(max-width:760px){
+     /* Adjust width as necessary */
+        .overlay {
+            width: 80%; /* Use 80% width for smaller screens */
+            max-width: 500px; /* Set a max width */
+            height: 100%; /* Adjust height as needed */
+            margin-left: 10%; /* Center it */
+            margin-top: 20px; /* Adjust space from the top */
+            margin-bottom: 20px; /* Adjust space from the bottom */
+            border-radius: 10px; /* Optional: Smaller border radius for smaller screens */
+            margin-top: 0px;
+        }
+    
+    .overlay-content {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+    }
+    .left-section {
+        background-color: #2A3647;
+        
+        height: 20%;/* Take 50% of the width */
+        padding: 20px; /* Add some padding */
+         /* Enable flex for centering */
+        flex-direction: row; /* Stack items vertically */
+        justify-content:flex-start; /* Center items vertically */
+        align-items: center;
+        border-radius: 20px 0 0 20px; /* Center items horizontally */
+    }
+    .left-section img{
+        display: none;
+    }
+    .left-section h2 {
+        font-size: 34px; /* Font size for heading */
+        color: #fff;
+        text-align: center;
+        position: relative; /* Position for the underline */
+    }
+    .left-section p {
+        position: relative;
+        margin: 0;
+        color: #fff;
+        font-size: 24px;
+    }
+    
+    .left-section p::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px; /* Adjust the space between the text and the border */
+        width: 30%;   /* Set the width of the border */
+        border-bottom: 4px solid #3498db;
+    }
+
+ }
