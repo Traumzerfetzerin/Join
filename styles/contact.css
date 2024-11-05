@@ -2,13 +2,7 @@
     text-decoration: none;
 }
 
-body {
-    margin: 0;
-    display: flex;
-    height: 100vh; /* Full height of the viewport */
-    background-color: white; /* Set the body background */
-    
-}
+
 
 #main-content {
     margin-left: 232px; /* Leave space for the sidebar */
