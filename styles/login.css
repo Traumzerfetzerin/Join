@@ -103,17 +103,10 @@
     font-size: 16px;
 }
 
-
 .input-group input:focus {
     border-color: #3498db;
     outline: none;
 }
-
-.icon img {
-    cursor: pointer;
-    ;
-}
-
 
 .checkbox {
     padding-bottom: 1em;
@@ -147,7 +140,6 @@
     padding: 10px 20px;
     font-size: medium;
     font-weight: 600;
-    cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -159,15 +151,8 @@
     border-radius: 8px;
     font-size: medium;
     font-weight: 600;
-    cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
-
-
-
-
-
-
 
 .input-group {
     position: relative;
