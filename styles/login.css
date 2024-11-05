@@ -1,47 +1,52 @@
-
 /* Reset some browser default styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body {
-    font-family: 'Arial', sans-serif;
+
+.join-login {
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     position: relative;
-    
 }
+
 #login-logoContainer {
-    position: absolute; /* Make sure it's absolutely positioned */
+    position: absolute;
+    /* Make sure it's absolutely positioned */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 3000; /* Higher z-index to stay on top */
+    z-index: 3000;
+    /* Higher z-index to stay on top */
     animation: move-logo 1.5s ease forwards;
 }
 
-.joinLogo img{
+.joinLogo img {
     width: 100px;
     height: 100px;
 }
+
 @keyframes move-logo {
     0% {
-        transform: translate(-50%, -50%) scale(3);  
+        transform: translate(-50%, -50%) scale(3);
     }
+
     100% {
-        transform: translate(-50vw, -50vh) scale(1); 
-    }}
-    .signUp-button span{
-        text-decoration: none;
-        font-size: 18px;
-        color: rgb(16, 14, 14);
-        font-family:monospace;
-        padding-right: 30px;
+        transform: translate(-50vw, -50vh) scale(1);
     }
+}
+
+.signUp-button span {
+    text-decoration: none;
+    font-size: 18px;
+    color: rgb(16, 14, 14);
+    font-family: monospace;
+    padding-right: 30px;
+}
 
 
 
@@ -53,34 +58,37 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     width: 500px;
-    
+
     height: 550px;
 }
-.login-joinContainer h1{
+
+.login-joinContainer h1 {
     margin-bottom: 30px;
     text-align: center;
     font-size: 50px;
     text-decoration: underline;
     font-weight: 700;
     text-underline-offset: 18px;
-    text-decoration-color: #3498db; 
-    text-decoration-thickness: 2px; 
-    
-    
+    text-decoration-color: #3498db;
+    text-decoration-thickness: 2px;
+
+
 }
-.login-joinContainer .signUp{
-    margin-right: 0%!important;
+
+.login-joinContainer .signUp {
+    margin-right: 0% !important;
 }
-.login-signup-button{
-    position: absolute; 
-    right:5% ;
+
+.login-signup-button {
+    position: absolute;
+    right: 5%;
     top: 50;
-    
-    
+
+
 }
 
 
-.input-group{
+.input-group {
     padding-bottom: 20px;
     display: flex;
     max-width: 400px;
@@ -90,7 +98,7 @@ body {
 .input-group input {
     padding: 12PX;
     border-radius: 15px;
-    border: 1px solid #dddddd; 
+    border: 1px solid #dddddd;
     width: 100%;
     /* color: #f6f7f8; */
     font-size: 16px;
@@ -98,39 +106,43 @@ body {
 
 
 .input-group input:focus {
-    border-color: #3498db ; 
-    outline: none; 
+    border-color: #3498db;
+    outline: none;
 }
-.icon img{
-    cursor: pointer;;
+
+.icon img {
+    cursor: pointer;
+    ;
 }
 
 
-.checkbox{
+.checkbox {
     padding-bottom: 1em;
     padding-left: 1em;
 }
 
 /* Button styles */
-.buttons{
+.buttons {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
-.login-button{
+
+.login-button {
     border: 2px solid #2a2a2a;
-    background-color:#2A3647 ;
+    background-color: #2A3647;
     border-radius: 8px;
     color: white;
     padding: 10px 20px;
     font-size: medium;
     font-weight: 600;
     box-shadow: none;
-} 
-.login-button:hover{
+}
+
+.login-button:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border: 2px solid #3498db;
-    background-color:#3498db;
+    background-color: #3498db;
     border-radius: 8px;
     color: white;
     padding: 10px 20px;
@@ -139,20 +151,21 @@ body {
     cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease;
 }
-.login-button.guest-btn{
+
+.login-button.guest-btn {
     border: 2px solid #1a2b47;
-    background-color:wHITE;
-    color: #1a2b47; 
+    background-color: wHITE;
+    color: #1a2b47;
     padding: 10px 20px;
     border-radius: 8px;
     font-size: medium;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.25s ease, color 0.25s ease;
-}  
+}
 
 
-    
+
 
 
 
@@ -161,12 +174,13 @@ body {
     position: relative;
     margin-bottom: 1rem;
 }
+
 .icon {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-     /* Prevent the icon from blocking clicks */
+    /* Prevent the icon from blocking clicks */
 }
 
 .icon img {
@@ -177,70 +191,91 @@ body {
 
 
 .login-button.guest-btn:hover {
-    background-color: transparent; 
-    border: 2px solid #3498db; /*  Blue border */
-    color: #3498db; /* White text on hover */
+    background-color: transparent;
+    border: 2px solid #3498db;
+    /*  Blue border */
+    color: #3498db;
+    /* White text on hover */
 }
 
-.joinLogo{
+.joinLogo {
     position: absolute;
     padding: 4.5em;
-    
+
 }
-#login-logoContainer{
+
+#login-logoContainer {
     top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%); 
-        z-index: 3000; 
-        animation: move-logo 1.5s ease forwards; 
-    }
-    .notice_link {
-        margin-top: 80px;
-        padding-left: 40px;
-        color: #a0a0a0;
-        z-index: 1000;
-        text-decoration: none;
-    }
-    /* Toast Styles */
-    .toast {
-        visibility: hidden; /* Hidden by default */
-        min-width: 150px; /* Minimum width */
-        min-height:80px;
-        background-color: #2A3647; 
-        color: #f4f4f4;
-        
-         /* White text */
-        text-align: center; /* Center text */
-        border-radius: 15px; /* Rounded corners */
-        padding: 15px; /* Padding inside the toast */
-        position: fixed; /* Fixed position */
-        z-index: 2001; /* On top of other elements */
-        right: 0; /* Start on the right */
-        top: 50%; /* Center vertically */
-        transform: translate(100%, -80%); /* Start hidden on the right */
-        opacity: 0; /* Start invisible */
-        transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
-    }
-    
-    /* Show the toast with sliding in effect */
-    .toast.show {
-        visibility: visible;
-        opacity: 1;
-        transform: translate(-90%, -90%); /* Move to the center of the screen */
-    }
-    
-    /* Hide the toast with sliding out effect */
-    .toast.hide {
-        transform: translate(100%, -80%); /* Slide out to the right */
-        opacity: 0; /* Fade out */
-    }
-    
-    /* Toast types: success and error */
-    .toast.success {
-        background-color: #2A3647; /* Green for success */
-    }
-    
-    .toast.error {
-        background-color: #dc3545; /* Red for error */
-    }
-    
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3000;
+    animation: move-logo 1.5s ease forwards;
+}
+
+.notice_link {
+    margin-top: 80px;
+    padding-left: 40px;
+    color: #a0a0a0;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+/* Toast Styles */
+.toast {
+    visibility: hidden;
+    /* Hidden by default */
+    min-width: 150px;
+    /* Minimum width */
+    min-height: 80px;
+    background-color: #2A3647;
+    color: #f4f4f4;
+
+    /* White text */
+    text-align: center;
+    /* Center text */
+    border-radius: 15px;
+    /* Rounded corners */
+    padding: 15px;
+    /* Padding inside the toast */
+    position: fixed;
+    /* Fixed position */
+    z-index: 2001;
+    /* On top of other elements */
+    right: 0;
+    /* Start on the right */
+    top: 50%;
+    /* Center vertically */
+    transform: translate(100%, -80%);
+    /* Start hidden on the right */
+    opacity: 0;
+    /* Start invisible */
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    /* Smooth transition */
+}
+
+/* Show the toast with sliding in effect */
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-90%, -90%);
+    /* Move to the center of the screen */
+}
+
+/* Hide the toast with sliding out effect */
+.toast.hide {
+    transform: translate(100%, -80%);
+    /* Slide out to the right */
+    opacity: 0;
+    /* Fade out */
+}
+
+/* Toast types: success and error */
+.toast.success {
+    background-color: #2A3647;
+    /* Green for success */
+}
+
+.toast.error {
+    background-color: #dc3545;
+    /* Red for error */
+}
