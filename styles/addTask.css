@@ -224,9 +224,12 @@ textarea {
 
 #assignTaskDropdown {
     border: 1px solid #ccc;
-    max-height: 200px;
+    width: 515px;
     padding: 10px;
     overflow-y: scroll;
+    position: fixed;
+    background-color: #FFF;
+    border-radius: 12px;
 }
 
 .popUp {
