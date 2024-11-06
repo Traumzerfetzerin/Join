@@ -56,6 +56,10 @@ select:focus {
     box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
 }
 
+input:required:invalid {
+    border: 2px solid #FF3D00;
+}
+
 /* Title Section */
 .titleTask {
     gap: 8px;
@@ -86,6 +90,21 @@ textarea {
 #assignTask {
     display: block;
     height: auto;
+}
+
+#assignTaskDropdown {
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: auto;
+    padding: 10px;
+    overflow-y: scroll;
+    position: absolute;
+    background-color: #FFF;
+    border-radius: 12px;
+}
+
+#assigned-to {
+    border: 2px solid #FF3D00;
 }
 
 /* Separator Styling */
@@ -133,6 +152,16 @@ textarea {
     border-color: #FF3D00;
     background-color: #FF3D00;
     color: #FFF;
+}
+
+#categoryDropdown {
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+}
+
+#categorySelect {
+    border: 2px solid #FF3D00;
 }
 
 /* Button Container */
@@ -216,29 +245,6 @@ textarea {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Required Field Styling */
-.required {
-    font-size: 16px;
-    color: #FF3D00;
-}
-
-#assignTaskDropdown {
-    border: 1px solid #ccc;
-    width: 100%;
-    max-width: auto;
-    padding: 10px;
-    overflow-y: scroll;
-    position: absolute;
-    background-color: #FFF;
-    border-radius: 12px;
-}
-
-#categoryDropdown {
-    background-color: #FFF;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-}
-
 #technicalTask:hover,
 #userStory:hover {
     background-color: #D1D1D1;
@@ -264,14 +270,8 @@ textarea {
     color: #FFF;
 }
 
-input:required:invalid {
-    border: 2px solid #FF3D00;
-}
-
-#categorySelect {
-    border: 2px solid #FF3D00;
-}
-
-#assigned-to {
-    border: 2px solid #FF3D00;
+/* Required Field Styling */
+.required {
+    font-size: 16px;
+    color: #FF3D00;
 }

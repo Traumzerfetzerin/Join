@@ -266,6 +266,7 @@ function toggleDropdown() {
     }
 }
 
+
 function toggleDropdownCategory() {
     const dropdown = document.getElementById('categoryDropdown');
     if (dropdown.style.display === 'none' || dropdown.style.display === '') {
@@ -274,6 +275,7 @@ function toggleDropdownCategory() {
         dropdown.style.display = 'none'; // Hide dropdown
     }
 }
+
 
 // Close the dropdown when clicking outside
 document.addEventListener('click', function (event) {
@@ -284,6 +286,7 @@ document.addEventListener('click', function (event) {
         dropdown.style.display = 'none';
     }
 });
+
 
 // Call the function to load contacts when the page loads
 window.onload = function () {
