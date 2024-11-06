@@ -171,7 +171,7 @@ function selectUserStory() {
 
 function toggleDropdownCategory() {
     let dropdownCategory = document.getElementById('categoryDropdown');
-    dropdownCategory.classList.toggle('d-none');
+    dropdown.classList.toggle('d-none');
 }
 
 
@@ -271,14 +271,17 @@ async function createTasks(event) {
 
 // POP UP REQUIRED FIELDS
 async function popUpRequired() {
-    document.getElementById('popUpRequired').classList.remove('d-none');
-    document.getElementById('popUpRequired').innerHTML = /*HTML*/`
+    let popUpElement = document.getElementById('popUpRequired');
+
+    popUpElement.classList.remove('d-none');
+
+    popUpElement.innerHTML = /*HTML*/`
         <div class="space-evently">
             <p class="center">Please, <br> fill in all required fields.</p>
         </div>`;
 
     setTimeout(() => {
-        document.getElementById("popUpRequired").style.display = "none";
+        popUpElement.classList.add('d-none');
     }, 1000);
 }
 
