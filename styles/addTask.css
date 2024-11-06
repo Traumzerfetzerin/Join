@@ -233,6 +233,17 @@ textarea {
     border-radius: 12px;
 }
 
+#categoryDropdown {
+    background-color: #FFF;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+}
+
+#technicalTask:hover,
+#userStory:hover {
+    background-color: #D1D1D1;
+}
+
 .popUp {
     background-color: #2a3647;
     border-radius: 20px;
