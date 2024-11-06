@@ -171,7 +171,7 @@ function selectUserStory() {
 
 function toggleDropdownCategory() {
     let dropdownCategory = document.getElementById('categoryDropdown');
-    dropdown.classList.toggle('d-none');
+    dropdownCategory.classList.toggle('d-none');
 }
 
 
