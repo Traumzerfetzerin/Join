@@ -224,10 +224,11 @@ textarea {
 
 #assignTaskDropdown {
     border: 1px solid #ccc;
-    width: 515px;
+    width: 100%;
+    max-width: auto;
     padding: 10px;
     overflow-y: scroll;
-    position: fixed;
+    position: absolute;
     background-color: #FFF;
     border-radius: 12px;
 }
