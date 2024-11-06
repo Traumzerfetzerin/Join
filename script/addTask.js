@@ -266,6 +266,15 @@ function toggleDropdown() {
     }
 }
 
+function toggleDropdownCategory() {
+    const dropdown = document.getElementById('categoryDropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block'; // Show dropdown
+    } else {
+        dropdown.style.display = 'none'; // Hide dropdown
+    }
+}
+
 // Close the dropdown when clicking outside
 document.addEventListener('click', function (event) {
     const dropdown = document.getElementById('assignTaskDropdown');
