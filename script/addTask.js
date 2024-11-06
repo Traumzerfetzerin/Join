@@ -1,6 +1,85 @@
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 
 
+async function loadContactsForDropdown() {
+    try {
+        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
+        const contactsData = await response.json();
+        if (contactsData) {
+            contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+            populateCheckboxDropdown(); // Populate checkboxes
+        } else {
+            console.log('No contacts found');
+        }
+    } catch (error) {
+        console.error('Error fetching contacts:', error);
+    }
+}
+
+
+// Populate the custom dropdown with checkboxes for each contact
+function populateCheckboxDropdown() {
+    const dropdown = document.getElementById("assignTaskDropdown");
+    dropdown.innerHTML = ''; // Clear previous options
+
+    contacts.forEach(contact => {
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
+        checkbox.value = contact.name; // Use contact name as value
+        checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
+
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(contact.name)); // Display contact name
+        dropdown.appendChild(label);
+        dropdown.appendChild(document.createElement('br')); // Line break for better UI
+    });
+}
+
+
+// Maintain an array of selected contacts
+let selectedContacts = [];
+
+
+// Update the selected contacts based on checked checkboxes
+function updateAssignedContacts() {
+    selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value);
+
+    // Update the input field with the selected contacts
+    document.getElementById('assigned-to').value = selectedContacts.join(', ');
+}
+
+
+// Toggle dropdown visibility
+function toggleDropdown() {
+    const dropdown = document.getElementById('assignTaskDropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block'; // Show dropdown
+    } else {
+        dropdown.style.display = 'none'; // Hide dropdown
+    }
+}
+
+// Close the dropdown when clicking outside
+document.addEventListener('click', function (event) {
+    const dropdown = document.getElementById('assignTaskDropdown');
+    const inputContainer = document.querySelector('.input-with-icon');
+
+    if (!inputContainer.contains(event.target)) {
+        dropdown.style.display = 'none';
+    }
+});
+
+
+// Call the function to load contacts when the page loads
+window.onload = function () {
+    loadContactsForDropdown();
+    setMinDueDate(); // Restore the date functionality
+};
+
+
 function calculateDueDate() {
     let duoDate = new Date();
     let formattedDate = duoDate.toISOString().split('T')[0];
@@ -75,6 +154,24 @@ function urgentPrioButton(priorityButton) {
     document.getElementById('medium').classList.remove('mediumWhite');
     document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
     document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
+}
+
+// CATEGORY
+function selectTechnicalTask() {
+    document.getElementById('categorySelect').value = "Technical Task";
+    toggleDropdownCategory();
+}
+
+
+function selectUserStory() {
+    document.getElementById('categorySelect').value = "User Story";
+    toggleDropdownCategory();
+}
+
+
+function toggleDropdownCategory() {
+    let dropdownCategory = document.getElementById('categoryDropdown');
+    dropdownCategory.classList.toggle('d-none');
 }
 
 
@@ -177,7 +274,7 @@ async function popUpRequired() {
     document.getElementById('popUpRequired').classList.remove('d-none');
     document.getElementById('popUpRequired').innerHTML = /*HTML*/`
         <div class="space-evently">
-            <p>Please, <br> fill in all required fields.</p>
+            <p class="center">Please, <br> fill in all required fields.</p>
         </div>`;
 
     setTimeout(() => {
@@ -190,7 +287,7 @@ async function popUpRequired() {
 async function popUpAddTask() {
     document.getElementById('popUpAddTask').classList.remove('d-none');
     document.getElementById('popUpAddTask').innerHTML = /*HTML*/`
-    <div class="space-evently">
+    <div class="space-evently flex">
         <p>Task added to board</p>
         <img src="../Assets/addTask/Icons.svg" alt="">
     </div>`;
@@ -203,93 +300,3 @@ async function popUpAddTask() {
         document.getElementById("popUpAddTask").style.display = "none";
     }, 1000);
 }
-
-
-async function loadContactsForDropdown() {
-    try {
-        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
-        const contactsData = await response.json();
-        if (contactsData) {
-            contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-            populateCheckboxDropdown(); // Populate checkboxes
-        } else {
-            console.log('No contacts found');
-        }
-    } catch (error) {
-        console.error('Error fetching contacts:', error);
-    }
-}
-
-
-// Populate the custom dropdown with checkboxes for each contact
-function populateCheckboxDropdown() {
-    const dropdown = document.getElementById("assignTaskDropdown");
-    dropdown.innerHTML = ''; // Clear previous options
-
-    contacts.forEach(contact => {
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
-        checkbox.value = contact.name; // Use contact name as value
-        checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
-
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(contact.name)); // Display contact name
-        dropdown.appendChild(label);
-        dropdown.appendChild(document.createElement('br')); // Line break for better UI
-    });
-}
-
-
-// Maintain an array of selected contacts
-let selectedContacts = [];
-
-
-// Update the selected contacts based on checked checkboxes
-function updateAssignedContacts() {
-    selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value);
-
-    // Update the input field with the selected contacts
-    document.getElementById('assigned-to').value = selectedContacts.join(', ');
-}
-
-
-// Toggle dropdown visibility
-function toggleDropdown() {
-    const dropdown = document.getElementById('assignTaskDropdown');
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-        dropdown.style.display = 'block'; // Show dropdown
-    } else {
-        dropdown.style.display = 'none'; // Hide dropdown
-    }
-}
-
-
-function toggleDropdownCategory() {
-    const dropdown = document.getElementById('categoryDropdown');
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-        dropdown.style.display = 'block'; // Show dropdown
-    } else {
-        dropdown.style.display = 'none'; // Hide dropdown
-    }
-}
-
-
-// Close the dropdown when clicking outside
-document.addEventListener('click', function (event) {
-    const dropdown = document.getElementById('assignTaskDropdown');
-    const inputContainer = document.querySelector('.input-with-icon');
-
-    if (!inputContainer.contains(event.target)) {
-        dropdown.style.display = 'none';
-    }
-});
-
-
-// Call the function to load contacts when the page loads
-window.onload = function () {
-    loadContactsForDropdown();
-    setMinDueDate(); // Restore the date functionality
-};

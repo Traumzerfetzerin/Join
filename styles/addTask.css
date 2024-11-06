@@ -164,6 +164,19 @@ textarea {
     border: 2px solid #FF3D00;
 }
 
+#closeSubtask:hover,
+#createSubtask:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+}
+
+.seperatorSubtasks {
+    background-color: #D1D1D1;
+    width: 2px;
+    height: auto;
+    align-self: stretch;
+}
+
 /* Button Container */
 .buttons {
     display: flex;
