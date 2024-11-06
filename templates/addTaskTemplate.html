@@ -56,13 +56,13 @@
                             Urgent
                             <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
                         </button>
-                
+
                         <button id="medium" type="button" class="prioButton cursorPointer fonts mediumWhite"
                             onclick="setPrio('medium', event)">
                             Medium
                             <img id="mediumSvg" src="../Assets/addTask/Prio media white.svg" alt="">
                         </button>
-                
+
                         <button id="low" type="button" class="prioButton cursorPointer fonts"
                             onclick="setPrio('low', event)">
                             Low
@@ -70,7 +70,7 @@
                         </button>
                     </div>
                 </section>
-             
+
                 <div class="input-group">
                     <label for="assignTask" class="add-task-label fonts">Category<span class="required">*</span></label>
                     <div class="input-with-icon" id="inputCategory">
@@ -91,28 +91,32 @@
                 </div>
 
                 <section class="fonts">
-                    <div>Subtasks</div>
-                    <div class="flex subtaskInput">
-                        <input class="input_12_16 cursorPointer" type="text" name="" id="inputSubtasks"
-                            placeholder="Add new subtask">
-                        <div>
-                            <img class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg" alt="">
-                        </div>
-
-                        <div>
-                            <div class="space-between">
-                                <div><img id="closeSubtask" class="cursorPointer"
-                                        src="../Assets/addTask/Property 1=close.svg" alt="">
+                    <div class="input-group">
+                        <label for="assignTask" class="add-task-label fonts">Subtasks</label>
+                        <div class="input-with-icon" id="inputSubtask">
+                            <input type="text" name="subtask" class="add-task-title add-task-assigned-to cursorPointer"
+                                id="subtaskSelect" placeholder="Add new subtask" autocomplete="off">
+                            <div>
+                                <div>
+                                    <img class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg"
+                                        alt="">
                                 </div>
-                                <div class="seperatorSubtasks"></div>
-                                <div><img id="createSubtask" class="cursorPointer"
-                                        src="../Assets/addTask/Property 1=check.svg" alt="">
+                                <div class="d-none">
+                                    <div>
+                                        <img id="closeSubtask" class="cursorPointer"
+                                            src="../Assets/addTask/Property 1=close.svg" alt="">
+                                    </div>
+                                    <div class="seperatorSubtasks"></div>
+                                    <div>
+                                        <img id="createSubtask" class="cursorPointer"
+                                            src="../Assets/addTask/Property 1=check.svg" alt="">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </section>
+
             </div>
         </div>
     </form>
