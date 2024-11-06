@@ -146,6 +146,7 @@ function urgentPrioButton(priorityButton) {
     document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
 }
 
+
 // CATEGORY
 function selectTechnicalTask() {
     document.getElementById('categorySelect').value = "Technical Task";
@@ -163,6 +164,13 @@ function toggleDropdownCategory() {
     let dropdownCategory = document.getElementById('categoryDropdown');
     dropdownCategory.classList.toggle('d-none');
 }
+
+
+// SUBTASKS
+// function selectSubtasks() {
+//     document.getElementById('addSubtask').classList.add('d-none');
+//     document.getElementById('editSubtask').classList.remove('d-none');
+// }
 
 
 // CLEAR BUTTON
