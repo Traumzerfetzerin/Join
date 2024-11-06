@@ -102,24 +102,14 @@ function setPrio(prio, event) {
     // Set the selected priority
     selectedPrio = prio;
 
-    // // Remove 'active' class from all buttons
-    // const prioButtons = document.querySelectorAll('.prioButton');
-    // prioButtons.forEach(button => button.classList.remove('active'));
+    let priorityButton = event.currentTarget.id;
 
-    // // Add 'active' class to the clicked button
-    // event.target.classList.add('active');
-
-
-    let priorityButton = event.target.id;
-
-    if (event.target.id == "low") {
-        lowPrioButton(priorityButton)
-
-    } if (event.target.id == "medium") {
-        mediumPrioButton(priorityButton)
-
-    } if (event.target.id == "urgent") {
-        urgentPrioButton(priorityButton)
+    if (priorityButton === "low") {
+        lowPrioButton(priorityButton);
+    } else if (priorityButton === "medium") {
+        mediumPrioButton(priorityButton);
+    } else if (priorityButton === "urgent") {
+        urgentPrioButton(priorityButton);
     }
 }
 
