@@ -242,6 +242,7 @@ textarea {
 #technicalTask:hover,
 #userStory:hover {
     background-color: #D1D1D1;
+    border-radius: 8px;
 }
 
 .popUp {
