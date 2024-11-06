@@ -5,10 +5,6 @@
 #boardHeader {
     display: flex;
     justify-content: space-between;
-    width: 1056px;
-    height: 73px;
-    top: 79.5px;
-    left: 64px;
 }
 
 #boardSearchbar {
@@ -47,51 +43,60 @@ button {
 }
 
 #taskBoard {
-    width: 1208px;
-    height: 688;
-    top: 336px;
-    left: 232px;
     padding-right: 64px;
     padding-left: 64px;
-    gap: 26px;
     display: flex;
-    align-items: center;
-    gap: 10px; /* Space between input field and icon */
+    justify-content: space-between;
 }
 
-.input-wrapper input {
-    width: 300px; /* Adjust width as needed */
-    padding: 12px 21px;
-    border: 1px solid #3498db;
-    border-radius: 10px;
-    font-size: 14px;
-    outline: none;
-    background-color: white;
-    box-sizing: border-box;
+.column {
+    width: 252px;
+    height: 688px;
+    gap: 16px;
 }
 
-.input-wrapper input::placeholder {
-    color: #ccc;
+.task {
+    width: 252px;
+    height: 263px;
+    padding: 16px;
+    gap: 10px;
+    border-radius: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .column:hover {
     background-color: #e0e0e0;
 }
 
-.task:hover {
-    cursor: pointer;
-}
-
-#templateAddTask {
-    position: absolute;
-    top: calc(50vh - 350px);
-    left: calc(50vw - 680px);
-    z-index: 1;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
 #clearButton {
     width: 96.2px;
+}
+
+.dialogBackground {
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Task Background Container */
+.taskBackground {
+    background-color: #FFF;
+    border-radius: 30px;
+    max-width: 1116px;
+    max-height: 870px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#closeAddTaskOnBoard:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+    padding: 8px;
 }
