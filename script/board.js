@@ -24,6 +24,19 @@ function clearColumns() {
 }
 
 
+/**
+ * Returns the CSS class based on the task title.
+ */
+function getTaskClass(title) {
+    if (title === "User Story") {
+        return "user-story";
+    } else if (title === "Technical Task") {
+        return "technical-task";
+    }
+    return "";
+}
+
+
 /** function to load tasks and put them into the appropriate column */
 function loadTasks(tasks) {
     clearColumns();
@@ -38,7 +51,8 @@ function loadTasks(tasks) {
                 contactList = task.contacts.map(contact => `<li>${contact}</li>`).join('');
             }
 
-            let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList);
+            let taskClass = getTaskClass(task.title);
+            let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass);
 
             // Check if task has a column property, if not, default to "toDo"
             let column = task.column ? task.column : "toDo";

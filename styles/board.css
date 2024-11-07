@@ -27,24 +27,37 @@ button {
     color: #2A3647;
 }
 
-#columnTitles {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 0;
-}
-
-#columnTitles div {
-    width: 22%;
-    text-align: center;
+.column-title {
     font-size: 18px;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.column-title img {
+    margin-left: auto;
+}
+
+.task.user-story h4 {
+    background-color: #0038FF; /* Blau für User Story */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.task.technical-task h4 {
+    background-color: #1FD7C1; /* Türkis für Technical Task */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
 }
 
 #taskBoard {
     width: 1208px;
-    height: 688;
+    height: 688px;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -58,13 +71,6 @@ button {
     width: 22%;
 }
 
-.column-title {
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
 .column {
     width: 100%;
     height: 688px;
@@ -74,8 +80,7 @@ button {
 
 
 .task {
-    width: auto;
-    height: 263px;
+    width: 100%;
     padding: 16px;
     gap: 10px;
     border-radius: 24px;
