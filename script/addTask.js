@@ -169,7 +169,12 @@ function toggleDropdownCategory() {
 // SUBTASKS
 // function selectSubtasks() {
 //     document.getElementById('addSubtask').classList.add('d-none');
-//     document.getElementById('editSubtask').classList.remove('d-none');
+//     document.getElementById('editSubtasks').classList.remove('d-none');
+// }
+
+// function closeSubtask() {
+//     document.getElementById('addSubtask').classList.remove('d-none');
+//     document.getElementById('editSubtasks').classList.add('d-none');
 // }
 
 

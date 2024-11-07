@@ -95,25 +95,37 @@
                         <label for="assignTask" class="add-task-label fonts">Subtasks</label>
                         <div class="input-with-icon" id="inputSubtask">
                             <input type="text" name="subtask" class="add-task-title add-task-assigned-to cursorPointer"
-                                id="subtaskSelect" placeholder="Add new subtask" autocomplete="off">
+                                id="subtaskSelect" placeholder="Add new subtask" autocomplete="off"
+                                onclick="selectSubtasks()">
                             <div>
                                 <div id="addSubtask">
                                     <img class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg"
-                                        alt="">
+                                        alt="" onclick="selectSubtasks()">
                                 </div>
                             </div>
                         </div>
-                        <div id="editSubtasks" class="flex-end">
-                            <div>
-                                <img id="closeSubtask" class="cursorPointer"
-                                    src="../Assets/addTask/Property 1=close.svg" alt="">
-                            </div>
-                            <div class="seperatorSubtasks"></div>
-                            <div>
-                                <img id="createSubtask" class="cursorPointer"
-                                    src="../Assets/addTask/Property 1=check.svg" alt="">
+
+                        <div id="editSubtasks">
+                            <div class="space-between">
+                                <div>
+                                    <li>Bla</li>
+                                </div>
+                                <div class="flex">
+                                    <div>
+                                        <img id="closeSubtask" class="cursorPointer"
+                                            src="../Assets/addTask/Property 1=close.svg" alt=""
+                                            onclick="closeSubtask()">
+                                    </div>
+                                    <div class="seperatorSubtasks"></div>
+                                    <div>
+                                        <img id="createSubtask" class="cursorPointer"
+                                            src="../Assets/addTask/Property 1=check.svg" alt=""
+                                            onclick="closeSubtask()">
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </section>
 
