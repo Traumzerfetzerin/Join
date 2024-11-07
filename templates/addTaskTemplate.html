@@ -27,6 +27,8 @@
                         <div>
                             <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown"
                                 class="cursorPointer margin-right dropdownimg" onclick="toggleDropdown()">
+                            <img src="../Assets/addTask/Property 1=Variant4.svg" id="dropdown1"
+                                class="cursorPointer margin-right dropdownimg d-none" onclick="toggleDropdown()">
                         </div>
                         <!-- Custom Dropdown with checkboxes -->
                         <div id="assignTaskDropdown" class="d-none">
@@ -78,8 +80,10 @@
                             id="categorySelect" placeholder="Select task category" autocomplete="off" readonly
                             onclick="toggleDropdownCategory()">
                         <div>
-                            <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown"
+                            <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdownCategory"
                                 class="cursorPointer margin-right dropdownimg" onclick="toggleDropdownCategory()">
+                            <img src="../Assets/addTask/Property 1=Variant4.svg" id="dropdownCategory1"
+                                class="cursorPointer margin-right dropdownimg d-none" onclick="toggleDropdownCategory()">
                         </div>
                     </div>
                     <div id="categoryDropdown" class="d-none">
@@ -121,6 +125,23 @@
                                         <img id="createSubtask" class="cursorPointer"
                                             src="../Assets/addTask/Property 1=check.svg" alt=""
                                             onclick="closeSubtask()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-between">
+                                <div>
+                                    <li>Bla</li>
+                                </div>
+                                <div class="flex">
+                                    <div>
+                                        <img id="editSubtask" class="cursorPointer"
+                                            src="../Assets/addTask/Property 1=edit.svg">
+                                    </div>
+                                    <div class="seperatorSubtasks"></div>
+                                    <div>
+                                        <img id="deleteSubtask" class="cursorPointer"
+                                            src="../Assets/addTask/Property 1=delete.svg" alt="">
                                     </div>
                                 </div>
                             </div>

@@ -161,7 +161,6 @@ textarea {
     background-color: #FFF;
     border-radius: 12px;
     z-index: 1;
-    width: 517px;
 }
 
 #categorySelect {
@@ -175,6 +174,8 @@ textarea {
 
 #closeSubtask:hover,
 #createSubtask:hover,
+#editSubtask:hover,
+#deleteSubtask:hover,
 #dropdown:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 32px;

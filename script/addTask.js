@@ -55,10 +55,16 @@ function updateAssignedContacts() {
 // Toggle dropdown visibility
 function toggleDropdown() {
     const dropdown = document.getElementById('assignTaskDropdown');
+    let dropdownImg = document.getElementById('dropdown');
+    let dropdownImg1 = document.getElementById('dropdown1');
     if (dropdown.style.display === 'none' || dropdown.style.display === '') {
         dropdown.style.display = 'block'; // Show dropdown
+        dropdownImg.style.display = 'none';
+        dropdownImg1.style.display = 'block';
     } else {
         dropdown.style.display = 'none'; // Hide dropdown
+        dropdownImg1.style.display = 'none';
+        dropdownImg.style.display = 'block';
     }
 }
 
@@ -66,9 +72,13 @@ function toggleDropdown() {
 document.addEventListener('click', function (event) {
     const dropdown = document.getElementById('assignTaskDropdown');
     const inputContainer = document.querySelector('.input-with-icon');
+    let dropdownImg = document.getElementById('dropdown');
+    let dropdownImg1 = document.getElementById('dropdown1');
 
     if (!inputContainer.contains(event.target)) {
         dropdown.style.display = 'none';
+        dropdownImg1.style.display = 'none';
+        dropdownImg.style.display = 'block';
     }
 });
 
@@ -162,20 +172,33 @@ function selectUserStory() {
 
 function toggleDropdownCategory() {
     let dropdownCategory = document.getElementById('categoryDropdown');
+    let dropdownImg = document.getElementById('dropdownCategory');
+    let dropdownImg1 = document.getElementById('dropdownCategory1');
+
     dropdownCategory.classList.toggle('d-none');
+
+    if (dropdownImg.style.display !== 'none') {
+        dropdownImg.style.display = 'none';
+        dropdownImg1.style.display = 'block';
+    } else {
+        dropdownImg.style.display = 'block';
+        dropdownImg1.style.display = 'none';
+    }
 }
 
 
 // SUBTASKS
-// function selectSubtasks() {
-//     document.getElementById('addSubtask').classList.add('d-none');
-//     document.getElementById('editSubtasks').classList.remove('d-none');
-// }
+let subtask = [];
 
-// function closeSubtask() {
-//     document.getElementById('addSubtask').classList.remove('d-none');
-//     document.getElementById('editSubtasks').classList.add('d-none');
-// }
+function selectSubtasks() {
+    document.getElementById('addSubtask').classList.add('d-none');
+    document.getElementById('editSubtasks').classList.remove('d-none');
+}
+
+function createSubtask() {
+    document.getElementById('addSubtask').classList.remove('d-none');
+    document.getElementById('editSubtasks').classList.add('d-none');
+}
 
 
 // CLEAR BUTTON
