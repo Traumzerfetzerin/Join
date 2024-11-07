@@ -56,10 +56,6 @@ select:focus {
     box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
 }
 
-input:required:invalid {
-    border: 2px solid #FF3D00;
-}
-
 /* Title Section */
 .titleTask {
     gap: 8px;
@@ -101,10 +97,6 @@ textarea {
     position: absolute;
     background-color: #FFF;
     border-radius: 12px;
-}
-
-#assigned-to {
-    border: 2px solid #FF3D00;
 }
 
 /* Separator Styling */
@@ -161,10 +153,6 @@ textarea {
     background-color: #FFF;
     border-radius: 12px;
     z-index: 1;
-}
-
-#categorySelect {
-    border: 2px solid #FF3D00;
 }
 
 .subtaskImg:hover {

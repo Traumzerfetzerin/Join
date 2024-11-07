@@ -241,10 +241,12 @@ async function createTasks(event) {
     let description = document.getElementById('textareaDescription').value;
     let dueDate = document.getElementById('dueDate').value;
     let category = document.getElementById('categorySelect').value;
+    let subtask = document.getElementById('subtaskSelect').value;
 
     // Validate that all required fields are filled
     if (!title || !dueDate || !selectedPrio || category === '0') {
         await popUpRequired();
+        await redBorder();
         return;
     }
 
@@ -260,7 +262,7 @@ async function createTasks(event) {
 
     // Send the task data to Firebase using the selected category as the key
     try {
-        let response = await fetch(CREATETASK_URL + '/' + category + '.json', {
+        let response = await fetch(CREATETASK_URL + '/' + category + subtask + '.json', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -272,7 +274,7 @@ async function createTasks(event) {
         if (response.ok) {
             let responseToJson = await response.json();
             console.log('Task successfully created:', responseToJson);
-            showToast('Task successfully created under the category: ' + category);
+            showToast('Task successfully created under the category: ' + category + subtask);
         } else {
             console.error('Error creating task:', response.statusText);
         }
@@ -280,8 +282,43 @@ async function createTasks(event) {
         console.error('Error saving to Firebase:', error);
     }
 
+    await redBorder();
     await popUpAddTask();
     await closeTask();
+}
+
+// RED BORDER
+async function redBorder() {
+    // Wählen Sie alle required und invalid Felder aus
+    let inputElements = document.querySelectorAll('input:required:invalid');
+    let assignedTo = document.getElementById('assigned-to');
+    let categorySelect = document.getElementById('categorySelect');
+
+    inputElements.forEach(input => {
+        input.style.border = '2px solid #FF3D00';
+    });
+
+    if (!assignedTo.value) {
+        assignedTo.style.border = '2px solid #FF3D00';
+    }
+
+    if (!categorySelect.value) {
+        categorySelect.style.border = '2px solid #FF3D00';
+    }
+
+    setTimeout(() => {
+        inputElements.forEach(input => {
+            input.style.border = '';
+        });
+    }, 2000);
+
+    setTimeout(() => {
+        assignedTo.style.border = '';
+    }, 2000);
+
+    setTimeout(() => {
+        categorySelect.style.border = '';
+    }, 2000);
 }
 
 
