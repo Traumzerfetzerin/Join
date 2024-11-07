@@ -155,17 +155,27 @@ textarea {
 }
 
 #categoryDropdown {
-    background-color: #FFF;
     border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    background-color: #FFF;
     border-radius: 12px;
+    z-index: 1;
+    width: 517px;
 }
 
 #categorySelect {
     border: 2px solid #FF3D00;
 }
 
+.subtaskImg:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+}
+
 #closeSubtask:hover,
-#createSubtask:hover {
+#createSubtask:hover,
+#dropdown:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 32px;
 }
