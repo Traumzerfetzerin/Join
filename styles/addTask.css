@@ -176,7 +176,10 @@ textarea {
 #createSubtask:hover,
 #editSubtask:hover,
 #deleteSubtask:hover,
-#dropdown:hover {
+#dropdownCategory:hover,
+#dropdownCategory1:hover,
+#dropdown:hover,
+#dropdown1:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 32px;
 }

@@ -188,17 +188,7 @@ function toggleDropdownCategory() {
 
 
 // SUBTASKS
-let subtask = [];
 
-function selectSubtasks() {
-    document.getElementById('addSubtask').classList.add('d-none');
-    document.getElementById('editSubtasks').classList.remove('d-none');
-}
-
-function createSubtask() {
-    document.getElementById('addSubtask').classList.remove('d-none');
-    document.getElementById('editSubtasks').classList.add('d-none');
-}
 
 
 // CLEAR BUTTON
