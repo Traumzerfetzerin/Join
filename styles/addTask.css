@@ -159,6 +159,11 @@ textarea {
     display: inline;
 }
 
+#editSubtask:hover,
+#deleteSubtask:hover {
+    transform: scale(1.1);
+}
+
 .subtaskImg:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 32px;
@@ -167,8 +172,6 @@ textarea {
 #createdSubtask:hover,
 #closeSubtask:hover,
 #createSubtask:hover,
-#editSubtask:hover,
-#deleteSubtask:hover,
 #dropdownCategory:hover,
 #dropdownCategory1:hover,
 #dropdown:hover,
