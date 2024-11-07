@@ -90,6 +90,7 @@ window.onload = function () {
 };
 
 
+// CALCULATE DUE DATE
 function calculateDueDate() {
     let duoDate = new Date();
     let formattedDate = duoDate.toISOString().split('T')[0];
@@ -197,7 +198,7 @@ async function clearTasks() {
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
-    document.getElementById('inputSubtasks').value = "";
+    document.getElementById('subtaskSelect').value = "";
     document.getElementById('assigned-to').value = "";
     document.getElementById('assignTaskDropdown').value = "";
     document.getElementById('categorySelect').selectedIndex = 0;

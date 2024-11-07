@@ -155,11 +155,16 @@ textarea {
     z-index: 1;
 }
 
+#createdSubtask:hover img {
+    display: inline;
+}
+
 .subtaskImg:hover {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 32px;
 }
 
+#createdSubtask:hover,
 #closeSubtask:hover,
 #createSubtask:hover,
 #editSubtask:hover,
