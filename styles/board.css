@@ -2,9 +2,27 @@
     font-size: 61px;
 }
 
+#headerWrapper{
+    width: 1208px;
+    height: 232px;
+    top: 96px;
+    left: 232px;
+    gap: 0px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
 #boardHeader {
     display: flex;
-    justify-content: space-between;
+    width: 1056px;
+    height: 73px;
+    top: 79.5px;
+    left: 64px;
+    gap: 0px;
+    justify-content: space-between;  
+    align-items: center;
+    position: relative;
 }
 
 #boardSearchbar {
@@ -16,7 +34,15 @@
     gap: 10px;
 }
 
-button {
+#findAddTask{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 504px;
+    height: 48px;
+}
+
+#buttonAddTask {
     width: 160px;
     height: 48px;
     border-radius: 10px;
@@ -24,7 +50,10 @@ button {
     border-color: #2A3647;
     padding: 8px 16px 8px 16px;
     gap: 4px;
-    color: #2A3647;
+    background-color: #2A3647;
+    color: white;
+    font-weight: 700;
+    font-size: 21px;
 }
 
 .column-title {
@@ -42,14 +71,14 @@ button {
 }
 
 .task.user-story h4 {
-    background-color: #0038FF; /* Blau für User Story */
+    background-color: #0038FF;
     color: white;
     padding: 4px 8px;
     border-radius: 5px;
 }
 
 .task.technical-task h4 {
-    background-color: #1FD7C1; /* Türkis für Technical Task */
+    background-color: #1FD7C1; 
     color: white;
     padding: 4px 8px;
     border-radius: 5px;
@@ -60,8 +89,12 @@ button {
     height: 688px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    padding: 20px;
+    padding-left: 64px;
+    padding-right: 64px;
+    position: relative;
+    top: 336px;
+    left: 232px;
+    gap: 26px;
 }
 
 .column-wrapper {
@@ -72,12 +105,15 @@ button {
 }
 
 .column {
-    width: 100%;
+    width: 252px;
     height: 688px;
     gap: 16px;
     overflow-y: auto;
 }
 
+#toDoColumn{
+    width: 246px !important;
+}
 
 .task {
     width: 100%;
@@ -110,7 +146,6 @@ button {
     align-items: center;
 }
 
-/* Task Background Container */
 .taskBackground {
     background-color: #FFF;
     border-radius: 30px;

@@ -138,6 +138,7 @@ async function updateTaskColumn(taskId, column) {
 }
 
 
+
 function addTaskOnBoard() {
     document.getElementById('templateAddTask').classList.remove('d-none');
 }
@@ -150,4 +151,4 @@ function closeTaskOnBoard() {
 
 function dontClose(event) {
     event.stopPropagation(); // stoppt Standardfunktionalität
-}
+}  

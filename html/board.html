@@ -39,11 +39,15 @@
         </div>
 
         <div id="forAddTask">
-            <div id="boardHeader">
-                <h2>Board</h2>
-                <input type="search" placeholder="Find task" id="boardSearchbar"></input>
-                <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task
-                    +</button>
+            <div id="headerWrapper">
+                <div id="boardHeader">
+                    <h2>Board</h2>
+                        <div id="findAddTask">
+                            <input type="search" placeholder="Find task" id="boardSearchbar"><img src="../Assets/board/magnifier.svg" alt="magnifier"></input>
+                            <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task
+                            +</button>
+                        </div>
+                </div>        
             </div>
             <div id="taskBoard">
                 <div class="column-wrapper">
