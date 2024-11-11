@@ -160,3 +160,23 @@
     border-radius: 32px;
     padding: 8px;
 }
+
+.user-story h4 {
+    background-color: #0038FF;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.technical-task h4 {
+    background-color: #1FD7C1; 
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.no-tasks {
+    color: #888;
+    text-align: center;
+    font-style: italic;
+}
