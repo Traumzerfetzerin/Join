@@ -42,13 +42,16 @@
             <div id="headerWrapper">
                 <div id="boardHeader">
                     <h2>Board</h2>
-                        <div id="findAddTask">
-                            <input type="search" placeholder="Find task" id="boardSearchbar"><img src="../Assets/board/magnifier.svg" alt="magnifier"></input>
-                            <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task
-                            +</button>
+                    <div id="findAddTask">
+                        <div class="input-with-icon">
+                            <input type="search" placeholder="Find task" id="boardSearchbar">
+                            <img src="../Assets/board/magnifier.svg" alt="magnifier" class="input-icon">
                         </div>
-                </div>        
+                        <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task +</button>
+                    </div>
+                </div>
             </div>
+            
             <div id="taskBoard">
                 <div class="column-wrapper">
                     <div class="column-title">To do <img class="cursorPointer" src="../Assets/board/plusButton.svg"
