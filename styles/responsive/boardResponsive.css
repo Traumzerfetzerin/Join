@@ -1,0 +1,25 @@
+@media (max-width: 850px) {
+    #headerWrapper {
+        width: 428;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        justify-content: start;
+    }
+
+    #taskBoard{
+        width: 396px;
+        height: auto;
+        top: 296px;
+        left: 16px;
+        gap: 26px;
+        flex-direction: column;
+
+    }
+
+    .column{
+        width: 396px;
+        height: 311px;
+        gap: 16px;
+    }
+}
