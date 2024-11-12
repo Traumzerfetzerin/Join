@@ -1,4 +1,3 @@
-
 .taskSide,
 .sectionTemplateAddTask {
     max-width: 1116px;
@@ -157,12 +156,12 @@ textarea {
     z-index: 1;
 }
 
-#createdSubtask:hover img {
+.createdSubtask:hover img {
     display: inline;
 }
 
-#editSubtask:hover,
-#deleteSubtask:hover {
+.editSubtask:hover,
+.deleteSubtask:hover {
     transform: scale(1.1);
 }
 
@@ -171,9 +170,9 @@ textarea {
     border-radius: 32px;
 }
 
-#createdSubtask:hover,
-#closeSubtask:hover,
-#createSubtask:hover,
+.createdSubtask:hover,
+.closeSubtask:hover,
+.createSubtask:hover,
 #dropdownCategory:hover,
 #dropdownCategory1:hover,
 #dropdown:hover,

@@ -188,7 +188,43 @@ function toggleDropdownCategory() {
 }
 
 
-// SUBTASKS
+// ENTER SUBTASK
+let input = document.getElementById('subtaskSelect');
+document.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById('addSubtaskButton').click();
+    }
+});
+
+
+// CREATE SUBTASK
+let subtaskCounter = 0;
+
+function createSubtaskElement(subtaskText) {
+    let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
+    let subtaskUlId = `subtaskUl_${subtaskCounter}`;
+    let subtaskLiId = `subtaskLi_${subtaskCounter}`;
+
+    let subtaskHTML = createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId);
+
+    document.getElementById('editSubtasks').innerHTML += subtaskHTML;
+    subtaskCounter++;
+}
+
+
+// ADD SUBTASK
+function addSubtask() {
+    let addSubtask = document.getElementById('subtaskSelect').value;
+
+    if (addSubtask.trim() !== "") {
+        createSubtaskElement(addSubtask);
+        document.getElementById('subtaskSelect').value = "";
+    }
+}
+
+
+// EDIT SUBTASK
 
 
 
@@ -198,12 +234,12 @@ async function clearTasks() {
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
-    document.getElementById('subtaskSelect').value = "";
+    document.getElementById('editSubtasks').value = "";
     document.getElementById('assigned-to').value = "";
     document.getElementById('assignTaskDropdown').value = "";
     document.getElementById('categorySelect').selectedIndex = 0;
     contacts.forEach(contact => {
-        document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`).checked = false;
+        document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
     });
     clearPrioButtons();
 }
@@ -292,7 +328,6 @@ async function createTasks(event) {
 
 // RED BORDER
 async function redBorder() {
-    // Wählen Sie alle required und invalid Felder aus
     let inputElements = document.querySelectorAll('input:required:invalid');
     let assignedTo = document.getElementById('assigned-to');
     let categorySelect = document.getElementById('categorySelect');
@@ -331,10 +366,7 @@ async function popUpRequired() {
 
     popUpElement.classList.remove('d-none');
 
-    popUpElement.innerHTML = /*HTML*/`
-        <div class="space-evently">
-            <p class="center">Please, <br> fill in all required fields.</p>
-        </div>`;
+    popUpElement.innerHTML = popUpRequiredHTML();
 
     setTimeout(() => {
         popUpElement.classList.add('d-none');
@@ -345,11 +377,7 @@ async function popUpRequired() {
 // POP UP ADD TASK
 async function popUpAddTask() {
     document.getElementById('popUpAddTask').classList.remove('d-none');
-    document.getElementById('popUpAddTask').innerHTML = /*HTML*/`
-    <div class="space-evently flex">
-        <p>Task added to board</p>
-        <img src="../Assets/addTask/Icons.svg" alt="">
-    </div>`;
+    document.getElementById('popUpAddTask').innerHTML = popUpAddTaskHTML();
     document.getElementById('inputTitle').value = "";
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
