@@ -100,15 +100,20 @@ function enableDragAndDrop(columns) {
             event.preventDefault();
         });
         
-        zone.addEventListener('drop', function (event) {
+        zone.addEventListener('drop', async function (event) {
             event.preventDefault();
             const taskId = event.dataTransfer.getData('task-id');
             const taskElement = document.getElementById(taskId);
             
             if (taskElement) {
-                // Directly move the task element
+                // Direktes Verschieben des Task-Elements
                 zone.insertAdjacentElement('beforeend', taskElement);
-                checkEmptyColumns(columns); // Update empty columns after moving task
+                
+                // Die neue Spalte speichern
+                const column = Object.keys(columns).find(key => columns[key] === zone.id);
+                await updateTaskColumn(taskId, column); // Update Firebase mit der neuen Spalte
+                
+                checkEmptyColumns(columns); // Aktualisiere leere Spalten nach dem Verschieben
             }
         });
     });
