@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../styles/navbar.css">
 
     <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/boardOverlay.css">
     <link rel="stylesheet" href="../styles/responsive/boardResponsive.css">
 
     <link rel="stylesheet" href="../styles/addTask.css">
@@ -20,6 +21,8 @@
     <script src="../script/board.js"></script>
     <script src="../templates/boardTemplate.js"></script>
     <script src="../script/addTask.js"></script>
+    <script src="../script/boardSearch.js"></script>
+    <script src="../script/boardPopUp.js"></script>
 
 <body onload="fetchTasks()">
     <aside w3-include-html="../templates/header.html"></aside>
@@ -44,15 +47,16 @@
                 <div id="boardHeader">
                     <h2>Board</h2>
                     <div id="findAddTask">
-                        <div class="input-with-icon">
+                        <div class="searchbarBoard">
                             <input type="search" placeholder="Find task" id="boardSearchbar">
+                            <span class="searchbar-divider"></span> 
                             <img src="../Assets/board/magnifier.svg" alt="magnifier" class="input-icon">
                         </div>
                         <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task +</button>
                     </div>
                 </div>
             </div>
-            
+
             <div id="taskBoard">
                 <div class="column-wrapper">
                     <div class="column-title">To do <img class="cursorPointer" src="../Assets/board/plusButton.svg"
@@ -81,6 +85,7 @@
                 </div>
             </div>
         </div>
+        
     </main>
 
     <footer></footer>
