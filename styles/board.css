@@ -2,7 +2,7 @@
     font-size: 61px;
 }
 
-#headerWrapper{
+#headerWrapper {
     width: 1208px;
     height: 232px;
     top: 96px;
@@ -20,13 +20,13 @@
     top: 79.5px;
     left: 64px;
     gap: 0px;
-    justify-content: space-between;  
+    justify-content: space-between;
     align-items: center;
     position: relative;
 }
 
 #boardSearchbar {
-    width: calc(100% - 48px - 16px); 
+    width: calc(100% - 48px - 16px);
     height: 48px;
     border-radius: 10px;
     border: solid 1px;
@@ -35,16 +35,16 @@
 }
 
 .searchbar-divider {
-    width: 1px;               
-    height: 32px;            
-    background-color: #333;  
-    margin: 0 16px;          
+    width: 1px;
+    height: 32px;
+    background-color: #333;
+    margin: 0 16px;
 }
 
 .input-icon {
     width: 48px;
     height: 32px;
-    margin-left: 8px; 
+    margin-left: 8px;
 }
 
 #findAddTask {
@@ -91,7 +91,7 @@
 }
 
 .task.technical-task h4 {
-    background-color: #1FD7C1; 
+    background-color: #1FD7C1;
     color: white;
     padding: 4px 8px;
     border-radius: 5px;
@@ -124,7 +124,7 @@
     overflow-y: auto;
 }
 
-#toDoColumn{
+#toDoColumn {
     width: 246px !important;
 }
 
@@ -181,7 +181,7 @@
 }
 
 .technical-task h4 {
-    background-color: #1FD7C1; 
+    background-color: #1FD7C1;
     color: white;
     padding: 4px 8px;
     border-radius: 5px;

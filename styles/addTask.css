@@ -1,4 +1,6 @@
-.taskSide {
+
+.taskSide,
+.sectionTemplateAddTask {
     max-width: 1116px;
     max-height: 870px;
 }

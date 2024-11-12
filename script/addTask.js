@@ -258,12 +258,13 @@ async function createTasks(event) {
         dueDate: dueDate,
         prio: selectedPrio,
         status: "to do",
-        contacts: selectedContacts
+        contacts: selectedContacts,
+        subtask: subtask
     };
 
     // Send the task data to Firebase using the selected category as the key
     try {
-        let response = await fetch(CREATETASK_URL + '/' + category + subtask + '.json', {
+        let response = await fetch(CREATETASK_URL + '/' + category + '.json', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -287,6 +288,7 @@ async function createTasks(event) {
     await popUpAddTask();
     await closeTask();
 }
+
 
 // RED BORDER
 async function redBorder() {
