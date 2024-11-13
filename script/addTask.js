@@ -258,20 +258,7 @@ function load() {
 function editSubtask(subtaskDivId) {
     let createdSubtask = document.getElementById(subtaskDivId);
     let editSubtask = createdSubtask.innerText;
-    createdSubtask.innerHTML = /*HTML*/`
-    <input type="text" value="${editSubtask}" onblur="updateSubtaskText(this)">
-    <div id="${subtaskDivId}" class="space-between createdSubtask">
-        <div class="flex">
-            <div>
-                <img class="deleteSubtask subtaskImg cursorPointer d-none" src="../Assets/addTask/Property 1=delete.svg"
-                    alt="" onclick="deleteSubtask('${subtaskDivId}')">
-            </div>
-            <div class="seperatorSubtasks"></div>
-            <div>
-                <img id="createSubtask" class="cursorPointer" src="../Assets/addTask/Property 1=check.svg" alt="">
-            </div>
-        </div>
-    </div>`;
+    createdSubtask.innerHTML = editSubtaskHTML(subtaskDivId, editSubtask);
 }
 
 

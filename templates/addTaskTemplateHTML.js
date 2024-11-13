@@ -22,18 +22,36 @@ function createSubtaskElementHTMML(subtaskText) {
 }
 
 
+function editSubtaskHTML(subtaskDivId, editSubtask) {
+    return /*HTML*/ `
+        <input type="text" value="${editSubtask}" onblur="updateSubtaskText(this)">
+        <div id="${subtaskDivId}" class="space-between createdSubtask">
+            <div class="flex">
+                <div>
+                    <img class="deleteSubtask subtaskImg cursorPointer d-none"
+                        src="../Assets/addTask/Property 1=delete.svg" alt="" onclick="deleteSubtask('${subtaskDivId}')">
+                </div>
+                <div class="seperatorSubtasks"></div>
+                <div>
+                    <img id="createSubtask" class="cursorPointer" src="../Assets/addTask/Property 1=check.svg" alt="">
+                </div>
+            </div>
+        </div>`;
+}
+
+
 // POP UP
 function popUpRequiredHTML() {
     return /*HTML*/`
-    <div class="space-evently">
-        <p class="center">Please, <br> fill in all required fields.</p>
+        < div class="space-evently" >
+            <p class="center">Please, <br> fill in all required fields.</p>
     </div > `;
 }
 
 
 function popUpAddTaskHTML() {
     return /*HTML*/`
-    <div class="space-evently flex">
+        < div class="space-evently flex" >
         <p>Task added to board</p>
         <img src="../Assets/addTask/Icons.svg" alt="">
     </div>`;
