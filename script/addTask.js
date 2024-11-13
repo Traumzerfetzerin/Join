@@ -214,14 +214,18 @@ document.addEventListener("keyup", function (event) {
 
 
 // CREATE SUBTASK
+
+// let subtask = [];
+// let trashSubtask = [];
+// let editSubtask = -1;
 let subtaskCounter = 0;
+let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
+let subtaskUlId = `subtaskUl_${subtaskCounter}`;
+let subtaskLiId = `subtaskLi_${subtaskCounter}`;
+
 
 function createSubtaskElement(subtaskText) {
-    let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
-    let subtaskUlId = `subtaskUl_${subtaskCounter}`;
-    let subtaskLiId = `subtaskLi_${subtaskCounter}`;
-
-    let subtaskHTML = createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId);
+    let subtaskHTML = createSubtaskElementHTMML(subtaskText);
 
     document.getElementById('editSubtasks').innerHTML += subtaskHTML;
     subtaskCounter++;
@@ -239,10 +243,45 @@ function addSubtask() {
 }
 
 
+function saveSubtask() {
+    let subtaskAsText = JSON.stringify(subtask);
+    localStorage.setItem('subtask', subtaskAsText);
+}
+
+
+function load() {
+    let subtaskAsText = localStorage.getItem('subtask');
+
+    if (subtaskAsText) {
+        subtask = JSON.parse(subtaskAsText);
+    }
+}
+
+
 // EDIT SUBTASK
 
-// DELETE SUBTASK
 
+
+// DELETE SUBTASK
+function deleteSubtask(subtaskDivId) {
+    let deleteSubtask = document.getElementById(subtaskDivId);
+    if (deleteSubtask) {
+        deleteSubtask.remove();
+    } else {
+        console.log("Element mit ID " + subtaskDivId + " nicht gefunden.");
+    }
+}
+
+
+function showDeleteIcon(subtaskDivId) {
+    let subtaskDiv = document.getElementById(subtaskDivId);
+    if (subtaskDiv) {
+        let deleteIcons = subtaskDiv.getElementsByClassName('deleteSubtask');
+        if (deleteIcons.length > 0) {
+            deleteIcons[0].classList.remove('d-none');
+        }
+    }
+}
 
 
 // CLEAR BUTTON

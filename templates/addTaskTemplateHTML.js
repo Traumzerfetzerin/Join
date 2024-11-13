@@ -1,5 +1,5 @@
 // SUBTASK
-function createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
+function createSubtaskElementHTMML(subtaskText) {
     return /*HTML*/ `
 <div id="${subtaskDivId}" class="space-between createdSubtask">
     <div>
@@ -15,7 +15,7 @@ function createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subta
         <div class="seperatorSubtasks"></div>
         <div>
             <img class="deleteSubtask subtaskImg cursorPointer d-none"
-                 src="../Assets/addTask/Property 1=delete.svg" alt="">
+                 src="../Assets/addTask/Property 1=delete.svg" alt="" onclick="deleteSubtask('${subtaskDivId}')">
         </div>
     </div>
 </div>`;
