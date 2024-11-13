@@ -172,20 +172,35 @@ function selectUserStory() {
 
 
 function toggleDropdownCategory() {
-    let dropdownCategory = document.getElementById('categoryDropdown');
+    let categoryDropdown = document.getElementById('categoryDropdown');
     let dropdownImg = document.getElementById('dropdownCategory');
     let dropdownImg1 = document.getElementById('dropdownCategory1');
 
-    dropdownCategory.classList.toggle('d-none');
-
-    if (dropdownImg.style.display !== 'none') {
-        dropdownImg.style.display = 'none';
-        dropdownImg1.style.display = 'block';
+    if (categoryDropdown.classList.contains('d-none')) {
+        categoryDropdown.classList.remove('d-none');
+        dropdownImg.classList.add('d-none');
+        dropdownImg1.classList.remove('d-none');
     } else {
-        dropdownImg.style.display = 'block';
-        dropdownImg1.style.display = 'none';
+        categoryDropdown.classList.add('d-none');
+        dropdownImg.classList.remove('d-none');
+        dropdownImg1.classList.add('d-none');
     }
 }
+
+
+// CLOSE DROPDOWN
+document.addEventListener('click', function (event) {
+    let categoryDropdown = document.getElementById('categoryDropdown');
+    let categoryInputContainer = document.getElementById('inputCategory');
+    let dropdownImg = document.getElementById('dropdownCategory');
+    let dropdownImg1 = document.getElementById('dropdownCategory1');
+
+    if (!categoryInputContainer.contains(event.target)) {
+        categoryDropdown.classList.add('d-none');
+        dropdownImg.classList.remove('d-none');
+        dropdownImg1.classList.add('d-none');
+    }
+});
 
 
 // ENTER SUBTASK
@@ -226,6 +241,8 @@ function addSubtask() {
 
 // EDIT SUBTASK
 
+// DELETE SUBTASK
+
 
 
 // CLEAR BUTTON
@@ -238,9 +255,10 @@ async function clearTasks() {
     document.getElementById('assigned-to').value = "";
     document.getElementById('assignTaskDropdown').value = "";
     document.getElementById('categorySelect').selectedIndex = 0;
-    contacts.forEach(contact => {
-        document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
-    });
+    document.getElementById('categoryDropdown').classList.add('d-none');
+    // contacts.forEach(contact => {
+    //     document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
+    // });
     clearPrioButtons();
 }
 
