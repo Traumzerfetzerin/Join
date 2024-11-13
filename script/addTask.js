@@ -262,9 +262,15 @@ function editSubtask(subtaskDivId) {
 }
 
 
-function updateSubtaskText(inputElement) {
-    let processedSubtask = inputElement.value;
-    inputElement.parentElement.innerHTML = processedSubtask;
+function updateSubtaskText(subtaskDivId, subtaskValue) {
+    let subtaskElement = document.getElementById(subtaskDivId);
+    if (subtaskElement) {
+
+        let subtaskTextElements = subtaskElement.getElementsByClassName('subtaskText');
+        if (subtaskTextElements.length > 0) {
+            subtaskTextElements[0].innerText = subtaskValue;
+        }
+    }
 }
 
 
@@ -283,6 +289,34 @@ function showDeleteIcon(subtaskDivId) {
         let deleteIcons = subtaskDiv.getElementsByClassName('deleteSubtask');
         if (deleteIcons.length > 0) {
             deleteIcons[0].classList.remove('d-none');
+        }
+    }
+}
+
+
+function acceptSubtask(subtaskDivId) {
+    let subtaskInput = document.getElementById(`editSubtask_${subtaskDivId}`);
+    let subtaskValue = subtaskInput.value;
+
+    if (subtaskValue.trim() === "") {
+        return;
+    }
+
+    updateSubtaskText(subtaskDivId, subtaskValue);
+
+    let acceptIcon = document.getElementById(`acceptSubtask_${subtaskDivId}`);
+    if (acceptIcon) {
+        acceptIcon.classList.add('d-none');
+    }
+}
+
+
+function showAcceptIconsIcon(subtaskDivId) {
+    let subtaskDiv = document.getElementById(subtaskDivId);
+    if (subtaskDiv) {
+        let acceptIcons = subtaskDiv.getElementsByClassName('acceptSubtask');
+        if (acceptIcons.length > 0) {
+            acceptIcons[0].classList.remove('d-none');
         }
     }
 }
