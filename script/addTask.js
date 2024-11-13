@@ -214,10 +214,6 @@ document.addEventListener("keyup", function (event) {
 
 
 // CREATE SUBTASK
-
-// let subtask = [];
-// let trashSubtask = [];
-// let editSubtask = -1;
 let subtaskCounter = 0;
 let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
 let subtaskUlId = `subtaskUl_${subtaskCounter}`;
@@ -259,7 +255,30 @@ function load() {
 
 
 // EDIT SUBTASK
+function editSubtask(subtaskDivId) {
+    let createdSubtask = document.getElementById(subtaskDivId);
+    let editSubtask = createdSubtask.innerText;
+    createdSubtask.innerHTML = /*HTML*/`
+    <input type="text" value="${editSubtask}" onblur="updateSubtaskText(this)">
+    <div id="${subtaskDivId}" class="space-between createdSubtask">
+        <div class="flex">
+            <div>
+                <img class="deleteSubtask subtaskImg cursorPointer d-none" src="../Assets/addTask/Property 1=delete.svg"
+                    alt="" onclick="deleteSubtask('${subtaskDivId}')">
+            </div>
+            <div class="seperatorSubtasks"></div>
+            <div>
+                <img id="createSubtask" class="cursorPointer" src="../Assets/addTask/Property 1=check.svg" alt="">
+            </div>
+        </div>
+    </div>`;
+}
 
+
+function updateSubtaskText(inputElement) {
+    let processedSubtask = inputElement.value;
+    inputElement.parentElement.innerHTML = processedSubtask;
+}
 
 
 // DELETE SUBTASK
@@ -267,8 +286,6 @@ function deleteSubtask(subtaskDivId) {
     let deleteSubtask = document.getElementById(subtaskDivId);
     if (deleteSubtask) {
         deleteSubtask.remove();
-    } else {
-        console.log("Element mit ID " + subtaskDivId + " nicht gefunden.");
     }
 }
 

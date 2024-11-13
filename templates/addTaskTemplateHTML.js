@@ -10,7 +10,7 @@ function createSubtaskElementHTMML(subtaskText) {
     <div class="flex">
         <div>
             <img class="editSubtask subtaskImg cursorPointer d-none"
-                 src="../Assets/addTask/Property 1=edit.svg" alt="">
+                 src="../Assets/addTask/Property 1=edit.svg" alt="" onclick="editSubtask(subtaskDivId)">
         </div>
         <div class="seperatorSubtasks"></div>
         <div>
