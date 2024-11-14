@@ -44,15 +44,15 @@ function editSubtaskHTML(subtaskDivId, editSubtask) {
 // POP UP
 function popUpRequiredHTML() {
     return /*HTML*/`
-        < div class="space-evently" >
+        <div class="space-evently">
             <p class="center">Please, <br> fill in all required fields.</p>
-    </div > `;
+    </div> `;
 }
 
 
 function popUpAddTaskHTML() {
     return /*HTML*/`
-        < div class="space-evently flex" >
+        <div class="space-evently flex">
         <p>Task added to board</p>
         <img src="../Assets/addTask/Icons.svg" alt="">
     </div>`;

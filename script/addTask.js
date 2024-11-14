@@ -110,7 +110,7 @@ function setPrio(prio, event) {
     // Prevent default action (in case it's triggering form submission or reset)
     event.preventDefault();
 
-    // Set the selected priority
+
     selectedPrio = prio;
 
     let priorityButton = event.currentTarget.id;
@@ -373,7 +373,7 @@ async function createTasks(event) {
     let description = document.getElementById('textareaDescription').value;
     let dueDate = document.getElementById('dueDate').value;
     let category = document.getElementById('categorySelect').value;
-    let subtask = document.getElementById('subtaskSelect').value;
+    let subtask = document.getElementById('subtaskLi_0').value;
 
     // Validate that all required fields are filled
     if (!title || !dueDate || !selectedPrio || category === '0') {
