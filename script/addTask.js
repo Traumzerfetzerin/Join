@@ -374,7 +374,6 @@ async function createTasks(event) {
     let dueDate = document.getElementById('dueDate').value;
     let category = document.getElementById('categorySelect').value;
 
-    // Sammle die Subtasks
     let subtasks = Array.from(document.querySelectorAll('#editSubtasks li')).map(li => li.textContent);
 
     // Validate that all required fields are filled
@@ -384,7 +383,7 @@ async function createTasks(event) {
         return;
     }
 
-    // Structure the task data
+    // Structure in firebase
     const taskData = {
         title: title,
         description: description,
@@ -392,10 +391,11 @@ async function createTasks(event) {
         prio: selectedPrio,
         status: "to do",
         contacts: selectedContacts,
-        subtasks: subtasks // Füge die Subtasks hinzu
+        subtasks: subtasks 
     };
 
-    // Send the task data to Firebase using the selected category as the key
+    document.getElementById('editSubtasks').innerHTML = "";
+
     try {
         let response = await fetch(CREATETASK_URL + '/' + category + '.json', {
             method: "POST",
