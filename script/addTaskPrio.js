@@ -57,3 +57,15 @@ function urgentPrioButton(priorityButton) {
     document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
     document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
 }
+
+
+// CLEAR PRIO BUTTON
+async function clearPrioButtons() {
+    document.getElementById('low').classList.remove('lowWhite');
+    document.getElementById('medium').classList.remove('mediumWhite');
+    document.getElementById('urgent').classList.remove('urgentWhite');
+    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg"
+    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media white.svg";
+    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
+    document.getElementById('medium').classList.add('mediumWhite');
+}

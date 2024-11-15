@@ -4,7 +4,7 @@ const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatab
 // Call the function to load contacts when the page loads
 window.onload = function () {
     loadContactsForDropdown();
-    setMinDueDate(); // Restore the date functionality
+    setMinDueDate(); 
 };
 
 
@@ -195,18 +195,6 @@ async function clearTasks() {
     //     document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
     // });
     clearPrioButtons();
-}
-
-
-// CLEAR PRIO BUTTON
-async function clearPrioButtons() {
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg"
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media white.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
-    document.getElementById('medium').classList.add('mediumWhite');
 }
 
 
