@@ -58,9 +58,9 @@ function addTaskToColumn(task, category, taskId, columns) {
     let contactList = task.contacts
         ? task.contacts.map(contact => `<li>${contact}</li>`).join('')
         : '';
-    
+    let subtaskCount = task.subtasks ? task.subtasks.length : 0;
     let taskClass = getTaskClass(task.title);
-    let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass);
+    let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount);
 
     let columnId = task.column ? task.column : "toDo";
     document.getElementById(columns[columnId]).innerHTML += taskHtml;

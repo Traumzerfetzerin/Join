@@ -373,7 +373,9 @@ async function createTasks(event) {
     let description = document.getElementById('textareaDescription').value;
     let dueDate = document.getElementById('dueDate').value;
     let category = document.getElementById('categorySelect').value;
-    let subtask = document.getElementById('subtaskLi_0').value;
+
+    // Sammle die Subtasks
+    let subtasks = Array.from(document.querySelectorAll('#editSubtasks li')).map(li => li.textContent);
 
     // Validate that all required fields are filled
     if (!title || !dueDate || !selectedPrio || category === '0') {
@@ -390,7 +392,7 @@ async function createTasks(event) {
         prio: selectedPrio,
         status: "to do",
         contacts: selectedContacts,
-        subtask: subtask
+        subtasks: subtasks // Füge die Subtasks hinzu
     };
 
     // Send the task data to Firebase using the selected category as the key
@@ -407,7 +409,7 @@ async function createTasks(event) {
         if (response.ok) {
             let responseToJson = await response.json();
             console.log('Task successfully created:', responseToJson);
-            showToast('Task successfully created under the category: ' + category + subtask);
+            showToast('Task successfully created under the category: ' + category);
         } else {
             console.error('Error creating task:', response.statusText);
         }
@@ -419,7 +421,6 @@ async function createTasks(event) {
     await popUpAddTask();
     await closeTask();
 }
-
 
 // RED BORDER
 async function redBorder() {
