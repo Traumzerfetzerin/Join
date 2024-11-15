@@ -34,7 +34,7 @@ function getTaskClass(title) {
 function loadTasks(tasks) {
     clearColumns();
 
-    const columns = {
+    let columns = {
         toDo: "toDoColumn",
         inProgress: "inProgressColumn",
         awaitFeedback: "awaitFeedbackColumn",
@@ -86,8 +86,8 @@ function checkEmptyColumns(columns) {
 
 /** Enable drag and drop functionality */
 function enableDragAndDrop(columns) {
-    const draggableTasks = document.querySelectorAll('.draggable');
-    const dropZones = Object.values(columns).map(column => document.getElementById(column));
+    let draggableTasks = document.querySelectorAll('.draggable');
+    let dropZones = Object.values(columns).map(column => document.getElementById(column));
 
     draggableTasks.forEach(task => {
         task.addEventListener('dragstart', function (event) {
@@ -102,18 +102,16 @@ function enableDragAndDrop(columns) {
         
         zone.addEventListener('drop', async function (event) {
             event.preventDefault();
-            const taskId = event.dataTransfer.getData('task-id');
-            const taskElement = document.getElementById(taskId);
+            let taskId = event.dataTransfer.getData('task-id');
+            let taskElement = document.getElementById(taskId);
             
             if (taskElement) {
-                // Direktes Verschieben des Task-Elements
                 zone.insertAdjacentElement('beforeend', taskElement);
                 
-                // Die neue Spalte speichern
-                const column = Object.keys(columns).find(key => columns[key] === zone.id);
-                await updateTaskColumn(taskId, column); // Update Firebase mit der neuen Spalte
-                
-                checkEmptyColumns(columns); // Aktualisiere leere Spalten nach dem Verschieben
+                let column = Object.keys(columns).find(key => columns[key] === zone.id);
+                await updateTaskColumn(taskId, column);
+            
+                checkEmptyColumns(columns); 
             }
         });
     });

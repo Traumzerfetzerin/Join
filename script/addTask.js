@@ -1,88 +1,6 @@
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 
 
-async function loadContactsForDropdown() {
-    try {
-        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
-        const contactsData = await response.json();
-        if (contactsData) {
-            contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-            populateCheckboxDropdown(); // Populate checkboxes
-        } else {
-            console.log('No contacts found');
-        }
-    } catch (error) {
-        console.error('Error fetching contacts:', error);
-    }
-}
-
-
-// Populate the custom dropdown with checkboxes for each contact
-function populateCheckboxDropdown() {
-    const dropdown = document.getElementById("assignTaskDropdown");
-    dropdown.innerHTML = ''; // Clear previous options
-
-    contacts.forEach(contact => {
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
-        checkbox.value = contact.name; // Use contact name as value
-        checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
-
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(contact.name)); // Display contact name
-        dropdown.appendChild(label);
-        dropdown.appendChild(document.createElement('br')); // Line break for better UI
-    });
-}
-
-
-// Maintain an array of selected contacts
-let selectedContacts = [];
-
-
-// Update the selected contacts based on checked checkboxes
-function updateAssignedContacts() {
-    selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value);
-
-    // Update the input field with the selected contacts
-    document.getElementById('assigned-to').value = selectedContacts.join(', ');
-}
-
-
-// Toggle dropdown visibility
-function toggleDropdown() {
-    const dropdown = document.getElementById('assignTaskDropdown');
-    let dropdownImg = document.getElementById('dropdown');
-    let dropdownImg1 = document.getElementById('dropdown1');
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-        dropdown.style.display = 'block'; // Show dropdown
-        dropdownImg.style.display = 'none';
-        dropdownImg1.style.display = 'block';
-    } else {
-        dropdown.style.display = 'none'; // Hide dropdown
-        dropdownImg1.style.display = 'none';
-        dropdownImg.style.display = 'block';
-    }
-}
-
-// Close the dropdown when clicking outside
-document.addEventListener('click', function (event) {
-    const dropdown = document.getElementById('assignTaskDropdown');
-    const inputContainer = document.querySelector('.input-with-icon');
-    let dropdownImg = document.getElementById('dropdown');
-    let dropdownImg1 = document.getElementById('dropdown1');
-
-    if (!inputContainer.contains(event.target)) {
-        dropdown.style.display = 'none';
-        dropdownImg1.style.display = 'none';
-        dropdownImg.style.display = 'block';
-    }
-});
-
-
 // Call the function to load contacts when the page loads
 window.onload = function () {
     loadContactsForDropdown();
@@ -95,66 +13,6 @@ function calculateDueDate() {
     let duoDate = new Date();
     let formattedDate = duoDate.toISOString().split('T')[0];
     document.getElementById('dueDate').setAttribute('min', formattedDate);
-}
-
-let selectedPrio = null;
-
-/**
- * Sets the selected priority and highlights the selected button.
- * 
- * @param {string} prio - The priority to be set (e.g., 'Urgent', 'Medium', 'Low').
- * @param {Event} event - The event to prevent default behavior.
- */
-
-function setPrio(prio, event) {
-    // Prevent default action (in case it's triggering form submission or reset)
-    event.preventDefault();
-
-
-    selectedPrio = prio;
-
-    let priorityButton = event.currentTarget.id;
-
-    if (priorityButton === "low") {
-        lowPrioButton(priorityButton);
-    } else if (priorityButton === "medium") {
-        mediumPrioButton(priorityButton);
-    } else if (priorityButton === "urgent") {
-        urgentPrioButton(priorityButton);
-    }
-}
-
-
-// PRIO BUTTON LOW
-function lowPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('lowWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
-}
-
-
-// PRIO BUTTON MEDIUM
-function mediumPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('mediumWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio media white.svg";
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
-}
-
-
-// PRIO BUTTON URGENT
-function urgentPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('urgentWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
 }
 
 
@@ -352,111 +210,128 @@ async function clearPrioButtons() {
 }
 
 
-let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
+let taskCategory = "";
 
 /**
- * Creates a new task and sends the task data to Firebase.
- * 
- * The function collects data from the form (title, description, due date, category, and priority),
- * validates that the required fields are filled, and posts the task data to the Firebase database
- * under the selected category.
- * 
- * @param {Event} event - The click event to prevent the default form submission.
+ * Creates a new task and sends it to Firebase.
+ * @param {Event} event - Prevents default form submission.
  */
-
 async function createTasks(event) {
-    // Prevent the form from reloading the page
     event.preventDefault();
+    let taskData = collectTaskData();
+    if (!validateTaskData(taskData)) return;
 
-    // Collect task data
-    let title = document.getElementById('inputTitle').value;
-    let description = document.getElementById('textareaDescription').value;
-    let dueDate = document.getElementById('dueDate').value;
-    let category = document.getElementById('categorySelect').value;
+    document.getElementById('editSubtasks').innerHTML = "";
+    await saveTaskToFirebase(taskData);
+    await finalizeTaskCreation();
+}
 
-    let subtasks = Array.from(document.querySelectorAll('#editSubtasks li')).map(li => li.textContent);
+/**
+ * Collects data from the form and returns it as an object.
+ * @returns {Object} - Task data.
+ */
+function collectTaskData() {
+    let subtasks = Array.from(
+        document.querySelectorAll('#editSubtasks li')
+    ).map(li => li.textContent);
 
-    // Validate that all required fields are filled
-    if (!title || !dueDate || !selectedPrio || category === '0') {
-        await popUpRequired();
-        await redBorder();
-        return;
-    }
-
-    // Structure in firebase
-    const taskData = {
-        title: title,
-        description: description,
-        dueDate: dueDate,
+    return {
+        title: document.getElementById('inputTitle').value,
+        description: document.getElementById('textareaDescription').value,
+        dueDate: document.getElementById('dueDate').value,
         prio: selectedPrio,
         status: "to do",
         contacts: selectedContacts,
-        subtasks: subtasks 
+        subtasks: subtasks,
+        category: document.getElementById('categorySelect').value
     };
+}
 
-    document.getElementById('editSubtasks').innerHTML = "";
-
-    try {
-        let response = await fetch(CREATETASK_URL + '/' + category + '.json', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(taskData)
-        });
-
-        // Check if the task was successfully created
-        if (response.ok) {
-            let responseToJson = await response.json();
-            console.log('Task successfully created:', responseToJson);
-            showToast('Task successfully created under the category: ' + category);
-        } else {
-            console.error('Error creating task:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error saving to Firebase:', error);
+/**
+ * Validates the task data.
+ * @param {Object} data - The task data to validate.
+ * @returns {boolean} - Returns true if valid, otherwise false.
+ */
+async function validateTaskData(data) {
+    if (!data.title || !data.dueDate || !data.prio || data.category === '0') {
+        await popUpRequired();
+        await redBorder();
+        return false;
     }
+    return true;
+}
 
+/**
+ * Sends the task data to Firebase.
+ * @param {Object} taskData - The task data to save.
+ */
+async function saveTaskToFirebase(taskData) {
+    try {
+        let response = await fetch(
+            `${CREATETASK_URL}/${taskData.category}.json`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(taskData)
+            });
+
+        if (response.ok) {
+            let json = await response.json();
+            console.log('Task created:', json);
+            showToast(`Task created in category: ${taskData.category}`);
+        } else console.error('Error:', response.statusText);
+    } catch (error) {
+        console.error('Error saving:', error);
+    }
+}
+
+
+async function finalizeTaskCreation() {
     await redBorder();
     await popUpAddTask();
     await closeTask();
 }
 
-// RED BORDER
+
+/**
+ * Highlights invalid inputs and resets their border after 2 seconds.
+ */
 async function redBorder() {
-    let inputElements = document.querySelectorAll('input:required:invalid');
+    let inputs = document.querySelectorAll('input:required:invalid');
     let assignedTo = document.getElementById('assigned-to');
     let categorySelect = document.getElementById('categorySelect');
 
-    inputElements.forEach(input => {
-        input.style.border = '2px solid #FF3D00';
-    });
+    highlightInvalid(inputs);
+    if (!assignedTo.value) highlightElement(assignedTo);
+    if (!categorySelect.value) highlightElement(categorySelect);
 
-    if (!assignedTo.value) {
-        assignedTo.style.border = '2px solid #FF3D00';
-    }
+    setTimeout(() => resetBorders([ ...inputs, assignedTo, categorySelect ]), 2000);
+}
 
-    if (!categorySelect.value) {
-        categorySelect.style.border = '2px solid #FF3D00';
-    }
+/**
+ * Adds a red border to invalid elements.
+ * @param {NodeList} elements - List of elements to highlight.
+ */
+function highlightInvalid(elements) {
+    elements.forEach(el => el.style.border = '2px solid #FF3D00');
+}
 
-    setTimeout(() => {
-        inputElements.forEach(input => {
-            input.style.border = '';
-        });
-    }, 2000);
+/**
+ * Highlights a specific element.
+ * @param {HTMLElement} element - Element to highlight.
+ */
+function highlightElement(element) {
+    element.style.border = '2px solid #FF3D00';
+}
 
-    setTimeout(() => {
-        assignedTo.style.border = '';
-    }, 2000);
-
-    setTimeout(() => {
-        categorySelect.style.border = '';
-    }, 2000);
+/**
+ * Resets the border for given elements.
+ * @param {HTMLElement[]} elements - Elements to reset.
+ */
+function resetBorders(elements) {
+    elements.forEach(el => (el.style.border = ''));
 }
 
 
-// POP UP REQUIRED FIELDS
 async function popUpRequired() {
     let popUpElement = document.getElementById('popUpRequired');
 
