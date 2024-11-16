@@ -6,22 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board</title>
     <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
-    <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/style.css">
+
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/navbar.css">
-    <link rel="stylesheet" href="../styles/contact.css">
-    <link rel="stylesheet" href="../styles/style.css">
+
+    <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/boardOverlay.css">
+    <link rel="stylesheet" href="../styles/responsive/boardResponsive.css">
+
     <link rel="stylesheet" href="../styles/addTask.css">
-    <script src="../script/addTask.js"></script>
+
+    <script src="../script/header.js"></script>
     <script src="../script/board.js"></script>
     <script src="../templates/boardTemplate.js"></script>
-    <script src="../script/header.js"></script>
-</head>
+    <script src="../script/addTask.js"></script>
+    <script src="../templates/addTaskTemplateHTML.js"></script>
+    <script src="../script/boardSearch.js"></script>
+    <script src="../script/boardPopUp.js"></script>
 
 <body onload="fetchTasks()">
-    <header w3-include-html="../templates/header.html"></header>
+    <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
+<<<<<<< HEAD
 
     <main class="main-content">
         <div class="board-header">
@@ -55,17 +63,20 @@
                 </div>
                 
 =======
+=======
+>>>>>>> 135e23509841c2be30de569f40f0e726a7c7dc8d
     <main class="mainBoard">
         <div id="popUpTaskOnBoard" class="flex">
             <div id="templateAddTask" class="d-none" onclick="closeTaskOnBoard()">
                 <div class="dialogBackground">
                     <div class="taskBackground">
-                        <div class="flex-end"><img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard()" class="cursorPointer" src="../Assets/addTask/close.svg"
-                                alt=""></div>
+                        <div class="flex-end"><img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard()"
+                                class="cursorPointer" src="../Assets/addTask/close.svg" alt=""></div>
                         <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
                         </section>
                     </div>
                 </div>
+<<<<<<< HEAD
             </div>
 
             <div id="columnTitles">
@@ -82,8 +93,55 @@
                 <div class="column" id="inProgressColumn"></div>
                 <div class="column" id="awaitFeedbackColumn"></div>
                 <div class="column" id="doneColumn"></div>
+=======
+>>>>>>> 135e23509841c2be30de569f40f0e726a7c7dc8d
             </div>
         </div>
+
+        <div id="forAddTask">
+            <div id="headerWrapper">
+                <div id="boardHeader">
+                    <h2>Board</h2>
+                    <div id="findAddTask">
+                        <div class="searchbarBoard">
+                            <input type="search" placeholder="Find task" id="boardSearchbar">
+                            <span class="searchbar-divider"></span> 
+                            <img src="../Assets/board/magnifier.svg" alt="magnifier" class="input-icon">
+                        </div>
+                        <button id="buttonAddTask" type="submit" class="cursorPointer" onclick="addTaskOnBoard()">Add task +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="taskBoard">
+                <div class="column-wrapper">
+                    <div class="column-title">To do <img class="cursorPointer" src="../Assets/board/plusButton.svg"
+                            alt="plus button" onclick="addTaskOnBoard()">
+                    </div>
+                    <div class="column" id="toDoColumn">
+                    </div>
+                </div>
+                <div class="column-wrapper">
+                    <div class="column-title">In progress <img class="cursorPointer"
+                            src="../Assets/board/plusButton.svg" alt="plus button" onclick="addTaskOnBoard()">
+                    </div>
+                    <div class="column" id="inProgressColumn">
+                    </div>
+                </div>
+                <div class="column-wrapper">
+                    <div class="column-title">Await feedback <img class="cursorPointer"
+                            src="../Assets/board/plusButton.svg" alt="plus button" onclick="addTaskOnBoard()">
+                    </div>
+                    <div class="column" id="awaitFeedbackColumn">
+                    </div>
+                </div>
+                <div class="column-wrapper">
+                    <div class="column-title">Done</div>
+                    <div class="column" id="doneColumn"></div>
+                </div>
+            </div>
+        </div>
+        
     </main>
 
     <footer></footer>

@@ -1,4 +1,5 @@
-.taskSide {
+.taskSide,
+.sectionTemplateAddTask {
     max-width: 1116px;
     max-height: 870px;
 }
@@ -88,6 +89,18 @@ textarea {
     height: auto;
 }
 
+#assignTaskDropdown {
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: auto;
+    padding: 10px;
+    overflow-y: scroll;
+    position: absolute;
+    background-color: #FFF;
+    border-radius: 12px;
+    z-index: 1;
+}
+
 /* Separator Styling */
 .seperator {
     background-color: #D1D1D1;
@@ -133,6 +146,47 @@ textarea {
     border-color: #FF3D00;
     background-color: #FF3D00;
     color: #FFF;
+}
+
+#categoryDropdown {
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    background-color: #FFF;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.createdSubtask:hover img {
+    display: inline;
+}
+
+.editSubtask:hover,
+.deleteSubtask:hover {
+    transform: scale(1.1);
+}
+
+.subtaskImg:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+}
+
+.createdSubtask:hover,
+.closeSubtask:hover,
+.createSubtask:hover,
+#dropdownCategory:hover,
+#dropdownCategory1:hover,
+#dropdown:hover,
+#dropdown1:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+}
+
+.seperatorSubtasks {
+    background-color: #D1D1D1;
+    width: 2px;
+    height: auto;
+    align-self: stretch;
 }
 
 /* Button Container */
@@ -216,17 +270,10 @@ textarea {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Required Field Styling */
-.required {
-    font-size: 16px;
-    color: #FF3D00;
-}
-
-#assignTaskDropdown {
-    border: 1px solid #ccc;
-    max-height: 200px;
-    padding: 10px;
-    overflow-y: scroll;
+#technicalTask:hover,
+#userStory:hover {
+    background-color: #D1D1D1;
+    border-radius: 8px;
 }
 
 .popUp {
@@ -248,14 +295,8 @@ textarea {
     color: #FFF;
 }
 
-input:required:invalid {
-    border: 2px solid #FF3D00;
-}
-
-#categorySelect {
-    border: 2px solid #FF3D00;
-}
-
-#assigned-to {
-    border: 2px solid #FF3D00;
+/* Required Field Styling */
+.required {
+    font-size: 16px;
+    color: #FF3D00;
 }

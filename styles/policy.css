@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 body {
   overflow: auto; /* Allow body to scroll if content exceeds the viewport */
@@ -36,6 +37,17 @@ body {
     margin-right: 20px;
     margin-bottom: 120px;
   }
+=======
+#policy {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-arrow:hover img {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 32px;
+>>>>>>> 135e23509841c2be30de569f40f0e726a7c7dc8d
 }
 
 

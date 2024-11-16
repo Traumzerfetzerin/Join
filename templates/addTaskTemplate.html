@@ -16,25 +16,26 @@
                     <textarea class="cursorPointer" id="textareaDescription" name=""
                         placeholder="Enter a Description"></textarea>
                 </section>
+
                 <div class="input-group">
-                    <label for="assignTask" class="add-task-label">Assign Task (Select multiple) <span
+                    <label for="assignTask" class="add-task-label fonts">Assign Task (Select multiple)<span
                             class="required">*</span></label>
                     <div class="input-with-icon">
                         <input type="text" name="assigned" class="add-task-title add-task-assigned-to cursorPointer"
-                            id="assigned-to" placeholder="Selected contacts" autocomplete="off" readonly>
+                            id="assigned-to" placeholder="Selected contacts" autocomplete="off" readonly
+                            onclick="toggleDropdown()">
                         <div>
                             <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown"
                                 class="cursorPointer margin-right dropdownimg" onclick="toggleDropdown()">
+                            <img src="../Assets/addTask/Property 1=Variant4.svg" id="dropdown1"
+                                class="cursorPointer margin-right dropdownimg d-none" onclick="toggleDropdown()">
+                        </div>
+                        <!-- Custom Dropdown with checkboxes -->
+                        <div id="assignTaskDropdown" class="d-none">
+                            <!-- Options will be dynamically generated with checkboxes -->
                         </div>
                     </div>
-
-                    <!-- Custom Dropdown with checkboxes -->
-                    <div id="assignTaskDropdown" class="d-none">
-                        <!-- Options will be dynamically generated with checkboxes -->
-                    </div>
                 </div>
-
-
             </div>
 
             <div class="seperator"></div>
@@ -53,44 +54,63 @@
                     <div class="fonts">Prio</div>
                     <div class="flex space-between">
                         <button id="urgent" type="button" class="prioButton cursorPointer fonts"
-                            onclick="setPrio('urgent', event)">Urgent
+                            onclick="setPrio('urgent', event)">
+                            Urgent
                             <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
                         </button>
+
                         <button id="medium" type="button" class="prioButton cursorPointer fonts mediumWhite"
-                            onclick="setPrio('medium', event)">Medium
+                            onclick="setPrio('medium', event)">
+                            Medium
                             <img id="mediumSvg" src="../Assets/addTask/Prio media white.svg" alt="">
                         </button>
+
                         <button id="low" type="button" class="prioButton cursorPointer fonts"
-                            onclick="setPrio('low', event)">Low
+                            onclick="setPrio('low', event)">
+                            Low
                             <img id="lowSvg" src="../Assets/addTask/Prio baja.svg" alt="">
                         </button>
                     </div>
                 </section>
 
-
-                <section>
-                    <div class="flex fonts">
-                        <div>Category</div>
-                        <div class="colorRed">*</div>
+                <div class="input-group">
+                    <label for="assignTask" class="add-task-label fonts">Category<span class="required">*</span></label>
+                    <div class="input-with-icon" id="inputCategory">
+                        <input type="text" name="category" class="add-task-title add-task-assigned-to cursorPointer"
+                            id="categorySelect" placeholder="Select task category" autocomplete="off" readonly
+                            onclick="toggleDropdownCategory()">
+                        <div>
+                            <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdownCategory"
+                                class="cursorPointer margin-right dropdownimg" onclick="toggleDropdownCategory()">
+                            <img src="../Assets/addTask/Property 1=Variant4.svg" id="dropdownCategory1"
+                                class="cursorPointer margin-right dropdownimg d-none"
+                                onclick="toggleDropdownCategory()">
+                        </div>
                     </div>
-                    <div class="custom-select relative">
-                        <select class="input_12_16 cursorPointer fonts" id="categorySelect">
-                            <option value="0">Select task category</option>
-                            <option value="Technical Task" id="technicalTask">Technical Task</option>
-                            <option value="User Story" id="userStory">User Story</option>
-                        </select>
-                        <!-- <img class="dropDown cursorPointer" src="../Assets/addTask/arrow_drop_downaa.svg" alt=""> -->
+                    <div id="categoryDropdown" class="d-none">
+                        <div class="fonts cursorPointer" id="technicalTask" onclick="selectTechnicalTask()">Technical
+                            Task</div>
+                        <div class="fonts cursorPointer" id="userStory" onclick="selectUserStory()">User Story</div>
                     </div>
-                </section>
+                </div>
 
                 <section class="fonts">
-                    <div>Subtasks</div>
-                    <div class="relative">
-                        <input class="input_12_16 cursorPointer" type="text" name="" id="inputSubtasks"
-                            placeholder="Add new subtask">
-                        <img class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg" alt="">
-                    </div>
+                    <div class="input-group">
+                        <label for="assignTask" class="add-task-label fonts">Subtasks</label>
+                        <div class="input-with-icon" id="inputSubtask">
+                            <input type="text" name="subtask" class="add-task-title add-task-assigned-to cursorPointer"
+                                id="subtaskSelect" placeholder="Add new subtask" autocomplete="off">
+                            <div>
+                                <div>
+                                    <img id="addSubtaskButton" class="subtaskImg cursorPointer"
+                                        src="../Assets/addTask/Property 1=add.svg" alt="" onclick="addSubtask()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="editSubtasks"></div>
                 </section>
+
             </div>
         </div>
     </form>

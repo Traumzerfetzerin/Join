@@ -1,34 +1,61 @@
-<<<<<<< HEAD
-main {
-    margin-top: 120px;
-    margin-left: 260px;
-}
-
-=======
->>>>>>> 80f143f73a5a6b6a3085045a313cf51ab6984dcf
 #boardHeader h2 {
     font-size: 61px;
 }
 
+#headerWrapper {
+    width: 1208px;
+    height: 232px;
+    top: 96px;
+    left: 232px;
+    gap: 0px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
 #boardHeader {
     display: flex;
-    justify-content: space-between;
     width: 1056px;
     height: 73px;
     top: 79.5px;
     left: 64px;
+    gap: 0px;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
 }
 
 #boardSearchbar {
-    width: 312px;
+    width: calc(100% - 48px - 16px);
     height: 48px;
     border-radius: 10px;
     border: solid 1px;
-    padding: 8px 16px 8px 16px;
-    gap: 10px;
+    padding: 8px 16px;
+    box-sizing: border-box;
 }
 
-button {
+.searchbar-divider {
+    width: 1px;
+    height: 32px;
+    background-color: #333;
+    margin: 0 16px;
+}
+
+.input-icon {
+    width: 48px;
+    height: 32px;
+    margin-left: 8px;
+}
+
+#findAddTask {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 504px;
+    height: 48px;
+}
+
+#buttonAddTask {
     width: 160px;
     height: 48px;
     border-radius: 10px;
@@ -36,70 +63,132 @@ button {
     border-color: #2A3647;
     padding: 8px 16px 8px 16px;
     gap: 4px;
-    color: #2A3647;
+    background-color: #2A3647;
+    color: white;
+    font-weight: 700;
+    font-size: 21px;
 }
 
-#columnTitles {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 0;
-}
-
-#columnTitles div {
-    width: 22%;
-    text-align: center;
+.column-title {
     font-size: 18px;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.column-title img {
+    margin-left: auto;
+}
+
+.task.user-story h4 {
+    background-color: #0038FF;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.task.technical-task h4 {
+    background-color: #1FD7C1;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
 }
 
 #taskBoard {
     width: 1208px;
-    height: 688;
+    height: 688px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 64px;
+    padding-right: 64px;
+    position: relative;
     top: 336px;
     left: 232px;
-    padding-right: 64px;
-    padding-left: 64px;
     gap: 26px;
+}
+
+.column-wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px; /* Space between input field and icon */
+    width: 22%;
 }
 
-.input-wrapper input {
-    width: 300px; /* Adjust width as needed */
-    padding: 12px 21px;
-    border: 1px solid #3498db;
-    border-radius: 10px;
-    font-size: 14px;
-    outline: none;
+.column {
+    width: 252px;
+    height: 688px;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+#toDoColumn {
+    width: 246px !important;
+}
+
+.task {
+    width: 100%;
+    padding: 16px;
+    gap: 10px;
+    border-radius: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: white;
-    box-sizing: border-box;
-}
-
-.input-wrapper input::placeholder {
-    color: #ccc;
+    margin-bottom: 10px;
 }
 
 .column:hover {
     background-color: #e0e0e0;
 }
 
-.task:hover {
-    cursor: pointer;
-}
-
-#templateAddTask {
-    position: absolute;
-    top: calc(50vh - 350px);
-    left: calc(50vw - 680px);
-    z-index: 1;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
 #clearButton {
     width: 96.2px;
+}
+
+.dialogBackground {
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.taskBackground {
+    background-color: #FFF;
+    border-radius: 30px;
+    max-width: 1116px;
+    max-height: 870px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#closeAddTaskOnBoard:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+}
+
+.user-story h4 {
+    background-color: #0038FF;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.technical-task h4 {
+    background-color: #1FD7C1;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.no-tasks {
+    color: #888;
+    text-align: center;
+    font-style: italic;
 }

@@ -1,80 +1,182 @@
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 
 
+// Call the function to load contacts when the page loads
+window.onload = function () {
+    loadContactsForDropdown();
+    setMinDueDate(); 
+};
+
+
+// CALCULATE DUE DATE
 function calculateDueDate() {
     let duoDate = new Date();
     let formattedDate = duoDate.toISOString().split('T')[0];
     document.getElementById('dueDate').setAttribute('min', formattedDate);
 }
 
-let selectedPrio = null;
 
-/**
- * Sets the selected priority and highlights the selected button.
- * 
- * @param {string} prio - The priority to be set (e.g., 'Urgent', 'Medium', 'Low').
- * @param {Event} event - The event to prevent default behavior.
- */
-
-function setPrio(prio, event) {
-    // Prevent default action (in case it's triggering form submission or reset)
-    event.preventDefault();
-
-    // Set the selected priority
-    selectedPrio = prio;
-
-    // // Remove 'active' class from all buttons
-    // const prioButtons = document.querySelectorAll('.prioButton');
-    // prioButtons.forEach(button => button.classList.remove('active'));
-
-    // // Add 'active' class to the clicked button
-    // event.target.classList.add('active');
+// CATEGORY
+function selectTechnicalTask() {
+    document.getElementById('categorySelect').value = "Technical Task";
+    toggleDropdownCategory();
+}
 
 
-    let priorityButton = event.target.id;
+function selectUserStory() {
+    document.getElementById('categorySelect').value = "User Story";
+    toggleDropdownCategory();
+}
 
-    if (event.target.id == "low") {
-        lowPrioButton(priorityButton)
 
-    } if (event.target.id == "medium") {
-        mediumPrioButton(priorityButton)
+function toggleDropdownCategory() {
+    let categoryDropdown = document.getElementById('categoryDropdown');
+    let dropdownImg = document.getElementById('dropdownCategory');
+    let dropdownImg1 = document.getElementById('dropdownCategory1');
 
-    } if (event.target.id == "urgent") {
-        urgentPrioButton(priorityButton)
+    if (categoryDropdown.classList.contains('d-none')) {
+        categoryDropdown.classList.remove('d-none');
+        dropdownImg.classList.add('d-none');
+        dropdownImg1.classList.remove('d-none');
+    } else {
+        categoryDropdown.classList.add('d-none');
+        dropdownImg.classList.remove('d-none');
+        dropdownImg1.classList.add('d-none');
     }
 }
 
 
-// PRIO BUTTON LOW
-function lowPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('lowWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
+// CLOSE DROPDOWN
+document.addEventListener('click', function (event) {
+    let categoryDropdown = document.getElementById('categoryDropdown');
+    let categoryInputContainer = document.getElementById('inputCategory');
+    let dropdownImg = document.getElementById('dropdownCategory');
+    let dropdownImg1 = document.getElementById('dropdownCategory1');
+
+    if (!categoryInputContainer.contains(event.target)) {
+        categoryDropdown.classList.add('d-none');
+        dropdownImg.classList.remove('d-none');
+        dropdownImg1.classList.add('d-none');
+    }
+});
+
+
+// ENTER SUBTASK
+let input = document.getElementById('subtaskSelect');
+document.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById('addSubtaskButton').click();
+    }
+});
+
+
+// CREATE SUBTASK
+let subtaskCounter = 0;
+let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
+let subtaskUlId = `subtaskUl_${subtaskCounter}`;
+let subtaskLiId = `subtaskLi_${subtaskCounter}`;
+
+
+function createSubtaskElement(subtaskText) {
+    let subtaskHTML = createSubtaskElementHTMML(subtaskText);
+
+    document.getElementById('editSubtasks').innerHTML += subtaskHTML;
+    subtaskCounter++;
 }
 
 
-// PRIO BUTTON MEDIUM
-function mediumPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('mediumWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio media white.svg";
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
+// ADD SUBTASK
+function addSubtask() {
+    let addSubtask = document.getElementById('subtaskSelect').value;
+
+    if (addSubtask.trim() !== "") {
+        createSubtaskElement(addSubtask);
+        document.getElementById('subtaskSelect').value = "";
+    }
 }
 
 
-// PRIO BUTTON URGENT
-function urgentPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('urgentWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
+function saveSubtask() {
+    let subtaskAsText = JSON.stringify(subtask);
+    localStorage.setItem('subtask', subtaskAsText);
+}
+
+
+function load() {
+    let subtaskAsText = localStorage.getItem('subtask');
+
+    if (subtaskAsText) {
+        subtask = JSON.parse(subtaskAsText);
+    }
+}
+
+
+// EDIT SUBTASK
+function editSubtask(subtaskDivId) {
+    let createdSubtask = document.getElementById(subtaskDivId);
+    let editSubtask = createdSubtask.innerText;
+    createdSubtask.innerHTML = editSubtaskHTML(subtaskDivId, editSubtask);
+}
+
+
+function updateSubtaskText(subtaskDivId, subtaskValue) {
+    let subtaskElement = document.getElementById(subtaskDivId);
+    if (subtaskElement) {
+
+        let subtaskTextElements = subtaskElement.getElementsByClassName('subtaskText');
+        if (subtaskTextElements.length > 0) {
+            subtaskTextElements[0].innerText = subtaskValue;
+        }
+    }
+}
+
+
+// DELETE SUBTASK
+function deleteSubtask(subtaskDivId) {
+    let deleteSubtask = document.getElementById(subtaskDivId);
+    if (deleteSubtask) {
+        deleteSubtask.remove();
+    }
+}
+
+
+function showDeleteIcon(subtaskDivId) {
+    let subtaskDiv = document.getElementById(subtaskDivId);
+    if (subtaskDiv) {
+        let deleteIcons = subtaskDiv.getElementsByClassName('deleteSubtask');
+        if (deleteIcons.length > 0) {
+            deleteIcons[0].classList.remove('d-none');
+        }
+    }
+}
+
+
+function acceptSubtask(subtaskDivId) {
+    let subtaskInput = document.getElementById(`editSubtask_${subtaskDivId}`);
+    let subtaskValue = subtaskInput.value;
+
+    if (subtaskValue.trim() === "") {
+        return;
+    }
+
+    updateSubtaskText(subtaskDivId, subtaskValue);
+
+    let acceptIcon = document.getElementById(`acceptSubtask_${subtaskDivId}`);
+    if (acceptIcon) {
+        acceptIcon.classList.add('d-none');
+    }
+}
+
+
+function showAcceptIconsIcon(subtaskDivId) {
+    let subtaskDiv = document.getElementById(subtaskDivId);
+    if (subtaskDiv) {
+        let acceptIcons = subtaskDiv.getElementsByClassName('acceptSubtask');
+        if (acceptIcons.length > 0) {
+            acceptIcons[0].classList.remove('d-none');
+        }
+    }
 }
 
 
@@ -84,104 +186,149 @@ async function clearTasks() {
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
-    document.getElementById('inputSubtasks').value = "";
+    document.getElementById('editSubtasks').value = "";
     document.getElementById('assigned-to').value = "";
     document.getElementById('assignTaskDropdown').value = "";
     document.getElementById('categorySelect').selectedIndex = 0;
-    contacts.forEach(contact => {
-        document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`).checked = false;
-    });
+    document.getElementById('categoryDropdown').classList.add('d-none');
+    // contacts.forEach(contact => {
+    //     document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
+    // });
     clearPrioButtons();
 }
 
 
-// CLEAR PRIO BUTTON
-async function clearPrioButtons() {
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg"
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media white.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
-    document.getElementById('medium').classList.add('mediumWhite');
+let taskCategory = "";
+
+/**
+ * Creates a new task and sends it to Firebase.
+ * @param {Event} event - Prevents default form submission.
+ */
+async function createTasks(event) {
+    event.preventDefault();
+    let taskData = collectTaskData();
+    if (!validateTaskData(taskData)) return;
+
+    document.getElementById('editSubtasks').innerHTML = "";
+    await saveTaskToFirebase(taskData);
+    await finalizeTaskCreation();
+}
+
+/**
+ * Collects data from the form and returns it as an object.
+ * @returns {Object} - Task data.
+ */
+function collectTaskData() {
+    let subtasks = Array.from(
+        document.querySelectorAll('#editSubtasks li')
+    ).map(li => li.textContent);
+
+    return {
+        title: document.getElementById('inputTitle').value,
+        description: document.getElementById('textareaDescription').value,
+        dueDate: document.getElementById('dueDate').value,
+        prio: selectedPrio,
+        status: "to do",
+        contacts: selectedContacts,
+        subtasks: subtasks,
+        category: document.getElementById('categorySelect').value
+    };
+}
+
+/**
+ * Validates the task data.
+ * @param {Object} data - The task data to validate.
+ * @returns {boolean} - Returns true if valid, otherwise false.
+ */
+async function validateTaskData(data) {
+    if (!data.title || !data.dueDate || !data.prio || data.category === '0') {
+        await popUpRequired();
+        await redBorder();
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Sends the task data to Firebase.
+ * @param {Object} taskData - The task data to save.
+ */
+async function saveTaskToFirebase(taskData) {
+    try {
+        let response = await fetch(
+            `${CREATETASK_URL}/${taskData.category}.json`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(taskData)
+            });
+
+        if (response.ok) {
+            let json = await response.json();
+            console.log('Task created:', json);
+            showToast(`Task created in category: ${taskData.category}`);
+        } else console.error('Error:', response.statusText);
+    } catch (error) {
+        console.error('Error saving:', error);
+    }
 }
 
 
-let taskCategory = ""; // Variable zum Speichern der ausgewählten kategorie
-
-/**
- * Creates a new task and sends the task data to Firebase.
- * 
- * The function collects data from the form (title, description, due date, category, and priority),
- * validates that the required fields are filled, and posts the task data to the Firebase database
- * under the selected category.
- * 
- * @param {Event} event - The click event to prevent the default form submission.
- */
-
-async function createTasks(event) {
-    // Prevent the form from reloading the page
-    event.preventDefault();
-
-    // Collect task data
-    let title = document.getElementById('inputTitle').value;
-    let description = document.getElementById('textareaDescription').value;
-    let dueDate = document.getElementById('dueDate').value;
-    let category = document.getElementById('categorySelect').value;
-
-    // Validate that all required fields are filled
-    if (!title || !dueDate || !selectedPrio || category === '0') {
-        await popUpRequired();
-        return;
-    }
-
-    // Structure the task data
-    const taskData = {
-        title: title,
-        description: description,
-        dueDate: dueDate,
-        prio: selectedPrio,
-        status: "to do",
-        contacts: selectedContacts
-    };
-
-    // Send the task data to Firebase using the selected category as the key
-    try {
-        let response = await fetch(CREATETASK_URL + '/' + category + '.json', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(taskData)
-        });
-
-        // Check if the task was successfully created
-        if (response.ok) {
-            let responseToJson = await response.json();
-            console.log('Task successfully created:', responseToJson);
-            showToast('Task successfully created under the category: ' + category);
-        } else {
-            console.error('Error creating task:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error saving to Firebase:', error);
-    }
-
+async function finalizeTaskCreation() {
+    await redBorder();
     await popUpAddTask();
     await closeTask();
 }
 
 
-// POP UP REQUIRED FIELDS
+/**
+ * Highlights invalid inputs and resets their border after 2 seconds.
+ */
+async function redBorder() {
+    let inputs = document.querySelectorAll('input:required:invalid');
+    let assignedTo = document.getElementById('assigned-to');
+    let categorySelect = document.getElementById('categorySelect');
+
+    highlightInvalid(inputs);
+    if (!assignedTo.value) highlightElement(assignedTo);
+    if (!categorySelect.value) highlightElement(categorySelect);
+
+    setTimeout(() => resetBorders([ ...inputs, assignedTo, categorySelect ]), 2000);
+}
+
+/**
+ * Adds a red border to invalid elements.
+ * @param {NodeList} elements - List of elements to highlight.
+ */
+function highlightInvalid(elements) {
+    elements.forEach(el => el.style.border = '2px solid #FF3D00');
+}
+
+/**
+ * Highlights a specific element.
+ * @param {HTMLElement} element - Element to highlight.
+ */
+function highlightElement(element) {
+    element.style.border = '2px solid #FF3D00';
+}
+
+/**
+ * Resets the border for given elements.
+ * @param {HTMLElement[]} elements - Elements to reset.
+ */
+function resetBorders(elements) {
+    elements.forEach(el => (el.style.border = ''));
+}
+
+
 async function popUpRequired() {
-    document.getElementById('popUpRequired').classList.remove('d-none');
-    document.getElementById('popUpRequired').innerHTML = /*HTML*/`
-        <div class="space-evently">
-            <p>Please, <br> fill in all required fields.</p>
-        </div>`;
+    let popUpElement = document.getElementById('popUpRequired');
+
+    popUpElement.classList.remove('d-none');
+
+    popUpElement.innerHTML = popUpRequiredHTML();
 
     setTimeout(() => {
-        document.getElementById("popUpRequired").style.display = "none";
+        popUpElement.classList.add('d-none');
     }, 1000);
 }
 
@@ -189,11 +336,7 @@ async function popUpRequired() {
 // POP UP ADD TASK
 async function popUpAddTask() {
     document.getElementById('popUpAddTask').classList.remove('d-none');
-    document.getElementById('popUpAddTask').innerHTML = /*HTML*/`
-    <div class="space-evently">
-        <p>Task added to board</p>
-        <img src="../Assets/addTask/Icons.svg" alt="">
-    </div>`;
+    document.getElementById('popUpAddTask').innerHTML = popUpAddTaskHTML();
     document.getElementById('inputTitle').value = "";
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
@@ -203,81 +346,3 @@ async function popUpAddTask() {
         document.getElementById("popUpAddTask").style.display = "none";
     }, 1000);
 }
-
-
-async function loadContactsForDropdown() {
-    try {
-        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
-        const contactsData = await response.json();
-        if (contactsData) {
-            contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-            populateCheckboxDropdown(); // Populate checkboxes
-        } else {
-            console.log('No contacts found');
-        }
-    } catch (error) {
-        console.error('Error fetching contacts:', error);
-    }
-}
-
-
-// Populate the custom dropdown with checkboxes for each contact
-function populateCheckboxDropdown() {
-    const dropdown = document.getElementById("assignTaskDropdown");
-    dropdown.innerHTML = ''; // Clear previous options
-
-    contacts.forEach(contact => {
-        const label = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
-        checkbox.value = contact.name; // Use contact name as value
-        checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
-
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(contact.name)); // Display contact name
-        dropdown.appendChild(label);
-        dropdown.appendChild(document.createElement('br')); // Line break for better UI
-    });
-}
-
-
-// Maintain an array of selected contacts
-let selectedContacts = [];
-
-
-// Update the selected contacts based on checked checkboxes
-function updateAssignedContacts() {
-    selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value);
-
-    // Update the input field with the selected contacts
-    document.getElementById('assigned-to').value = selectedContacts.join(', ');
-}
-
-
-// Toggle dropdown visibility
-function toggleDropdown() {
-    const dropdown = document.getElementById('assignTaskDropdown');
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-        dropdown.style.display = 'block'; // Show dropdown
-    } else {
-        dropdown.style.display = 'none'; // Hide dropdown
-    }
-}
-
-// Close the dropdown when clicking outside
-document.addEventListener('click', function (event) {
-    const dropdown = document.getElementById('assignTaskDropdown');
-    const inputContainer = document.querySelector('.input-with-icon');
-
-    if (!inputContainer.contains(event.target)) {
-        dropdown.style.display = 'none';
-    }
-});
-
-// Call the function to load contacts when the page loads
-window.onload = function () {
-    loadContactsForDropdown();
-    setMinDueDate(); // Restore the date functionality
-};

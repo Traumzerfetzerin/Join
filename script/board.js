@@ -1,6 +1,6 @@
 const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 
-/** fetch data from firebase API */
+/** Fetch data from Firebase API */
 async function fetchTasks() {
     try {
         let response = await fetch(TASK_URL + ".json");
@@ -15,7 +15,7 @@ async function fetchTasks() {
     }
 }
 
-
+/** Clear all task columns */
 function clearColumns() {
     document.getElementById("toDoColumn").innerHTML = "";
     document.getElementById("inProgressColumn").innerHTML = "";
@@ -23,91 +23,114 @@ function clearColumns() {
     document.getElementById("doneColumn").innerHTML = "";
 }
 
+/** Get CSS class based on task title */
+function getTaskClass(title) {
+    if (title === "User Story") return "user-story";
+    if (title === "Technical Task") return "technical-task";
+    return "";
+}
 
-/** function to load tasks and put them into the appropriate column */
+/** Load tasks and add them to the appropriate columns */
 function loadTasks(tasks) {
     clearColumns();
+
+    let columns = {
+        toDo: "toDoColumn",
+        inProgress: "inProgressColumn",
+        awaitFeedback: "awaitFeedbackColumn",
+        done: "doneColumn"
+    };
 
     for (let category in tasks) {
         let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
-            let contactList = '';
-
-            if (task.contacts) {
-                contactList = task.contacts.map(contact => `<li>${contact}</li>`).join('');
-            }
-
-            let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList);
-
-            // Check if task has a column property, if not, default to "toDo"
-            let column = task.column ? task.column : "toDo";
-            document.getElementById(column + "Column").innerHTML += taskHtml;
+            addTaskToColumn(task, category, taskId, columns);
         }
     }
 
-    enableDragAndDrop();
+    checkEmptyColumns(columns);
+    enableDragAndDrop(columns);
 }
 
+/** Add a task to the specified column */
+function addTaskToColumn(task, category, taskId, columns) {
+    let contactList = task.contacts
+        ? task.contacts.map(contact => `<li>${contact}</li>`).join('')
+        : '';
+    let subtaskCount = task.subtasks ? task.subtasks.length : 0;
+    let taskClass = getTaskClass(task.title);
+    let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount);
 
-/** Enable drag and drop functionality for all columns */
-function enableDragAndDrop() {
-    let columns = document.querySelectorAll('.column');
-    columns.forEach(column => {
-        column.ondragover = allowDrop;
-        column.ondrop = drop;
-    });
-    let tasks = document.querySelectorAll('.task');
-    tasks.forEach(task => {
-        task.ondragstart = drag;
-    });
+    let columnId = task.column ? task.column : "toDo";
+    document.getElementById(columns[columnId]).innerHTML += taskHtml;
 }
 
-
-/** Allow dropping in the target column */
-function allowDrop(event) {
-    event.preventDefault();
-}
-
-
-/** Handle dropping of a task in a column */
-function drop(event) {
-    event.preventDefault();
-    let taskId = event.dataTransfer.getData("text");
-    let taskElement = document.getElementById(taskId);
-    let target = event.target.closest('.column'); // Ensure target is a column
-
-    if (target) {
-        // Remove the task from the actual column
-        taskElement.remove();
-
-        // Add the task to the new column
-        target.innerHTML += taskElement.outerHTML;
-
-        // Update the task's column in the database
-        updateTaskColumn(taskId, target.id.replace("Column", ""));
+/** Check if columns are empty and add/remove 'No tasks to do' message */
+function checkEmptyColumns(columns) {
+    for (let column in columns) {
+        let columnElement = document.getElementById(columns[column]);
+        
+        if (columnElement.children.length === 0 || 
+            (columnElement.children.length === 1 && columnElement.children[0].classList.contains("no-tasks"))) {
+            
+            if (!columnElement.querySelector('.no-tasks')) {
+                columnElement.innerHTML = `<p class="no-tasks">No tasks to do</p>`;
+            }
+        } else {
+            let noTasksMessage = columnElement.querySelector('.no-tasks');
+            if (noTasksMessage) noTasksMessage.remove();
+        }
     }
 }
 
+/** Enable drag and drop functionality */
+function enableDragAndDrop(columns) {
+    let draggableTasks = document.querySelectorAll('.draggable');
+    let dropZones = Object.values(columns).map(column => document.getElementById(column));
+
+    draggableTasks.forEach(task => {
+        task.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('task-id', task.id);
+        });
+    });
+
+    dropZones.forEach(zone => {
+        zone.addEventListener('dragover', function (event) {
+            event.preventDefault();
+        });
+        
+        zone.addEventListener('drop', async function (event) {
+            event.preventDefault();
+            let taskId = event.dataTransfer.getData('task-id');
+            let taskElement = document.getElementById(taskId);
+            
+            if (taskElement) {
+                zone.insertAdjacentElement('beforeend', taskElement);
+                
+                let column = Object.keys(columns).find(key => columns[key] === zone.id);
+                await updateTaskColumn(taskId, column);
+            
+                checkEmptyColumns(columns); 
+            }
+        });
+    });
+}
 
 /** Handle the dragging of a task */
 function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
 
-
 /** Update the task's column in the database */
 async function updateTaskColumn(taskId, column) {
     try {
-        // Fetch the task data to preserve other task properties
         let response = await fetch(`${TASK_URL}.json`);
         let data = await response.json();
 
         for (let category in data) {
             if (data[category][taskId]) {
                 data[category][taskId].column = column;
-
-                // Update the task in Firebase using PUT
                 await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
                     method: "PUT",
                     headers: {
@@ -119,21 +142,22 @@ async function updateTaskColumn(taskId, column) {
             }
         }
     } catch (error) {
-        // Fehlerbehandlung
+        console.error("Fehler beim Aktualisieren der Spalte:", error);
     }
 }
 
 
+/** Show the task form on the board */
 function addTaskOnBoard() {
     document.getElementById('templateAddTask').classList.remove('d-none');
 }
 
-
+/** Hide the task form on the board */
 function closeTaskOnBoard() {
     document.getElementById('templateAddTask').classList.add('d-none');
 }
 
-
+/** Prevents closing when clicking inside the form */
 function dontClose(event) {
-    event.stopPropagation(); // stoppt Standardfunktionalität
+    event.stopPropagation();
 }

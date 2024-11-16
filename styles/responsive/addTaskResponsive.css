@@ -1,0 +1,6 @@
+@media (max-width: 1070px) {
+    .taskBothSide {
+        display: flex;
+        flex-direction: column;
+    }
+}

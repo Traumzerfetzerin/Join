@@ -7,20 +7,27 @@
     <title>Add Task</title>
     <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../styles/style.css">
-    <link rel="stylesheet" href="../styles/addTask.css">
+
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/navbar.css">
-    <script src="../script/addTask.js"></script>
+
+    <link rel="stylesheet" href="../styles/addTask.css">
+    <link rel="stylesheet" href="../styles/responsive/addTaskResponsive.css">
+
     <script src="../script/header.js"></script>
+    <script src="../script/addTask.js"></script>
+    <script src="../templates/addTaskTemplateHTML.js"></script>
     <script src="../script/board.js"></script>
+    <script src="../script/addTaskPrio.js"></script>
+    <script src="../script/addTaskContactDropdown.js"></script>
 </head>
 
 <body>
-    <header w3-include-html="../templates/header.html"></header>
+    <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
-    <main>
-        <section w3-include-html="../templates/addTaskTemplate.html"></section>
+    <main class="mainSectionAddTask">
+        <section w3-include-html="../templates/addTaskTemplate.html" class="sectionTemplateAddTask"></section>
     </main>
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>
