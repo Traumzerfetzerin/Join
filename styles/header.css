@@ -98,6 +98,15 @@ header p {
     font-size: 16px;
     font-weight: 100;
     text-align: left;
+    cursor: pointer;
+}
+.headerImg{
+    display: none;
+
+}
+.headerImg img{
+  height: 60px;
+  width: 70px;
 }
 
 .mobile_headerNav a:hover {

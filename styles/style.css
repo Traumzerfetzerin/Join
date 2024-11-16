@@ -10,7 +10,7 @@ body {
 
 /* FONT  */
 @font-face {
-    font-family: Inter;
+    font-family:"Inter";
     src: url('../fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
 }
 

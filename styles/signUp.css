@@ -7,6 +7,7 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    flex: 1;
 }
 
 /* Join logo container styling */
@@ -32,13 +33,14 @@
     }
 
     100% {
-        transform: translate(-40vw, -45vh) scale(1);
+        transform: translate(-45vw, -40vh) scale(1);
         /* Move to near top-left */
     }
 }
 
 /* Signup container styling */
 .signup-joinContainer {
+    position: relative;
     background-color: white;
     padding: 50px;
     border-radius: 15px;
@@ -46,13 +48,14 @@
     width: 100%;
     max-width: 500px;
     /* Responsive width */
-    height: auto;
+    height: auto; 
 
 }
 
 /* Signup title styling */
 .signup-joinContainer h1 {
-    margin-bottom: 30px;
+    margin-top: 3px;
+    margin-bottom: 20px;
     text-align: center;
     font-size: 50px;
     font-weight: 700;
@@ -68,19 +71,30 @@
     top: 50px;
     right: 5%;
 }
+.go-to-login {
+    position: absolute;
+    top: 70px; /* Adjust as needed to fit within padding */
+    left: 20px; /* Aligns to top left */
+}
+
+.go-to-login img {
+    width: 24px; /* Adjust icon size if needed */
+    height: auto;
+}
 
 /* Input group styling */
 .input-group {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 5px;  /* Reduce the space between input fields */
     position: relative;
 }
 
 .input-group input {
     width: 100%;
-    padding: 12px 40px 12px 10px;
-    border: 2px solid #ccc;
+    padding: 10px 15px;  /* Adjust padding */
+    margin: 0;  /* Remove any default margin */
+    border: 2px solid #ccc;  /* Optional, just ensure border is consistent */
     border-radius: 8px;
     font-size: 16px;
 }
@@ -97,6 +111,8 @@
 .signup-button {
     display: flex;
     justify-content: center;
+    
+    
 }
 
 .signup-button button {
@@ -115,40 +131,104 @@
     border-color: #3498db;
     background-color: #3498db;
     color: white;
+    cursor: pointer;
 }
+.legalPolicy {
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    align-items: center; /* Center the items vertically if needed */
+    gap: 20px; /* Space between the links */
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px; /* Add space below */
+    gap: 10px;
+}
+
+/* Checkbox input styling */
+.checkbox-group input{
+    cursor: pointer;
+}
+
+
+/* Span styling for the label */
+.checkbox-group span {
+    font-size: 14px;
+    color: #333;
+}
+
+.checkbox-group span a {
+    color: #3498db; /* Link color for "Terms and Conditions" */
+    text-decoration: none;
+}
+
+.checkbox-group span a:hover {
+    text-decoration: underline; /* Hover effect for link */
+    cursor: pointer;
+}
+/* Toast container */
+.toast {
+    visibility: hidden;
+    min-width: 150px;    
+    min-height: 40px;
+    color: white;    
+    text-align: center;    
+    border-radius: 15px;    
+    padding: 15px;    
+    position: fixed;
+    z-index: 2000;    
+    right: 0;    
+    top: 50%;    
+      
+    opacity: 0;    
+    transition: transform 0.5s ease, opacity 0.5s ease;    
+}
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    
+}
+
+/* Hide the toast with sliding out effect */
+.toast.hide {
+    transform: translate(100%, -50%);
+    /* Slide out to the right */
+    opacity: 0;
+    /* Fade out */
+}
+
+/* Toast show effect */
+
+
+
 
 /* Media Queries for responsiveness */
 
 /* For tablets (width less than 768px) */
-@media (max-width: 768px) {
+@media (max-width: 980px) {
     #signup-logoContainer {
-        position: absolute;
-        top: 93%;
+        top: 70px; /* Keep logo near the top */
         left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 3000;
-        animation: move-logo 1.5s ease forwards;
+        transform: translateX(-50%);
+        /* Remove other positioning to keep it consistent */
     }
+    
 
     .join {
         overflow: hidden;
     }
 
-    @keyframes move-logo {
-        0% {
-            transform: translate(-50%, -50%) scale(3);
-        }
-
-        100% {
-            transform: translate(-50%, -90vh) scale(1);
-            /* Move up while staying in the center */
-        }
-    }
+    
 
     .signup-joinContainer {
         padding: 30px;
         max-width: 400px;
-        margin-top: 150px;
+        margin-top: 70px;
     }
 
     .signup-joinContainer h1 {
@@ -162,35 +242,76 @@
 }
 
 /* For mobile devices (width less than 480px) */
+/* For mobile devices (width less than 480px) */
 @media (max-width: 480px) {
+    /* Center logo near the top for mobile */
+    #signup-logoContainer {
+        top: 70px; /* Position logo closer to the top */
+        left: 50%;
+        transform: translateX(-50%);
+
+    }
+    
+
+    /* Adjusting join container styling for mobile */
     .signup-joinContainer {
         padding: 20px;
-        max-width: 100%;
-        top: 20%;
-        /* Move form lower for mobile */
+        width: 70%; /* Make container responsive to screen width */
+        max-width: 100%; 
+        margin-top: 50px; /* Adds space between the logo and container */
+        border-radius: 10px;
+        margin-bottom: 0;
     }
 
+    /* Adjust title font size */
     .signup-joinContainer h1 {
-        font-size: 30px;
+        font-size: 28px;
+        margin-bottom: px; /* Reduce space below title */
     }
 
+    /* Input styling adjustments for mobile */
     .input-group input {
-        font-size: 12px;
-        padding: 8px 30px 8px 5px;
+        font-size: 14px;
+        padding: 8px 15px; /* Reduce padding for compact styling */
     }
 
-    .signup-button button {
-        padding: 8px 15px;
-        font-size: small;
-    }
-
+    /* Resize logo for mobile */
     #signup-logoContainer img {
-        width: 80px;
-        height: 80px;
+        width: 70px; /* Smaller logo size for mobile */
+        height: 70px;
     }
 
+    /* Positioning back-to-login button */
     .go-to-login {
-        top: 20px;
-        right: 10px;
+        top: 10px; /* Position at the top left */
+        left: 10px;
+    }
+
+    /* Adjust button styling */
+    .signup-button button {
+        padding: 10px;
+        font-size: 14px;
+        
+    }
+
+    /* Adjust legal policy section */
+    .legalPolicy {
+        /* Stack links vertically */
+        gap: 8px; /* Adjust spacing between links */
+        margin-top:0px;
+        ; /* Space at bottom of container */
+        font-size: 12px;
+    }
+
+    /* Checkbox group styling adjustments */
+    .checkbox-group {
+        flex-direction: row; /* Keep checkbox and text inline */
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .checkbox-group span {
+        font-size: 12px;
     }
 }

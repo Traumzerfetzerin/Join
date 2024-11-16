@@ -7,12 +7,10 @@ function validateSignUp(event) {
     let email = document.getElementById('email').value.trim(); // Trimming input
     let password = document.getElementById('password').value.trim();
     let confirmPassword = document.getElementById('confirm-password').value.trim();
-    let responseMessage = document.getElementById('response-message');
 
     // Validate email format
     if (!validateEmail(email)) {
-        responseMessage.textContent = 'Invalid email format';
-        responseMessage.style.color = 'red';
+        showToast('Invalid email format');
         clearForm();  // Clear form if email format is invalid
         return;
     }
@@ -21,24 +19,21 @@ function validateSignUp(event) {
     isEmailExists(email)
         .then(exists => {
             if (exists) {
-                responseMessage.textContent = 'Email already exists';
-                responseMessage.style.color = 'red';
+                showToast('Email already exists');
                 clearForm();  // Clear form if email exists
                 return;
             }
 
             // Validate password strength
             if (!validatePassword(password)) {
-                responseMessage.textContent = 'Password must be at least 6 characters long, contain at least one uppercase letter, and one number';
-                responseMessage.style.color = 'red';
+                showToast('must be atleast 6 characters, at least one uppercase letter and number');
                 clearForm();  // Clear form if password doesn't meet the strength requirements
                 return;
             }
 
             // Validate password matching
             if (password !== confirmPassword) {
-                responseMessage.textContent = 'Passwords do not match';
-                responseMessage.style.color = 'red';
+                showToast('Passwords do not match');
                 clearForm();  // Clear form if passwords don't match
                 return;
             }
@@ -46,9 +41,8 @@ function validateSignUp(event) {
             // Store user data in Firebase Realtime Database
             saveUserData(name, email, password)
                 .then(() => {
-                    // Show success message and clear form fields after successful sign-up
-                    responseMessage.textContent = 'Sign up successful!';
-                    responseMessage.style.color = 'green';
+                    // Show success toast
+                    showToast('Sign up successful!');
 
                     // Clear the form after successful sign-up
                     clearForm();
@@ -59,11 +53,12 @@ function validateSignUp(event) {
                     }, 1500);
                 })
                 .catch(error => {
-                    responseMessage.textContent = 'Error saving user data: ' + error;
-                    responseMessage.style.color = 'red';
+                    showToast('Error saving user data: ' + error);
                 });
         });
 }
+
+// Function to display the toast
 
 // Validate email format
 function validateEmail(email) {
@@ -116,19 +111,56 @@ function clearForm() {
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
     const confirmPasswordField = document.getElementById('confirm-password');
+    const termsCheckbox = document.getElementById('terms-checkbox');
 
     if (nameField && emailField && passwordField && confirmPasswordField) {
         nameField.value = '';
         emailField.value = '';
         passwordField.value = '';
         confirmPasswordField.value = '';
+        termsCheckbox.checked = false; 
     } 
 }
 
 // Ensure form fields are cleared when the page loads
 window.onload = function() {
+    // Retain existing functionality (clear form)
     clearForm();
+
+    // Get references to the checkbox and signup button
+    const termsCheckbox = document.getElementById('terms-checkbox');
+    const signupButton = document.getElementById('signup-btn');
+
+    // Initially disable the signup button visually and functionally
+    disableButton(signupButton);
+
+    // Event listener for checkbox to toggle button disable state
+    termsCheckbox.addEventListener('change', function() {
+        if (termsCheckbox.checked) {
+            // Enable the button if the checkbox is checked
+            enableButton(signupButton);
+        } else {
+            // Disable the button if the checkbox is unchecked
+            disableButton(signupButton);
+        }
+    });
 };
+
+// Function to disable the button
+function disableButton(button) {
+    button.disabled = true;
+
+    button.style.cursor = 'not-allowed';  // Non-clickable cursor
+}
+
+// Function to enable the button
+function enableButton(button) {
+    button.disabled = false;
+    
+    button.style.cursor = 'pointer';  // Clickable cursor
+}
+
+
 
 // Function to toggle password visibility
 function togglePasswordVisibility(inputId, toggleIconId) {
@@ -162,6 +194,23 @@ function togglePasswordVisibility(inputId, toggleIconId) {
         console.log('Password is now hidden.'); // Debugging log
     }
 }
+// Ensure the signup button is disabled initially
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message; // Set the message
+    toast.className = `toast show ${type}`; // Add the 'show' class and type ('success' or 'error')
+
+    // After 3 seconds, add the 'hide' class to slide the toast out
+    setTimeout(() => {
+        toast.classList.add('hide');
+    }, 3000);
+
+    // Remove the 'show' and 'hide' classes after the slide-out animation completes
+    setTimeout(() => {
+        toast.className = toast.className.replace('show', '').replace('hide', '');
+    }, 3500); // Wait an additional 0.5 seconds to match the CSS transition
+}
+
 
 
 

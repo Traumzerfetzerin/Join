@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/contact.css">
-    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">    
     <script src="../script/header.js"></script>
     <script src="../script/contacts.js" defer></script> <!-- Use defer -->
-    <script src="./scripts/overlay.js" defer></script>
-    <script src="./scripts/script.js" defer></script>
+    <script src="../script/contactTemplate.js" defer></script>
+    
+    
 
 </head>
 
@@ -21,40 +23,84 @@
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
+    
+
+
     <div id="main-content">
         <div id="toast" class="toast">Message</div>
 
         <div class="contacts-container">
             <div class="contact-list">
-                <h2>Contact List</h2>
-                <div class="contact-item cursorPointer">
-                    <div class="contact-initials" style="background-color: #F39C12;">JD</div>
-                    <!-- Initials with random color -->
-                    <span class="contact-name">John Doe</span> <!-- Name -->
-                    <span class="contact-email">john.doe@example.com</span> <!-- Email -->
-                </div>
-
-                <div class="contact-item cursorPointer">
-                    <span class="contact-name">Jane Smith</span>
-                    <span class="contact-email">jane@example.com</span>
-                </div>
-                <!-- Add more contacts here -->
+                
+                
             </div>
+            
+            
             <div class="add-contact">
                 <div class="contact">
                     <h1>Contacts</h1>
                     <div class="separator"></div>
                     <h3>Better with Team</h3>
+                    
                 </div>
-                <div class="add-contact-section">
-                    <div class="add-contact-button cursorPointer" id="show-overlay">
-                        <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
-                        <span>Add New Contact</span>
+                <div class="back-arrow">
+                    <img id="back-arrow" src="../Assets/arrowLeft.svg" alt="Back" style="display: none;">
+                </div> 
+                
+                <div id="contact-details" class="contact-details" style="display: none;">
+                    <div class="contact-name-container">
+                        <div class="contact-initials" id="contact-initials"></div>
+                        
+                           <span class="contact-name" id="contact-name"></span>
+                    </div> 
+                    <div class="editSection"> 
+                            <a href="#" class="edit-link">
+                                <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
+                            </a>
+                            <a href="#" class="delete-link">
+                                <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
+                            </a>
+                    </div>  
+                    <h2>Contact information</h2>
+                    <div class="email-section">
+                        <strong>Email:</strong>
+                        <p id="contact-email"></p>
                     </div>
+                    
+                    <!-- Phone section with label above the phone number -->
+                    <div class="phone-section">
+                        <strong>Phone:</strong>
+                        <p id="contact-phone"></p>
+                    </div> 
+                    <div class="dots-icon">
+                      <div id="dots-icon" class="dots-icon">
+                           <img src="../Assets/3dots.svg" alt="">
+                        </div>
+                    </div>
+                    <div id="small-overlay" class="small-overlay" style="display: none;">
+                        <a href="#" class="edit-link" id="overlay-edit-link">
+                            <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
+                        </a>
+                        <a href="#" class="delete-link" id="overlay-delete-link">
+                            <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
+                        </a>
+                    </div>
+                
+                    
+                    
                 </div>
             </div>
+            
+            
+               
         </div>
+       
+        
     </div>
+    <!---contact-header-->
+    <!-- New Contact Details Overlay -->
+
+
 
     <!-- Overlay Element -->
     <!-- Overlay Element -->
@@ -62,45 +108,59 @@
     <div id="overlay" class="overlay">
         <div class="overlay-content">
             <div class="left-section">
-                <img src="../Assets/JoinLogoWhite.svg" alt="">
+                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
                 <h2>Add Contact</h2>
                 <p>Tasks are easier with a team!</p>
             </div>
             <div class="right-section">
-                <a href="" id="close-overlay" class="close-button cursorPointer">X</a>
-                <img src="../Assets/person.svg" alt="">
-                <form id="contact-form" class="contact-form">
-                    <input type="text" id="name" placeholder="Enter Name" />
-                    <input type="email" id="email" placeholder="Enter Email" />
-                    <input type="tel" id="phone" placeholder="Enter Phone Number" /> <!-- Phone number input -->
-                    <button id="add-contact-button">Create Contact</button>
-                </form>
+                <a href="" id="close-overlay" class="close-button">X</a> 
+                <!-- New Flex Container -->
+                <div class="right-section-flex">
+                    <img src="../Assets/person.svg" class="centered-image" alt="">
+                    <form id="contact-form" class="contact-form">
+                        <input type="text" id="name" placeholder="Name" required />
+                        <input type="email" id="email" placeholder="Email" required/>
+                        <input type="tel" id="phone" placeholder="Phone" required/>
+                        <div class="button-container">
+                        <button type="submit" id="create-contact-button" class="form-button">Create Contact</button>
+                        <button id="cancel-button"class="form-button">cancel</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
     </div>
-
-    <div id="contact-overlay" class="overlay" style="display: none;">
-        <div class="overlay-content">
-            <div class="left-section">
-                <img src="../Assets/JoinLogoWhite.svg" alt="">
-                <h2>Contact Details</h2>
-
+    
+    
+    <div id="contact-overlay" class="" style="display: none;">
+        <div class="contact-overlay-content">
+            <div class="contactOverlayLeft ">
+                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+                <h2>Edit Contact</h2>
             </div>
-            <div class="right-section">
+            <div class="contactOverlayRight ">
                 <a href="#" id="close-contact-overlay" class="close-button">X</a>
-                <div class="contact-details">
-                    <p id="contact-details-name" class="contact-detail"></p>
-                    <p id="contact-details-email" class="contact-detail"></p>
-                    <p id="contact-details-phone" class="contact-detail"></p>
+                <div class="contact-details-row">
+                    <div class="contact-initials-overlay" id="contact-initials-overlay"></div>
+                    <div class="contact-details-inputs">
+                        <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
+                        <input type="email" id="edit-contact-email" class="edit-input" placeholder="Enter Email">
+                        <input type="tel" id="edit-contact-phone" class="edit-input" placeholder="Enter Phone">
+                    </div>
                 </div>
                 <div class="contact-details-buttons">
-                    <button id="edit-contact-button" class="contact-button cursorPointer">Edit</button>
-                    <button id="delete-contact-button" class="contact-button cursorPointer">Delete</button>
-                    <button id="save-contact-button" class="contact-button cursorPointer" style="display:none;">Save</button>
+                    <button id="delete-contact-button" class="contact-button">Delete</button>
+                    <button id="save-contact-button" class="contact-button">Save</button>
+                    
                 </div>
             </div>
+            
         </div>
+
     </div>
+    
+    
 
 
 

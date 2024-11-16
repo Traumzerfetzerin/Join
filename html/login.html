@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Program</title>
     <link rel="stylesheet" href="../styles/login.css?v=1.0"> <!-- Force cache refresh -->
-    <link rel="stylesheet" href="../styles/style.css">
+    
     <script src="../scripts/script.js" defer></script>
     <script src="../scripts/signup.js" defer></script>
     <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
@@ -15,18 +15,15 @@
 </head>
 
 <body>
+    <div  class="content-wrapper">
+    
     <div class="join-login">
         <div class="joinLogo" id="login-logoContainer">
 
             <img src="../Assets/joinLogo.svg" alt=""> <!-- Fixed 'Assets' typo -->
 
         </div>
-        <div class="login-signup-button">
-            <span>Not a Join User</span>
-            <a href="../html/signUp.html">
-                <button class="login-button cursorPointer">Sign Up</button>
-            </a>
-        </div>
+       
         <div class="login-joinContainer">
             <h1>Log in</h1>
             <form id="join-form" onsubmit="logIn(event)">
@@ -62,6 +59,22 @@
             </form>
         </div>
     </div>
+    <div class="login-signup-button">
+        <span>Not a Join User?</span>
+        <a href="../html/signUp.html">
+            <button class="login-button cursorPointer">Sign Up</button>
+        </a>
+    </div>
+    <div id="sidefoot" class="legalPolicy">
+        <a class="sidebartext widget" href="../html/policy.html">Privacy Policy</a>        
+        <a class="sidebartext widget" href="../html/legalNotice.html">Legal Notice</a>        
+    </div>
+    
+   
+    
+</div>
+
+    
 </body>
 
 </html>

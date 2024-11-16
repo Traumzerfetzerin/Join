@@ -10,14 +10,14 @@
     <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/contact.css">
-    <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/policy.css">
     <link rel="stylesheet" href="../styles/help.css">
-    <link rel="stylesheet" href="../styles/help.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    
     <script src="../script/header.js" defer></script>
     <script src="../script/contacts.js" defer></script> <!-- Use defer -->
     <script src="./scripts/overlay.js" defer></script>
-    <script src="./scripts/script.js" defer></script>
+    
 
 </head>
 
@@ -26,10 +26,10 @@
     </header>
     <aside w3-include-html="../templates/navbar.html">
     </aside>
-    <main>
-        <div onclick="pageBack()" class="back-arrow">
+    <div class="policy-content">
+        <div onclick="pageBack()" class="back-arrow back">
 
-            <img class="cursorPointer" src="/Assets/arrowLeft.svg" alt="Back Arrow">
+            <img src="/Assets/arrowLeft.svg" alt="Back Arrow">
         </div>
 
         <div id="policy" class="policy">
@@ -148,7 +148,7 @@
                         befugt sind, die personenbezogenen Daten zu verarbeiten.</p>
                 </li>
                 <li>
-                    <h4>k)    Einwilligung</h4>
+                    <h4>   Einwilligung</h4>
                     <p>Einwilligung ist jede von der betroffenen Person freiwillig für den bestimmten Fall in
                         informierter Weise und unmissverständlich abgegebene Willensbekundung in Form einer Erklärung
                         oder einer sonstigen eindeutigen bestätigenden Handlung, mit der die betroffene Person zu
@@ -560,7 +560,7 @@
                 Solmecke erstellt.
             </p>
         </div>
-    </main>
+    </div>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML();

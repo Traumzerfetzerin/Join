@@ -5,23 +5,24 @@
 }
 #sidebar {
     background-color: #2A3647;
-    display: flex;
+    
     align-items: center;
     flex-direction: column;
     height: 100vh;
     width: 232px;
     position: fixed;
-    z-index: 1;
-    overflow: hidden;
+    z-index: 1000;
+    
     top: 0;
-    justify-content: space-around;
+    
+    
 }
 
 .sidebarlogo {
     height: 121px;
     width: 130px;
     padding-top: 64px;
-    padding-bottom: 0px;
+    padding-bottom: 20px;
 }
 
 #sidebarimg {
@@ -34,18 +35,18 @@
     margin-right: 8px;
 }
 
-#widget_1,
-#widget_2,
-#widget_3,
-#widget_4 {
-    font-size: 16px;
+#widget_1, #widget_2, #widget_3, #widget_4 {
+    width: 100%; /* Make widgets span full sidebar width */
+    box-sizing: border-box; /* Reset box-sizing to include padding/border */
+    padding: 8px 12px; /* Adjust padding for more spacing control */
     display: flex;
+    justify-content: center; /* Center content within the sidebar */
     align-items: center;
     gap: 12px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-left: 130px;
+    font-size: 16px;
+    
 }
+
 
 .sidebartext {
     text-decoration: none;
@@ -53,6 +54,7 @@
     font-family: 'PT Sans';
     font-weight: 400;
     font-size: 20px;
+    
 }
 
 .sidelinks {
@@ -66,14 +68,23 @@
 
 .widget {
     cursor: pointer;
-    width: 232px;
+    width: 100%; /* Ensure widget spans the full sidebar width */
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    box-sizing: border-box; /* Include padding in width calculation */
+    padding: 0 16px; /* Adjust padding to control spacing */
 }
 
+.widget:hover {
+    background: #2A3D59;  /* Hover background color */
+    width: 100%;         /* Ensure the hover width spans the sidebar */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+
 /* Hover and active state for the widget */
-.widget:hover, 
+ 
 .widget.active{
     background: #2A3D59;  /* Retain hover background color */
 }
@@ -95,6 +106,7 @@
     display: flex;
     flex-direction: column;
     gap: 0px; /* Reduce gap between the footer links */
+    width: 100%;
 }
 
 #sidefoot a {
@@ -107,12 +119,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width:100% ;
 }
 
 #sidefoot a:hover {
     background: #2A3D59;
     color: white;
     font-weight: 700;
+    width:215px;
 }
 .sidefoot a :focus{
     background: #2A3D59;
