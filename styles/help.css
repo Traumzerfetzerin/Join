@@ -1,3 +1,9 @@
+body{
+  overflow:hidden;
+  height: 100%;
+  box-sizing: border-box;
+}
+
 .help-content {
     height: calc(100vh - 96px);
     margin-left: 328px;
@@ -8,6 +14,7 @@
     flex-direction: column;
     gap: 24px;
     overflow-y: auto;
+    flex: 1;
   }
   
   h4 {
@@ -62,3 +69,12 @@
     color: var(--clr-light-blue);
     text-decoration: none;
   }
+
+  @media (max-width: 980px) {
+    .help-content {
+      
+        margin-left: 20px;
+        margin-bottom: 100px;
+        height: calc(80vh - 96px);
+    }
+}

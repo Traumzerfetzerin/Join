@@ -30,7 +30,7 @@
 }
 
 .sidebarimg {
-    height: 30px;
+    height: 20px;
     width: 30px;
     margin-right: 8px;
 }
@@ -126,10 +126,11 @@
     background: #2A3D59;
     color: white;
     font-weight: 700;
-    width:215px;
+    width:205px;
 }
 .sidefoot a :focus{
     background: #2A3D59;
+    
 
 }
 
