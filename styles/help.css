@@ -1,19 +1,18 @@
 body{
-  overflow:hidden;
+  overflow:auto;
   height: 100%;
-  box-sizing: border-box;
+  
 }
 
 .help-content {
-    height: calc(100vh - 96px);
-    margin-left: 328px;
-    padding-bottom: 24px;
-    padding-right: 96px;
-    padding-top: 110px;
+    max-height: calc(100vh - 120px);
+    margin-left: 270px;
+    margin-right: 20px;
+    margin-top:110px ;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow-y: auto;
+    overflow: auto;
     flex: 1;
   }
   
