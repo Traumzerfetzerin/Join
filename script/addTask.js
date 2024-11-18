@@ -1,13 +1,6 @@
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 
 
-// Call the function to load contacts when the page loads
-window.onload = function () {
-    loadContactsForDropdown();
-    setMinDueDate();
-};
-
-
 // CALCULATE DUE DATE
 function calculateDueDate() {
     let duoDate = new Date();
@@ -158,7 +151,7 @@ function acceptSubtask(subtaskDivId) {
     let subtaskValue = subtaskInput.value;
 
     if (subtaskValue.trim() === "") {
-        return;
+        editSubtask(subtaskDivId, subtaskValue)
     }
 
     updateSubtaskText(subtaskDivId, subtaskValue);
