@@ -151,7 +151,7 @@ textarea {
 #categoryDropdown {
     border: 1px solid #ccc;
     padding: 10px;
-    position: absolute;
+    /* position: absolute; */
     background-color: #FFF;
     border-radius: 12px;
     z-index: 1;

@@ -4,7 +4,7 @@ const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatab
 // Call the function to load contacts when the page loads
 window.onload = function () {
     loadContactsForDropdown();
-    setMinDueDate(); 
+    setMinDueDate();
 };
 
 
@@ -152,6 +152,7 @@ function showDeleteIcon(subtaskDivId) {
 }
 
 
+// ACCEPT SUBTASK
 function acceptSubtask(subtaskDivId) {
     let subtaskInput = document.getElementById(`editSubtask_${subtaskDivId}`);
     let subtaskValue = subtaskInput.value;
@@ -191,6 +192,7 @@ async function clearTasks() {
     document.getElementById('assignTaskDropdown').value = "";
     document.getElementById('categorySelect').selectedIndex = 0;
     document.getElementById('categoryDropdown').classList.add('d-none');
+    document.getElementById('subtaskSelect').value = "";
     // contacts.forEach(contact => {
     //     document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
     // });
@@ -257,10 +259,10 @@ async function saveTaskToFirebase(taskData) {
     try {
         let response = await fetch(
             `${CREATETASK_URL}/${taskData.category}.json`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(taskData)
-            });
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(taskData)
+        });
 
         if (response.ok) {
             let json = await response.json();
@@ -292,7 +294,7 @@ async function redBorder() {
     if (!assignedTo.value) highlightElement(assignedTo);
     if (!categorySelect.value) highlightElement(categorySelect);
 
-    setTimeout(() => resetBorders([ ...inputs, assignedTo, categorySelect ]), 2000);
+    setTimeout(() => resetBorders([...inputs, assignedTo, categorySelect]), 2000);
 }
 
 /**

@@ -33,7 +33,7 @@ function editSubtaskHTML(subtaskDivId, editSubtask) {
                 </div>
                 <div class="seperatorSubtasks"></div>
                 <div>
-                    <img id="acceptSubtask_${subtaskDivId}" class=" acceptSubtask cursorPointer d-none" src="../Assets/addTask/Property 1=check.svg" alt=""
+                    <img id="acceptSubtask_${subtaskDivId}" class="acceptSubtask cursorPointer d-none subtaskImg" src="../Assets/addTask/Property 1=check.svg" alt=""
                         onclick="acceptSubtask('${subtaskDivId}')">
                 </div>
             </div>
