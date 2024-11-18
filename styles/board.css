@@ -1,3 +1,7 @@
+main {
+    margin: 0 !important;
+}
+
 #boardHeader h2 {
     font-size: 61px;
 }
@@ -5,7 +9,6 @@
 #headerWrapper {
     width: 1208px;
     height: 232px;
-    top: 96px;
     left: 232px;
     gap: 0px;
     display: flex;
@@ -105,9 +108,7 @@
     padding-left: 64px;
     padding-right: 64px;
     position: relative;
-    top: 336px;
-    left: 232px;
-    gap: 26px;
+    left: 232px;    
 }
 
 .column-wrapper {
