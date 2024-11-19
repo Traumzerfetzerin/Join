@@ -4,7 +4,7 @@ async function loadContactsForDropdown() {
         const contactsData = await response.json();
         if (contactsData) {
             contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-            populateCheckboxDropdown(); // Populate checkboxes
+            populateCheckboxDropdown(); 
         } else {
             console.log('No contacts found');
         }
