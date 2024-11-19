@@ -40,6 +40,25 @@ function editSubtaskHTML(subtaskDivId, editSubtask) {
         </div>`;
 }
 
+function subtaskChangeHTML(subtaskDivId, subtaskValue) {
+    return`
+        <ul>
+            <li class="subtaskText">${subtaskValue}</li>
+        </ul>
+        <div class="flex">
+            <div>
+                <img class="editSubtask subtaskImg cursorPointer" 
+                     src="../Assets/addTask/Property 1=edit.svg" 
+                     alt="Edit" onclick="editSubtask('${subtaskDivId}')">
+            </div>
+            <div class="seperatorSubtasks"></div>
+            <div>
+                <img class="deleteSubtask subtaskImg cursorPointer"
+                     src="../Assets/addTask/Property 1=delete.svg" 
+                     alt="Delete" onclick="deleteSubtask('${subtaskDivId}')">
+            </div>
+        </div>`;
+}
 
 // POP UP
 function popUpRequiredHTML() {

@@ -148,13 +148,13 @@ function showDeleteIcon(subtaskDivId) {
 // ACCEPT SUBTASK
 function acceptSubtask(subtaskDivId) {
     let subtaskInput = document.getElementById(`editSubtask_${subtaskDivId}`);
-    let subtaskValue = subtaskInput.value;
-
-    if (subtaskValue.trim() === "") {
-        editSubtask(subtaskDivId, subtaskValue)
-    }
+    let subtaskValue = subtaskInput ? subtaskInput.value.trim() : "";
 
     updateSubtaskText(subtaskDivId, subtaskValue);
+
+    let subtaskElement = document.getElementById(subtaskDivId);
+    if (subtaskElement) {
+        subtaskElement.innerHTML =  subtaskChangeHTML(subtaskDivId, subtaskValue);}
 
     let acceptIcon = document.getElementById(`acceptSubtask_${subtaskDivId}`);
     if (acceptIcon) {
