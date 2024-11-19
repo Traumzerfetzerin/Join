@@ -10,7 +10,7 @@ body {
 
 /* FONT  */
 @font-face {
-    font-family:"Inter";
+    font-family: "Inter";
     src: url('../fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
 }
 
@@ -97,6 +97,10 @@ main {
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+}
+
+.font_2A3647 {
+    color: #2A3647;
 }
 
 .width_440 {
