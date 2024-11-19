@@ -66,9 +66,6 @@ document.addEventListener("keyup", function (event) {
 
 // CREATE SUBTASK
 let subtaskCounter = 0;
-let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
-let subtaskUlId = `subtaskUl_${subtaskCounter}`;
-let subtaskLiId = `subtaskLi_${subtaskCounter}`;
 
 
 function createSubtaskElement(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
