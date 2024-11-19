@@ -71,11 +71,9 @@ let subtaskUlId = `subtaskUl_${subtaskCounter}`;
 let subtaskLiId = `subtaskLi_${subtaskCounter}`;
 
 
-function createSubtaskElement(subtaskText) {
-    let subtaskHTML = createSubtaskElementHTMML(subtaskText);
-
+function createSubtaskElement(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
+    let subtaskHTML = createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId);
     document.getElementById('editSubtasks').innerHTML += subtaskHTML;
-    subtaskCounter++;
 }
 
 
@@ -84,8 +82,14 @@ function addSubtask() {
     let addSubtask = document.getElementById('subtaskSelect').value;
 
     if (addSubtask.trim() !== "") {
-        createSubtaskElement(addSubtask);
-        document.getElementById('subtaskSelect').value = "";
+        subtaskCounter++; 
+
+        let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
+        let subtaskUlId = `subtaskUl_${subtaskCounter}`;
+        let subtaskLiId = `subtaskLi_${subtaskCounter}`;
+
+        createSubtaskElement(addSubtask, subtaskDivId, subtaskUlId, subtaskLiId);
+        document.getElementById('subtaskSelect').value = ""; 
     }
 }
 
