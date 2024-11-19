@@ -29,7 +29,8 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-    background: #29ABE2;
+    background: #fff;
+    border: none;
 }
 
 ::-webkit-scrollbar-thumb {
