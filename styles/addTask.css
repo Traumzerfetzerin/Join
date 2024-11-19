@@ -1,4 +1,3 @@
-
 .sectionTemplateAddTask {
     max-width: 1116px;
     max-height: 870px;
@@ -6,10 +5,15 @@
 
 /* Header Styling */
 .h1Task {
-    margin: 0;
-    font-size: 48px;
+    width: 278px;
+    height: 73px;
+    top: 206px;
+    left: 328px;
+    gap: 1px;
+    font-size: 61px;
+    line-height: 73.2px;
     font-weight: bold;
-    color: #333;
+    color: #000000;
 }
 
 /* Layout for Task Sections */
@@ -25,9 +29,18 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 416px;
 }
 
 /* Input Fields General Styling */
+
+#inputTitle {
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    padding: 12px 21px;
+}
+
 input,
 textarea,
 select {
@@ -60,17 +73,37 @@ select:focus {
 /* Title Section */
 .titleTask {
     gap: 8px;
+    height: 96px;
 }
 
-.title {
-    font-weight: bold;
-    margin-bottom: 8px;
+.titleAddTask {
+    height: 24px;
+}
+
+.descriptionTask {
+    height: 168px;
+    top: 112px;
+    gap: 8px;
+}
+
+#textareaDescription {
+    padding: 18px 16px;
+    gap: 10px;
 }
 
 /* Textarea Styling */
 textarea {
     resize: none;
     min-height: 120px;
+}
+
+.input-group {
+    height: 80px;
+}
+
+.headlineAssignedTo {
+    width: 112px;
+    height: 24px;
 }
 
 /* Assigned To Dropdown Styling */
@@ -106,7 +139,7 @@ textarea {
     background-color: #D1D1D1;
     width: 2px;
     /* Make the separator slightly thicker */
-    height: auto;
+    height: 424px;
     /* Adjusts to the height of the container */
     margin: 0 20px;
     /* Add spacing to the left and right */
@@ -151,7 +184,7 @@ textarea {
 #categoryDropdown {
     border: 1px solid #ccc;
     padding: 10px;
-    /* position: absolute; */
+    position: relative;
     background-color: #FFF;
     border-radius: 12px;
     z-index: 1;
@@ -193,6 +226,8 @@ textarea {
 .buttons {
     display: flex;
     gap: 16px;
+    width: 309px;
+    height: 56px;
 }
 
 /* Clear and Create Button Styles */
@@ -206,22 +241,26 @@ textarea {
 }
 
 #clearButton {
+    width: 110px;
+    height: 56px;
     background-color: #FFF;
     border: 1px solid #D1D1D1;
     color: #333;
+    font-family: "Inter";
 }
 
 #clearButton:hover {
     background: url(../Assets/addTask/iconoir_cancel.svg) no-repeat;
-    background-position: 60px 15px;
+    background-position: 68px 14px;
     border-color: #29ABE2;
     color: #29ABE2;
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
     padding-left: 0;
     height: 56px;
-    width: 95px;
+    width: 110px;
     border-radius: 10px;
     font-size: 18px;
+    font-family: "Inter";
 }
 
 #clearButton:hover img {
@@ -229,10 +268,12 @@ textarea {
 }
 
 .createButton {
+    width: 183px;
     background-color: #2a3647;
     color: #FFF;
     font-weight: bold;
     border: none;
+    font-family: "Inter";
 }
 
 .createButton:hover {
@@ -300,6 +341,7 @@ textarea {
     font-size: 16px;
     color: #FF3D00;
 }
+
 /* Label for each contact */
 
 
@@ -308,21 +350,25 @@ textarea {
 /* Style the container for each entry */
 .entry-container {
     display: flex;
-    justify-content: space-between; /* Space between name container and checkbox */
+    justify-content: space-between;
+    /* Space between name container and checkbox */
     align-items: center;
-    padding: 5px 0; /* Add some vertical padding */
-    gap: 10px; /* Space between elements */
+    padding: 5px 0;
+    /* Add some vertical padding */
+    gap: 10px;
+    /* Space between elements */
     max-height: calc(40vh-100px);
-    
-    
+
+
 }
 
 /* Name container styling */
 .name-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Space between initials and name */
-    
+    gap: 10px;
+    /* Space between initials and name */
+
 }
 
 /* Style for the initials */
@@ -333,9 +379,11 @@ textarea {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    border-radius: 50%; /* Circular shape */
+    border-radius: 50%;
+    /* Circular shape */
     font-size: 14px;
-    color: white; /* Ensure text color contrasts with the background */
+    color: white;
+    /* Ensure text color contrasts with the background */
     text-transform: uppercase;
     background-color: #29ABE2;
 }
@@ -348,7 +396,8 @@ textarea {
 
 /* Style the checkbox */
 .entry-container input[type="checkbox"] {
-    flex-shrink: 0; /* Prevent shrinking */
+    flex-shrink: 0;
+    /* Prevent shrinking */
     width: 16px;
     height: 16px;
 }

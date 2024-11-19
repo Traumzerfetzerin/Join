@@ -10,11 +10,16 @@ body {
 
 /* FONT  */
 @font-face {
+<<<<<<< HEAD
     font-display: swap;
     font-family: 'Inter';
     font-style: italic;
     font-weight: 400;
     src: url('assets/fonts/inter-v12-latin-italic.woff2') format('woff2');
+=======
+    font-family: "Inter";
+    src: url('../fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
+>>>>>>> 8a794a2d13de83cf50ac544c452acdd009c6cf7e
 }
 
 html {
@@ -100,6 +105,10 @@ main {
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
+}
+
+.font_2A3647 {
+    color: #2A3647;
 }
 
 .width_440 {

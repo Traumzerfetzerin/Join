@@ -1,28 +1,28 @@
 <div class="taskSide">
     <form>
+        <h1 class="h1Task">Add Task</h1>
         <div class="flex taskBothSide">
             <div class="taskLeftSide width_440">
-                <h1 class="h1Task">Add Task</h1>
                 <section class="titleTask fonts">
-                    <div class="flex">
-                        <div class="title">Title</div>
+                    <div class="flex titleAddTask">
+                        <div class="title font_2A3647">Title</div>
                         <div class="colorRed">*</div>
                     </div>
                     <input class="cursorPointer" id="inputTitle" type="text" placeholder="Enter a title" required>
                 </section>
 
                 <section class="descriptionTask fd-column">
-                    <div class="fonts description">Description</div>
+                    <div class="fonts description font_2A3647">Description</div>
                     <textarea class="cursorPointer" id="textareaDescription" name=""
                         placeholder="Enter a Description"></textarea>
                 </section>
 
                 <div class="input-group">
-                    <label for="assignTask" class="add-task-label fonts">Assign Task (Select multiple)<span
+                    <label for="assignTask" class="add-task-label fonts font_2A3647">Assigned to<span
                             class="required">*</span></label>
                     <div class="input-with-icon">
                         <input type="text" name="assigned" class="add-task-title add-task-assigned-to cursorPointer"
-                            id="assigned-to" placeholder="Selected contacts" autocomplete="off" readonly
+                            id="assigned-to" placeholder="Selected contacts to assign" autocomplete="off" readonly
                             onclick="toggleDropdown()">
                         <div>
                             <img src="../Assets/addTask/arrow_drop_downaa.svg" id="dropdown"
@@ -43,7 +43,7 @@
             <div class="taskRightSide width_440">
                 <section>
                     <div class="flex fonts">
-                        <div>Due date</div>
+                        <div class="font_2A3647">Due date</div>
                         <div class="colorRed">*</div>
                     </div>
                     <input onclick="calculateDueDate()" class="input_12_16 width_440 cursorPointer fonts" type="date"
@@ -51,7 +51,7 @@
                 </section>
 
                 <section>
-                    <div class="fonts">Prio</div>
+                    <div class="fonts font_2A3647">Prio</div>
                     <div class="flex space-between">
                         <button id="urgent" type="button" class="prioButton cursorPointer fonts"
                             onclick="setPrio('urgent', event)">
@@ -74,7 +74,7 @@
                 </section>
 
                 <div class="input-group">
-                    <label for="assignTask" class="add-task-label fonts">Category<span class="required">*</span></label>
+                    <label for="assignTask" class="add-task-label fonts headlineAssignedTo font_2A3647">Category<span class="required">*</span></label>
                     <div class="input-with-icon" id="inputCategory">
                         <input type="text" name="category" class="add-task-title add-task-assigned-to cursorPointer"
                             id="categorySelect" placeholder="Select task category" autocomplete="off" readonly
@@ -96,7 +96,7 @@
 
                 <section class="fonts">
                     <div class="input-group">
-                        <label for="assignTask" class="add-task-label fonts">Subtasks</label>
+                        <label for="assignTask" class="add-task-label fonts font_2A3647">Subtasks</label>
                         <div class="input-with-icon" id="inputSubtask">
                             <input type="text" name="subtask" class="add-task-title add-task-assigned-to cursorPointer"
                                 id="subtaskSelect" placeholder="Add new subtask" autocomplete="off">
