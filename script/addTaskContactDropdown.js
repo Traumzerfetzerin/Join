@@ -20,19 +20,70 @@ function populateCheckboxDropdown() {
     dropdown.innerHTML = ''; // Clear previous options
 
     contacts.forEach(contact => {
-        const label = document.createElement('label');
+        // Create a container for each entry
+        const entryContainer = document.createElement('div');
+        entryContainer.classList.add('entry-container'); // Add a class for styling
+
+        // Generate initials from the name
+        const initials = contact.name
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase())
+            .join('');
+
+        // Create a span for initials
+        const initialsSpan = document.createElement('span');
+        initialsSpan.classList.add('contact-initials'); // Add a class for styling
+        initialsSpan.textContent = initials;
+        
+        // Apply the background color from the contact
+        if (contact.color) {
+            initialsSpan.style.backgroundColor = contact.color; // Use color from the contact object
+        } else {
+            // Generate and assign a color if not already present
+            const randomColor = getRandomColor();
+            initialsSpan.style.backgroundColor = randomColor;
+            contact.color = randomColor; // Save the generated color back to the contact
+        }
+
+        // Create a span for the contact name
+        const nameSpan = document.createElement('span');
+        nameSpan.classList.add('contact-name'); // Add a class for styling
+        nameSpan.textContent = contact.name;
+
+        // Create checkbox element
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
         checkbox.value = contact.name; // Use contact name as value
         checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
 
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(contact.name)); // Display contact name
-        dropdown.appendChild(label);
-        dropdown.appendChild(document.createElement('br')); // Line break for better UI
+        // Append initials and name to the left side
+        const nameContainer = document.createElement('div');
+        nameContainer.classList.add('name-container'); // Wrapper for initials and name
+        nameContainer.appendChild(initialsSpan);
+        nameContainer.appendChild(nameSpan);
+
+        // Append name container and checkbox to the entry container
+        entryContainer.appendChild(nameContainer);
+        entryContainer.appendChild(checkbox);
+
+        // Append the entry to the dropdown
+        dropdown.appendChild(entryContainer);
     });
+
+    dropdown.classList.remove('d-none'); // Ensure the dropdown is visible
 }
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+
+
 
 
 // Maintain an array of selected contacts

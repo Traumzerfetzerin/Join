@@ -148,6 +148,37 @@ function addNewContactToDOM(contact) {
     // Extract initials from the contact name
     const initials = getInitials(contact.name);
 
+    // Generate random color for the initials and store it in the contact object
+    const randomColor = getRandomColor();
+    contact.initialsColor = randomColor; // Save the color for later use
+
+    // Use a template literal to create the contact item structure
+    const newContactHTML = `
+        <div class="contact-item" data-id="${contact.id}">
+            <div class="contact-initials" style="background-color: ${randomColor};">${initials}</div>
+            <span class="contact-name">${contact.name}</span>
+            <span class="contact-email">${contact.email}</span>
+            <span class="contact-phone">${contact.phone}</span>
+        </div>
+        <div class="divider"></div>
+    `;
+
+    // Append the new contact item to the contact list
+    contactList.insertAdjacentHTML('beforeend', newContactHTML);
+
+    // Add a click event listener to the newly created contact item
+    const newContact = contactList.lastElementChild.previousElementSibling;
+    newContact.addEventListener('click', function () {
+        showContactDetails(contact.id);
+    });
+}
+
+/*function addNewContactToDOM(contact) {
+    const contactList = document.querySelector('.contact-list'); // Assuming '.contact-list' is the container
+
+    // Extract initials from the contact name
+    const initials = getInitials(contact.name);
+
     // Generate random color for the initials
     const randomColor = getRandomColor();
 
@@ -171,7 +202,7 @@ function addNewContactToDOM(contact) {
         showContactDetails(contact.id);
     });
     
-}
+}*/
 
 // Helper function to get initials from the contact name
 function getInitials(name) {

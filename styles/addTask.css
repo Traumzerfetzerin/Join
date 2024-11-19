@@ -1,4 +1,4 @@
-.taskSide,
+
 .sectionTemplateAddTask {
     max-width: 1116px;
     max-height: 870px;
@@ -53,7 +53,7 @@ select {
 input:focus,
 textarea:focus,
 select:focus {
-    border-color: #3498db;
+    border-color: #3498;
     box-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
 }
 
@@ -299,4 +299,56 @@ textarea {
 .required {
     font-size: 16px;
     color: #FF3D00;
+}
+/* Label for each contact */
+
+
+/* Container for initials and name */
+/* Style the container for each entry */
+/* Style the container for each entry */
+.entry-container {
+    display: flex;
+    justify-content: space-between; /* Space between name container and checkbox */
+    align-items: center;
+    padding: 5px 0; /* Add some vertical padding */
+    gap: 10px; /* Space between elements */
+    max-height: calc(40vh-100px);
+    
+    
+}
+
+/* Name container styling */
+.name-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between initials and name */
+    
+}
+
+/* Style for the initials */
+.contact-initials {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 50%; /* Circular shape */
+    font-size: 14px;
+    color: white; /* Ensure text color contrasts with the background */
+    text-transform: uppercase;
+    background-color: #29ABE2;
+}
+
+/* Style for the contact name */
+.contact-name {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Style the checkbox */
+.entry-container input[type="checkbox"] {
+    flex-shrink: 0; /* Prevent shrinking */
+    width: 16px;
+    height: 16px;
 }
