@@ -298,7 +298,7 @@ body::-webkit-scrollbar-button {
     }
 
     .mobile_headerNav {
-        height: 120px;
+        height: 150px !important;
     }
 
     .sidelinks {

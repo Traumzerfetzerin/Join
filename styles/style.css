@@ -10,8 +10,11 @@ body {
 
 /* FONT  */
 @font-face {
-    font-family:"Inter";
-    src: url('../fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 400;
+    src: url('assets/fonts/inter-v12-latin-italic.woff2') format('woff2');
 }
 
 html {
@@ -108,4 +111,7 @@ main {
     height: 48px;
     border-radius: 10px;
     padding: 12px 16px;
+}
+.dNone{
+    display: none;
 }
