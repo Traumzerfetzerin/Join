@@ -42,16 +42,17 @@ function loadTasks(tasks) {
     };
 
     for (let category in tasks) {
-        let categoryTasks = tasks[category];
+        let categoryTasks = tasks[category]; 
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
-            addTaskToColumn(task, category, taskId, columns);
+            addTaskToColumn(task, category, taskId, columns); 
         }
     }
 
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
 }
+
 
 /** Add a task to the specified column */
 function addTaskToColumn(task, category, taskId, columns) {
