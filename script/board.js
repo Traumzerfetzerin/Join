@@ -150,12 +150,12 @@ async function updateTaskColumn(taskId, column) {
 
 /** Show the task form on the board */
 function addTaskOnBoard() {
-    document.getElementById('templateAddTask').classList.remove('d-none');
+    document.getElementById('templateAddTask').classList.remove('dNone');
 }
 
 /** Hide the task form on the board */
 function closeTaskOnBoard() {
-    document.getElementById('templateAddTask').classList.add('d-none');
+    document.getElementById('templateAddTask').classList.add('dNone');
 }
 
 /** Prevents closing when clicking inside the form */

@@ -15,7 +15,7 @@ async function showTaskOverlay(category, taskId) {
         overlayDetails.innerHTML = overlayHtml;
 
         let taskOverlay = document.getElementById("taskOverlay");
-        taskOverlay.classList.remove("d-none");
+        taskOverlay.classList.remove("dNone");
     } catch (error) {
         console.error("Fehler beim Laden der Aufgabe:", error);
     }
@@ -26,16 +26,16 @@ function closeTaskOverlay(event) {
     let taskOverlay = document.getElementById("taskOverlay");
 
     if (event && event.target === taskOverlay) {
-        taskOverlay.classList.add("d-none");
+        taskOverlay.classList.add("dNone");
     } else if (!event || event.target.tagName === "BUTTON") {
-        taskOverlay.classList.add("d-none");
+        taskOverlay.classList.add("dNone");
     }
 }
 
 
 window.onload = function () {
     let taskOverlay = document.getElementById("taskOverlay");
-    taskOverlay.classList.add("d-none");
+    taskOverlay.classList.add("dNone");
 };
 
 
