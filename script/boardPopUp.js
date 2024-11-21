@@ -9,22 +9,7 @@ async function showTaskOverlay(category, taskId) {
             return;
         }
 
-        let overlayHtml = `
-            <h2>${category}</h2> 
-            <h3>${task.title || "No title"}</h3>
-            <p><strong>Description:</strong> ${task.description || "No description"}</p>
-            <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
-            <p><strong>Priority:</strong> ${task.prio || "No priority"}</p>
-            <p><strong>Contacts:</strong> ${task.contacts && task.contacts.length ? task.contacts.join(", ") : "No contacts"}</p>
-            <div>
-                <strong>Subtasks:</strong>
-                <ul>
-                    ${task.subtasks && task.subtasks.length
-                        ? task.subtasks.map(subtask => `<li>${subtask}</li>`).join("")
-                        : "<li>No subtasks</li>"}
-                </ul>
-            </div>
-        `;
+        let overlayHtml = getBoardOverlayTemplate(category, task);
 
         let overlayDetails = document.getElementById("overlayDetails");
         overlayDetails.innerHTML = overlayHtml;
