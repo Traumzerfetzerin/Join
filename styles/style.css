@@ -9,6 +9,13 @@ body {
 }
 
 /* FONT  */
+@font-face {
+    font-display: swap;
+    font-family: 'Inter';
+    font-style: 'regular';
+    font-weight: 400;
+    src: url('../fonts/static/Inter_24pt-Regular.ttf') format('woff2');
+}
 
 
 html {
@@ -30,14 +37,7 @@ main {
     border: none;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #2A3647;
-    border-radius: 8px;
-}
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
 
 .cursorPointer {
     cursor: pointer;
