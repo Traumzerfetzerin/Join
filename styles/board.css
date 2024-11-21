@@ -126,7 +126,7 @@ main {
 }
 
 #toDoColumn {
-    width: 246px !important;
+    width: 246px ;
 }
 
 .task {

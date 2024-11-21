@@ -9,13 +9,7 @@ body {
 }
 
 /* FONT  */
-@font-face {
-    font-display: swap;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    src: url('assets/fonts/inter-v12-latin-700.woff2') format('woff2');
-}
+
 
 html {
     font-family: "Inter" !important;
