@@ -1,13 +1,19 @@
 /** Template for each task */
-function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount) {
+function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks, prioIcon) {
     return `
         <div id="${taskId}" class="task draggable ${taskClass}" draggable="true" 
              onclick="showTaskOverlay('${category}', '${taskId}')">
             <h4 class="task-category">${category}</h4>
             <h3>${task.title}</h3>
             <p>${task.description}</p>
-            <p class="subtask-count">${subtaskCount} Subtasks</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: ${(subtaskCount > 0 ? (completedSubtasks / subtaskCount) * 100 : 0)}%"></div>
+            </div>
+            <p class="subtask-count">${completedSubtasks}/${subtaskCount} Subtasks</p>
             <ul>${contactList}</ul>
+            <div class="prio-icon-container">
+                <img src="${prioIcon}" class="prio-icon">
+            </div>
         </div>
     `;
 }
