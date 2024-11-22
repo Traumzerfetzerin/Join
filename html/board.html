@@ -52,7 +52,7 @@
                     <h2>Board</h2>
                     <div id="findAddTask">
                         <div class="searchbarBoard">
-                            <input type="search" placeholder="Find task" id="boardSearchbar">
+                            <input type="search" placeholder="Find task" id="boardSearchbar" oninput="filterTasks()">
                             <img src="../Assets/board/magnifier.svg" alt="magnifier" class="input-icon" onclick="filterTasks()">
                         </div>
                         <button id="buttonAddTask" type="submit" class="cursorPointer"
