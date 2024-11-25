@@ -28,20 +28,24 @@ main {
     position: relative;
 }
 
-#boardSearchbar {
-    width: calc(100% - 48px - 16px);
-    height: 48px;
+.searchbarBoard{
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #D1D1D1;
     border-radius: 10px;
-    border: solid 1px;
-    padding: 8px 16px;
-    box-sizing: border-box;
+    line-height: 24px;
+    background-color: #FFF;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-right: 32px;
+
 }
 
-.searchbar-divider {
-    width: 1px;
-    height: 32px;
-    background-color: #333;
-    margin: 0 16px;
+#boardSearchbar {
+    width: 100%;
+    border: none;
 }
 
 .input-icon {
@@ -59,13 +63,12 @@ main {
 }
 
 #buttonAddTask {
-    width: 160px;
-    height: 48px;
+    display: flex;
+    justify-content: center;
     border-radius: 10px;
     border: solid 1px;
     border-color: #2A3647;
     padding: 8px 16px 8px 16px;
-    gap: 4px;
     background-color: #2A3647;
     color: white;
     font-weight: 700;
@@ -79,7 +82,7 @@ main {
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    margin-bottom: 10px;
+    margin: 18px;
 }
 
 .column-title img {
@@ -126,14 +129,14 @@ main {
 }
 
 #toDoColumn {
-    width: 246px !important;
+    width: 246px ;
 }
 
 .task {
     width: 100%;
     padding: 16px;
     gap: 10px;
-    border-radius: 24px;
+    border-radius: 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: white;
     margin-bottom: 10px;
@@ -174,22 +177,129 @@ main {
     border-radius: 32px;
 }
 
-.user-story h4 {
-    background-color: #0038FF;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 5px;
-}
 
-.technical-task h4 {
-    background-color: #1FD7C1;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 5px;
-}
 
 .no-tasks {
     color: #888;
     text-align: center;
     font-style: italic;
 }
+.task-category {
+    padding: 2px 6px; /* Add some spacing */
+    border-radius: 3px; /* Rounded corners */
+    display: inline-block; /* Ensure width matches text */
+    font-size: 14px;
+    text-transform: capitalize; /* Ensure category names look consistent */
+    font-weight: bold;
+}
+
+.task-category.user-story {
+    background-color: #0038FF;
+    color: white;
+}
+
+.task-category.technical-task {
+    background-color: #1FD7C1;
+    color: white;
+}
+.contact-initial {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: -5px; /* Slight negative margin for overlapping effect */
+    border: 2px solid white; /* Optional: Add a border for better separation */
+    z-index: 1; /* Ensure initials don't stack visually in the wrong order */
+}
+.action-links {
+    position: absolute; /* Enable positioning relative to the card */
+    right: 10px; /* Align to the far right of the card */
+    bottom: 10px; /* Align to the bottom of the card */
+    display: flex;
+    flex-direction: row; /* Stack links vertically */
+    align-items: flex-end; /* Align links to the right */
+}
+
+.action-link {
+    display: flex;
+    color: gray;
+    align-items: center;
+    text-decoration: none;
+     /* Neutral text color */
+    margin-top: 5px; /* Add spacing between links */
+}
+
+.action-link:hover {
+    color:#3498db;
+    /* Darker color on hover */
+}
+
+.link-icon {
+    width: 16px; /* Icon size */
+    height: 16px;
+    margin-left: 8px; /* Space between text and icon */
+}
+
+.card-container {
+    position: relative; /* Ensure the container is positioned for absolute positioning */
+    padding-bottom: 40px; /* Add space to avoid overlap at the bottom */
+}
+.priority-symbol {
+    margin-top: 5px; /* Add space between text and priority symbol */
+}
+
+.priority-icon {
+    width: 24px; /* Adjust size to fit */
+    height: 24px;
+    vertical-align: middle; /* Align icon with text */
+    display: inline-block;
+}
+
+.contact-priority-container {
+    display: flex;
+    justify-content: space-between; /* Space between the contact list and priority symbol */
+    align-items: center; /* Vertically center the elements */
+    margin-top: 10px; /* Add some space above */
+}
+
+
+
+.priority-symbol {
+    display: flex;
+    justify-content: flex-end; /* Align the symbol to the right */
+    align-items: center; /* Center the symbol vertically */
+    margin-left: 10px; /* Adjust space between the contact list and priority symbol */
+}
+
+.priority-icon {
+    width: 24px; /* Adjust icon size */
+    height: 24px;
+}
+.subtask-progress-container {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.subtask-progress-bar {
+    height: 5px;
+    border-radius: 5px;
+    background-color: lightgray; /* Default background color for toDo */
+    flex-grow: 1;
+    margin-left: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.subtask-progress-bar .filled {
+    height: 100%;
+    background-color: blue; /* Default filled color */
+    width: 0%; /* Initial width */
+    transition: width 0.3s ease; /* Smooth animation for width changes */
+}
+
+

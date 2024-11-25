@@ -40,10 +40,13 @@
     box-sizing: border-box; /* Reset box-sizing to include padding/border */
     padding: 8px 12px; /* Adjust padding for more spacing control */
     display: flex;
-    justify-content: center; /* Center content within the sidebar */
+    justify-self: center; /* Center content within the sidebar */
     align-items: center;
+    
     gap: 12px;
     font-size: 16px;
+    cursor: pointer;
+
     
 }
 
@@ -66,15 +69,7 @@
     height: 229px;
 }
 
-.widget {
-    cursor: pointer;
-    width: 100%; /* Ensure widget spans the full sidebar width */
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    box-sizing: border-box; /* Include padding in width calculation */
-    padding: 0 16px; /* Adjust padding to control spacing */
-}
+
 
 .widget:hover {
     background: #2A3D59;  /* Hover background color */

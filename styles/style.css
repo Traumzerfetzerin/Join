@@ -12,10 +12,11 @@ body {
 @font-face {
     font-display: swap;
     font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    src: url('assets/fonts/inter-v12-latin-700.woff2') format('woff2');
+    font-style: 'regular';
+    font-weight: 400;
+    src: url('../fonts/static/Inter_24pt-Regular.ttf') format('woff2');
 }
+
 
 html {
     font-family: "Inter" !important;
@@ -36,14 +37,7 @@ main {
     border: none;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #2A3647;
-    border-radius: 8px;
-}
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
 
 .cursorPointer {
     cursor: pointer;

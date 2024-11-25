@@ -1,19 +1,25 @@
 const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 
 /** Fetch data from Firebase API */
+
 async function fetchTasks() {
     try {
-        let response = await fetch(TASK_URL + ".json");
+        let response = await fetch(`${TASK_URL}.json`);
         let data = await response.json();
+        console.log("Fetched data from Firebase:", data);
+
         if (data) {
             loadTasks(data);
         } else {
-            console.log("Keine Daten gefunden.");
+            console.log("No data found.");
         }
     } catch (error) {
-        console.error("Fehler beim Abrufen der Daten:", error);
+        console.error("Error fetching data:", error);
     }
 }
+
+
+
 
 /** Clear all task columns */
 function clearColumns() {
@@ -31,6 +37,27 @@ function getTaskClass(title) {
 }
 
 /** Load tasks and add them to the appropriate columns */
+/*function loadTasks(tasks) {
+    clearColumns();
+
+    let columns = {
+        toDo: "toDoColumn",
+        inProgress: "inProgressColumn",
+        awaitFeedback: "awaitFeedbackColumn",
+        done: "doneColumn"
+    };
+
+    for (let category in tasks) {
+        let categoryTasks = tasks[category];
+        for (let taskId in categoryTasks) {
+            let task = categoryTasks[taskId];
+            addTaskToColumn(task, category, taskId, columns);
+        }
+    }
+
+    checkEmptyColumns(columns);
+    enableDragAndDrop(columns);
+}*/
 function loadTasks(tasks) {
     clearColumns();
 
@@ -45,6 +72,7 @@ function loadTasks(tasks) {
         let categoryTasks = tasks[category]; 
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
+            task.id = taskId; // Add the ID to the task object
             addTaskToColumn(task, category, taskId, columns); 
         }
     }
@@ -54,36 +82,77 @@ function loadTasks(tasks) {
 }
 
 
-/** Add a task to the specified column */
-function addTaskToColumn(task, category, taskId, columns) {
-    let contactList = task.contacts
-        ? task.contacts.map(contact => `<li>${contact}</li>`).join('')
-        : '';
-    let subtaskCount = task.subtasks ? task.subtasks.length : 0;
-    let taskClass = getTaskClass(task.title);
-    let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount);
 
-    let columnId = task.column ? task.column : "toDo";
-    document.getElementById(columns[columnId]).innerHTML += taskHtml;
+/** Add a task to the specified column */
+
+
+
+
+function addTaskToColumn(task, category, taskId, columns) {
+    let contactList = formatContactList(task.contacts);
+    let subtaskData = calculateSubtaskData(task.subtasks);
+    let prioIcon = getPrioIcon(task.prio);
+    let taskHtml = createTaskHtml(
+        category,
+        task,
+        taskId,
+        contactList,
+        subtaskData,
+        prioIcon
+    );
+    insertTaskIntoColumn(task.column, taskHtml, columns);
 }
 
-/** Check if columns are empty and add/remove 'No tasks to do' message */
-function checkEmptyColumns(columns) {
-    for (let column in columns) {
-        let columnElement = document.getElementById(columns[column]);
-        
-        if (columnElement.children.length === 0 || 
-            (columnElement.children.length === 1 && columnElement.children[0].classList.contains("no-tasks"))) {
-            
-            if (!columnElement.querySelector('.no-tasks')) {
-                columnElement.innerHTML = `<p class="no-tasks">No tasks to do</p>`;
-            }
-        } else {
-            let noTasksMessage = columnElement.querySelector('.no-tasks');
-            if (noTasksMessage) noTasksMessage.remove();
-        }
+
+/** Format the contact list as HTML */
+function formatContactList(contacts) {
+    return contacts
+        ? contacts.map(contact => `<li>${contact}</li>`).join('')
+        : '';
+}
+
+
+/** Calculate subtask data: total and completed */
+function calculateSubtaskData(subtasks) {
+    if (!subtasks) return { count: 0, completed: 0 };
+    return {
+        count: subtasks.length,
+        completed: subtasks.filter(subtask => subtask.completed).length
+    };
+}
+
+
+/** Get the priority icon based on the priority value */
+function getPrioIcon(prio) {
+    if (prio === "urgent") return "../Assets/addTask/Prio alta.svg";
+    if (prio === "medium") return "../Assets/addTask/Prio media white.svg";
+    return "../Assets/addTask/Prio baja.svg";
+}
+
+/** Generate the task HTML */
+function createTaskHtml(category, task, taskId, contactList, subtaskData, prioIcon) {
+    return getTaskBoardTemplate(
+        category,
+        task,
+        taskId,
+        contactList,
+        getTaskClass(task.title),
+        subtaskData.count,
+        subtaskData.completed,
+        prioIcon
+    );
+}
+
+
+/** Insert the task HTML into the specified column */
+function insertTaskIntoColumn(column, taskHtml, columns) {
+    let columnId = column || "toDo";
+    let columnElement = document.getElementById(columns[columnId]);
+    if (columnElement) {
+        columnElement.innerHTML += taskHtml;
     }
 }
+
 
 /** Enable drag and drop functionality */
 function enableDragAndDrop(columns) {
@@ -148,6 +217,24 @@ async function updateTaskColumn(taskId, column) {
 }
 
 
+function checkEmptyColumns(columns) {
+    for (let columnId in columns) {
+        let columnElement = document.getElementById(columns[columnId]);
+        if (columnElement) {
+            let tasks = columnElement.querySelectorAll(".task");
+            if (tasks.length === 0) {
+                columnElement.innerHTML = `<p class="no-tasks">No tasks available</p>`;
+            } else {
+                let noTasksMessage = columnElement.querySelector(".no-tasks");
+                if (noTasksMessage) {
+                    noTasksMessage.remove();
+                }
+            }
+        }
+    }
+}
+
+
 /** Show the task form on the board */
 function addTaskOnBoard() {
     document.getElementById('templateAddTask').classList.remove('d-none');
@@ -162,3 +249,33 @@ function closeTaskOnBoard() {
 function dontClose(event) {
     event.stopPropagation();
 }
+/** Delete a task both from the UI and the Firebase database */
+
+/** Delete a task both from the UI and the Firebase database */
+async function deleteTask(taskId, category) {
+    console.log('Deleting task:', taskId, category);  // Add this line to debug
+
+    if (!taskId || taskId === "undefined") {
+        console.error('Error: Invalid task ID');
+        return;
+    }
+
+    try {
+        const taskUrl = `${TASK_URL}/${category}/${taskId}.json`;
+
+        let response = await fetch(taskUrl, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            console.log(`Task with ID ${taskId} from category ${category} deleted successfully.`);
+            fetchTasks();
+        } else {
+            console.error('Error deleting task:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error deleting task:', error);
+    }
+}
+
+

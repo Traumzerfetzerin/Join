@@ -149,6 +149,32 @@ async function saveTaskToFirebase(taskData) {
         console.error('Error saving:', error);
     }
 }
+async function saveTaskToFirebase(taskData) {
+    try {
+        let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(taskData),
+        });
+
+        if (response.ok) {
+            let json = await response.json(); // Contains the generated key
+            let generatedKey = Object.keys(json)[0]; // The unique key for the task
+            console.log("Task created with ID:", generatedKey);
+
+            // Optionally store the task ID in your task object
+            taskData.id = generatedKey;
+
+            showToast(`Task created in category: ${taskData.category}`);
+            return generatedKey; // Return the key for further use
+        } else {
+            console.error("Error:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error saving task:", error);
+    }
+}
+
 
 
 async function finalizeTaskCreation() {
