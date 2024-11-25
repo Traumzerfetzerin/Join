@@ -84,17 +84,14 @@ let taskCategory = "";
  */
 async function createTasks(event) {
     event.preventDefault();
+
     let taskData = collectTaskData();
     if (!validateTaskData(taskData)) return;
 
     document.getElementById('editSubtasks').innerHTML = "";
+
     await saveTaskToFirebase(taskData);
     await finalizeTaskCreation();
-    await doChangeToBoard();
-}
-
-
-async function doChangeToBoard() {
     await changeToBoard();
 }
 
@@ -197,7 +194,6 @@ async function saveTaskToFirebase(taskData) {
 async function finalizeTaskCreation() {
     await redBorder();
     await popUpAddTask();
-    await closeTask();
 }
 
 
