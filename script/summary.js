@@ -11,9 +11,9 @@ function navigateToToDo() {
  * Updates the greeting message based on the current time.
  */
 function updateGreeting() {
-    const greetingElement = document.querySelector(".good");
-    const now = new Date();
-    const hour = now.getHours();
+    let greetingElement = document.querySelector(".good");
+    let now = new Date();
+    let hour = now.getHours();
     if (!greetingElement) return;
 
     if (hour < 12) {
@@ -32,7 +32,7 @@ function updateGreeting() {
  * @param {string} lastName - The user's last name.
  */
 function updateUserGreeting(isGuest, firstName, lastName) {
-    const nameElement = document.querySelector(".name");
+    let nameElement = document.querySelector(".name");
     if (!nameElement) return;
     nameElement.textContent = isGuest ? "" : `${firstName} ${lastName}`;
 }
@@ -42,9 +42,9 @@ function updateUserGreeting(isGuest, firstName, lastName) {
  */
 async function loadSummaryData() {
     try {
-        const response = await fetch(`${TASK_URL}.json`);
+        let response = await fetch(`${TASK_URL}.json`);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-        const tasks = await response.json();
+        let tasks = await response.json();
         updateSummaryMetrics(tasks);
         updateUrgentTaskDate(tasks);
     } catch (error) {
@@ -57,7 +57,7 @@ async function loadSummaryData() {
  * @param {object} tasks - The tasks retrieved from Firebase.
  */
 function updateSummaryMetrics(tasks) {
-    const counts = countTasksByColumn(tasks);
+    let counts = countTasksByColumn(tasks);
     setSummaryCounts(counts);
 }
 
@@ -96,7 +96,7 @@ function initializeCounts() {
  */
 function processCategoryTasks(categoryTasks, counts) {
     for (let taskId in categoryTasks) {
-        const task = categoryTasks[taskId];
+        let task = categoryTasks[taskId];
         counts.total++;
         updateColumnCounts(task, counts);
         updateUrgentCount(task, counts);
@@ -136,7 +136,6 @@ function updateUrgentCount(task, counts) {
     }
 }
 
-
 /**
  * Updates the summary elements in the UI with the calculated task counts.
  * @param {object} counts - The counts of tasks by category.
@@ -155,21 +154,24 @@ function setSummaryCounts(counts) {
  * @param {object} tasks - The tasks retrieved from Firebase.
  */
 function updateUrgentTaskDate(tasks) {
-    const urgentTasks = findUrgentTasks(tasks);
-    const urgentCount = urgentTasks.length;
-    const closestDate = findClosestDate(urgentTasks);
+    let urgentTasks = findUrgentTasks(tasks);
+    let urgentCount = urgentTasks.length;
+    let closestDate = findClosestDate(urgentTasks);
 
     document.querySelector(".urgentnmb").textContent = urgentCount;
-    const dateElement = document.querySelector(".date");
-    const underDateElement = document.querySelector(".underdate");
 
-    if (closestDate) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dateElement.textContent = closestDate.toLocaleDateString('en-GB', options);
-        underDateElement.textContent = "Upcoming Deadline";
-    } else {
-        dateElement.textContent = "";
-        underDateElement.textContent = "";
+    let dateElement = document.querySelector(".date");
+    let underDateElement = document.querySelector(".underdate");
+
+    if (dateElement && underDateElement) {
+        if (closestDate) {
+            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.textContent = closestDate.toLocaleDateString('en-GB', options);
+            underDateElement.textContent = "Upcoming Deadline";
+        } else {
+            dateElement.textContent = "";
+            underDateElement.textContent = "";
+        }
     }
 }
 
@@ -181,9 +183,9 @@ function updateUrgentTaskDate(tasks) {
 function findUrgentTasks(tasks) {
     let urgentTasks = [];
     for (let category in tasks) {
-        const categoryTasks = tasks[category];
+        let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
-            const task = categoryTasks[taskId];
+            let task = categoryTasks[taskId];
             if (task.prio === "urgent") urgentTasks.push(task);
         }
     }
@@ -198,7 +200,7 @@ function findUrgentTasks(tasks) {
 function findClosestDate(tasks) {
     let closestDate = null;
     tasks.forEach(task => {
-        const dueDate = new Date(task.dueDate);
+        let dueDate = new Date(task.dueDate);
         if (!closestDate || dueDate < closestDate) {
             closestDate = dueDate;
         }
