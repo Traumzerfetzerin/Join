@@ -33,6 +33,7 @@ function closeTaskOverlay(event) {
 }
 
 
+
 window.onload = function () {
     let taskOverlay = document.getElementById("taskOverlay");
     taskOverlay.classList.add("dNone");
@@ -40,9 +41,17 @@ window.onload = function () {
 
 
 function addTaskToColumn(task, category, taskId, columns) {
+    // Ensure task.id is set
+    task.id = taskId;
+
     let contactList = task.contacts
-        ? task.contacts.map(contact => `<li>${contact}</li>`).join('')
+        ? task.contacts.map(contact => {
+              const initials = getInitials(contact); // Extract initials
+              const bgColor = getRandomColor(); // Generate a random background color
+              return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
+          }).join('') // No space between spans for stacking
         : '';
+
     let subtaskCount = task.subtasks ? task.subtasks.length : 0;
     let taskClass = getTaskClass(task.title);
 
@@ -50,6 +59,25 @@ function addTaskToColumn(task, category, taskId, columns) {
 
     let columnId = task.column ? task.column : "toDo";
     let columnElement = document.getElementById(columns[columnId]);
-    columnElement.innerHTML += taskHtml;
+
+    // Set the task's DOM element ID to include taskId for deletion
+    columnElement.innerHTML += `<div id="task-${taskId}">${taskHtml}</div>`;
 }
+
+
+function getInitials(name) {
+    return name
+        .split(' ')
+        .map(part => part[0]?.toUpperCase()) // Take the first letter of each part
+        .join('');
+}
+function getRandomColor() {
+    // Generate a random RGB color
+    const r = Math.floor(Math.random() * 256); // Red: 0-255
+    const g = Math.floor(Math.random() * 256); // Green: 0-255
+    const b = Math.floor(Math.random() * 256); // Blue: 0-255
+
+    return `rgb(${r}, ${g}, ${b})`; // Return the RGB color string
+}
+
 

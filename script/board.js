@@ -1,19 +1,25 @@
 const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 
 /** Fetch data from Firebase API */
+
 async function fetchTasks() {
     try {
-        let response = await fetch(TASK_URL + ".json");
+        let response = await fetch(`${TASK_URL}.json`);
         let data = await response.json();
+        console.log("Fetched data from Firebase:", data);
+
         if (data) {
             loadTasks(data);
         } else {
-            console.log("Keine Daten gefunden.");
+            console.log("No data found.");
         }
     } catch (error) {
-        console.error("Fehler beim Abrufen der Daten:", error);
+        console.error("Error fetching data:", error);
     }
 }
+
+
+
 
 /** Clear all task columns */
 function clearColumns() {
@@ -31,7 +37,7 @@ function getTaskClass(title) {
 }
 
 /** Load tasks and add them to the appropriate columns */
-function loadTasks(tasks) {
+/*function loadTasks(tasks) {
     clearColumns();
 
     let columns = {
@@ -51,21 +57,36 @@ function loadTasks(tasks) {
 
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
+}*/
+function loadTasks(tasks) {
+    clearColumns();
+
+    let columns = {
+        toDo: "toDoColumn",
+        inProgress: "inProgressColumn",
+        awaitFeedback: "awaitFeedbackColumn",
+        done: "doneColumn"
+    };
+
+    for (let category in tasks) {
+        let categoryTasks = tasks[category]; 
+        for (let taskId in categoryTasks) {
+            let task = categoryTasks[taskId];
+            task.id = taskId; // Add the ID to the task object
+            addTaskToColumn(task, category, taskId, columns); 
+        }
+    }
+
+    checkEmptyColumns(columns);
+    enableDragAndDrop(columns);
 }
+
 
 
 /** Add a task to the specified column */
-function addTaskToColumn(task, category, taskId, columns) {
-    let contactList = task.contacts
-        ? task.contacts.map(contact => `<li>${contact}</li>`).join('')
-        : '';
-    let subtaskCount = task.subtasks ? task.subtasks.length : 0;
-    let taskClass = getTaskClass(task.title);
-    let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount);
 
-    let columnId = task.column ? task.column : "toDo";
-    document.getElementById(columns[columnId]).innerHTML += taskHtml;
-}
+
+
 
 /** Check if columns are empty and add/remove 'No tasks to do' message */
 function checkEmptyColumns(columns) {
@@ -162,3 +183,33 @@ function closeTaskOnBoard() {
 function dontClose(event) {
     event.stopPropagation();
 }
+/** Delete a task both from the UI and the Firebase database */
+
+/** Delete a task both from the UI and the Firebase database */
+async function deleteTask(taskId, category) {
+    console.log('Deleting task:', taskId, category);  // Add this line to debug
+
+    if (!taskId || taskId === "undefined") {
+        console.error('Error: Invalid task ID');
+        return;
+    }
+
+    try {
+        const taskUrl = `${TASK_URL}/${category}/${taskId}.json`;
+
+        let response = await fetch(taskUrl, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            console.log(`Task with ID ${taskId} from category ${category} deleted successfully.`);
+            fetchTasks();
+        } else {
+            console.error('Error deleting task:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error deleting task:', error);
+    }
+}
+
+
