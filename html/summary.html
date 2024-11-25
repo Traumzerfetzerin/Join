@@ -38,51 +38,46 @@
         </div>
         <div class="details">
             <div class="checkpencil">
-                <div class="pencil cursorPointer" onclick="navigateToToDo()">
-                    <div><img class="summaryimg" src="../Assets/pencil.svg" alt="pencil"></div>
+                <div class="pencil cursorPointer">
+                    <div><img class="summaryimg" src="../Assets/pencil.svg" alt="To Do"></div>
                     <div class="summaryp">
-                        <p class="summarynmb"></p>
-                        <p class="summarymission todo">To-Do</p>
+                        <p class="summarynmb todo"></p> <!-- Anzahl To Do -->
+                        <p class="summarymission">To Do</p>
                     </div>
                 </div>
-                <div class="pencil" onclick="navigateToToDo()">
-                    <div><img class="summaryimg" src="../Assets/Ckeck.svg" alt="pencil"></div>
+                <div class="pencil cursorPointer">
+                    <div><img class="summaryimg" src="../Assets/Ckeck.svg" alt="Done"></div>
                     <div class="summaryp">
-                        <p class="summarynmb"></p>
-                        <p class="summarymission">Done</p>undertask
+                        <p class="summarynmb done"></p> <!-- Anzahl Done -->
+                        <p class="summarymission">Done</p>
                     </div>
                 </div>
             </div>
-            <div class="urgent cursorPointer" onclick="navigateToToDo()">
+            <div class="urgent cursorPointer">
                 <div class="numimg">
                     <img class="urgentimg" src="../Assets/Urgent.svg" alt="Urgent">
                     <div class="nmbtext">
-                        <p class="urgentnmb"></p>
+                        <p class="urgentnmb"></p> <!-- Anzahl Urgent -->
                         <p class="urgenttext">Urgent</p>
                     </div>
                 </div>
-                <div class="vectorurgent"></div>
-                <div class="datetext">
-                    <p class="date">October 16, 2022</p>
-                    <p class="underdate">Upcoming Deadline</p>
-                </div>
             </div>
             <div class="tasks">
-                <div class="undertask cursorPointer" onclick="navigateToToDo()">
+                <div class="undertask cursorPointer">
                     <div class="underundertask">
-                        <p class="tasknmb"></p>
+                        <p class="tasknmb board"></p> <!-- Tasks in Board -->
                         <p class="tasktext">Tasks in Board</p>
                     </div>
                 </div>
-                <div class="undertask cursorPointer" onclick="navigateToToDo()">
+                <div class="undertask cursorPointer">
                     <div class="underundertask">
-                        <p class="tasknmb"></p>
+                        <p class="tasknmb progress"></p> <!-- Tasks in Progress -->
                         <p class="tasktext">Tasks in Progress</p>
                     </div>
                 </div>
-                <div class="undertask cursorPointer" onclick="navigateToToDo()">
+                <div class="undertask cursorPointer">
                     <div class="underundertask">
-                        <p class="tasknmb"></p>
+                        <p class="tasknmb awaitFeedback"></p> <!-- Await Feedback -->
                         <p class="tasktext">Awaiting Feedback</p>
                     </div>
                 </div>

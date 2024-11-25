@@ -40,18 +40,18 @@ function updateUserGreeting(isGuest, firstName, lastName) {
 // Lädt die Übersichtsdaten von Firebase und ruft die Funktion auf, um die Metriken anzuzeigen
 async function loadSummaryData() {
     try {
-        const response = await fetch(TASK_URL + ".json");
-        const data = await response.json();
-
-        if (data) {
-            updateSummaryMetrics(data);
-        } else {
-            console.log("Keine Daten gefunden.");
+        const response = await fetch("https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks.json");
+        if (!response.ok) {
+            throw new Error(`Fehler beim Laden der Daten: ${response.statusText}`);
         }
+        const tasks = await response.json();
+        console.log("Geladene Tasks aus Firebase:", tasks); // Debugging
+        updateSummaryMetrics(tasks); // Aktualisiere die Summary
     } catch (error) {
-        console.error("Fehler beim Abrufen der Daten:", error);
+        console.error("Fehler beim Laden der Summary-Daten:", error);
     }
 }
+
 
 function updateSummaryMetrics(tasks) {
     let toDoCount = 0;
@@ -155,3 +155,53 @@ function updateUrgentTaskDate(tasks) {
 
 // Lädt beim Laden der Seite die Übersichtsdaten
 window.onload = loadSummaryData;
+
+
+function updateSummaryMetrics(tasks) {
+    let toDoCount = 0;
+    let doneCount = 0;
+    let urgentCount = 0;
+    let inProgressCount = 0;
+    let awaitFeedbackCount = 0;
+
+    // Tasks in Board berechnen
+    let tasksInBoard = 0;
+
+    // Tasks nach column zählen
+    for (let category in tasks) {
+        const categoryTasks = tasks[category];
+        for (let taskId in categoryTasks) {
+            const task = categoryTasks[taskId];
+            tasksInBoard++;
+
+            // Nutze die `column`-Eigenschaft für die Zuordnung
+            switch (task.column?.toLowerCase()) {
+                case "todo":
+                    toDoCount++;
+                    break;
+                case "done":
+                    doneCount++;
+                    break;
+                case "inprogress":
+                    inProgressCount++;
+                    break;
+                case "awaitfeedback":
+                    awaitFeedbackCount++;
+                    break;
+            }
+
+            // Dringende Aufgaben zählen
+            if (task.prio === "urgent") {
+                urgentCount++;
+            }
+        }
+    }
+
+    // Setze die gezählten Werte in die HTML-Elemente
+    document.querySelector(".summarynmb.todo").textContent = toDoCount;
+    document.querySelector(".summarynmb.done").textContent = doneCount;
+    document.querySelector(".urgentnmb").textContent = urgentCount;
+    document.querySelector(".tasknmb.board").textContent = tasksInBoard;
+    document.querySelector(".tasknmb.progress").textContent = inProgressCount;
+    document.querySelector(".tasknmb.awaitFeedback").textContent = awaitFeedbackCount;
+}
