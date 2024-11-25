@@ -84,11 +84,10 @@ function loadTasks(tasks) {
 
 
 /** Add a task to the specified column */
-<<<<<<< HEAD
 
 
 
-=======
+
 function addTaskToColumn(task, category, taskId, columns) {
     let contactList = formatContactList(task.contacts);
     let subtaskData = calculateSubtaskData(task.subtasks);
@@ -103,7 +102,6 @@ function addTaskToColumn(task, category, taskId, columns) {
     );
     insertTaskIntoColumn(task.column, taskHtml, columns);
 }
->>>>>>> 549e933b19dfac8f519caf89352bfb054188bfe1
 
 
 /** Format the contact list as HTML */
