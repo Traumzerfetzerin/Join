@@ -1,207 +1,210 @@
 const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 
-// Navigationsfunktion für "To-Do"-Bereich
+/**
+ * Navigates to the "To-Do" section.
+ */
 function navigateToToDo() {
     window.location.href = "board.html";
 }
 
-// Beim Laden der Seite die Begrüßung aktualisieren
-updateGreeting();
-
+/**
+ * Updates the greeting message based on the current time.
+ */
 function updateGreeting() {
     const greetingElement = document.querySelector(".good");
     const now = new Date();
     const hour = now.getHours();
+    if (!greetingElement) return;
 
-    if (greetingElement) {
-        if (hour < 12) {
-            greetingElement.textContent = "Good Morning";
-        } else if (hour < 18) {
-            greetingElement.textContent = "Good Afternoon";
-        } else {
-            greetingElement.textContent = "Good Evening";
-        }
+    if (hour < 12) {
+        greetingElement.textContent = "Good Morning";
+    } else if (hour < 18) {
+        greetingElement.textContent = "Good Afternoon";
+    } else {
+        greetingElement.textContent = "Good Evening";
     }
 }
 
+/**
+ * Updates the user's greeting with the provided name or clears it for a guest.
+ * @param {boolean} isGuest - True if the user is a guest.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ */
 function updateUserGreeting(isGuest, firstName, lastName) {
     const nameElement = document.querySelector(".name");
-    
-    if (isGuest) {
-        // Wenn der Benutzer ein Gast ist, kein Name anzeigen
-        nameElement.textContent = "";
-    } else {
-        // Wenn der Benutzer angemeldet ist, den Namen anzeigen
-        nameElement.textContent = `${firstName} ${lastName}`;
-    }
+    if (!nameElement) return;
+    nameElement.textContent = isGuest ? "" : `${firstName} ${lastName}`;
 }
 
-
-// Lädt die Übersichtsdaten von Firebase und ruft die Funktion auf, um die Metriken anzuzeigen
+/**
+ * Fetches task data from Firebase and updates the summary.
+ */
 async function loadSummaryData() {
     try {
-        const response = await fetch("https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks.json");
-        if (!response.ok) {
-            throw new Error(`Fehler beim Laden der Daten: ${response.statusText}`);
-        }
+        const response = await fetch(`${TASK_URL}.json`);
+        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         const tasks = await response.json();
-        console.log("Geladene Tasks aus Firebase:", tasks); // Debugging
-        updateSummaryMetrics(tasks); // Aktualisiere die Summary
+        updateSummaryMetrics(tasks);
+        updateUrgentTaskDate(tasks);
     } catch (error) {
-        console.error("Fehler beim Laden der Summary-Daten:", error);
+        console.error("Error fetching summary data:", error);
     }
 }
 
-
+/**
+ * Updates the summary metrics for tasks.
+ * @param {object} tasks - The tasks retrieved from Firebase.
+ */
 function updateSummaryMetrics(tasks) {
-    let toDoCount = 0;
-    let doneCount = 0;
-    let urgentCount = 0;
-    let inProgressCount = 0;
-    let awaitFeedbackCount = 0;
-
-    // Setze alle `tasknmb`- und `summarynmb`-Elemente standardmäßig auf "0"
-    document.querySelectorAll(".tasknmb").forEach(element => {
-        element.textContent = "0";
-    });
-    document.querySelectorAll(".summarynmb").forEach(element => {
-        element.textContent = "0";
-    });
-
-    // Durchlaufe die Aufgaben und zähle nach Status
-    for (let category in tasks) {
-        const categoryTasks = tasks[category];
-        for (let taskId in categoryTasks) {
-            const task = categoryTasks[taskId];
-
-            // Zähle die Aufgaben je nach Status
-            switch (task.status) {
-                case 'To-Do':
-                    toDoCount++;
-                    break;
-                case 'Done':
-                    doneCount++;
-                    break;
-                case 'Urgent':
-                    urgentCount++;
-                    break;
-                case 'In Progress':
-                    inProgressCount++;
-                    break;
-                case 'Await Feedback':
-                    awaitFeedbackCount++;
-                    break;
-            }
-        }
-    }
-
-    // Setze die Zählerwerte in die jeweiligen Elemente
-    const todoElement = document.querySelector(".summarynmb.todo");
-    const doneElement = document.querySelector(".summarynmb.done");
-    const urgentElement = document.querySelector(".urgentnmb");
-    const boardElement = document.querySelector(".tasknmb.board");
-    const progressElement = document.querySelector(".tasknmb.progress");
-    const awaitFeedbackElement = document.querySelector(".tasknmb.awaitFeedback");
-
-    if (todoElement) todoElement.textContent = toDoCount;
-    if (doneElement) doneElement.textContent = doneCount;
-    if (urgentElement) urgentElement.textContent = urgentCount;
-    if (boardElement) boardElement.textContent = toDoCount + doneCount + inProgressCount + awaitFeedbackCount;
-    if (progressElement) progressElement.textContent = inProgressCount;
-    if (awaitFeedbackElement) awaitFeedbackElement.textContent = awaitFeedbackCount;
+    const counts = countTasksByColumn(tasks);
+    setSummaryCounts(counts);
 }
 
-function updateUrgentTaskDate(tasks) {
-    const urgentElement = document.querySelector(".urgentnmb");
-    const dateElement = document.querySelector(".date"); // Element für das Datum
-    const underDateElement = document.querySelector(".underdate"); // Element für den Untertitel unter dem Datum
-
-    let urgentCount = 0;
-    let closestDate = null;
-
+/**
+ * Counts tasks by their column and priority.
+ * @param {object} tasks - The tasks retrieved from Firebase.
+ * @returns {object} - An object containing task counts by category.
+ */
+function countTasksByColumn(tasks) {
+    let counts = initializeCounts();
     for (let category in tasks) {
-        const categoryTasks = tasks[category];
-        for (let taskId in categoryTasks) {
-            const task = categoryTasks[taskId];
-
-            // Zähle nur die "Urgent"-Aufgaben
-            if (task.status === 'Urgent') {
-                urgentCount++;
-
-                // Überprüfe das Fälligkeitsdatum
-                const dueDate = new Date(task.dueDate); // Angenommen, die Aufgabe hat ein dueDate-Feld
-                if (!closestDate || dueDate < closestDate) {
-                    closestDate = dueDate; // Finde das nächste Fälligkeitsdatum
-                }
-            }
-        }
+        processCategoryTasks(tasks[category], counts);
     }
+    return counts;
+}
 
-    // Aktualisiere die UI-Elemente
-    if (urgentElement) {
-        urgentElement.textContent = urgentCount; // Anzahl der dringenden Aufgaben anzeigen
+/**
+ * Initializes the counts object for task metrics.
+ * @returns {object} - A counts object with initial values.
+ */
+function initializeCounts() {
+    return {
+        toDo: 0,
+        done: 0,
+        inProgress: 0,
+        awaitFeedback: 0,
+        urgent: 0,
+        total: 0
+    };
+}
+
+/**
+ * Processes all tasks in a category and updates the counts.
+ * @param {object} categoryTasks - The tasks in a specific category.
+ * @param {object} counts - The counts object to update.
+ */
+function processCategoryTasks(categoryTasks, counts) {
+    for (let taskId in categoryTasks) {
+        const task = categoryTasks[taskId];
+        counts.total++;
+        updateColumnCounts(task, counts);
+        updateUrgentCount(task, counts);
     }
+}
+
+/**
+ * Updates counts based on the task's column.
+ * @param {object} task - A single task object.
+ * @param {object} counts - The counts object to update.
+ */
+function updateColumnCounts(task, counts) {
+    switch (task.column?.toLowerCase()) {
+        case "todo":
+            counts.toDo++;
+            break;
+        case "done":
+            counts.done++;
+            break;
+        case "inprogress":
+            counts.inProgress++;
+            break;
+        case "awaitfeedback":
+            counts.awaitFeedback++;
+            break;
+    }
+}
+
+/**
+ * Updates the urgent count if the task is marked as urgent.
+ * @param {object} task - A single task object.
+ * @param {object} counts - The counts object to update.
+ */
+function updateUrgentCount(task, counts) {
+    if (task.prio === "urgent") {
+        counts.urgent++;
+    }
+}
+
+
+/**
+ * Updates the summary elements in the UI with the calculated task counts.
+ * @param {object} counts - The counts of tasks by category.
+ */
+function setSummaryCounts(counts) {
+    document.querySelector(".summarynmb.todo").textContent = counts.toDo;
+    document.querySelector(".summarynmb.done").textContent = counts.done;
+    document.querySelector(".urgentnmb").textContent = counts.urgent;
+    document.querySelector(".tasknmb.board").textContent = counts.total;
+    document.querySelector(".tasknmb.progress").textContent = counts.inProgress;
+    document.querySelector(".tasknmb.awaitFeedback").textContent = counts.awaitFeedback;
+}
+
+/**
+ * Updates the urgent task count and next deadline in the UI.
+ * @param {object} tasks - The tasks retrieved from Firebase.
+ */
+function updateUrgentTaskDate(tasks) {
+    const urgentTasks = findUrgentTasks(tasks);
+    const urgentCount = urgentTasks.length;
+    const closestDate = findClosestDate(urgentTasks);
+
+    document.querySelector(".urgentnmb").textContent = urgentCount;
+    const dateElement = document.querySelector(".date");
+    const underDateElement = document.querySelector(".underdate");
 
     if (closestDate) {
-        // Setze das Datum für die nächste dringende Aufgabe
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dateElement.textContent = closestDate.toLocaleDateString('de-DE', options); // Datum im deutschen Format
-        underDateElement.textContent = "Upcoming Deadline"; // Untertitel für das Datum
+        dateElement.textContent = closestDate.toLocaleDateString('en-GB', options);
+        underDateElement.textContent = "Upcoming Deadline";
     } else {
-        dateElement.textContent = ""; // Kein Datum anzeigen, wenn keine dringenden Aufgaben vorhanden sind
-        underDateElement.textContent = ""; // Untertitel leeren
+        dateElement.textContent = "";
+        underDateElement.textContent = "";
     }
 }
 
-// Lädt beim Laden der Seite die Übersichtsdaten
-window.onload = loadSummaryData;
-
-
-function updateSummaryMetrics(tasks) {
-    let toDoCount = 0;
-    let doneCount = 0;
-    let urgentCount = 0;
-    let inProgressCount = 0;
-    let awaitFeedbackCount = 0;
-
-    // Tasks in Board berechnen
-    let tasksInBoard = 0;
-
-    // Tasks nach column zählen
+/**
+ * Finds all urgent tasks.
+ * @param {object} tasks - The tasks retrieved from Firebase.
+ * @returns {Array} - An array of urgent tasks.
+ */
+function findUrgentTasks(tasks) {
+    let urgentTasks = [];
     for (let category in tasks) {
         const categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             const task = categoryTasks[taskId];
-            tasksInBoard++;
-
-            // Nutze die `column`-Eigenschaft für die Zuordnung
-            switch (task.column?.toLowerCase()) {
-                case "todo":
-                    toDoCount++;
-                    break;
-                case "done":
-                    doneCount++;
-                    break;
-                case "inprogress":
-                    inProgressCount++;
-                    break;
-                case "awaitfeedback":
-                    awaitFeedbackCount++;
-                    break;
-            }
-
-            // Dringende Aufgaben zählen
-            if (task.prio === "urgent") {
-                urgentCount++;
-            }
+            if (task.prio === "urgent") urgentTasks.push(task);
         }
     }
-
-    // Setze die gezählten Werte in die HTML-Elemente
-    document.querySelector(".summarynmb.todo").textContent = toDoCount;
-    document.querySelector(".summarynmb.done").textContent = doneCount;
-    document.querySelector(".urgentnmb").textContent = urgentCount;
-    document.querySelector(".tasknmb.board").textContent = tasksInBoard;
-    document.querySelector(".tasknmb.progress").textContent = inProgressCount;
-    document.querySelector(".tasknmb.awaitFeedback").textContent = awaitFeedbackCount;
+    return urgentTasks;
 }
+
+/**
+ * Finds the closest due date from an array of tasks.
+ * @param {Array} tasks - An array of tasks.
+ * @returns {Date|null} - The closest due date or null if none exists.
+ */
+function findClosestDate(tasks) {
+    let closestDate = null;
+    tasks.forEach(task => {
+        const dueDate = new Date(task.dueDate);
+        if (!closestDate || dueDate < closestDate) {
+            closestDate = dueDate;
+        }
+    });
+    return closestDate;
+}
+
+// Load summary data on page load
+window.onload = loadSummaryData;
