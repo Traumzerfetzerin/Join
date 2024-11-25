@@ -88,6 +88,9 @@ async function createTasks(event) {
     let taskData = collectTaskData();
     if (!validateTaskData(taskData)) return;
 
+    // let isValid = await validateTaskData(taskData);
+    // if (!isValid) return;
+
     document.getElementById('editSubtasks').innerHTML = "";
 
     await saveTaskToFirebase(taskData);
