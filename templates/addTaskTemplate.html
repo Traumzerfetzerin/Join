@@ -74,7 +74,8 @@
                 </section>
 
                 <div class="input-group">
-                    <label for="assignTask" class="add-task-label fonts headlineAssignedTo font_2A3647">Category<span class="required">*</span></label>
+                    <label for="assignTask" class="add-task-label fonts headlineAssignedTo font_2A3647">Category<span
+                            class="required">*</span></label>
                     <div class="input-with-icon" id="inputCategory">
                         <input type="text" name="category" class="add-task-title add-task-assigned-to cursorPointer"
                             id="categorySelect" placeholder="Select task category" autocomplete="off" readonly
@@ -125,7 +126,8 @@
             <button id="clearButton" class="clearButton cursorPointer" onclick="clearTasks()">Clear
                 <img src="../Assets/addTask/Vector.svg" alt="">
             </button>
-            <button type="button" class="createButton cursorPointer" id="createTask" onclick="createTasks(event)">Create
+            <button type="button" class="createButton cursorPointer" id="createTask"
+                onclick="createTasks(event), changeToBoard()">Create
                 Task
                 <img src="../Assets/addTask/check.svg" alt="">
             </button>

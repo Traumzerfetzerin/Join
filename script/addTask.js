@@ -66,9 +66,12 @@ async function clearTasks() {
     document.getElementById('categorySelect').selectedIndex = 0;
     document.getElementById('categoryDropdown').classList.add('d-none');
     document.getElementById('subtaskSelect').value = "";
-    // contacts.forEach(contact => {
-    //     document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')} `).checked = false;
-    // });
+    contacts.forEach(contact => {
+        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        if (checkbox) {
+            checkbox.checked = false;
+        }
+    });
     clearPrioButtons();
 }
 
@@ -87,6 +90,19 @@ async function createTasks(event) {
     document.getElementById('editSubtasks').innerHTML = "";
     await saveTaskToFirebase(taskData);
     await finalizeTaskCreation();
+    await doChangeToBoard();
+}
+
+
+async function doChangeToBoard() {
+    await changeToBoard();
+}
+
+
+async function changeToBoard() {
+    setTimeout(() => {
+        window.location.href = "board.html";
+    }, 1000);
 }
 
 
@@ -149,6 +165,8 @@ async function saveTaskToFirebase(taskData) {
         console.error('Error saving:', error);
     }
 }
+
+
 async function saveTaskToFirebase(taskData) {
     try {
         let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
@@ -176,7 +194,6 @@ async function saveTaskToFirebase(taskData) {
 }
 
 
-
 async function finalizeTaskCreation() {
     await redBorder();
     await popUpAddTask();
@@ -199,6 +216,7 @@ async function redBorder() {
     setTimeout(() => resetBorders([...inputs, assignedTo, categorySelect]), 2000);
 }
 
+
 /**
  * Adds a red border to invalid elements.
  * @param {NodeList} elements - List of elements to highlight.
@@ -207,6 +225,7 @@ function highlightInvalid(elements) {
     elements.forEach(el => el.style.border = '2px solid #FF3D00');
 }
 
+
 /**
  * Highlights a specific element.
  * @param {HTMLElement} element - Element to highlight.
@@ -214,6 +233,7 @@ function highlightInvalid(elements) {
 function highlightElement(element) {
     element.style.border = '2px solid #FF3D00';
 }
+
 
 /**
  * Resets the border for given elements.
@@ -245,6 +265,13 @@ async function popUpAddTask() {
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
+    document.getElementById('assigned-to').value = "";
+    contacts.forEach(contact => {
+        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        if (checkbox) {
+            checkbox.checked = false;
+        }
+    });
 
     setTimeout(() => {
         document.getElementById("popUpAddTask").style.display = "none";

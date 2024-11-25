@@ -73,6 +73,8 @@ function populateCheckboxDropdown() {
 
     dropdown.classList.remove('d-none'); // Ensure the dropdown is visible
 }
+
+
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -81,9 +83,6 @@ function getRandomColor() {
     }
     return color;
 }
-
-
-
 
 
 // Maintain an array of selected contacts
@@ -115,6 +114,7 @@ function toggleDropdown() {
         dropdownImg.style.display = 'block';
     }
 }
+
 
 // Close the dropdown when clicking outside
 document.addEventListener('click', function (event) {
