@@ -3,15 +3,13 @@
  */
 function filterTasks() {
     let searchTerm = document.getElementById("boardSearchbar").value.toLowerCase();
+    let allTasks = document.querySelectorAll(".task");
 
-    if (searchTerm.length < 3) {
-        document.querySelectorAll(".task").forEach(task => {
-            task.style.display = "block";
-        });
+    if (!searchTerm) {
+
+        allTasks.forEach(task => task.style.display = "block");
         return;
     }
-
-    let allTasks = document.querySelectorAll(".task");
 
     allTasks.forEach(task => {
         let title = task.querySelector("h3")?.innerText.toLowerCase() || "";
@@ -27,7 +25,7 @@ function filterTasks() {
             category.includes(searchTerm) ||
             subtasks.includes(searchTerm)
         ) {
-            task.style.display = "block";
+            task.style.display = "block"; 
         } else {
             task.style.display = "none";
         }

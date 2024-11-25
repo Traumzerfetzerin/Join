@@ -28,20 +28,24 @@ main {
     position: relative;
 }
 
-#boardSearchbar {
-    width: calc(100% - 48px - 16px);
-    height: 48px;
+.searchbarBoard{
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #D1D1D1;
     border-radius: 10px;
-    border: solid 1px;
-    padding: 8px 16px;
-    box-sizing: border-box;
+    line-height: 24px;
+    background-color: #FFF;
+    color: #333;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-right: 32px;
+
 }
 
-.searchbar-divider {
-    width: 1px;
-    height: 32px;
-    background-color: #333;
-    margin: 0 16px;
+#boardSearchbar {
+    width: 100%;
+    border: none;
 }
 
 .input-icon {
@@ -59,13 +63,12 @@ main {
 }
 
 #buttonAddTask {
-    width: 160px;
-    height: 48px;
+    display: flex;
+    justify-content: center;
     border-radius: 10px;
     border: solid 1px;
     border-color: #2A3647;
     padding: 8px 16px 8px 16px;
-    gap: 4px;
     background-color: #2A3647;
     color: white;
     font-weight: 700;
@@ -79,7 +82,7 @@ main {
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    margin-bottom: 10px;
+    margin: 18px;
 }
 
 .column-title img {

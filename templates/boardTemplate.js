@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount) {
     const categoryClass = category.toLowerCase().replace(" ", "-");
 
@@ -5,16 +6,30 @@ function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, su
     const prioritySymbol = getPrioritySymbol(task.prio);
     const progressBar = getSubtaskProgressBar(task, subtaskCount);
 
+=======
+/** Template for each task */
+function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks, prioIcon) {
+>>>>>>> 549e933b19dfac8f519caf89352bfb054188bfe1
     return `
         <div id="${taskId}" class="task draggable ${taskClass}" draggable="true" 
              onclick="showTaskOverlay('${category}', '${taskId}')">
             <h4 class="task-category ${categoryClass}">${category}</h4>
             <h3>${task.title}</h3>
             <p>${task.description}</p>
+<<<<<<< HEAD
             ${progressBar}
             <div class="contact-priority-container">
                 <div class="contact-list">${contactList}</div>
                 <div class="priority-symbol">${prioritySymbol}</div>
+=======
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: ${(subtaskCount > 0 ? (completedSubtasks / subtaskCount) * 100 : 0)}%"></div>
+            </div>
+            <p class="subtask-count">${completedSubtasks}/${subtaskCount} Subtasks</p>
+            <ul>${contactList}</ul>
+            <div class="prio-icon-container">
+                <img src="${prioIcon}" class="prio-icon">
+>>>>>>> 549e933b19dfac8f519caf89352bfb054188bfe1
             </div>
         </div>
     `;

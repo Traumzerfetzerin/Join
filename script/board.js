@@ -48,10 +48,10 @@ function getTaskClass(title) {
     };
 
     for (let category in tasks) {
-        let categoryTasks = tasks[category]; 
+        let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
-            addTaskToColumn(task, category, taskId, columns); 
+            addTaskToColumn(task, category, taskId, columns);
         }
     }
 
@@ -84,27 +84,77 @@ function loadTasks(tasks) {
 
 
 /** Add a task to the specified column */
+<<<<<<< HEAD
 
 
 
+=======
+function addTaskToColumn(task, category, taskId, columns) {
+    let contactList = formatContactList(task.contacts);
+    let subtaskData = calculateSubtaskData(task.subtasks);
+    let prioIcon = getPrioIcon(task.prio);
+    let taskHtml = createTaskHtml(
+        category,
+        task,
+        taskId,
+        contactList,
+        subtaskData,
+        prioIcon
+    );
+    insertTaskIntoColumn(task.column, taskHtml, columns);
+}
+>>>>>>> 549e933b19dfac8f519caf89352bfb054188bfe1
 
-/** Check if columns are empty and add/remove 'No tasks to do' message */
-function checkEmptyColumns(columns) {
-    for (let column in columns) {
-        let columnElement = document.getElementById(columns[column]);
-        
-        if (columnElement.children.length === 0 || 
-            (columnElement.children.length === 1 && columnElement.children[0].classList.contains("no-tasks"))) {
-            
-            if (!columnElement.querySelector('.no-tasks')) {
-                columnElement.innerHTML = `<p class="no-tasks">No tasks to do</p>`;
-            }
-        } else {
-            let noTasksMessage = columnElement.querySelector('.no-tasks');
-            if (noTasksMessage) noTasksMessage.remove();
-        }
+
+/** Format the contact list as HTML */
+function formatContactList(contacts) {
+    return contacts
+        ? contacts.map(contact => `<li>${contact}</li>`).join('')
+        : '';
+}
+
+
+/** Calculate subtask data: total and completed */
+function calculateSubtaskData(subtasks) {
+    if (!subtasks) return { count: 0, completed: 0 };
+    return {
+        count: subtasks.length,
+        completed: subtasks.filter(subtask => subtask.completed).length
+    };
+}
+
+
+/** Get the priority icon based on the priority value */
+function getPrioIcon(prio) {
+    if (prio === "urgent") return "../Assets/addTask/Prio alta.svg";
+    if (prio === "medium") return "../Assets/addTask/Prio media white.svg";
+    return "../Assets/addTask/Prio baja.svg";
+}
+
+/** Generate the task HTML */
+function createTaskHtml(category, task, taskId, contactList, subtaskData, prioIcon) {
+    return getTaskBoardTemplate(
+        category,
+        task,
+        taskId,
+        contactList,
+        getTaskClass(task.title),
+        subtaskData.count,
+        subtaskData.completed,
+        prioIcon
+    );
+}
+
+
+/** Insert the task HTML into the specified column */
+function insertTaskIntoColumn(column, taskHtml, columns) {
+    let columnId = column || "toDo";
+    let columnElement = document.getElementById(columns[columnId]);
+    if (columnElement) {
+        columnElement.innerHTML += taskHtml;
     }
 }
+
 
 /** Enable drag and drop functionality */
 function enableDragAndDrop(columns) {
@@ -165,6 +215,24 @@ async function updateTaskColumn(taskId, column) {
         }
     } catch (error) {
         console.error("Fehler beim Aktualisieren der Spalte:", error);
+    }
+}
+
+
+function checkEmptyColumns(columns) {
+    for (let columnId in columns) {
+        let columnElement = document.getElementById(columns[columnId]);
+        if (columnElement) {
+            let tasks = columnElement.querySelectorAll(".task");
+            if (tasks.length === 0) {
+                columnElement.innerHTML = `<p class="no-tasks">No tasks available</p>`;
+            } else {
+                let noTasksMessage = columnElement.querySelector(".no-tasks");
+                if (noTasksMessage) {
+                    noTasksMessage.remove();
+                }
+            }
+        }
     }
 }
 
