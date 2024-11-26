@@ -1,6 +1,64 @@
-@media (max-width: 1070px) {
-    .taskBothSide {
+@media (max-width: 990px) {
+    .mainSectionAddTask {
+        margin-left: 0px;
+    }
+}
+
+@media (max-width: 1015px) {
+    .h1Task {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+    }
+
+    .taskSide {
+        overflow: scroll;
+        height: calc(100vh - 480px);
+    }
+
+    .taskBothSide {
         flex-direction: column;
+
+    }
+
+    .seperator {
+        display: none;
+    }
+
+    .requiredAndButtons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 710px){
+    .taskSide {
+        overflow: scroll;
+        height: calc(100vh - 450px);
+    }
+}
+
+@media (max-width: 440px) {
+    .h1Task {
+        font-size: 40px;
+    }
+
+    .taskSide {
+        overflow: scroll;
+        height: calc(100vh - 420px);
+    }
+
+    .taskRightSide {
+        width: auto;
+    }
+
+    .taskLeftSide {
+        width: 300px;
+    }
+
+    #urgent,
+    #medium,
+    #low {
+        font-size: 15px;
     }
 }

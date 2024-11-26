@@ -1,6 +1,6 @@
+<h1 class="h1Task">Add Task</h1>
 <div class="taskSide">
     <form>
-        <h1 class="h1Task">Add Task</h1>
         <div class="flex taskBothSide">
             <div class="taskLeftSide width_440">
                 <section class="titleTask fonts">
@@ -115,22 +115,22 @@
             </div>
         </div>
     </form>
+</div>
 
-    <div class="space-between">
-        <div class="flex fonts required">
-            <div class="colorRed">*</div>
-            <span class="font_16">This field is required</span>
-        </div>
-        <!-- ICON BUTTON -->
-        <div class="buttons">
-            <button id="clearButton" class="clearButton cursorPointer" onclick="clearTasks()">Clear
-                <img src="../Assets/addTask/Vector.svg" alt="">
-            </button>
-            <button type="button" class="createButton cursorPointer" id="createTask" onclick="createTasks(event)">Create
-                Task
-                <img src="../Assets/addTask/check.svg" alt="">
-            </button>
-        </div>
+<div class="space-between requiredAndButtons">
+    <div class="flex fonts required">
+        <div class="colorRed">*</div>
+        <span class="font_16">This field is required</span>
+    </div>
+
+    <div class="buttons">
+        <button id="clearButton" class="clearButton cursorPointer" onclick="clearTasks()">Clear
+            <img src="../Assets/addTask/Vector.svg" alt="">
+        </button>
+        <button type="button" class="createButton cursorPointer" id="createTask" onclick="createTasks(event)">Create
+            Task
+            <img src="../Assets/addTask/check.svg" alt="">
+        </button>
     </div>
 </div>
 

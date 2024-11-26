@@ -98,6 +98,7 @@ async function createTasks(event) {
 }
 
 
+// AFTER CREATE TASK CHANGE TO BOARD
 async function changeToBoard() {
     setTimeout(() => {
         window.location.href = "board.html";

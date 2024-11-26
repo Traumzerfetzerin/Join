@@ -1,3 +1,8 @@
+.mainSectionAddTask {
+    margin-top: 120px;
+    margin-left: 260px;
+}
+
 .sectionTemplateAddTask {
     max-width: 1116px;
     max-height: 870px;
@@ -14,6 +19,7 @@
     line-height: 73.2px;
     font-weight: bold;
     color: #000000;
+    padding: 10px;
 }
 
 /* Layout for Task Sections */
@@ -30,6 +36,7 @@
     flex-direction: column;
     gap: 20px;
     height: 416px;
+    padding: 10px;
 }
 
 /* Input Fields General Styling */
