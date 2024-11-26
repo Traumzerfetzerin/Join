@@ -301,5 +301,9 @@ main {
     width: 0%; /* Initial width */
     transition: width 0.3s ease; /* Smooth animation for width changes */
 }
-
+#cardOverlayContacts{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 

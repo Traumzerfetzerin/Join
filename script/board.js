@@ -252,30 +252,4 @@ function dontClose(event) {
 /** Delete a task both from the UI and the Firebase database */
 
 /** Delete a task both from the UI and the Firebase database */
-async function deleteTask(taskId, category) {
-    console.log('Deleting task:', taskId, category);  // Add this line to debug
-
-    if (!taskId || taskId === "undefined") {
-        console.error('Error: Invalid task ID');
-        return;
-    }
-
-    try {
-        const taskUrl = `${TASK_URL}/${category}/${taskId}.json`;
-
-        let response = await fetch(taskUrl, {
-            method: 'DELETE'
-        });
-
-        if (response.ok) {
-            console.log(`Task with ID ${taskId} from category ${category} deleted successfully.`);
-            fetchTasks();
-        } else {
-            console.error('Error deleting task:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error deleting task:', error);
-    }
-}
-
 
