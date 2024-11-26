@@ -86,10 +86,9 @@ async function createTasks(event) {
     event.preventDefault();
 
     let taskData = collectTaskData();
-    if (!validateTaskData(taskData)) return;
 
-    // let isValid = await validateTaskData(taskData);
-    // if (!isValid) return;
+    let isValid = await validateTaskData(taskData);
+    if (!isValid) return;
 
     document.getElementById('editSubtasks').innerHTML = "";
 
@@ -134,7 +133,7 @@ function collectTaskData() {
  * @returns {boolean} - Returns true if valid, otherwise false.
  */
 async function validateTaskData(data) {
-    if (!data.title || !data.dueDate || !data.prio || data.category === '0') {
+    if (!data.title || !data.dueDate || !data.contacts || !data.category) {
         await popUpRequired();
         await redBorder();
         return false;
