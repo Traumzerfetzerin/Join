@@ -3,11 +3,10 @@
         grid-template-columns: 1fr;
         width: 100%; 
         gap: 16px; 
-        margin-left: 0; /* Entfernt linken Abstand */
-        padding-left: 0; /* Entfernt inneren linken Abstand */
+        margin-left: 0; 
+        padding-left: 0; 
     }
     
-
     .undertask, .tasks, .goodmorning {
         width: 100%; 
         height: auto; 
@@ -26,7 +25,8 @@
         height: auto; 
         margin: 0; 
         padding: 0; 
-    
+    }
+
     .goodmorning {
         display: none;
     }
@@ -42,5 +42,4 @@
         margin-left: 0; 
         padding-left: 0; 
     }
-}
 }
