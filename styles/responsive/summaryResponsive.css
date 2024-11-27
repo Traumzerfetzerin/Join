@@ -1,49 +1,40 @@
 @media (max-width: 850px) {
     .details {
-        grid-template-columns: 1fr; /* Eine Spalte */
-        width: 100%; /* Volle Breite für kleinere Bildschirme */
-        gap: 16px; /* Angepasst für mobile Darstellung */
+        grid-template-columns: 1fr;
+        width: 100%; 
+        gap: 16px; 
     }
 
     .undertask, .tasks, .goodmorning {
-        width: 100%; /* Volle Breite für mobile Darstellung */
-        height: auto; /* Flexible Höhe */
-    }
+        width: 100%; 
+        height: auto; 
+    }    
 
     .titeljoin h1 {
-        font-size: 8vw; /* Anpassung für mobile Geräte */
+        font-size: 8vw;  
     }
 
     .titeljoin p {
-        font-size: 4vw; /* Anpassung für mobile Geräte */
+        font-size: 4vw;  
     }
 
     .undertask, .tasks, .goodmorning {
-        width: 100%; /* Volle Breite für mobile Darstellung */
-        height: auto; /* Flexible Höhe */
-        margin: 0 auto; /* Zentriere die Elemente */
+        width: 100%; 
+        height: auto; 
+        margin: 0 auto; 
     }
     
     .goodmorning {
-        position: relative; /* Geändert von absolute auf relative */
-        width: 100%; /* Flexible Breite */
-        height: auto; /* Flexible Höhe */
-        top: 0; /* Entfernt feste Positionierung */
-        left: 0; /* Entfernt feste Positionierung */
-        opacity: 1; /* Sichtbar machen */
-    }
-    .tasks {
-        position: relative; /* Geändert von absolute auf relative */
-        width: 100%; /* Flexible Breite */
-        height: auto; /* Flexible Höhe */
-        gap: 16px; /* Angepasst für bessere Flexibilität */
-        opacity: 1; /* Sichtbar machen */
+        position: relative; 
+        width: 100%;
+        top: 0; 
+        left: 0;
+        opacity: 1;
     }
     .titeljoin {
-        position: relative; /* Geändert von absolute auf relative */
-        height: auto; /* Geändert von fester Höhe auf auto */
-        width: 100%; /* Geändert von 625px auf 100% */
-        gap: 20px; /* Angepasst für bessere Flexibilität */
+        position: relative;
+        height: auto; 
+        width: 100%; 
+        gap: 20px; 
     }
-    
 }
