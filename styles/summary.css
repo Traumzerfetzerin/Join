@@ -233,6 +233,7 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
     width: 178px;
     height: 57px;
     gap: 13px;
@@ -240,31 +241,13 @@
 }
 
 .date {
-    width: 178px;
-    height: 25px;
-    gap: 0px;
-    opacity: 0px;
-    font-family: Inter;
+    width: 196px;
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
     text-align: left;
     color: #2A3647;
     margin: 0;
-}
-
-.underdate {
-    width: 148px;
-    height: 19px;
-    gap: 0px;
-    opacity: 0px;
-    margin: 0;
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.2px;
-    text-align: left;
-    color: #2A3647;
 }
 
 .tasks {

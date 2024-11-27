@@ -175,6 +175,18 @@ function updateUrgentTaskDate(tasks) {
     }
 }
 
+
+document.addEventListener('DOMContentLoaded', setCurrentDate);
+
+function setCurrentDate() {
+    const dateElement = document.getElementById('currentDate');
+    if (dateElement) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = new Date().toLocaleDateString('en-US', options);
+    }
+}
+
+
 /**
  * Finds all urgent tasks.
  * @param {object} tasks - The tasks retrieved from Firebase.

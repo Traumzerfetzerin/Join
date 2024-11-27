@@ -3,7 +3,10 @@
         grid-template-columns: 1fr;
         width: 100%; 
         gap: 16px; 
+        margin-left: 0; /* Entfernt linken Abstand */
+        padding-left: 0; /* Entfernt inneren linken Abstand */
     }
+    
 
     .undertask, .tasks, .goodmorning {
         width: 100%; 
@@ -21,20 +24,23 @@
     .undertask, .tasks, .goodmorning {
         width: 100%; 
         height: auto; 
-        margin: 0 auto; 
-    }
+        margin: 0; 
+        padding: 0; 
     
     .goodmorning {
-        position: relative; 
-        width: 100%;
-        top: 0; 
-        left: 0;
-        opacity: 1;
+        display: none;
     }
+    
     .titeljoin {
         position: relative;
+        display: flex;
+        flex-direction: column;
         height: auto; 
         width: 100%; 
         gap: 20px; 
+        top: 60px;
+        margin-left: 0; 
+        padding-left: 0; 
     }
+}
 }
