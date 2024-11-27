@@ -1,25 +1,110 @@
 @media (max-width: 850px) {
     #headerWrapper {
-        width: 428;
+        width: 428px;
         display: flex;
         flex-direction: column;
-        overflow: auto;
-        justify-content: start;
+        overflow: visible; 
+        justify-content: flex-start;
     }
 
-    #taskBoard{
-        width: 396px;
+    #boardHeader{
+        left: 120px;
+        top: 100px;
+    }
+
+    #findAddTask{
+        position: absolute;
+        top: 84px;
+    }
+
+    #taskBoard {
+        width: 100%;
+        max-width: 428px;
         height: auto;
-        top: 296px;
-        left: 16px;
+        margin: 0 auto;
+        top: 0;
+        left: 0;
         gap: 26px;
         flex-direction: column;
-
+        align-items: center;
+        padding-bottom: 80px;
     }
 
-    .column{
-        width: 396px;
-        height: 311px;
+    .column-container {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
         gap: 16px;
+        padding: 20px;
+        width: 100%; 
+        box-sizing: border-box;
+    }
+
+    .column {
+        position: relative;
+        min-width: 320px;
+        max-width: 428px;
+        height: auto;
+        flex-shrink: 0;
+        margin: 0 10px; 
+        display: flex;
+        flex-direction: row; 
+        left: -54px;
+        overflow: visible; 
+        align-items: flex-start;
+    }
+
+    .column-wrapper {
+        width: 100%;
+        overflow: visible;
+    }
+
+    .task {
+        min-width: 280px;
+        max-width: 350px;
+        flex: 0 1 auto;
+        margin: 10px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #boardTitle {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .searchbarBoard{
+        height: 45px;
+    }
+
+    #boardSearchbar {
+        height: 1px;
+    }
+
+    .board-column {
+        max-width: 428px;
+        margin: 0 auto;
+    }
+
+    #buttonAddTask {
+        position: relative;
+        font-size: 0; 
+        right: 0px;
+    }
+
+    #buttonAddTask::before {
+        content: "+"; 
+        font-size: 2rem; 
+        color: white; 
+        display: block; 
+        text-align: center;
+    }
+
+    .column-title {
+        position: relative;
+        left: -54px;
     }
 }
