@@ -1,11 +1,12 @@
 .titeljoin {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    position: absolute;
-    height: 73px;
-    width: 625px;
-    gap: 30px;
+    text-align: center;
+    margin: 16px auto;
+    width: 100%;
+    max-width: 400px;
+    gap: 8px;
 }
 
 .victor {
@@ -14,25 +15,14 @@
 }
 
 .titeljoin h1 {
-    font-weight: 700;
-    font-size: 61px;
-    line-height: 73.2px;
-    color: black;
-    height: 73px;
-    width: 264px;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.2;
 }
 
 .titeljoin p {
-    width: 301px;
-    height: 32px;
-    gap: 0px;
-    opacity: 0px;
-    font-family: Inter;
-    font-size: 27px;
-    font-weight: 400;
-    line-height: 32.4px;
-    text-align: left;
-    color: #2A3647;
+    font-size: 16px;
+    color: #666;
 }
 
 .goodmorning {
@@ -74,15 +64,25 @@
 }
 
 .details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 400px;
+    justify-items: center;
+}
+
+.details > div {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 160px;
+    height: 120px;
     display: flex;
+    align-items: center;
     justify-content: center;
-    position: absolute;
-    width: 560px;
-    height: 562px;
-    top: 335px;
-    left: 328px;
-    gap: 28px;
-    opacity: 0px;
+    text-align: center;
+    font-size: 14px;
 }
 
 .checkpencil {
@@ -161,17 +161,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    /* left:20px; */
-    width: 470px;
-    height: 168px;
-    top: 196px;
-    padding: 28px 48px 28px 48px;
-    gap: 51px;
-    border-radius: 30px;
-    opacity: 0px;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 4px 0px #0000001A;
+    padding: 8px 16px;
+    margin: 16px auto;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .numimg {

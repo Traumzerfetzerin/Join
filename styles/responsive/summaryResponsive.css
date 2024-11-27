@@ -1,26 +1,18 @@
+
 @media (max-width: 850px) {
-    .titeljoin{
-        flex-direction: column;
-        top: 128px;
-        width: 223px;
-        height: 104px;
-        left: 16px;
-        gap: 16px;
-    }
-
-    .checkpencil{
-        width: 396px;
-        height: 110px;
-    }
-
-    .details{
-        width: 396px;
-        height: 384px;
-        top: 272px;
-        left: 16px;
-        padding-top: 24px;
-        padding-bottom: 24px;
-    }
-
-
+    @media (max-width: 850px) {
+        .details {
+            grid-template-columns: 1fr; /* Eine Spalte */
+        }
+    
+        .details > div {
+            width: 100%; /* Volle Breite */
+        }
+    
+        .urgent {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+    }    
 }
