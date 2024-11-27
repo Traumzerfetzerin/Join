@@ -1,18 +1,49 @@
-
 @media (max-width: 850px) {
-    @media (max-width: 850px) {
-        .details {
-            grid-template-columns: 1fr; /* Eine Spalte */
-        }
+    .details {
+        grid-template-columns: 1fr; /* Eine Spalte */
+        width: 100%; /* Volle Breite für kleinere Bildschirme */
+        gap: 16px; /* Angepasst für mobile Darstellung */
+    }
+
+    .undertask, .tasks, .goodmorning {
+        width: 100%; /* Volle Breite für mobile Darstellung */
+        height: auto; /* Flexible Höhe */
+    }
+
+    .titeljoin h1 {
+        font-size: 8vw; /* Anpassung für mobile Geräte */
+    }
+
+    .titeljoin p {
+        font-size: 4vw; /* Anpassung für mobile Geräte */
+    }
+
+    .undertask, .tasks, .goodmorning {
+        width: 100%; /* Volle Breite für mobile Darstellung */
+        height: auto; /* Flexible Höhe */
+        margin: 0 auto; /* Zentriere die Elemente */
+    }
     
-        .details > div {
-            width: 100%; /* Volle Breite */
-        }
+    .goodmorning {
+        position: relative; /* Geändert von absolute auf relative */
+        width: 100%; /* Flexible Breite */
+        height: auto; /* Flexible Höhe */
+        top: 0; /* Entfernt feste Positionierung */
+        left: 0; /* Entfernt feste Positionierung */
+        opacity: 1; /* Sichtbar machen */
+    }
+    .tasks {
+        position: relative; /* Geändert von absolute auf relative */
+        width: 100%; /* Flexible Breite */
+        height: auto; /* Flexible Höhe */
+        gap: 16px; /* Angepasst für bessere Flexibilität */
+        opacity: 1; /* Sichtbar machen */
+    }
+    .titeljoin {
+        position: relative; /* Geändert von absolute auf relative */
+        height: auto; /* Geändert von fester Höhe auf auto */
+        width: 100%; /* Geändert von 625px auf 100% */
+        gap: 20px; /* Angepasst für bessere Flexibilität */
+    }
     
-        .urgent {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-    }    
 }
