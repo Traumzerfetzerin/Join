@@ -93,39 +93,45 @@ function getBoardOverlayTemplate(category, task) {
     // Subtasks dynamisch generieren
     const subtasksList = task.subtasks && task.subtasks.length
         ? task.subtasks.map((subtask, index) => `
-            <li style="display: flex; align-items: center; gap: 8px;">
+            <li class="subtask-item">
                 <input type="checkbox" class="subtask-checkbox" data-subtask-index="${index}">
-                <span>${subtask}</span>
+                <span class="subtask-text">${subtask}</span>
             </li>
         `).join("")
         : "<li>No subtasks</li>";
 
+    // Overlay-Template zurückgeben
     return `
         <div class="board-overlay" data-task-id="${task.id}">
-            <h2 class="task-category ${categoryClass}">${category}</h2>
-            <h3>${task.title || "No title"}</h3>
-            <p>${task.description || "No description"}</p>
-            <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
-            <div class="priority-container">
-                <strong>Priority:</strong> ${prioritySymbol}
+            <div class="overlay-header">
+                <h2 class="task-category ${categoryClass}">${category}</h2>
+                <button class="close-button" onclick="closeTaskOverlay()">×</button>
             </div>
-            <div class="contacts-section">
-                <strong>Contacts:</strong>
-                <div id="cardOverlayContacts" class="contact-list">${contactList}</div>
-            </div>
-            <div class="subtasks-section">
-                <strong>Subtasks:</strong>
-                <ul>${subtasksList}</ul>
-            </div>
-            <div class="action-links">
-                <a href="javascript:void(0);" onclick="deleteTask('${category}', '${task.id}')" class="action-link delete-link">
-                    <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete" class="link-icon">
-                    Delete
-                </a>
-                <a href="javascript:void(0);" onclick="editTask('${task.id}')" class="action-link edit-link">
-                    <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit" class="link-icon">
-                    Edit
-                </a>
+            <div class="overlay-content">
+                <h1 class="task-title">${task.title || "No title"}</h1>
+                <p class="task-description">${task.description || "No description"}</p>
+                <div class="task-info">
+                    <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
+                    <p><strong>Priority:</strong> ${prioritySymbol}</p>
+                </div>
+                <div class="contacts-section">
+                    <strong>Assigned To:</strong>
+                    <div id="cardOverlayContacts" class="contact-list">${contactList}</div>
+                </div>
+                <div class="subtasks-section">
+                    <strong>Subtasks:</strong>
+                    <ul class="subtasks-list">${subtasksList}</ul>
+                </div>
+                <div class="action-links">
+                    <a href="javascript:void(0);" onclick="deleteTask('${category}', '${task.id}')" class="action-link delete-link">
+                        <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete" class="link-icon">
+                        Delete
+                    </a>
+                    <a href="javascript:void(0);" onclick="editTask('${task.id}')" class="action-link edit-link">
+                        <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit" class="link-icon">
+                        Edit
+                    </a>
+                </div>
             </div>
         </div>
     `;

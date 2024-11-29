@@ -4,9 +4,6 @@ async function showTaskOverlay(category, taskId) {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
         let task = await response.json();
 
-        // Debugging: Zeigt die Task-Daten in der Konsole an
-        console.log("Loaded task:", task);
-
         if (!task) {
             alert("Task not found!");
             return;
@@ -46,15 +43,15 @@ window.onload = function () {
 
 
 function addTaskToColumn(task, category, taskId, columns) {
-    // Ensure task.id is set
+
     task.id = taskId;
 
     let contactList = task.contacts
         ? task.contacts.map(contact => {
-              const initials = getInitials(contact); // Extract initials
-              const bgColor = getRandomColor(); // Generate a random background color
+              const initials = getInitials(contact); 
+              const bgColor = getRandomColor(); 
               return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
-          }).join('') // No space between spans for stacking
+          }).join('') 
         : '';
 
     let subtaskCount = task.subtasks ? task.subtasks.length : 0;
@@ -64,8 +61,6 @@ function addTaskToColumn(task, category, taskId, columns) {
 
     let columnId = task.column ? task.column : "toDo";
     let columnElement = document.getElementById(columns[columnId]);
-
-    // Set the task's DOM element ID to include taskId for deletion
     columnElement.innerHTML += `<div id="task-${taskId}">${taskHtml}</div>`;
 }
 

@@ -6,7 +6,6 @@ async function fetchTasks() {
     try {
         let response = await fetch(`${TASK_URL}.json`);
         let data = await response.json();
-        console.log("Fetched data from Firebase:", data);
 
         if (data) {
             loadTasks(data);
