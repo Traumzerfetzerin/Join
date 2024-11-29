@@ -12,23 +12,101 @@
 }
 
 .overlay-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    width: 90%;
-    text-align: left;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     position: relative;
+    width: 525px;
+    padding: 48px 40px;
+    background: #ffffff;
+    border-radius: 30px 0 0 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 }
+
 
 .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     background: none;
     border: none;
     font-size: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
+    z-index: 10; 
+}
+
+
+.contact-list {
+    display: flex;
+    gap: 10px;
+}
+
+.contact-initial {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+}
+
+.subtasks-list li {
+    list-style: none;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.action-links {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.action-link {
+    text-decoration: none;
+    color: #5f6368;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.action-link:hover {
+    color: #333;
+}
+
+.link-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.subtasks-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subtasks-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subtasks-section li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.subtask-checkbox {
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
 

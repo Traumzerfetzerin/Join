@@ -37,12 +37,12 @@ function getPrioritySymbol(priority) {
 function getSubtaskProgressBar(task, subtaskCount) {
     // Return empty if no subtasks
     if (!subtaskCount || subtaskCount <= 0) {
-        return ""; 
+        return "";
     }
 
     // Default to zero progress
-    let progressPercentage = 0; 
-    let progressBarColor = "lightgray"; 
+    let progressPercentage = 0;
+    let progressBarColor = "lightgray";
 
     // Update progress based on the task column
     switch (task.column) {
@@ -73,20 +73,15 @@ function getSubtaskProgressBar(task, subtaskCount) {
 }
 
 
-
 function getBoardOverlayTemplate(category, task) {
-    // Generate the priority symbol using the function
     const prioritySymbol = getPrioritySymbol(task.prio);
-
-    // Define the category class for styling
     const categoryClass = category.toLowerCase().replace(" ", "-");
 
-    // Generate contact initials or placeholders with random background colors
+    // Kontakte dynamisch generieren
     const contactList = task.contacts && task.contacts.length
         ? task.contacts.map(contact => {
-            const initials = contact.split(' ').map(name => name[0]).join('').toUpperCase(); // Generate initials
-            const bgColor = getRandomColor(); // Call the random color function
-          
+            const initials = contact.split(' ').map(name => name[0]).join('').toUpperCase();
+            const bgColor = getRandomColor();
             return `
                 <div class="contact-initials" style="background-color: ${bgColor};">
                     ${initials}
@@ -95,30 +90,32 @@ function getBoardOverlayTemplate(category, task) {
         }).join("")
         : "<p>No contacts</p>";
 
-        return `
+    // Subtasks dynamisch generieren
+    const subtasksList = task.subtasks && task.subtasks.length
+        ? task.subtasks.map((subtask, index) => `
+            <li style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" class="subtask-checkbox" data-subtask-index="${index}">
+                <span>${subtask}</span>
+            </li>
+        `).join("")
+        : "<li>No subtasks</li>";
+
+    return `
         <div class="board-overlay" data-task-id="${task.id}">
-            <h2 class="task-category ${categoryClass}">${category}</h2> <!-- Styled category -->
+            <h2 class="task-category ${categoryClass}">${category}</h2>
             <h3>${task.title || "No title"}</h3>
-            <p><strong>Description:</strong> ${task.description || "No description"}</p>
+            <p>${task.description || "No description"}</p>
             <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
             <div class="priority-container">
-                <strong>Priority:</strong> ${prioritySymbol} <!-- Priority symbol -->
+                <strong>Priority:</strong> ${prioritySymbol}
             </div>
             <div class="contacts-section">
                 <strong>Contacts:</strong>
-                <div id="cardOverlayContacts" class="contact-list">${contactList}</div> <!-- Contacts with initials -->
+                <div id="cardOverlayContacts" class="contact-list">${contactList}</div>
             </div>
-            <div>
+            <div class="subtasks-section">
                 <strong>Subtasks:</strong>
-                <ul>
-                    ${task.subtasks && task.subtasks.length
-                        ? task.subtasks.map(subtask => `
-                            <li>
-                                <label><input type="checkbox" class="subtask-checkbox"> ${subtask}</label>
-                            </li>`).join("")
-                        : "<li>No subtasks</li>"
-                    }
-                </ul>
+                <ul>${subtasksList}</ul>
             </div>
             <div class="action-links">
                 <a href="javascript:void(0);" onclick="deleteTask('${category}', '${task.id}')" class="action-link delete-link">
@@ -132,5 +129,4 @@ function getBoardOverlayTemplate(category, task) {
             </div>
         </div>
     `;
-    
 }

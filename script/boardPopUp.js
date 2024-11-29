@@ -4,6 +4,9 @@ async function showTaskOverlay(category, taskId) {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
         let task = await response.json();
 
+        // Debugging: Zeigt die Task-Daten in der Konsole an
+        console.log("Loaded task:", task);
+
         if (!task) {
             alert("Task not found!");
             return;
@@ -20,6 +23,8 @@ async function showTaskOverlay(category, taskId) {
         console.error("Fehler beim Laden der Aufgabe:", error);
     }
 }
+
+
 
 
 function closeTaskOverlay(event) {
