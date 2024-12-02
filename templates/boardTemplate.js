@@ -1,17 +1,32 @@
+/**
+ * Generates the task HTML template for display on the board.
+ * @param {string} category - Task category.
+ * @param {object} task - Task object containing all task details.
+ * @param {string} taskId - Unique ID of the task.
+ * @param {string} contactList - HTML for the list of contacts assigned to the task.
+ * @param {string} taskClass - CSS class for the task type.
+ * @param {number} subtaskCount - Total number of subtasks for the task.
+ * @returns {string} - Task HTML template as a string.
+ */
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount) {
-    const categoryClass = category.toLowerCase().replace(" ", "-");
-
-    // Generate the priority symbol and progress bar
-    const prioritySymbol = getPrioritySymbol(task.prio);
-    const progressBar = getSubtaskProgressBar(task, subtaskCount);
+    let categoryClass = category.toLowerCase().replace(" ", "-");
+    let prioritySymbol = getPrioritySymbol(task.prio);
+    let progressPercentage = calculateProgressPercentage(task.subtasks || []);
 
     return `
-        <div id="${taskId}" class="task draggable ${taskClass}" draggable="true" 
+        <div id="task-${taskId}" class="task draggable ${taskClass}" draggable="true" 
              onclick="showTaskOverlay('${category}', '${taskId}')">
             <h4 class="task-category ${categoryClass}">${category}</h4>
-            <h3>${task.title}</h3>
-            <p>${task.description}</p>
-            ${progressBar}
+            <h3>${task.title || "No title"}</h3>
+            <p>${task.description || "No description"}</p>
+            <div class="progress-bar-container" style="margin-top: 10px;">
+                <span>${subtaskCount || 0} Subtasks</span>
+                <div class="progress-bar-background" 
+                     style="width: 100%; background-color: lightgray; height: 5px; border-radius: 5px; overflow: hidden;">
+                    <div class="progress-bar-fill" 
+                         style="width: ${progressPercentage}%; background-color: ${progressPercentage === 0 ? 'lightgray' : 'blue'}; height: 100%;"></div>
+                </div>
+            </div>
             <div class="contact-priority-container">
                 <div class="contact-list">${contactList}</div>
                 <div class="priority-symbol">${prioritySymbol}</div>
@@ -21,8 +36,11 @@ function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, su
 }
 
 
-
-// Helper function to fetch priority symbols
+/**
+ * Fetches the priority symbol for the task.
+ * @param {string} priority - The priority level of the task.
+ * @returns {string} - HTML for the priority icon.
+ */
 function getPrioritySymbol(priority) {
     if (priority === "urgent") {
         return "<img src='../Assets/addTask/Prio alta.svg' class='priority-icon'>";
@@ -34,73 +52,50 @@ function getPrioritySymbol(priority) {
     return "";
 }
 
+/**
+ * Generates the progress bar HTML for a task based on subtasks.
+ * @param {object} task - Task object containing subtasks and column information.
+ * @param {number} subtaskCount - Total number of subtasks for the task.
+ * @returns {string} - HTML for the progress bar.
+ */
 function getSubtaskProgressBar(task, subtaskCount) {
-    // Return empty if no subtasks
     if (!subtaskCount || subtaskCount <= 0) {
         return "";
     }
 
-    // Default to zero progress
-    let progressPercentage = 0;
-    let progressBarColor = "lightgray";
-
-    // Update progress based on the task column
-    switch (task.column) {
-        case "toDo":
-            progressPercentage = 0; // No progress
-            progressBarColor = "lightgray";
-            break;
-        case "in-progress":
-            progressPercentage = 50; // Half progress
-            progressBarColor = "blue";
-            break;
-        case "awaiting-feedback":
-        case "done":
-            progressPercentage = 100; // Full progress
-            progressBarColor = "blue";
-            break;
-    }
-
-    // Construct the progress bar HTML
+    let progressPercentage = calculateProgressPercentage(task.subtasks);
     return `
         <div style="display: flex; align-items: center; margin-top: 5px;">
             <span>${subtaskCount} Subtasks</span>
             <div style="margin-left: 10px; width: 50%; height: 5px; background-color: lightgray; border-radius: 5px; overflow: hidden;">
-                <div style="width: ${progressPercentage}%; height: 100%; background-color: ${progressBarColor};"></div>
+                <div style="width: ${progressPercentage}%; height: 100%; background-color: blue;"></div>
             </div>
         </div>
     `;
 }
 
+/**
+ * Calculates the progress percentage for subtasks.
+ * @param {Array} subtasks - Array of subtasks.
+ * @returns {number} - Progress percentage.
+ */
+function calculateProgressPercentage(subtasks) {
+    let completed = subtasks.filter(subtask => subtask.completed).length;
+    return subtasks.length === 0 ? 0 : Math.round((completed / subtasks.length) * 100);
+}
 
+/**
+ * Generates the HTML template for the task overlay popup.
+ * @param {string} category - Task category.
+ * @param {object} task - Task object containing all task details.
+ * @returns {string} - HTML template for the task overlay.
+ */
 function getBoardOverlayTemplate(category, task) {
-    const prioritySymbol = getPrioritySymbol(task.prio);
-    const categoryClass = category.toLowerCase().replace(" ", "-");
+    let prioritySymbol = getPrioritySymbol(task.prio);
+    let categoryClass = category.toLowerCase().replace(" ", "-");
+    let contactList = generateContactList(task.contacts);
+    let subtasksList = generateSubtaskList(task);
 
-    // Kontakte dynamisch generieren
-    const contactList = task.contacts && task.contacts.length
-        ? task.contacts.map(contact => {
-            const initials = contact.split(' ').map(name => name[0]).join('').toUpperCase();
-            const bgColor = getRandomColor();
-            return `
-                <div class="contact-initials" style="background-color: ${bgColor};">
-                    ${initials}
-                </div>
-            `;
-        }).join("")
-        : "<p>No contacts</p>";
-
-    // Subtasks dynamisch generieren
-    const subtasksList = task.subtasks && task.subtasks.length
-        ? task.subtasks.map((subtask, index) => `
-            <li class="subtask-item">
-                <input type="checkbox" class="subtask-checkbox" data-subtask-index="${index}">
-                <span class="subtask-text">${subtask}</span>
-            </li>
-        `).join("")
-        : "<li>No subtasks</li>";
-
-    // Overlay-Template zurückgeben
     return `
         <div class="board-overlay" data-task-id="${task.id}">
             <div class="overlay-header">
@@ -135,4 +130,44 @@ function getBoardOverlayTemplate(category, task) {
             </div>
         </div>
     `;
+}
+
+/**
+ * Generates the contact list HTML.
+ * @param {Array} contacts - Array of contacts.
+ * @returns {string} - HTML for the contact list.
+ */
+function generateContactList(contacts) {
+    return contacts
+        ? contacts.map(contact => {
+              let initials = getInitials(contact);
+              let bgColor = getRandomColor();
+              return `<div class="contact-initials" style="background-color: ${bgColor};">${initials}</div>`;
+          }).join("")
+        : "<p>No contacts</p>";
+}
+
+/**
+ * Generates the subtasks list HTML for the overlay.
+ * @param {object} task - Task object containing subtasks.
+ * @returns {string} - HTML for the subtasks list.
+ */
+function generateSubtaskList(task) {
+    if (!task.id) {
+        console.error("Task ID is undefined for the following task:", task);
+        return "<li>No subtasks available</li>";
+    }
+
+    return task.subtasks && task.subtasks.length
+        ? task.subtasks.map((subtask, index) => `
+            <li class="subtask-item">
+                <input type="checkbox" class="subtask-checkbox" 
+                       data-task-id="${task.id}" 
+                       data-subtask-index="${index}" 
+                       ${subtask.completed ? "checked" : ""} 
+                       onchange="toggleSubtaskCompletion('${task.id}', ${index})">
+                <span class="subtask-text">${subtask.text}</span>
+            </li>
+        `).join("")
+        : "<li>No subtasks available</li>";
 }

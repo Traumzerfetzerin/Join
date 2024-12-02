@@ -1,24 +1,46 @@
 const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
+let taskData = {};
 
-/** Fetch data from Firebase API */
-
+/**
+ * Fetches all tasks from Firebase, assigns IDs to each task, and loads them into the board.
+ */
 async function fetchTasks() {
     try {
         let response = await fetch(`${TASK_URL}.json`);
         let data = await response.json();
 
         if (data) {
+            for (let category in data) {
+                for (let taskId in data[category]) {
+                    data[category][taskId].id = taskId;
+                }
+            }
+            taskData = data;
+            console.log("Loaded task data:", taskData);
             loadTasks(data);
         } else {
-            console.log("No data found.");
+            console.log("No tasks found.");
         }
     } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching tasks:", error);
     }
 }
 
 
-
+/**
+ * Finds a task in taskData by its ID.
+ * @param {string} taskId - ID of the task to find.
+ * @returns {object|null} - The task object if found, otherwise null.
+ */
+function findTaskInData(taskId) {
+    for (let category in taskData) {
+        let tasks = taskData[category];
+        if (tasks[taskId]) {
+            return tasks[taskId];
+        }
+    }
+    return null;
+}
 
 /** Clear all task columns */
 function clearColumns() {
@@ -35,44 +57,26 @@ function getTaskClass(title) {
     return "";
 }
 
-/** Load tasks and add them to the appropriate columns */
-/*function loadTasks(tasks) {
-    clearColumns();
-
-    let columns = {
-        toDo: "toDoColumn",
-        inProgress: "inProgressColumn",
-        awaitFeedback: "awaitFeedbackColumn",
-        done: "doneColumn"
-    };
-
-    for (let category in tasks) {
-        let categoryTasks = tasks[category];
-        for (let taskId in categoryTasks) {
-            let task = categoryTasks[taskId];
-            addTaskToColumn(task, category, taskId, columns);
-        }
-    }
-
-    checkEmptyColumns(columns);
-    enableDragAndDrop(columns);
-}*/
+/**
+ * Loads tasks into their respective columns on the board.
+ * @param {object} tasks - Tasks retrieved from Firebase.
+ */
 function loadTasks(tasks) {
     clearColumns();
 
-    let columns = {
+    const columns = {
         toDo: "toDoColumn",
         inProgress: "inProgressColumn",
         awaitFeedback: "awaitFeedbackColumn",
         done: "doneColumn"
     };
 
-    for (let category in tasks) {
-        let categoryTasks = tasks[category]; 
-        for (let taskId in categoryTasks) {
-            let task = categoryTasks[taskId];
-            task.id = taskId; // Add the ID to the task object
-            addTaskToColumn(task, category, taskId, columns); 
+    for (const category in tasks) {
+        const categoryTasks = tasks[category];
+        for (const taskId in categoryTasks) {
+            const task = categoryTasks[taskId];
+            task.id = taskId;
+            addTaskToColumn(task, category, taskId, columns);
         }
     }
 
@@ -81,17 +85,18 @@ function loadTasks(tasks) {
 }
 
 
-
-/** Add a task to the specified column */
-
-
-
-
+/**
+ * Adds a task to the specified column.
+ * @param {object} task - Task object.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ * @param {object} columns - Mapping of column names to HTML element IDs.
+ */
 function addTaskToColumn(task, category, taskId, columns) {
-    let contactList = formatContactList(task.contacts);
-    let subtaskData = calculateSubtaskData(task.subtasks);
-    let prioIcon = getPrioIcon(task.prio);
-    let taskHtml = createTaskHtml(
+    const contactList = formatContactList(task.contacts);
+    const subtaskData = calculateSubtaskData(task.subtasks);
+    const prioIcon = getPrioIcon(task.prio);
+    const taskHtml = createTaskHtml(
         category,
         task,
         taskId,
@@ -99,17 +104,30 @@ function addTaskToColumn(task, category, taskId, columns) {
         subtaskData,
         prioIcon
     );
-    insertTaskIntoColumn(task.column, taskHtml, columns);
+
+    const columnId = task.column || "toDo";
+    const columnElement = document.getElementById(columns[columnId]);
+    if (columnElement) {
+        columnElement.innerHTML += `<div id="task-${taskId}">${taskHtml}</div>`;
+    }
 }
 
-
-/** Format the contact list as HTML */
+/**
+ * Formats the contact list for display.
+ * @param {Array} contacts - List of contact names.
+ * @returns {string} - HTML for the contact list.
+ */
 function formatContactList(contacts) {
     return contacts
-        ? contacts.map(contact => `<li>${contact}</li>`).join('')
-        : '';
+        ? contacts
+              .map(contact => {
+                  const initials = getInitials(contact);
+                  const bgColor = getRandomColor();
+                  return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
+              })
+              .join("")
+        : "";
 }
-
 
 /** Calculate subtask data: total and completed */
 function calculateSubtaskData(subtasks) {
@@ -248,7 +266,3 @@ function closeTaskOnBoard() {
 function dontClose(event) {
     event.stopPropagation();
 }
-/** Delete a task both from the UI and the Firebase database */
-
-/** Delete a task both from the UI and the Firebase database */
-
