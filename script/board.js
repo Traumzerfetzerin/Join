@@ -16,7 +16,6 @@ async function fetchTasks() {
                 }
             }
             taskData = data;
-            console.log("Loaded task data:", taskData);
             loadTasks(data);
         } else {
             console.log("No tasks found.");

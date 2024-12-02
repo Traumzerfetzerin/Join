@@ -207,7 +207,6 @@ async function updateSubtasksInFirebase(taskId, subtasks, category) {
             body: JSON.stringify(subtasks)
         });
         if (response.ok) {
-            console.log(`Subtasks for Task ID ${taskId} successfully updated in Firebase.`);
         } else {
             console.error(`Failed to update subtasks for Task ID ${taskId}:`, response.statusText);
         }
