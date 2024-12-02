@@ -145,30 +145,20 @@ async function validateTaskData(data) {
 
 /**
  * Sends the task data to Firebase.
+ * Subtasks are automatically extended with `completed: false`.
  * @param {Object} taskData - The task data to save.
+ * @returns {Promise<string|undefined>} - Returns the generated task ID or undefined on failure.
  */
 async function saveTaskToFirebase(taskData) {
     try {
-        let response = await fetch(
-            `${CREATETASK_URL}/${taskData.category}.json`, {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(taskData)
-        });
+        // Format subtasks with `completed: false`
+        if (taskData.subtasks) {
+            taskData.subtasks = taskData.subtasks.map(subtask => ({
+                text: subtask,
+                completed: false
+            }));
+        }
 
-        if (response.ok) {
-            let json = await response.json();
-            console.log('Task created:', json);
-            showToast(`Task created in category: ${taskData.category}`);
-        } else console.error('Error:', response.statusText);
-    } catch (error) {
-        console.error('Error saving:', error);
-    }
-}
-
-
-async function saveTaskToFirebase(taskData) {
-    try {
         let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -176,15 +166,15 @@ async function saveTaskToFirebase(taskData) {
         });
 
         if (response.ok) {
-            let json = await response.json(); // Contains the generated key
-            let generatedKey = Object.keys(json)[0]; // The unique key for the task
+            let json = await response.json();
+            let generatedKey = Object.keys(json)[0];
             console.log("Task created with ID:", generatedKey);
 
-            // Optionally store the task ID in your task object
+            // Add the generated ID to the task data (optional)
             taskData.id = generatedKey;
 
             showToast(`Task created in category: ${taskData.category}`);
-            return generatedKey; // Return the key for further use
+            return generatedKey;
         } else {
             console.error("Error:", response.statusText);
         }
@@ -193,6 +183,18 @@ async function saveTaskToFirebase(taskData) {
     }
 }
 
+/**
+ * Handles the save button click event.
+ * Collects form data and saves it to Firebase.
+ */
+document.getElementById('saveTaskButton').addEventListener('click', async function () {
+    let taskData = collectTaskData();
+    
+    let taskId = await saveTaskToFirebase(taskData);
+    if (taskId) {
+        console.log("Task successfully created with ID:", taskId);
+    }
+});
 
 async function finalizeTaskCreation() {
     await redBorder();
