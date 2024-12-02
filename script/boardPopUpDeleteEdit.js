@@ -107,26 +107,6 @@ function getUpdatedTaskData() {
 }
 
 /**
- * Saves the updated task to Firebase.
- * @param {string} taskId - The ID of the task being saved.
- * @param {string} category - The category of the task being saved.
- * @param {object} updatedTask - The updated task data.
- */
-async function saveTaskToFirebase(taskId, category, updatedTask) {
-    let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedTask)
-    });
-
-    if (!response.ok) {
-        throw new Error(`Failed to update task with ID ${taskId}: ${response.statusText}`);
-    }
-
-    console.log(`Task with ID ${taskId} updated successfully.`);
-}
-
-/**
  * Updates the local taskData object with the edited task data.
  * @param {string} taskId - The ID of the task being updated.
  * @param {string} category - The category of the task being updated.
