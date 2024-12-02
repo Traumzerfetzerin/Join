@@ -29,18 +29,41 @@ async function showTaskOverlay(category, taskId) {
 
 
 /**
- * Closes the task overlay.
+ * Closes the task overlay and resets its content.
  * @param {Event} event - Event that triggered the function.
  */
 function closeTaskOverlay(event) {
     let taskOverlay = document.getElementById("taskOverlay");
 
+    // Close overlay based on event target
     if (event && event.target === taskOverlay) {
         taskOverlay.classList.add("dNone");
     } else if (!event || event.target.tagName === "BUTTON") {
         taskOverlay.classList.add("dNone");
     }
+
+    // Reset overlay content
+    let titleField = document.getElementById('inputTitle');
+    let descriptionField = document.getElementById('textareaDescription');
+    let dueDateField = document.getElementById('dueDate');
+    let categoryField = document.getElementById('categorySelect');
+    let subtaskContainer = document.getElementById('editSubtasks');
+    let contactsDropdown = document.getElementById('assigned-to');
+
+    if (titleField) titleField.value = '';
+    if (descriptionField) descriptionField.value = '';
+    if (dueDateField) dueDateField.value = '';
+    if (categoryField) categoryField.value = '';
+    if (subtaskContainer) subtaskContainer.innerHTML = '';
+    if (contactsDropdown) contactsDropdown.innerHTML = '';
+
+    // Reset priority
+    selectedPrio = null;
+    document.getElementById('urgent').classList.remove('active');
+    document.getElementById('medium').classList.remove('active');
+    document.getElementById('low').classList.remove('active');
 }
+
 
 
 

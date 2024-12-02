@@ -37,7 +37,7 @@ function editTask(taskId, category) {
 
     closeTaskOverlay(); 
     fillFields(task); 
-    loadContacts(task.contacts || []); 
+    loadContactsForDropdown(task.contacts || []); 
     setTaskSubtasks(task.subtasks || []); 
     addTaskOnBoard(); 
 }
@@ -47,11 +47,17 @@ function editTask(taskId, category) {
  * @param {object} task - Task data.
  */
 function fillFields(task) {
-    document.getElementById('taskTitle').value = task.title || '';
-    document.getElementById('taskDescription').value = task.description || '';
-    document.getElementById('taskDueDate').value = task.dueDate || '';
-    document.getElementById('taskCategory').value = task.category || '';
-    setTaskPriority(task.prio); 
+    let titleField = document.getElementById('inputTitle');
+    let descriptionField = document.getElementById('textareaDescription');
+    let dueDateField = document.getElementById('dueDate');
+    let categoryField = document.getElementById('categorySelect');
+
+    if (titleField) titleField.value = task.title || '';
+    if (descriptionField) descriptionField.value = task.description || '';
+    if (dueDateField) dueDateField.value = task.dueDate || '';
+    if (categoryField) categoryField.value = task.category || '';
+
+    setPrio(task.prio); // Funktion zur Prioritätsauswahl
 }
 
 
@@ -71,6 +77,46 @@ function fillSubtasks(subtasks) {
 function loadContactsIntoOverlay(contacts) {
     loadContactsForDropdown();
     contacts.forEach(contact => selectContact(contact));
+}
+
+function setTaskSubtasks(subtasks) {
+    let subtaskContainer = document.getElementById('editSubtasks');
+    if (!subtaskContainer) {
+        console.error('Subtask container not found');
+        return;
+    }
+
+    subtaskContainer.innerHTML = ''; // Clear existing subtasks
+
+    subtasks.forEach((subtask, index) => {
+        let subtaskHTML = `
+            <div class="subtask-item">
+                <input type="checkbox" id="subtask-${index}" ${subtask.completed ? 'checked' : ''}>
+                <label for="subtask-${index}">${subtask.text}</label>
+                <img src="../Assets/addTask/delete-icon.svg" onclick="deleteSubtask(${index})">
+            </div>
+        `;
+        subtaskContainer.insertAdjacentHTML('beforeend', subtaskHTML);
+    });
+}
+
+
+function loadContactsForEdit(taskContacts) {
+    let contactsDropdown = document.getElementById('assigned-to');
+    if (!contactsDropdown) {
+        console.error('Contacts dropdown not found');
+        return;
+    }
+
+    // Clear existing contacts
+    contactsDropdown.innerHTML = '';
+
+    // Load all available contacts and mark selected ones
+    allContacts.forEach(contact => {
+        let isSelected = taskContacts.includes(contact.id);
+        let contactOption = `<option value="${contact.id}" ${isSelected ? 'selected' : ''}>${contact.name}</option>`;
+        contactsDropdown.insertAdjacentHTML('beforeend', contactOption);
+    });
 }
 
 /**
