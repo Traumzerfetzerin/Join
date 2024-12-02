@@ -214,3 +214,4 @@ async function updateSubtasksInFirebase(taskId, subtasks, category) {
         console.error(`Error updating subtasks for Task ID ${taskId}:`, error);
     }
 }
+

@@ -122,7 +122,7 @@ function getBoardOverlayTemplate(category, task) {
                         <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete" class="link-icon">
                         Delete
                     </a>
-                    <a href="javascript:void(0);" onclick="editTask('${task.id}')" class="action-link edit-link">
+                    <a href="javascript:void(0);" onclick="editTask('${task.id}', '${category}')" class="action-link edit-link">
                         <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit" class="link-icon">
                         Edit
                     </a>
