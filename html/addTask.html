@@ -34,7 +34,9 @@
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
-        w3.includeHTML();
+        w3.includeHTML(() => {
+            loadContactsForDropdown();
+        });
     </script>
 </body>
 

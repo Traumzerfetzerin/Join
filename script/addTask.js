@@ -113,16 +113,18 @@ async function changeToBoard() {
 function collectTaskData() {
     let subtasks = Array.from(
         document.querySelectorAll('#editSubtasks li')
-    ).map(li => li.textContent);
-
+    ).map(li => ({
+        text: li.textContent.trim(),
+        completed: false
+    }));
     return {
-        title: document.getElementById('inputTitle').value,
-        description: document.getElementById('textareaDescription').value,
+        title: document.getElementById('inputTitle').value.trim(),
+        description: document.getElementById('textareaDescription').value.trim(),
         dueDate: document.getElementById('dueDate').value,
         prio: selectedPrio,
-        status: "to do",
+        column: "toDo",
         contacts: selectedContacts,
-        subtasks: subtasks,
+        subtasks: subtasks, // Direkt korrekt formatiert
         category: document.getElementById('categorySelect').value
     };
 }
@@ -151,28 +153,28 @@ async function validateTaskData(data) {
  */
 async function saveTaskToFirebase(taskData) {
     try {
-        // Format subtasks with `completed: false`
         if (taskData.subtasks) {
-            taskData.subtasks = taskData.subtasks.map(subtask => ({
-                text: subtask,
-                completed: false
-            }));
+            taskData.subtasks = taskData.subtasks.map(subtask => {
+                if (typeof subtask === 'object' && subtask.text) {
+                    return subtask;
+                }
+                return {
+                    text: subtask.trim(),
+                    completed: false      
+                };
+            });
         }
-
         let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskData),
         });
-
         if (response.ok) {
             let json = await response.json();
             let generatedKey = Object.keys(json)[0];
             console.log("Task created with ID:", generatedKey);
 
-            // Add the generated ID to the task data (optional)
-            taskData.id = generatedKey;
-
+ taskData.id = generatedKey;
             showToast(`Task created in category: ${taskData.category}`);
             return generatedKey;
         } else {
@@ -181,20 +183,20 @@ async function saveTaskToFirebase(taskData) {
     } catch (error) {
         console.error("Error saving task:", error);
     }
-}
+ }
 
-/**
- * Handles the save button click event.
- * Collects form data and saves it to Firebase.
- */
-document.getElementById('saveTaskButton').addEventListener('click', async function () {
-    let taskData = collectTaskData();
+// /**
+//  * Handles the save button click event.
+//  * Collects form data and saves it to Firebase.
+//  */
+// document.getElementById('saveTaskButton').addEventListener('click', async function () {
+//     let taskData = collectTaskData();
     
-    let taskId = await saveTaskToFirebase(taskData);
-    if (taskId) {
-        console.log("Task successfully created with ID:", taskId);
-    }
-});
+//     let taskId = await saveTaskToFirebase(taskData);
+//     if (taskId) {
+//         console.log("Task successfully created with ID:", taskId);
+//     }
+// });
 
 async function finalizeTaskCreation() {
     await redBorder();
