@@ -222,3 +222,11 @@ function findClosestDate(tasks) {
 
 // Load summary data on page load
 window.onload = loadSummaryData;
+
+
+// CHANGE TO BOARD
+async function summaryToBoard() {
+    setTimeout(() => {
+        window.location.href = "board.html";
+    }, 0);
+}
