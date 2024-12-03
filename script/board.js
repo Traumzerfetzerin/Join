@@ -22,6 +22,7 @@ async function fetchTasks() {
        console.error("Error fetching tasks:", error);
    }
 }
+
 /**
 * Finds a task in taskData by its ID.
 * @param {string} taskId - ID of the task to find.
@@ -36,6 +37,7 @@ function findTaskInData(taskId) {
    }
    return null;
 }
+
 /**
 * Clears all task columns.
 */
@@ -60,25 +62,29 @@ function getTaskClass(title) {
 * @param {object} tasks - Tasks retrieved from Firebase.
 */
 function loadTasks(tasks) {
-   clearColumns();
-   let columns = {
-       toDo: "toDoColumn",
-       inProgress: "inProgressColumn",
-       awaitFeedback: "awaitFeedbackColumn",
-       done: "doneColumn"
-   };
-   for (let category in tasks) {
-       let categoryTasks = tasks[category];
-       for (let taskId in categoryTasks) {
-           let task = categoryTasks[taskId];
-task.id = taskId;
-           let columnId = task.column || "toDo";
-           addTaskToColumn(task, category, taskId, columns);
-       }
-   }
-   checkEmptyColumns(columns);
-   enableDragAndDrop(columns);
+    clearColumns();
+    let columns = {
+        toDo: "toDoColumn",
+        inProgress: "inProgressColumn",
+        awaitFeedback: "awaitFeedbackColumn",
+        done: "doneColumn"
+    };
+    for (let category in tasks) {
+        let categoryTasks = tasks[category];
+        for (let taskId in categoryTasks) {
+            let task = categoryTasks[taskId];
+            task.id = taskId;
+            addTaskToColumn(task, category, taskId, columns);
+        }
+    }
+    checkEmptyColumns(columns);
+    enableDragAndDrop(columns);
 }
+
+function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+}
+
 /**
 * Adds a task to the specified column.
 * @param {object} task - Task object.
@@ -181,24 +187,27 @@ function createTaskHtml(category, task, taskId, contactList, subtaskData, prioIc
 }
 
 /**
-* Enables drag and drop functionality for all tasks and columns.
-* @param {object} columns - Mapping of column names to HTML element IDs.
-*/
+ * Enables drag and drop functionality for tasks and columns.
+ * @param {object} columns - Mapping of column names to HTML element IDs.
+ */
 function enableDragAndDrop(columns) {
     let draggableTasks = document.querySelectorAll('.draggable');
     let dropZones = Object.values(columns).map(function(column) {
         return document.getElementById(column);
     });
+
     draggableTasks.forEach(function(task) {
         task.addEventListener('dragstart', function(event) {
             event.dataTransfer.setData('task-id', task.id.replace('task-', ''));
             event.dataTransfer.setData('category', getCategoryFromTaskId(task.id.replace('task-', '')));
         });
     });
+
     dropZones.forEach(function(zone) {
         zone.addEventListener('dragover', function(event) {
             event.preventDefault();
         });
+
         zone.addEventListener('drop', async function(event) {
             event.preventDefault();
             let taskId = event.dataTransfer.getData('task-id');
@@ -206,21 +215,57 @@ function enableDragAndDrop(columns) {
             let newColumn = Object.keys(columns).find(function(key) {
                 return columns[key] === zone.id;
             });
+
             if (taskId && category && newColumn) {
-                let taskElement = document.getElementById(`task-${taskId}`);
-                if (taskElement) {
-                    let taskHtml = taskElement.outerHTML;
-                    taskElement.parentElement.removeChild(taskElement);
-                    let updatedColumn = document.getElementById(columns[newColumn]);
-                    updatedColumn.innerHTML += taskHtml;
-                    await updateTaskColumn(taskId, newColumn, category);
-                    enableDragAndDrop(columns);
-                    checkEmptyColumns(columns);
+                let task = findTaskInData(taskId); // Hole die vollständigen Task-Daten
+                if (!task) {
+                    console.error(`Task with ID ${taskId} not found.`);
+                    return;
                 }
+
+                task.column = newColumn; // Aktualisiere die Spalte in den lokalen Daten
+
+                // Aktualisiere Firebase mit den vollständigen Daten
+                await updateTaskColumn(taskId, newColumn, category);
+
+                // Entferne die Task aus der aktuellen Spalte und füge sie in die neue ein
+                document.getElementById(`task-${taskId}`).remove();
+                let columnElement = document.getElementById(columns[newColumn]);
+                let contactList = generateContactList(task.contacts || []);
+                let taskHtml = getTaskBoardTemplate(
+                    category,
+                    task,
+                    taskId,
+                    contactList,
+                    getTaskClass(task.title),
+                    task.subtasks ? Object.keys(task.subtasks).length : 0
+                );
+                columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
+
+                enableDragAndDrop(columns); // Reinitialisiere Drag-and-Drop-Events
+                checkEmptyColumns(columns); // Überprüfe auf leere Spalten
             }
         });
     });
- }
+}
+
+
+
+/**
+ * Finds a task in taskData by its ID.
+ * @param {string} taskId - ID of the task to find.
+ * @returns {object|null} - The task object if found, otherwise null.
+ */
+function findTaskInData(taskId) {
+    for (let category in taskData) {
+        let tasks = taskData[category];
+        if (tasks && tasks[taskId]) {
+            return tasks[taskId];
+        }
+    }
+    return null;
+}
+
 
 /**
 * Retrieves the category of a task based on its ID.
@@ -237,32 +282,42 @@ function getCategoryFromTaskId(taskId) {
 }
 
 /**
-* Updates the task's column and status in the database.
-* @param {string} taskId - The ID of the task.
-* @param {string} newColumn - The new column to assign.
-* @param {string} category - The category of the task.
-*/
+ * Updates the task's column in the Firebase database.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} newColumn - The new column to assign.
+ * @param {string} category - The category of the task.
+ */
 async function updateTaskColumn(taskId, newColumn, category) {
-   try {
-       let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-           method: "PATCH",
-           headers: {
-               'Content-Type': 'application/json'
-           },
-           body: JSON.stringify({ column: newColumn })
-       });
-       if (response.ok) {
-           console.log(`Task ${taskId} successfully moved to column ${newColumn}.`);
-           if (taskData[category] && taskData[category][taskId]) {
-               taskData[category][taskId].column = newColumn;
-           }
-       } else {
-           console.error(`Error updating column: ${response.statusText}`);
-       }
-   } catch (error) {
-       console.error("Error updating column:", error);
-   }
+    try {
+        let task = findTaskInData(taskId); // Hole die vollständigen Task-Daten
+        if (!task) {
+            console.error(`Task with ID ${taskId} not found.`);
+            return;
+        }
+
+        task.column = newColumn; // Aktualisiere die Spalte lokal
+
+        let url = `${TASK_URL}/${encodeURIComponent(category)}/${taskId}.json`;
+        let response = await fetch(url, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task) // Speichere die vollständige Task
+        });
+
+        if (response.ok) {
+            console.log(`Task ${taskId} successfully updated to column ${newColumn}.`);
+        } else {
+            console.error(`Failed to update task. HTTP Status: ${response.status}`);
+            let errorText = await response.text();
+            console.error(`Response Body: ${errorText}`);
+        }
+    } catch (error) {
+        console.error("Error while updating task column:", error);
+    }
 }
+
 
 /**
 * Checks and updates the display for empty columns.

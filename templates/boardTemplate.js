@@ -133,18 +133,17 @@ function getBoardOverlayTemplate(category, task) {
 }
 
 /**
- * Generates the contact list HTML.
- * @param {Array} contacts - Array of contacts.
- * @returns {string} - HTML for the contact list.
+ * Generates the HTML for the contact list.
+ * @param {Array} contacts - List of contacts assigned to the task.
+ * @returns {string} - HTML string for the contact list.
  */
 function generateContactList(contacts) {
-    return contacts
-        ? contacts.map(contact => {
-              let initials = getInitials(contact);
-              let bgColor = getRandomColor();
-              return `<div class="contact-initials" style="background-color: ${bgColor};">${initials}</div>`;
-          }).join("")
-        : "<p>No contacts</p>";
+    if (!contacts || contacts.length === 0) return "";
+    return contacts.map(function(contact) {
+        let initials = getInitials(contact);
+        let bgColor = getRandomColor();
+        return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
+    }).join('');
 }
 
 /**
