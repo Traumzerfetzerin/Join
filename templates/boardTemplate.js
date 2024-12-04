@@ -92,9 +92,9 @@ function calculateProgressPercentage(subtasks) {
  */
 function getBoardOverlayTemplate(category, task) {
     let prioritySymbol = getPrioritySymbol(task.prio);
-    let categoryClass = category.toLowerCase().replace(" ", "-");
-    let contactList = generateContactList(task.contacts);
-    let subtasksList = generateSubtaskList(task);
+    let categoryClass = category.toLowerCase().replace(" ", "-"); 
+    let contactList = generateContactList(task.contacts); 
+    let subtasksList = generateSubtaskList(task); 
 
     return `
         <div class="board-overlay" data-task-id="${task.id}">
@@ -131,6 +131,8 @@ function getBoardOverlayTemplate(category, task) {
         </div>
     `;
 }
+
+
 
 /**
  * Generates the HTML for the contact list.
