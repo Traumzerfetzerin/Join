@@ -85,6 +85,7 @@ function drag(event) {
     event.dataTransfer.setData("text", event.target.id);
 }
 
+
 /**
 * Adds a task to the specified column.
 * @param {object} task - Task object.
@@ -93,40 +94,40 @@ function drag(event) {
 * @param {object} columns - Mapping of column names to HTML element IDs.
 */
 function addTaskToColumn(task, category, taskId, columns) {
-   if (!task.column) {
-       task.column = "toDo";
-       console.warn(`Task ${taskId} has no column. Defaulting to "toDo".`);
-   }
-   let columnElement = document.getElementById(columns[task.column]);
-   if (!columnElement) {
-       console.error(`Column element for column ${task.column} not found in DOM.`);
-       return;
-   }
-   let contactList = task.contacts
-       ? task.contacts.map(contact => {
-             let initials = getInitials(contact);
-             let bgColor = getRandomColor();
-             return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
-         }).join('')
-       : '';
-   let subtaskCount = task.subtasks ? Object.keys(task.subtasks).length : 0;
-   let completedSubtasks = task.subtasks
-       ? Object.values(task.subtasks).filter(subtask => subtask.completed).length
-       : 0;
-   let taskClass = getTaskClass(task.title);
-   let prioIcon = getPrioIcon(task.prio);
-   let taskHtml = getTaskBoardTemplate(
-       category,
-       task,
-       taskId,
-       contactList,
-       taskClass,
-       subtaskCount,
-       completedSubtasks,
-       prioIcon
-   );
-   columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
-}
+    if (!task.column) {
+        task.column = "toDo";
+        console.warn(`Task ${taskId} has no column. Defaulting to "toDo".`);
+    }
+    let columnElement = document.getElementById(columns[task.column]);
+    if (!columnElement) {
+        console.error(`Column element for column ${task.column} not found in DOM.`);
+        return;
+    }
+    let contactList = task.contacts
+        ? task.contacts.map(contact => {
+              let initials = getInitials(contact);
+              let bgColor = getRandomColor();
+              return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
+          }).join('')
+        : '';
+    let subtaskCount = task.subtasks ? Object.keys(task.subtasks).length : 0;
+    let completedSubtasks = task.subtasks
+        ? Object.values(task.subtasks).filter(subtask => subtask.completed).length
+        : 0;
+    let taskClass = getTaskClass(task.title);
+    let prioIcon = getPrioIcon(task.prio);
+    let taskHtml = getTaskBoardTemplate(
+        category,
+        task,
+        taskId,
+        contactList,
+        taskClass,
+        subtaskCount,
+        completedSubtasks
+    );
+    columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
+ }
+
 /**
 * Formats the contact list for display.
 * @param {Array} contacts - List of contact names.

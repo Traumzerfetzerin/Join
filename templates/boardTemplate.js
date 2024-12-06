@@ -6,26 +6,29 @@
  * @param {string} contactList - HTML for the list of contacts assigned to the task.
  * @param {string} taskClass - CSS class for the task type.
  * @param {number} subtaskCount - Total number of subtasks for the task.
+ * @param {number} completedSubtasks - Number of completed subtasks.
  * @returns {string} - Task HTML template as a string.
  */
-function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount) {
+function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks) {
     let categoryClass = category.toLowerCase().replace(" ", "-");
     let prioritySymbol = getPrioritySymbol(task.prio);
     let progressPercentage = calculateProgressPercentage(task.subtasks || []);
+    let barColor = progressPercentage === 0 ? 'lightgray' : 'blue';
 
     return `
-        <div id="task-${taskId}" class="task draggable ${taskClass}" draggable="true" 
+        <div id="task-${taskId}" class="task draggable ${taskClass}" draggable="true"
              onclick="showTaskOverlay('${category}', '${taskId}')">
             <h4 class="task-category ${categoryClass}">${category}</h4>
             <h3>${task.title || "No title"}</h3>
             <p>${task.description || "No description"}</p>
-            <div class="progress-bar-container" style="margin-top: 10px;">
-                <span>${subtaskCount || 0} Subtasks</span>
+            <div class="progress-bar-container" style="margin-top: 10px; display:flex;align-items:center;gap:8px;">
                 <div class="progress-bar-background" 
-                     style="width: 100%; background-color: lightgray; height: 5px; border-radius: 5px; overflow: hidden;">
+                     style="flex-grow:1;background-color:lightgray;height:5px;border-radius:5px;overflow:hidden;">
                     <div class="progress-bar-fill" 
-                         style="width: ${progressPercentage}%; background-color: ${progressPercentage === 0 ? 'lightgray' : 'blue'}; height: 100%;"></div>
+                         style="width:${progressPercentage}%;background-color:${barColor};height:100%;">
+                    </div>
                 </div>
+                <span>${completedSubtasks}/${subtaskCount} Subtasks</span>
             </div>
             <div class="contact-priority-container">
                 <div class="contact-list">${contactList}</div>
@@ -34,7 +37,6 @@ function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, su
         </div>
     `;
 }
-
 
 /**
  * Fetches the priority symbol for the task.
@@ -131,8 +133,6 @@ function getBoardOverlayTemplate(category, task) {
         </div>
     `;
 }
-
-
 
 /**
  * Generates the HTML for the contact list.
