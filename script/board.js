@@ -1,73 +1,76 @@
-const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
+let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 let taskData = {};
+
 /**
-* Fetches all tasks from Firebase, assigns IDs to each task, and loads them into the board.
-*/
+ * Fetches all tasks from Firebase, assigns IDs to each task, and loads them into the board.
+ */
 async function fetchTasks() {
-   try {
-       let response = await fetch(`${TASK_URL}.json`);
-       let data = await response.json();
-       if (data) {
-           for (let category in data) {
-               for (let taskId in data[category]) {
-                   data[category][taskId].id = taskId;
-               }
-           }
-           taskData = data;
-           loadTasks(data);
-       } else {
-           console.log("No tasks found.");
-       }
-   } catch (error) {
-       console.error("Error fetching tasks:", error);
-   }
+    try {
+        let response = await fetch(`${TASK_URL}.json`);
+        let data = await response.json();
+        if (data) {
+            for (let category in data) {
+                for (let taskId in data[category]) {
+                    data[category][taskId].id = taskId;
+                }
+            }
+            taskData = data;
+            loadTasks(data);
+        } else {
+            console.log("No tasks found.");
+        }
+    } catch (error) {
+        console.error("Error fetching tasks:", error);
+    }
 }
 
 /**
-* Finds a task in taskData by its ID.
-* @param {string} taskId - ID of the task to find.
-* @returns {object|null} - The task object if found, otherwise null.
-*/
+ * Finds a task in taskData by its ID.
+ * @param {string} taskId - ID of the task to find.
+ * @returns {object|null} - The task object if found, otherwise null.
+ */
 function findTaskInData(taskId) {
-   for (let category in taskData) {
-       let tasks = taskData[category];
-       if (tasks[taskId]) {
-           return tasks[taskId];
-       }
-   }
-   return null;
+    for (let category in taskData) {
+        let tasks = taskData[category];
+        if (tasks[taskId]) {
+            return tasks[taskId];
+        }
+    }
+    return null;
 }
 
 /**
-* Clears all task columns.
-*/
+ * Clears all task columns.
+ */
 function clearColumns() {
-   document.getElementById("toDoColumn").innerHTML = "";
-   document.getElementById("inProgressColumn").innerHTML = "";
-   document.getElementById("awaitFeedbackColumn").innerHTML = "";
-   document.getElementById("doneColumn").innerHTML = "";
+    document.getElementById("toDoColumn").innerHTML = "";
+    document.getElementById("inProgressColumn").innerHTML = "";
+    document.getElementById("awaitFeedbackColumn").innerHTML = "";
+    document.getElementById("doneColumn").innerHTML = "";
 }
+
 /**
-* Gets CSS class based on task title.
-* @param {string} title - The title of the task.
-* @returns {string} - CSS class name.
-*/
+ * Gets CSS class based on task title.
+ * @param {string} title - The title of the task.
+ * @returns {string} - CSS class name.
+ */
 function getTaskClass(title) {
-   if (title === "User Story") return "user-story";
-   if (title === "Technical Task") return "technical-task";
-   return "";
+    if (title === "User Story") return "user-story";
+    if (title === "Technical Task") return "technical-task";
+    return "";
 }
+
 /**
-* Loads tasks into their respective columns on the board.
-* @param {object} tasks - Tasks retrieved from Firebase.
-*/
+ * Loads tasks into their respective columns on the board.
+ * @param {object} tasks - Tasks retrieved from Firebase.
+ */
 function loadTasks(tasks) {
     clearColumns();
     let columns = {
         toDo: "toDoColumn",
         inProgress: "inProgressColumn",
         awaitFeedback: "awaitFeedbackColumn",
-        done: "doneColumn"
+        done: "doneColumn",
     };
     for (let category in tasks) {
         let categoryTasks = tasks[category];
@@ -81,18 +84,13 @@ function loadTasks(tasks) {
     enableDragAndDrop(columns);
 }
 
-function drag(event) {
-    event.dataTransfer.setData("text", event.target.id);
-}
-
-
 /**
-* Adds a task to the specified column.
-* @param {object} task - Task object.
-* @param {string} category - Task category.
-* @param {string} taskId - Task ID.
-* @param {object} columns - Mapping of column names to HTML element IDs.
-*/
+ * Adds a task to the specified column.
+ * @param {object} task - Task object.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ * @param {object} columns - Mapping of column names to HTML element IDs.
+ */
 function addTaskToColumn(task, category, taskId, columns) {
     if (!task.column) {
         task.column = "toDo";
@@ -104,15 +102,17 @@ function addTaskToColumn(task, category, taskId, columns) {
         return;
     }
     let contactList = task.contacts
-        ? task.contacts.map(contact => {
-              let initials = getInitials(contact);
-              let bgColor = getRandomColor();
-              return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
-          }).join('')
-        : '';
+        ? task.contacts
+              .map((contact) => {
+                  let initials = getInitials(contact);
+                  let bgColor = getRandomColor();
+                  return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
+              })
+              .join("")
+        : "";
     let subtaskCount = task.subtasks ? Object.keys(task.subtasks).length : 0;
     let completedSubtasks = task.subtasks
-        ? Object.values(task.subtasks).filter(subtask => subtask.completed).length
+        ? Object.values(task.subtasks).filter((subtask) => subtask.completed).length
         : 0;
     let taskClass = getTaskClass(task.title);
     let prioIcon = getPrioIcon(task.prio);
@@ -126,65 +126,45 @@ function addTaskToColumn(task, category, taskId, columns) {
         completedSubtasks
     );
     columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
- }
+}
 
 /**
-* Formats the contact list for display.
-* @param {Array} contacts - List of contact names.
-* @returns {string} - HTML for the contact list.
-*/
-function formatContactList(contacts) {
-   if (!contacts) return "";
-   return contacts
-       .map(contact => {
-           let initials = getInitials(contact);
-           let bgColor = getRandomColor();
-           return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
-       })
-       .join("");
-}
-/**
-* Calculates subtask data: total and completed.
-* @param {object} subtasks - Object of subtasks.
-* @returns {object} - Object containing count and completed.
-*/
-function calculateSubtaskData(subtasks) {
-   if (!subtasks) return { count: 0, completed: 0 };
-   let count = Object.keys(subtasks).length;
-   let completed = Object.values(subtasks).filter(subtask => subtask.completed).length;
-   return { count, completed };
-}
-/**
-* Gets the priority icon based on the priority value.
-* @param {string} prio - The priority level.
-* @returns {string} - Path to the priority icon.
-*/
+ * Gets the priority icon based on the priority value.
+ * @param {string} prio - The priority level.
+ * @returns {string} - Path to the priority icon.
+ */
 function getPrioIcon(prio) {
-   if (prio === "urgent") return "../Assets/addTask/Prio alta.svg";
-   if (prio === "medium") return "../Assets/addTask/Prio media white.svg";
-   return "../Assets/addTask/Prio baja.svg";
+    if (prio === "urgent") return "../Assets/addTask/Prio alta.svg";
+    if (prio === "medium") return "../Assets/addTask/Prio media white.svg";
+    return "../Assets/addTask/Prio baja.svg";
 }
+
 /**
-* Generates the task HTML.
-* @param {string} category - Task category.
-* @param {object} task - Task object.
-* @param {string} taskId - Task ID.
-* @param {string} contactList - HTML for contact list.
-* @param {object} subtaskData - Object containing subtask count and completed.
-* @param {string} prioIcon - Path to priority icon.
-* @returns {string} - HTML string for the task.
-*/
-function createTaskHtml(category, task, taskId, contactList, subtaskData, prioIcon) {
-   return getTaskBoardTemplate(
-       category,
-       task,
-       taskId,
-       contactList,
-       getTaskClass(task.title),
-       subtaskData.count,
-       subtaskData.completed,
-       prioIcon
-   );
+ * Formats the contact list for display.
+ * @param {Array} contacts - List of contact names.
+ * @returns {string} - HTML for the contact list.
+ */
+function formatContactList(contacts) {
+    if (!contacts) return "";
+    return contacts
+        .map((contact) => {
+            let initials = getInitials(contact);
+            let bgColor = getRandomColor();
+            return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
+        })
+        .join("");
+}
+
+/**
+ * Calculates subtask data: total and completed.
+ * @param {object} subtasks - Object of subtasks.
+ * @returns {object} - Object containing count and completed.
+ */
+function calculateSubtaskData(subtasks) {
+    if (!subtasks) return { count: 0, completed: 0 };
+    let count = Object.keys(subtasks).length;
+    let completed = Object.values(subtasks).filter((subtask) => subtask.completed).length;
+    return { count, completed };
 }
 
 /**
@@ -192,44 +172,37 @@ function createTaskHtml(category, task, taskId, contactList, subtaskData, prioIc
  * @param {object} columns - Mapping of column names to HTML element IDs.
  */
 function enableDragAndDrop(columns) {
-    let draggableTasks = document.querySelectorAll('.draggable');
-    let dropZones = Object.values(columns).map(function(column) {
-        return document.getElementById(column);
-    });
+    let draggableTasks = document.querySelectorAll(".draggable");
+    let dropZones = Object.values(columns).map((column) => document.getElementById(column));
 
-    draggableTasks.forEach(function(task) {
-        task.addEventListener('dragstart', function(event) {
-            event.dataTransfer.setData('task-id', task.id.replace('task-', ''));
-            event.dataTransfer.setData('category', getCategoryFromTaskId(task.id.replace('task-', '')));
+    draggableTasks.forEach((task) => {
+        task.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("task-id", task.id.replace("task-", ""));
+            event.dataTransfer.setData(
+                "category",
+                getCategoryFromTaskId(task.id.replace("task-", ""))
+            );
         });
     });
 
-    dropZones.forEach(function(zone) {
-        zone.addEventListener('dragover', function(event) {
+    dropZones.forEach((zone) => {
+        zone.addEventListener("dragover", (event) => event.preventDefault());
+        zone.addEventListener("drop", async (event) => {
             event.preventDefault();
-        });
-
-        zone.addEventListener('drop', async function(event) {
-            event.preventDefault();
-            let taskId = event.dataTransfer.getData('task-id');
-            let category = event.dataTransfer.getData('category');
-            let newColumn = Object.keys(columns).find(function(key) {
-                return columns[key] === zone.id;
-            });
+            let taskId = event.dataTransfer.getData("task-id");
+            let category = event.dataTransfer.getData("category");
+            let newColumn = Object.keys(columns).find((key) => columns[key] === zone.id);
 
             if (taskId && category && newColumn) {
-                let task = findTaskInData(taskId); // Hole die vollständigen Task-Daten
+                let task = findTaskInData(taskId);
                 if (!task) {
                     console.error(`Task with ID ${taskId} not found.`);
                     return;
                 }
 
-                task.column = newColumn; // Aktualisiere die Spalte in den lokalen Daten
-
-                // Aktualisiere Firebase mit den vollständigen Daten
+                task.column = newColumn;
                 await updateTaskColumn(taskId, newColumn, category);
 
-                // Entferne die Task aus der aktuellen Spalte und füge sie in die neue ein
                 document.getElementById(`task-${taskId}`).remove();
                 let columnElement = document.getElementById(columns[newColumn]);
                 let contactList = generateContactList(task.contacts || []);
@@ -243,43 +216,11 @@ function enableDragAndDrop(columns) {
                 );
                 columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
 
-                enableDragAndDrop(columns); // Reinitialisiere Drag-and-Drop-Events
-                checkEmptyColumns(columns); // Überprüfe auf leere Spalten
+                enableDragAndDrop(columns);
+                checkEmptyColumns(columns);
             }
         });
     });
-}
-
-
-
-/**
- * Finds a task in taskData by its ID.
- * @param {string} taskId - ID of the task to find.
- * @returns {object|null} - The task object if found, otherwise null.
- */
-function findTaskInData(taskId) {
-    for (let category in taskData) {
-        let tasks = taskData[category];
-        if (tasks && tasks[taskId]) {
-            return tasks[taskId];
-        }
-    }
-    return null;
-}
-
-
-/**
-* Retrieves the category of a task based on its ID.
-* @param {string} taskId - ID of the task.
-* @returns {string|null} - Category of the task.
-*/
-function getCategoryFromTaskId(taskId) {
-   for (let category in taskData) {
-       if (taskData[category][taskId]) {
-           return category;
-       }
-   }
-   return null;
 }
 
 /**
@@ -290,34 +231,36 @@ function getCategoryFromTaskId(taskId) {
  */
 async function updateTaskColumn(taskId, newColumn, category) {
     try {
-        let task = findTaskInData(taskId); // Hole die vollständigen Task-Daten
+        let task = findTaskInData(taskId);
         if (!task) {
             console.error(`Task with ID ${taskId} not found.`);
             return;
         }
 
-        task.column = newColumn; // Aktualisiere die Spalte lokal
+        task.column = newColumn;
 
         let url = `${TASK_URL}/${encodeURIComponent(category)}/${taskId}.json`;
         let response = await fetch(url, {
             method: "PUT",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(task) // Speichere die vollständige Task
+            body: JSON.stringify(task),
         });
 
         if (response.ok) {
             console.log(`Task ${taskId} successfully updated to column ${newColumn}.`);
         } else {
             console.error(`Failed to update task. HTTP Status: ${response.status}`);
-            let errorText = await response.text();
-            console.error(`Response Body: ${errorText}`);
         }
     } catch (error) {
         console.error("Error while updating task column:", error);
     }
 }
+
+/**
+ * Checks and updates the
+
 
 
 /**

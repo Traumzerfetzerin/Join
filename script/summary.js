@@ -8,12 +8,13 @@ function navigateToToDo() {
 }
 
 /**
- * Updates the greeting message based on the current time.
+ * Updates the greeting message based on the current time of day.
  */
 function updateGreeting() {
     let greetingElement = document.querySelector(".good");
     let now = new Date();
     let hour = now.getHours();
+
     if (!greetingElement) return;
 
     if (hour < 12) {
@@ -26,19 +27,40 @@ function updateGreeting() {
 }
 
 /**
- * Updates the user's greeting with the provided name or clears it for a guest.
- * @param {boolean} isGuest - True if the user is a guest.
- * @param {string} firstName - The user's first name.
- * @param {string} lastName - The user's last name.
+ * Updates the user greeting with their full name or sets it to 'Guest' if no user is logged in.
+ * @param {boolean} isGuest - Indicates whether the user is a guest.
+ * @param {string} firstName - The first name of the user.
+ * @param {string} lastName - The last name of the user.
  */
 function updateUserGreeting(isGuest, firstName, lastName) {
     let nameElement = document.querySelector(".name");
+
     if (!nameElement) return;
-    nameElement.textContent = isGuest ? "" : `${firstName} ${lastName}`;
+
+    if (isGuest) {
+        nameElement.textContent = "Guest";
+    } else {
+        let fullName = `${firstName} ${lastName}`;
+        localStorage.setItem('loggedInUserName', fullName);
+        nameElement.textContent = fullName;
+    }
 }
 
 /**
- * Fetches task data from Firebase and updates the summary.
+ * Displays the full name of the user, if available.
+ * Retrieves the name from localStorage and inserts it into the designated element.
+ */
+function displayFullName() {
+    let fullName = localStorage.getItem('loggedInUserName');
+    let nameElement = document.querySelector(".name");
+
+    if (nameElement) {
+        nameElement.textContent = fullName ? fullName : "Guest";
+    }
+}
+
+/**
+ * Loads the summary data for tasks and updates the UI with the relevant information.
  */
 async function loadSummaryData() {
     try {
@@ -220,8 +242,15 @@ function findClosestDate(tasks) {
     return closestDate;
 }
 
-// Load summary data on page load
-window.onload = loadSummaryData;
+/**
+ * Initializes the application when the page is fully loaded.
+ */
+window.onload = function () {
+    loadSummaryData();
+    setCurrentDate();
+    updateGreeting();
+    displayFullName();
+};
 
 
 // CHANGE TO BOARD
