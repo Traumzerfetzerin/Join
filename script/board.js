@@ -167,7 +167,7 @@ function calculateSubtaskData(subtasks) {
 }
 
 /**
- * Enables drag and drop functionality for tasks and updates their categories.
+ * Enables drag-and-drop functionality for tasks and updates their column in Firebase.
  * @param {object} columns - Mapping of column names to their respective HTML element IDs.
  */
 function enableDragAndDrop(columns) {
@@ -177,15 +177,13 @@ function enableDragAndDrop(columns) {
     draggableTasks.forEach((task) => {
         task.addEventListener("dragstart", (event) => {
             event.dataTransfer.setData("task-id", task.id.replace("task-", ""));
-            event.dataTransfer.setData(
-                "category",
-                getCategoryFromTaskId(task.id.replace("task-", ""))
-            );
+            event.dataTransfer.setData("category", getCategoryFromTaskId(task.id.replace("task-", "")));
         });
     });
 
     dropZones.forEach((zone) => {
         zone.addEventListener("dragover", (event) => event.preventDefault());
+
         zone.addEventListener("drop", async (event) => {
             event.preventDefault();
             let taskId = event.dataTransfer.getData("task-id");
@@ -194,22 +192,19 @@ function enableDragAndDrop(columns) {
 
             if (taskId && newColumn) {
                 let task = findTaskInData(taskId);
-                if (!task) {
-                    console.error(`Task with ID ${taskId} not found.`);
-                    return;
-                }
+                if (!task) return;
 
-                let newCategory = newColumn;
+                let currentCategory = oldCategory;
+                task.category = currentCategory;
                 task.column = newColumn;
-                task.category = newCategory;
 
                 await deleteTaskFromCategory(taskId, oldCategory);
-                await updateTaskColumn(taskId, newColumn, newCategory);
+                await saveTaskToCategory(taskId, currentCategory, task);
 
                 document.getElementById(`task-${taskId}`).remove();
                 let columnElement = document.getElementById(columns[newColumn]);
                 let taskHtml = getTaskBoardTemplate(
-                    newCategory,
+                    currentCategory,
                     task,
                     taskId,
                     generateContactList(task.contacts || []),
@@ -225,6 +220,7 @@ function enableDragAndDrop(columns) {
         });
     });
 }
+
 
 /**
  * Gets the category of a task based on its ID.
