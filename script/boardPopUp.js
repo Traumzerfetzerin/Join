@@ -122,15 +122,25 @@ window.onload = function () {
 };
 
 /**
- * Gets the initials from a contact name.
- * @param {string} name - Contact name.
- * @returns {string} - Initials.
+ * Extracts the initials from a contact name.
+ * @param {string} name - The full name of the contact.
+ * @returns {string} The initials of the contact.
  */
 function getInitials(name) {
-    return name
-        .split(' ')
-        .map(part => part[0]?.toUpperCase())
-        .join('');
+    if (!name || typeof name !== "string") {
+        return "?";
+    }
+    let parts = name.split(" ");
+    let initials = parts.map((part) => part.charAt(0).toUpperCase()).join("");
+    return initials.slice(0, 2); 
+}
+
+
+async function fetchContactFromFirebase(contactId) {
+    let response = await fetch(`https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`);
+    let contact = await response.json();
+    console.log("Fetched contact:", contact);
+    return contact || { name: "Unknown" };
 }
 
 /**

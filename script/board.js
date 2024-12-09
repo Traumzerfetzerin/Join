@@ -2,6 +2,34 @@ let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/
 let taskData = {};
 
 /**
+ * Saves a task to a specified category in the database.
+ * @param {string} taskId - The ID of the task to save.
+ * @param {string} category - The category where the task should be saved.
+ * @param {object} taskData - The task data to save.
+ * @returns {Promise<void>}
+ */
+async function saveTaskToCategory(taskId, category, taskData) {
+    try {
+        let response = await fetch(
+            `${TASK_URL}/${encodeURIComponent(category)}/${encodeURIComponent(taskId)}.json`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(taskData),
+            }
+        );
+        if (!response.ok) {
+            throw new Error(`Failed to save task: ${response.statusText}`);
+        }
+        console.log(`Task ${taskId} successfully saved in category ${category}`);
+    } catch (error) {
+        console.error("Error saving task to category:", error);
+    }
+}
+
+/**
  * Fetches all tasks from Firebase, assigns IDs to each task, and loads them into the board.
  */
 async function fetchTasks() {
@@ -139,35 +167,7 @@ function getPrioIcon(prio) {
 }
 
 /**
- * Formats the contact list for display.
- * @param {Array} contacts - List of contact names.
- * @returns {string} - HTML for the contact list.
- */
-function formatContactList(contacts) {
-    if (!contacts) return "";
-    return contacts
-        .map((contact) => {
-            let initials = getInitials(contact);
-            let bgColor = getRandomColor();
-            return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
-        })
-        .join("");
-}
-
-/**
- * Calculates subtask data: total and completed.
- * @param {object} subtasks - Object of subtasks.
- * @returns {object} - Object containing count and completed.
- */
-function calculateSubtaskData(subtasks) {
-    if (!subtasks) return { count: 0, completed: 0 };
-    let count = Object.keys(subtasks).length;
-    let completed = Object.values(subtasks).filter((subtask) => subtask.completed).length;
-    return { count, completed };
-}
-
-/**
- * Enables drag-and-drop functionality for tasks and updates their column in Firebase.
+ * Enables drag-and-drop functionality for tasks and updates their column and category in Firebase.
  * @param {object} columns - Mapping of column names to their respective HTML element IDs.
  */
 function enableDragAndDrop(columns) {
@@ -192,19 +192,29 @@ function enableDragAndDrop(columns) {
 
             if (taskId && newColumn) {
                 let task = findTaskInData(taskId);
-                if (!task) return;
+                if (!task) {
+                    console.error(`Task with ID ${taskId} not found.`);
+                    return;
+                }
 
-                let currentCategory = oldCategory;
-                task.category = currentCategory;
+                // Update task properties
+                let newCategory = newColumn; // Assuming newColumn matches the category
+                task.category = newCategory;
                 task.column = newColumn;
 
-                await deleteTaskFromCategory(taskId, oldCategory);
-                await saveTaskToCategory(taskId, currentCategory, task);
+                // Delete from the old category
+                if (oldCategory && oldCategory !== newCategory) {
+                    await deleteTaskFromCategory(taskId, oldCategory);
+                }
 
+                // Save to the new category
+                await saveTaskToCategory(taskId, newCategory, task);
+
+                // Update UI
                 document.getElementById(`task-${taskId}`).remove();
                 let columnElement = document.getElementById(columns[newColumn]);
                 let taskHtml = getTaskBoardTemplate(
-                    currentCategory,
+                    newCategory,
                     task,
                     taskId,
                     generateContactList(task.contacts || []),
@@ -221,9 +231,8 @@ function enableDragAndDrop(columns) {
     });
 }
 
-
 /**
- * Gets the category of a task based on its ID.
+ * Finds the category of a task based on its ID.
  * @param {string} taskId - The ID of the task.
  * @returns {string|null} - The category of the task or null if not found.
  */
@@ -235,6 +244,7 @@ function getCategoryFromTaskId(taskId) {
     }
     return null;
 }
+
 
 /**
  * Deletes a task from its current category in the Firebase database.
@@ -262,8 +272,6 @@ async function deleteTaskFromCategory(taskId, category) {
         console.error("Error while deleting task:", error);
     }
 }
-
-
 
 /**
  * Updates the task's column in the Firebase database.
@@ -301,46 +309,44 @@ async function updateTaskColumn(taskId, newColumn, category) {
 }
 
 /**
- * Checks and updates the
-
-
-
-/**
-* Checks and updates the display for empty columns.
-* @param {object} columns - Mapping of column names to HTML element IDs.
-*/
+ * Checks and updates the display for empty columns.
+ * @param {object} columns - Mapping of column names to HTML element IDs.
+ */
 function checkEmptyColumns(columns) {
-   for (let columnId in columns) {
-       let columnElement = document.getElementById(columns[columnId]);
-       if (columnElement) {
-           let tasks = columnElement.querySelectorAll(".task");
-           if (tasks.length === 0) {
-               columnElement.innerHTML = `<p class="no-tasks">No tasks available</p>`;
-           } else {
-               let noTasksMessage = columnElement.querySelector(".no-tasks");
-               if (noTasksMessage) {
-                   noTasksMessage.remove();
-               }
-           }
-       }
-   }
+    for (let columnId in columns) {
+        let columnElement = document.getElementById(columns[columnId]);
+        if (columnElement) {
+            let tasks = columnElement.querySelectorAll(".task");
+            if (tasks.length === 0) {
+                columnElement.innerHTML = `<p class="no-tasks">No tasks available</p>`;
+            } else {
+                let noTasksMessage = columnElement.querySelector(".no-tasks");
+                if (noTasksMessage) {
+                    noTasksMessage.remove();
+                }
+            }
+        }
+    }
 }
+
 /**
-* Shows the task form on the board.
-*/
+ * Shows the task form on the board.
+ */
 function addTaskOnBoard() {
-   document.getElementById('templateAddTask').classList.remove('d-none');
+    document.getElementById('templateAddTask').classList.remove('d-none');
 }
+
 /**
-* Hides the task form on the board.
-*/
+ * Hides the task form on the board.
+ */
 function closeTaskOnBoard() {
-   document.getElementById('templateAddTask').classList.add('d-none');
+    document.getElementById('templateAddTask').classList.add('d-none');
 }
+
 /**
-* Prevents closing when clicking inside the form.
-* @param {Event} event - The click event.
-*/
+ * Prevents closing when clicking inside the form.
+ * @param {Event} event - The click event.
+ */
 function dontClose(event) {
-   event.stopPropagation();
+    event.stopPropagation();
 }

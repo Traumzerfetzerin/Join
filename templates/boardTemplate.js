@@ -113,7 +113,7 @@ function getBoardOverlayTemplate(category, task) {
                 </div>
                 <div class="contacts-section">
                     <strong>Assigned To:</strong>
-                    <div id="cardOverlayContacts" class="contact-list">${contactList}</div>
+                    <div id="cardOverlayContacts" class="contact-list">${generateOverlayContactList(task.contacts)}</div>
                 </div>
                 <div class="subtasks-section">
                     <strong>Subtasks:</strong>
@@ -147,6 +147,29 @@ function generateContactList(contacts) {
         return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
     }).join('');
 }
+
+/**
+ * Generates the HTML for the contact list in the overlay.
+ * @param {Array} contacts - List of contacts assigned to the task.
+ * @returns {string} - HTML string for the contact list in the overlay.
+ */
+function generateOverlayContactList(contacts) {
+    if (!contacts || contacts.length === 0) return "";
+
+    return contacts.map(function(contact) {
+        // Sicherstellen, dass `contact` und `contact.name` definiert sind
+        let name = contact && contact.name ? contact.name : "Unknown";
+        let initials = name !== "Unknown" ? getInitials(name) : "?";
+        let bgColor = getRandomColor();
+
+        return `
+            <div class="contact-item">
+                <span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>
+                <span class="contact-name">${name}</span>
+            </div>`;
+    }).join('');
+}
+
 
 /**
  * Generates the subtasks list HTML for the overlay.
