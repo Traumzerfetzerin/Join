@@ -94,7 +94,6 @@ function loadTasks(tasks) {
 function addTaskToColumn(task, category, taskId, columns) {
     if (!task.column) {
         task.column = "toDo";
-        console.warn(`Task ${taskId} has no column. Defaulting to "toDo".`);
     }
     let columnElement = document.getElementById(columns[task.column]);
     if (!columnElement) {
@@ -257,15 +256,17 @@ async function deleteTaskFromCategory(taskId, category) {
         let url = `${TASK_URL}/${encodeURIComponent(category)}/${taskId}.json`;
         let response = await fetch(url, { method: "DELETE" });
 
-        if (response.ok) {
-            console.log(`Task ${taskId} successfully deleted from category ${category}.`);
-        } else {
-            console.error(`Failed to delete task ${taskId}. HTTP Status: ${response.status}`);
+        if (!response.ok) {
+            console.error(`Failed to delete task with ID ${taskId}: ${response.statusText}`);
+            return;
         }
+
+        console.log(`Task with ID ${taskId} deleted successfully.`);
     } catch (error) {
         console.error("Error while deleting task:", error);
     }
 }
+
 
 
 /**

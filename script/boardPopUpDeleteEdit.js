@@ -22,31 +22,35 @@ async function deleteTask(category, taskId) {
     }
 }
 
+/**
+ * Enables edit mode for a specific task.
+ * @param {string} taskId - The ID of the task to edit.
+ * @param {string} category - The category of the task.
+ */
 function editTask(taskId, category) {
-    let task = findTaskInData(taskId); // Task aus lokalen Daten holen
+    let task = findTaskInData(taskId);
     if (!task) {
         console.error(`Task with ID ${taskId} not found.`);
         return;
     }
-
-    // Wechsle das Overlay in den Edit-Modus
     enableEditMode(task, category);
 }
 
+/**
+ * Enables editing mode for a task and populates fields.
+ * @param {Object} task - The task to edit.
+ * @param {string} category - The category of the task.
+ */
 function enableEditMode(task, category) {
-    // Titel als Eingabefeld anzeigen
     let titleElement = document.querySelector('.task-title');
     titleElement.innerHTML = `<input type="text" id="editTitle" value="${task.title}" />`;
 
-    // Beschreibung als Eingabefeld
     let descriptionElement = document.querySelector('.task-description');
     descriptionElement.innerHTML = `<textarea id="editDescription">${task.description}</textarea>`;
 
-    // Due Date
     let dueDateElement = document.querySelector('.task-info p:nth-child(1)');
     dueDateElement.innerHTML = `<input type="date" id="editDueDate" value="${task.dueDate}" />`;
 
-    // Priorität
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
     priorityElement.innerHTML = `
         <select id="editPriority">
@@ -56,7 +60,6 @@ function enableEditMode(task, category) {
         </select>
     `;
 
-    // Buttons aktualisieren
     let actionLinks = document.querySelector('.action-links');
     actionLinks.innerHTML = `
         <button onclick="saveChanges('${task.id}', '${category}')">Save Changes</button>
@@ -64,18 +67,25 @@ function enableEditMode(task, category) {
     `;
 }
 
-
+/**
+ * Fills the fields of the edit overlay with task data.
+ * @param {Object} task - The task data to populate the fields.
+ */
 function fillFields(task) {
     document.getElementById('inputTitle').value = task.title || '';
     document.getElementById('textareaDescription').value = task.description || '';
     document.getElementById('dueDate').value = task.dueDate || '';
     document.getElementById('categorySelect').value = task.category || '';
-    setPrio(task.prio); // Priorität setzen
+    setPrio(task.prio);
 }
 
+/**
+ * Fills the subtasks in the edit overlay.
+ * @param {Array} subtasks - The subtasks of the task.
+ */
 function fillSubtasks(subtasks) {
     let subtaskContainer = document.getElementById('editSubtasks');
-    subtaskContainer.innerHTML = ''; // Vorhandene Subtasks löschen
+    subtaskContainer.innerHTML = '';
 
     subtasks.forEach((subtask, index) => {
         let subtaskHTML = createSubtaskElementHTMML(subtask.text, `subtaskDiv_${index}`, `subtaskUl_${index}`, `subtaskLi_${index}`);
@@ -83,52 +93,97 @@ function fillSubtasks(subtasks) {
     });
 }
 
+/**
+ * Saves the edited task to Firebase and updates the board.
+ * @param {string} taskId - The ID of the task to save.
+ * @param {string} category - The category of the task.
+ */
 async function saveEditedTask(taskId, category) {
     let updatedTask = collectTaskData();
 
     try {
         await saveTaskToFirebase(updatedTask, category, taskId);
-        taskData[category][taskId] = updatedTask; // Lokale Daten aktualisieren
-        loadTasks(taskData); // Board aktualisieren
-        closeTaskOnBoard(); // Overlay schließen
+        taskData[category][taskId] = updatedTask;
+        loadTasks(taskData);
+        closeTaskOnBoard();
     } catch (error) {
         console.error(`Error saving task:`, error);
     }
 }
 
-
-async function saveChanges(taskId, category) {
-    let updatedTask = {
+/**
+ * Extracts updated task data from the edit form.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @returns {Object} - The updated task data.
+ */
+function getUpdatedTask(taskId, category) {
+    return {
         title: document.getElementById('editTitle').value,
         description: document.getElementById('editDescription').value,
         dueDate: document.getElementById('editDueDate').value,
         prio: document.getElementById('editPriority').value,
-        contacts: taskData[category][taskId].contacts, // Kontakte bleiben gleich
-        subtasks: taskData[category][taskId].subtasks, // Subtasks bleiben gleich
+        contacts: taskData[category][taskId].contacts,
+        subtasks: taskData[category][taskId].subtasks,
     };
+}
 
+/**
+ * Updates the task in the Firebase database.
+ * @param {string} category - The category of the task.
+ * @param {string} taskId - The ID of the task.
+ * @param {Object} updatedTask - The updated task data.
+ * @returns {Promise<void>}
+ */
+async function updateTaskInDatabase(category, taskId, updatedTask) {
     try {
-        // Speichere die Änderungen in Firebase
         await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedTask),
         });
+    } catch (error) {
+        console.error("Error updating task in database:", error);
+        throw error;
+    }
+}
 
-        // Aktualisiere die lokalen Daten
-        taskData[category][taskId] = updatedTask;
-        alert("Task updated successfully!");
-        closeTaskOverlay(); // Overlay schließen
-        loadTasks(taskData); // Board neu laden
+/**
+ * Finalizes the task update process by closing the overlay and reloading tasks.
+ * @param {Object} updatedTask - The updated task data.
+ * @param {string} category - The category of the task.
+ * @param {string} taskId - The ID of the task.
+ */
+function finalizeTaskUpdate(updatedTask, category, taskId) {
+    taskData[category][taskId] = updatedTask;
+    alert("Task updated successfully!");
+    closeTaskOverlay();
+    loadTasks(taskData);
+}
+
+/**
+ * Saves changes made to the task in edit mode.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ */
+async function saveChanges(taskId, category) {
+    let updatedTask = getUpdatedTask(taskId, category);
+
+    try {
+        await updateTaskInDatabase(category, taskId, updatedTask);
+        finalizeTaskUpdate(updatedTask, category, taskId);
     } catch (error) {
         console.error("Error updating task:", error);
     }
 }
 
+
+/**
+ * Cancels edit mode and reloads the original task data in the overlay.
+ */
 function cancelEdit() {
-    // Overlay neu laden, um wieder die Ansicht zu zeigen
     let overlay = document.querySelector('.board-overlay');
     let taskId = overlay.getAttribute('data-task-id');
     let category = document.querySelector('.task-category').textContent.trim();
-    showTaskOverlay(category, taskId); // Lädt die ursprünglichen Daten
+    showTaskOverlay(category, taskId);
 }

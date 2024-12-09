@@ -1,34 +1,108 @@
 /**
-* Shows the overlay with task details.
-* @param {string} category - Task category.
-* @param {string} taskId - Task ID.
-*/
+ * Shows the overlay with task details.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ */
 async function showTaskOverlay(category, taskId) {
+    let task = await fetchTask(category, taskId);
+    if (!task) return;
+
+    updateOverlayContent(category, task);
+    showOverlay();
+}
+
+/**
+ * Shows the overlay for a task.
+ */
+function showOverlay() {
+    let taskOverlay = document.getElementById("taskOverlay");
+
+    if (!taskOverlay) {
+        console.error("Task Overlay element not found!");
+        return;
+    }
+    taskOverlay.classList.remove("dNone");
+}
+
+/**
+ * Updates the overlay content with task details.
+ * @param {string} category - Task category.
+ * @param {Object} task - The task object.
+ */
+function updateOverlayContent(category, task) {
+    let overlayHtml = getBoardOverlayTemplate(category, task);
+    let overlayDetails = document.getElementById("overlayDetails");
+
+    if (!overlayDetails) {
+        console.error("Overlay Details element not found!");
+        return;
+    }
+    overlayDetails.innerHTML = overlayHtml;
+}
+
+/**
+ * Fetches a task from Firebase.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ * @returns {Object|null} - The task object or null if not found.
+ */
+async function fetchTask(category, taskId) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
         let task = await response.json();
-        console.log("Fetched Task:", task);
         if (!task) {
             alert("Task not found!");
-            return;
+            return null;
         }
         task.id = taskId;
-        let overlayHtml = getBoardOverlayTemplate(category, task);
-        let overlayDetails = document.getElementById("overlayDetails");
-        if (!overlayDetails) {
-            console.error("Overlay Details element not found!");
-            return;
-        }
-        overlayDetails.innerHTML = overlayHtml;
-        let taskOverlay = document.getElementById("taskOverlay");
-        if (!taskOverlay) {
-            console.error("Task Overlay element not found!");
-            return;
-        }
-        taskOverlay.classList.remove("dNone");
+        return task;
     } catch (error) {
-        console.error("Error loading task:", error);
+        console.error("Error fetching task:", error);
+        return null;
     }
+}
+
+
+/**
+ * Hides the task overlay if the event matches the conditions.
+ * @param {Event} event - Event that triggered the function.
+ */
+function hideTaskOverlay(event) {
+    let taskOverlay = document.getElementById("taskOverlay");
+    if (event && event.target === taskOverlay) {
+        taskOverlay.classList.add("dNone");
+    } else if (!event || event.target.tagName === "BUTTON") {
+        taskOverlay.classList.add("dNone");
+    }
+}
+
+/**
+ * Resets the values of the form fields in the overlay.
+ */
+function resetFormFields() {
+    let titleField = document.getElementById('inputTitle');
+    let descriptionField = document.getElementById('textareaDescription');
+    let dueDateField = document.getElementById('dueDate');
+    let categoryField = document.getElementById('categorySelect');
+    let subtaskContainer = document.getElementById('editSubtasks');
+    let contactsDropdown = document.getElementById('assigned-to');
+
+    if (titleField) titleField.value = '';
+    if (descriptionField) descriptionField.value = '';
+    if (dueDateField) dueDateField.value = '';
+    if (categoryField) categoryField.value = '';
+    if (subtaskContainer) subtaskContainer.innerHTML = '';
+    if (contactsDropdown) contactsDropdown.innerHTML = '';
+}
+
+/**
+ * Resets the priority selection in the overlay.
+ */
+function resetPriority() {
+    selectedPrio = null;
+    document.getElementById('urgent').classList.remove('active');
+    document.getElementById('medium').classList.remove('active');
+    document.getElementById('low').classList.remove('active');
 }
 
 /**
@@ -36,29 +110,11 @@ async function showTaskOverlay(category, taskId) {
  * @param {Event} event - Event that triggered the function.
  */
 function closeTaskOverlay(event) {
-    let taskOverlay = document.getElementById("taskOverlay");
-    if (event && event.target === taskOverlay) {
-        taskOverlay.classList.add("dNone");
-    } else if (!event || event.target.tagName === "BUTTON") {
-        taskOverlay.classList.add("dNone");
-    }
-    let titleField = document.getElementById('inputTitle');
-    let descriptionField = document.getElementById('textareaDescription');
-    let dueDateField = document.getElementById('dueDate');
-    let categoryField = document.getElementById('categorySelect');
-    let subtaskContainer = document.getElementById('editSubtasks');
-    let contactsDropdown = document.getElementById('assigned-to');
-    if (titleField) titleField.value = '';
-    if (descriptionField) descriptionField.value = '';
-    if (dueDateField) dueDateField.value = '';
-    if (categoryField) categoryField.value = '';
-    if (subtaskContainer) subtaskContainer.innerHTML = '';
-    if (contactsDropdown) contactsDropdown.innerHTML = '';
-    selectedPrio = null;
-    document.getElementById('urgent').classList.remove('active');
-    document.getElementById('medium').classList.remove('active');
-    document.getElementById('low').classList.remove('active');
+    hideTaskOverlay(event);
+    resetFormFields();
+    resetPriority();
 }
+
 
 window.onload = function () {
     let taskOverlay = document.getElementById("taskOverlay");
