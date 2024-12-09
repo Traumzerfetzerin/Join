@@ -167,7 +167,7 @@ function getPrioIcon(prio) {
 }
 
 /**
- * Enables drag-and-drop functionality for tasks and updates their column and category in Firebase.
+ * Enables drag-and-drop functionality for tasks and updates their column in Firebase.
  * @param {object} columns - Mapping of column names to their respective HTML element IDs.
  */
 function enableDragAndDrop(columns) {
@@ -187,7 +187,7 @@ function enableDragAndDrop(columns) {
         zone.addEventListener("drop", async (event) => {
             event.preventDefault();
             let taskId = event.dataTransfer.getData("task-id");
-            let oldCategory = event.dataTransfer.getData("category");
+            let category = event.dataTransfer.getData("category");
             let newColumn = Object.keys(columns).find((key) => columns[key] === zone.id);
 
             if (taskId && newColumn) {
@@ -197,24 +197,17 @@ function enableDragAndDrop(columns) {
                     return;
                 }
 
-                // Update task properties
-                let newCategory = newColumn; // Assuming newColumn matches the category
-                task.category = newCategory;
+                // Update only the column, retain the category
                 task.column = newColumn;
 
-                // Delete from the old category
-                if (oldCategory && oldCategory !== newCategory) {
-                    await deleteTaskFromCategory(taskId, oldCategory);
-                }
-
-                // Save to the new category
-                await saveTaskToCategory(taskId, newCategory, task);
+                // Save updated task to Firebase
+                await saveTaskToCategory(taskId, category, task);
 
                 // Update UI
                 document.getElementById(`task-${taskId}`).remove();
                 let columnElement = document.getElementById(columns[newColumn]);
                 let taskHtml = getTaskBoardTemplate(
-                    newCategory,
+                    category,
                     task,
                     taskId,
                     generateContactList(task.contacts || []),
