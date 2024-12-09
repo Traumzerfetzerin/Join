@@ -168,8 +168,8 @@ function calculateSubtaskData(subtasks) {
 }
 
 /**
- * Enables drag and drop functionality for tasks and columns.
- * @param {object} columns - Mapping of column names to HTML element IDs.
+ * Enables drag and drop functionality for tasks and updates their categories.
+ * @param {object} columns - Mapping of column names to their respective HTML element IDs.
  */
 function enableDragAndDrop(columns) {
     let draggableTasks = document.querySelectorAll(".draggable");
@@ -190,29 +190,33 @@ function enableDragAndDrop(columns) {
         zone.addEventListener("drop", async (event) => {
             event.preventDefault();
             let taskId = event.dataTransfer.getData("task-id");
-            let category = event.dataTransfer.getData("category");
+            let oldCategory = event.dataTransfer.getData("category");
             let newColumn = Object.keys(columns).find((key) => columns[key] === zone.id);
 
-            if (taskId && category && newColumn) {
+            if (taskId && newColumn) {
                 let task = findTaskInData(taskId);
                 if (!task) {
                     console.error(`Task with ID ${taskId} not found.`);
                     return;
                 }
 
+                let newCategory = newColumn;
                 task.column = newColumn;
-                await updateTaskColumn(taskId, newColumn, category);
+                task.category = newCategory;
+
+                await deleteTaskFromCategory(taskId, oldCategory);
+                await updateTaskColumn(taskId, newColumn, newCategory);
 
                 document.getElementById(`task-${taskId}`).remove();
                 let columnElement = document.getElementById(columns[newColumn]);
-                let contactList = generateContactList(task.contacts || []);
                 let taskHtml = getTaskBoardTemplate(
-                    category,
+                    newCategory,
                     task,
                     taskId,
-                    contactList,
+                    generateContactList(task.contacts || []),
                     getTaskClass(task.title),
-                    task.subtasks ? Object.keys(task.subtasks).length : 0
+                    task.subtasks ? Object.keys(task.subtasks).length : 0,
+                    task.subtasks ? calculateProgressPercentage(task.subtasks) : 0
                 );
                 columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
 
@@ -222,6 +226,47 @@ function enableDragAndDrop(columns) {
         });
     });
 }
+
+/**
+ * Gets the category of a task based on its ID.
+ * @param {string} taskId - The ID of the task.
+ * @returns {string|null} - The category of the task or null if not found.
+ */
+function getCategoryFromTaskId(taskId) {
+    for (let category in taskData) {
+        if (taskData[category] && taskData[category][taskId]) {
+            return category;
+        }
+    }
+    return null;
+}
+
+/**
+ * Deletes a task from its current category in the Firebase database.
+ * @param {string} taskId - The ID of the task to delete.
+ * @param {string} category - The current category of the task.
+ * @returns {Promise<void>}
+ */
+async function deleteTaskFromCategory(taskId, category) {
+    if (!category || !taskId) {
+        console.error("Invalid category or task ID for deletion.");
+        return;
+    }
+
+    try {
+        let url = `${TASK_URL}/${encodeURIComponent(category)}/${taskId}.json`;
+        let response = await fetch(url, { method: "DELETE" });
+
+        if (response.ok) {
+            console.log(`Task ${taskId} successfully deleted from category ${category}.`);
+        } else {
+            console.error(`Failed to delete task ${taskId}. HTTP Status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error("Error while deleting task:", error);
+    }
+}
+
 
 /**
  * Updates the task's column in the Firebase database.
