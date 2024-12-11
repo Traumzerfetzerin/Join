@@ -29,11 +29,10 @@ async function deleteTask(category, taskId) {
  */
 function editTask(taskId, category) {
     let task = findTaskInData(taskId);
-    if (!task) {
-        console.error(`Task with ID ${taskId} not found.`);
-        return;
-    }
+    if (!task) return;
+
     enableEditMode(task, category);
+    renderSubtasksInEditMode(task); // Subtasks im Bearbeitungsmodus rendern
 }
 
 function enableEditMode(task, category) {
@@ -110,6 +109,63 @@ function fillSubtasks(subtasks) {
 }
 
 /**
+ * Renders the subtasks in edit mode with inputs and checkboxes.
+ * @param {object} task - The task object containing subtasks.
+ */
+function renderSubtasksInEditMode(task) {
+    let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
+    if (!subtaskContainer) return;
+
+    subtaskContainer.innerHTML = '';
+
+    task.subtasks.forEach((subtask, index) => {
+        let subtaskHTML = `
+            <div class="space-between createdSubtask">
+                <input type="checkbox" class="subtask-checkbox" 
+                    ${subtask.completed ? "checked" : ""}>
+                <input type="text" value="${subtask.text}" 
+                    class="editSubtaskInput" data-index="${index}">
+                <div class="flex">
+                    <img class="deleteSubtask subtaskImg cursorPointer" 
+                        src="../Assets/addTask/Property 1=delete.svg" 
+                        alt="Delete" onclick="deleteSubtask('subtaskDiv_${index}')">
+                </div>
+            </div>
+        `;
+        subtaskContainer.innerHTML += subtaskHTML;
+    });
+
+    subtaskContainer.innerHTML += `
+        <div class="input-with-icon" id="inputSubtask">
+            <input type="text" id="newSubtaskInput" placeholder="Add new subtask" class="add-task-title">
+            <img id="addSubtaskButton" class="subtaskImg cursorPointer" 
+                src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask()">
+        </div>
+    `;
+}
+
+
+/**
+ * Adds a new subtask in the edit mode with the correct style.
+ */
+function addNewSubtask() {
+    let newSubtaskInput = document.getElementById('newSubtaskInput');
+    let subtaskText = newSubtaskInput.value.trim();
+    if (subtaskText === "") return;
+
+    let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
+    let subtaskHTML = `
+        <div class="subtask-item space-between">
+            <input type="checkbox" class="subtask-checkbox">
+            <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
+        </div>
+    `;
+    subtaskContainer.innerHTML += subtaskHTML;
+    newSubtaskInput.value = "";
+}
+
+
+/**
  * Saves the edited task to Firebase and updates the board.
  * @param {string} taskId - The ID of the task to save.
  * @param {string} category - The category of the task.
@@ -178,19 +234,21 @@ function finalizeTaskUpdate(updatedTask, category, taskId) {
 }
 
 /**
- * Saves changes made to the task in edit mode.
+ * Saves changes made to the task in edit mode, including updated subtasks.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The category of the task.
  */
 async function saveChanges(taskId, category) {
     let updatedTask = getUpdatedTask(taskId, category);
 
-    try {
-        await updateTaskInDatabase(category, taskId, updatedTask);
-        finalizeTaskUpdate(updatedTask, category, taskId);
-    } catch (error) {
-        console.error("Error updating task:", error);
-    }
+    let subtaskInputs = document.querySelectorAll('.editSubtaskInput');
+    updatedTask.subtasks = Array.from(subtaskInputs).map(input => ({
+        text: input.value.trim(),
+        completed: input.previousElementSibling.checked
+    }));
+
+    await updateTaskInDatabase(category, taskId, updatedTask);
+    finalizeTaskUpdate(updatedTask, category, taskId);
 }
 
 
