@@ -4,25 +4,44 @@
  * @param {string} taskId - Task ID.
  */
 async function showTaskOverlay(category, taskId) {
-    let task = await fetchTasks(category, taskId);
-    if (!task) return;
-
+    console.log("showTaskOverlay called with:", category, taskId);
+    let task = findTaskInData(taskId);
+    if (!task) return Promise.resolve(null); 
     updateOverlayContent(category, task);
     showOverlay();
+    return Promise.resolve("Overlay displayed successfully");
 }
 
+
 /**
- * Shows the overlay for a task.
+ * Opens the task overlay.
  */
 function showOverlay() {
     let taskOverlay = document.getElementById("taskOverlay");
+    if (!taskOverlay) return;
 
-    if (!taskOverlay) {
-        console.error("Task Overlay element not found!");
+    taskOverlay.classList.remove("dNone");
+    taskOverlay.style.display = "block";
+}
+
+
+/**
+ * Closes the task overlay.
+ * @param {Event} event - The event triggering the close action.
+ */
+function closeTaskOverlay(event) {
+    let taskOverlay = document.getElementById("taskOverlay");
+    if (!taskOverlay) return;
+
+    if (event && event.target !== taskOverlay && event.target.tagName !== "BUTTON") {
         return;
     }
-    taskOverlay.classList.remove("dNone");
+
+    taskOverlay.classList.add("dNone");
+    taskOverlay.style.display = "none";
 }
+
+
 
 /**
  * Updates the overlay content with task details.
@@ -32,20 +51,16 @@ function showOverlay() {
 function updateOverlayContent(category, task) {
     let overlayHtml = getBoardOverlayTemplate(category, task);
     let overlayDetails = document.getElementById("overlayDetails");
-
-    if (!overlayDetails) {
-        console.error("Overlay Details element not found!");
-        return;
-    }
-    overlayDetails.innerHTML = overlayHtml;
+    if (overlayDetails) overlayDetails.innerHTML = overlayHtml;
 }
 
 /**
  * Hides the task overlay if the event matches the conditions.
  * @param {Event} event - Event that triggered the function.
  */
-function hideTaskOverlay(event) {
+function hideOverlay(event) {
     let taskOverlay = document.getElementById("taskOverlay");
+    if (!taskOverlay) return;
     if (event && event.target === taskOverlay) {
         taskOverlay.classList.add("dNone");
     } else if (!event || event.target.tagName === "BUTTON") {
@@ -86,8 +101,8 @@ function resetPriority() {
  * Closes the task overlay and resets its content.
  * @param {Event} event - Event that triggered the function.
  */
-function closeTaskOverlay(event) {
-    hideTaskOverlay(event);
+function closeOverlay(event) {
+    hideOverlay(event);
     resetFormFields();
     resetPriority();
 }

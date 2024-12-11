@@ -91,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div id="taskOverlay" class="overlay dNone" onclick="closeTaskOverlay(event)">
+        <div id="taskOverlay" class="overlay dNone">
             <div class="overlay-content" onclick="event.stopPropagation()">
                 <button class="close-button" onclick="closeTaskOverlay(event)">X</button>
                 <div id="overlayDetails"></div>
@@ -105,6 +105,9 @@
         w3.includeHTML();
     </script>
     <script src="../script/board.js"></script>
+    <script src="../script/boardFirebase.js"></script>
+    <script src="../script/boardTask.js"></script>
+    <script src="../script/boardDragDrop.js"></script>
 </body>
 
 </html>
