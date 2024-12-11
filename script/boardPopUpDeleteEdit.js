@@ -118,11 +118,16 @@ function renderSubtasksInEditMode(task) {
 
     subtaskContainer.innerHTML = '';
 
+    subtaskContainer.innerHTML += `
+        <div class="input-with-icon" id="inputSubtask">
+            <input type="text" id="newSubtaskInput" placeholder="Add new subtask" class="add-task-title">
+            <img id="addSubtaskButton" class="subtaskImg cursorPointer" 
+                src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask()">
+        </div>
+    `;
     task.subtasks.forEach((subtask, index) => {
         let subtaskHTML = `
             <div class="space-between createdSubtask">
-                <input type="checkbox" class="subtask-checkbox" 
-                    ${subtask.completed ? "checked" : ""}>
                 <input type="text" value="${subtask.text}" 
                     class="editSubtaskInput" data-index="${index}">
                 <div class="flex">
@@ -134,14 +139,6 @@ function renderSubtasksInEditMode(task) {
         `;
         subtaskContainer.innerHTML += subtaskHTML;
     });
-
-    subtaskContainer.innerHTML += `
-        <div class="input-with-icon" id="inputSubtask">
-            <input type="text" id="newSubtaskInput" placeholder="Add new subtask" class="add-task-title">
-            <img id="addSubtaskButton" class="subtaskImg cursorPointer" 
-                src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask()">
-        </div>
-    `;
 }
 
 
@@ -156,7 +153,6 @@ function addNewSubtask() {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     let subtaskHTML = `
         <div class="subtask-item space-between">
-            <input type="checkbox" class="subtask-checkbox">
             <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
         </div>
     `;
