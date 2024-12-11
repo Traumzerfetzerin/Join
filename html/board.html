@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="../styles/responsive/addTaskResponsive.css">
 
     <script src="../script/header.js"></script>
-    <script src="../script/board.js"></script>
     <script src="../templates/boardTemplate.js"></script>
     <script src="../script/boardSearch.js"></script>
     <script src="../script/boardPopUp.js"></script>
@@ -29,8 +28,9 @@
     <script src="../script/addTaskPrio.js"></script>
     <script src="../script/addTaskSubtask.js"></script>
     <script src="../script/boardPopUpDeleteEdit.js"></script>
+    <script src="../script/boardProgressbar.js"></script>
 
-<body onload="fetchTasks()">
+<body onload="fetchAllTasks()">
     <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
@@ -104,6 +104,7 @@
     <script>
         w3.includeHTML();
     </script>
+    <script src="../script/board.js"></script>
 </body>
 
 </html>

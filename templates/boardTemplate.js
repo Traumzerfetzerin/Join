@@ -12,7 +12,7 @@
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks) {
     let categoryClass = category.toLowerCase().replace(" ", "-");
     let priorityIcon = getPrioIcon(task.prio);
-    let progressPercentage = calculateProgressPercentage(task.subtasks || []);
+    let progressPercentage = subtaskCount === 0 ? 0 : Math.round((completedSubtasks / subtaskCount) * 100);
     let barColor = progressPercentage === 0 ? 'lightgray' : 'blue';
 
     return `
@@ -25,18 +25,18 @@ function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, su
                 <div class="progress-bar-background" 
                      style="flex-grow:1;background-color:lightgray;height:5px;border-radius:5px;overflow:hidden;">
                     <div class="progress-bar-fill" 
-                         style="width:${progressPercentage}%;background-color:${barColor};height:100%;">
-                    </div>
+                         style="width:${progressPercentage}%;background-color:${barColor};height:100%;"></div>
                 </div>
                 <span>${completedSubtasks}/${subtaskCount} Subtasks</span>
             </div>
             <div class="contact-priority-container">
                 <div class="contact-list">${contactList}</div>
-                <div class="priority-symbol"><img src="${priorityIcon}" class="priority-icon"></div> <!-- Display priority icon -->
+                <div class="priority-symbol"><img src="${priorityIcon}" class="priority-icon"></div>
             </div>
         </div>
     `;
 }
+
 
 /**
  * Fetches the priority symbol for the task.

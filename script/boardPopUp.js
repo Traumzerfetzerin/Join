@@ -98,9 +98,6 @@ window.onload = function () {
     taskOverlay.classList.add("dNone");
 };
 
-
-
-
 async function fetchContactFromFirebase(contactId) {
     try {
         let encodedContactId = encodeURIComponent(contactId);
@@ -127,32 +124,6 @@ function getRandomColor() {
     let g = Math.floor(Math.random() * 256);
     let b = Math.floor(Math.random() * 256);
     return `rgb(${r}, ${g}, ${b})`;
-}
-
-/**
- * Calculates the progress of subtasks.
- * @param {Array} subtasks - The subtasks array.
- * @returns {number} - Progress percentage.
- */
-function calculateProgress(subtasks) {
-    let total = subtasks.length;
-    let completed = subtasks.filter(subtask => subtask.completed).length;
-    return total === 0 ? 0 : Math.round((completed / total) * 100);
-}
-
-/**
- * Updates the progress bar of a task on the board.
- * @param {string} taskId - The ID of the task.
- * @param {number} progressPercentage - The percentage of completed subtasks.
- */
-function updateProgressBar(taskId, progressPercentage) {
-    let progressBar = document.querySelector(`#task-${taskId} .progress-bar-fill`);
-    if (progressBar) {
-        progressBar.style.width = `${progressPercentage}%`;
-        progressBar.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
-    } else {
-        console.warn(`Progress bar for Task ID ${taskId} not found.`);
-    }
 }
 
 /**
