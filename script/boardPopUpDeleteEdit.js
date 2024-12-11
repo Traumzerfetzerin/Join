@@ -108,10 +108,6 @@ function fillSubtasks(subtasks) {
     });
 }
 
-/**
- * Renders the subtasks in edit mode with inputs and checkboxes.
- * @param {object} task - The task object containing subtasks.
- */
 function renderSubtasksInEditMode(task) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
@@ -125,15 +121,16 @@ function renderSubtasksInEditMode(task) {
                 src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask()">
         </div>
     `;
+
     task.subtasks.forEach((subtask, index) => {
         let subtaskHTML = `
-            <div class="space-between createdSubtask">
-                <input type="text" value="${subtask.text}" 
-                    class="editSubtaskInput" data-index="${index}">
-                <div class="flex">
-                    <img class="deleteSubtask subtaskImg cursorPointer" 
-                        src="../Assets/addTask/Property 1=delete.svg" 
-                        alt="Delete" onclick="deleteSubtask('subtaskDiv_${index}')">
+            <div class="subtask-item">
+                <span contenteditable="true" class="editSubtaskText">${subtask.text}</span>
+                <div class="subtask-icons">
+                    <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                         alt="Edit" onclick="editSubtask('${index}')">
+                    <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                         alt="Delete" onclick="deleteSubtask('${index}')">
                 </div>
             </div>
         `;
@@ -142,9 +139,7 @@ function renderSubtasksInEditMode(task) {
 }
 
 
-/**
- * Adds a new subtask in the edit mode with the correct style.
- */
+
 function addNewSubtask() {
     let newSubtaskInput = document.getElementById('newSubtaskInput');
     let subtaskText = newSubtaskInput.value.trim();
@@ -152,8 +147,14 @@ function addNewSubtask() {
 
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     let subtaskHTML = `
-        <div class="subtask-item space-between">
+        <div class="subtask-item">
             <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
+            <div class="subtask-icons">
+                <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                     alt="Edit" onclick="editSubtask('${subtaskText}')">
+                <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                     alt="Delete" onclick="deleteSubtask('${subtaskText}')">
+            </div>
         </div>
     `;
     subtaskContainer.innerHTML += subtaskHTML;
