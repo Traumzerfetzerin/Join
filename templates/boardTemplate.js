@@ -11,7 +11,7 @@
  */
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks) {
     let categoryClass = category.toLowerCase().replace(" ", "-");
-    let prioritySymbol = getPrioritySymbol(task.prio);
+    let priorityIcon = getPrioIcon(task.prio);
     let progressPercentage = calculateProgressPercentage(task.subtasks || []);
     let barColor = progressPercentage === 0 ? 'lightgray' : 'blue';
 
@@ -32,7 +32,7 @@ function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, su
             </div>
             <div class="contact-priority-container">
                 <div class="contact-list">${contactList}</div>
-                <div class="priority-symbol">${prioritySymbol}</div>
+                <div class="priority-symbol"><img src="${priorityIcon}" class="priority-icon"></div> <!-- Display priority icon -->
             </div>
         </div>
     `;
@@ -87,51 +87,51 @@ function calculateProgressPercentage(subtasks) {
 }
 
 /**
- * Generates the HTML template for the task overlay popup.
- * @param {string} category - Task category.
- * @param {object} task - Task object containing all task details.
- * @returns {string} - HTML template for the task overlay.
- */
+* Generates the HTML template for the task overlay popup.
+* @param {string} category - Task category.
+* @param {object} task - Task object containing all task details.
+* @returns {string} - HTML template for the task overlay.
+*/
 function getBoardOverlayTemplate(category, task) {
-    let prioritySymbol = getPrioritySymbol(task.prio);
-    let categoryClass = category.toLowerCase().replace(" ", "-"); 
-    let contactList = generateContactList(task.contacts); 
-    let subtasksList = generateSubtaskList(task); 
+   let priorityIcon = getPrioIcon(task.prio);
+   let categoryClass = category.toLowerCase().replace(" ", "-");
+   let contactList = generateOverlayContactList(task.contacts); 
+   let subtasksList = generateSubtaskList(task);
 
-    return `
-        <div class="board-overlay" data-task-id="${task.id}">
-            <div class="overlay-header">
-                <h2 class="task-category ${categoryClass}">${category}</h2>
-                <button class="close-button" onclick="closeTaskOverlay(event)">×</button>
-            </div>
-            <div class="overlay-content">
-                <h1 class="task-title">${task.title || "No title"}</h1>
-                <p class="task-description">${task.description || "No description"}</p>
-                <div class="task-info">
-                    <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
-                    <p><strong>Priority:</strong> ${prioritySymbol}</p>
-                </div>
-                <div class="contacts-section">
-                    <strong>Assigned To:</strong>
-                    <div id="cardOverlayContacts" class="contact-list">${generateOverlayContactList(task.contacts)}</div>
-                </div>
-                <div class="subtasks-section">
-                    <strong>Subtasks:</strong>
-                    <ul class="subtasks-list">${subtasksList}</ul>
-                </div>
-                <div class="action-links">
-                    <a href="javascript:void(0);" onclick="deleteTask('${category}', '${task.id}')" class="action-link delete-link">
-                        <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete" class="link-icon">
-                        Delete
-                    </a>
-                    <a href="javascript:void(0);" onclick="editTask('${task.id}', '${category}')" class="action-link edit-link">
-                        <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit" class="link-icon">
-                        Edit
-                    </a>
-                </div>
-            </div>
-        </div>
-    `;
+   return `
+       <div class="board-overlay" data-task-id="${task.id}">
+           <div class="overlay-header">
+               <h2 class="task-category ${categoryClass}">${category}</h2>
+               <button class="close-button" onclick="closeTaskOverlay(event)">×</button>
+           </div>
+           <div class="overlay-content">
+               <h1 class="task-title">${task.title || "No title"}</h1>
+               <p class="task-description">${task.description || "No description"}</p>
+               <div class="task-info">
+                   <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
+                   <p><strong>Priority:</strong> <img src="${priorityIcon}" class="priority-icon"></p> <!-- Display priority icon -->
+               </div>
+               <div class="contacts-section">
+                   <strong>Assigned To:</strong>
+                   <div id="cardOverlayContacts" class="contact-list">${contactList}</div>
+               </div>
+               <div class="subtasks-section">
+                   <strong>Subtasks:</strong>
+                   <ul class="subtasks-list">${subtasksList}</ul>
+               </div>
+               <div class="action-links">
+                   <a href="javascript:void(0);" onclick="deleteTask('${category}', '${task.id}')" class="action-link delete-link">
+                       <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete" class="link-icon">
+                       Delete
+                   </a>
+                   <a href="javascript:void(0);" onclick="editTask('${task.id}', '${category}')" class="action-link edit-link">
+                       <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit" class="link-icon">
+                       Edit
+                   </a>
+               </div>
+           </div>
+       </div>
+   `;
 }
 
 /**
@@ -142,7 +142,8 @@ function getBoardOverlayTemplate(category, task) {
 function generateContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
     return contacts.map(function(contact) {
-        let initials = getInitials(contact);
+        let name = contact && contact.name ? contact.name : "Unknown";
+        let initials = getInitials(name);
         let bgColor = getRandomColor();
         return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
     }).join('');
@@ -155,11 +156,9 @@ function generateContactList(contacts) {
  */
 function generateOverlayContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
-
     return contacts.map(function(contact) {
-        // Sicherstellen, dass `contact` und `contact.name` definiert sind
         let name = contact && contact.name ? contact.name : "Unknown";
-        let initials = name !== "Unknown" ? getInitials(name) : "?";
+        let initials = name !== "Unknown" ? getInitials(contact.name) : "?";
         let bgColor = getRandomColor();
 
         return `

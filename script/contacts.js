@@ -173,37 +173,6 @@ function addNewContactToDOM(contact) {
     });
 }
 
-/*function addNewContactToDOM(contact) {
-    const contactList = document.querySelector('.contact-list'); // Assuming '.contact-list' is the container
-
-    // Extract initials from the contact name
-    const initials = getInitials(contact.name);
-
-    // Generate random color for the initials
-    const randomColor = getRandomColor();
-
-    // Use a template literal to create the contact item structure
-    const newContactHTML = `
-        <div class="contact-item" data-id="${contact.id}">
-            <div class="contact-initials" style="background-color: ${randomColor};">${initials}</div>
-            <span class="contact-name">${contact.name}</span>
-            <span class="contact-email">${contact.email}</span>
-            <span class="contact-phone">${contact.phone}</span>
-        </div>
-        <div class="divider"></div>
-    `;
-
-    // Append the new contact item to the contact list
-    contactList.insertAdjacentHTML('beforeend', newContactHTML);
-
-    // Add a click event listener to the newly created contact item
-    const newContact = contactList.lastElementChild.previousElementSibling;
-    newContact.addEventListener('click', function () {
-        showContactDetails(contact.id);
-    });
-    
-}*/
-
 // Helper function to get initials from the contact name
 function getInitials(name) {
     return name
@@ -226,13 +195,6 @@ function getRandomColor() {
     return color;
 }
 
-
-// Helper function to generate a random color for initials
-
-
-// Function to display contact details below the "Contacts" section
-
-
 // Select elements
 // Utility function to generate initials from a name
 function getInitials(name) {
@@ -245,8 +207,6 @@ function getRandomColor() {
     const colors = ['#FFB6C1', '#FFA07A', '#FA8072', '#E9967A', '#F08080'];
     return colors[Math.floor(Math.random() * colors.length)];
 }
-
-
 
 
 // Function to go back to contact list on smaller screens
@@ -342,51 +302,6 @@ function showContactDetails(contactId) {
 }
 
 
-/*function showContactDetails(contactId) {
-    const contact = contacts.find(c => c.id === contactId); 
-    if (!contact) return; // Exit if contact not found
-    currentContactId = contact.id;
-
-
-    // Populate contact details in the contact-details section
-    document.getElementById('contact-name').textContent = contact.name;
-    document.getElementById('contact-email').textContent = contact.email;
-    document.getElementById('contact-phone').textContent = contact.phone;
-    document.getElementById('contact-initials').textContent = getInitials(contact.name);
-
-    // Generate and apply random color for initials
-    const initialsColor = getRandomColor();
-    document.getElementById('contact-initials').style.backgroundColor = initialsColor;
-
-    // Display the contact details section
-    document.getElementById('contact-details').style.display = 'block';
-    const editLink = document.querySelector('.edit-link');
-    if (editLink) {
-        editLink.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default link behavior
-            openEditOverlay(contact, initialsColor); // Call function to show overlay with initials color
-        });
-    }
-    const deleteLink = document.querySelector('.delete-link');
-    if (deleteLink) {
-        deleteLink.addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent default link behavior
-            deleteContact(contactId); // Call function to delete the contact
-        });
-    }
-
-    // Toggle visibility based on screen width
-    if (window.innerWidth <= 780) {
-        document.querySelector('.contact-list').style.display = 'none'; // Hide contact list
-        document.querySelector('.contact').style.display = 'flex';      // Show contact details
-        document.getElementById('add-contact-icon').style.display = 'none';
-
-        // Show the back arrow for smaller screens
-        document.getElementById('back-arrow').style.display = 'block';
-        
-    }
-}*/
-
 // Event listener to show `contact-list` when back arrow is clicked
 document.getElementById('back-arrow').addEventListener('click', function() {
     // Only show `contact-list` on screens 780px and below
@@ -405,9 +320,6 @@ document.getElementById('back-arrow').addEventListener('click', function() {
 
 
 });
-
-
-
 
 
 // Function to open the overlay and populate input fields with contact details and initials
@@ -684,6 +596,3 @@ document.getElementById('overlay-delete-link').addEventListener('click', functio
 
         
 });
-
-
-

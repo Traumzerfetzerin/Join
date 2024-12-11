@@ -36,11 +36,6 @@ function editTask(taskId, category) {
     enableEditMode(task, category);
 }
 
-/**
- * Enables editing mode for a task and populates fields.
- * @param {Object} task - The task to edit.
- * @param {string} category - The category of the task.
- */
 function enableEditMode(task, category) {
     let titleElement = document.querySelector('.task-title');
     titleElement.innerHTML = `<input type="text" id="editTitle" value="${task.title}" />`;
@@ -53,12 +48,31 @@ function enableEditMode(task, category) {
 
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
     priorityElement.innerHTML = `
-        <select id="editPriority">
-            <option value="urgent" ${task.prio === "urgent" ? "selected" : ""}>Urgent</option>
-            <option value="medium" ${task.prio === "medium" ? "selected" : ""}>Medium</option>
-            <option value="low" ${task.prio === "low" ? "selected" : ""}>Low</option>
-        </select>
+        <div class="fonts font_2A3647">Prio</div>
+        <div class="flex space-between">
+            <button id="urgent" type="button" class="prioButton cursorPointer fonts"
+                onclick="setPrio('urgent', event)">
+                Urgent
+                <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
+            </button>
+
+            <button id="medium" type="button" class="prioButton cursorPointer fonts mediumWhite"
+                onclick="setPrio('medium', event)">
+                Medium
+                <img id="mediumSvg" src="../Assets/addTask/Prio media white.svg" alt="">
+            </button>
+
+            <button id="low" type="button" class="prioButton cursorPointer fonts"
+                onclick="setPrio('low', event)">
+                Low
+                <img id="lowSvg" src="../Assets/addTask/Prio baja.svg" alt="">
+            </button>
+        </div>
     `;
+
+    setTimeout(() => {
+        setPrio(task.prio);
+    }, 0);
 
     let actionLinks = document.querySelector('.action-links');
     actionLinks.innerHTML = `
@@ -66,6 +80,8 @@ function enableEditMode(task, category) {
         <button onclick="cancelEdit()">Cancel</button>
     `;
 }
+
+
 
 /**
  * Fills the fields of the edit overlay with task data.

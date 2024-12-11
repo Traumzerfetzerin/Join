@@ -4,7 +4,7 @@
  * @param {string} taskId - Task ID.
  */
 async function showTaskOverlay(category, taskId) {
-    let task = await fetchTask(category, taskId);
+    let task = await fetchTasks(category, taskId);
     if (!task) return;
 
     updateOverlayContent(category, task);
@@ -39,29 +39,6 @@ function updateOverlayContent(category, task) {
     }
     overlayDetails.innerHTML = overlayHtml;
 }
-
-/**
- * Fetches a task from Firebase.
- * @param {string} category - Task category.
- * @param {string} taskId - Task ID.
- * @returns {Object|null} - The task object or null if not found.
- */
-async function fetchTask(category, taskId) {
-    try {
-        let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
-        let task = await response.json();
-        if (!task) {
-            alert("Task not found!");
-            return null;
-        }
-        task.id = taskId;
-        return task;
-    } catch (error) {
-        console.error("Error fetching task:", error);
-        return null;
-    }
-}
-
 
 /**
  * Hides the task overlay if the event matches the conditions.
@@ -121,26 +98,24 @@ window.onload = function () {
     taskOverlay.classList.add("dNone");
 };
 
-/**
- * Extracts the initials from a contact name.
- * @param {string} name - The full name of the contact.
- * @returns {string} The initials of the contact.
- */
-function getInitials(name) {
-    if (!name || typeof name !== "string") {
-        return "?";
-    }
-    let parts = name.split(" ");
-    let initials = parts.map((part) => part.charAt(0).toUpperCase()).join("");
-    return initials.slice(0, 2); 
-}
+
 
 
 async function fetchContactFromFirebase(contactId) {
-    let response = await fetch(`https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`);
-    let contact = await response.json();
-    console.log("Fetched contact:", contact);
-    return contact || { name: "Unknown" };
+    try {
+        let encodedContactId = encodeURIComponent(contactId);
+        let response = await fetch(`https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${encodedContactId}.json`);
+        if (response.ok) {
+            let contact = await response.json();
+            return contact || { name: "Unknown" };
+        } else {
+            console.error(`Error fetching contact with ID ${encodedContactId}: ${response.statusText}`);
+            return { name: "Unknown" };
+        }
+    } catch (error) {
+        console.error("Error fetching contact:", error);
+        return { name: "Unknown" };
+    }
 }
 
 /**
