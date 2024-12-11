@@ -14,6 +14,7 @@ async function deleteTask(category, taskId) {
             delete taskData[category][taskId];
             loadTasks(taskData);
             closeTaskOverlay();
+            refreshPageOrUpdateUI();
         } else {
             console.error(`Failed to delete task with ID ${taskId}: ${response.statusText}`);
         }
@@ -72,11 +73,10 @@ function enableEditMode(task, category) {
     setTimeout(() => {
         setPrio(task.prio);
     }, 0);
-
+    
     let actionLinks = document.querySelector('.action-links');
     actionLinks.innerHTML = `
-        <button onclick="saveChanges('${task.id}', '${category}')">Save Changes</button>
-        <button onclick="cancelEdit()">Cancel</button>
+        <button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
     `;
 }
 
@@ -181,20 +181,30 @@ async function saveEditedTask(taskId, category) {
 }
 
 /**
- * Extracts updated task data from the edit form.
+ * Retrieves updated task details from the form inputs.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The category of the task.
- * @returns {Object} - The updated task data.
+ * @returns {object} - The updated task object containing the new details.
  */
 function getUpdatedTask(taskId, category) {
-    return {
-        title: document.getElementById('editTitle').value,
-        description: document.getElementById('editDescription').value,
-        dueDate: document.getElementById('editDueDate').value,
-        prio: document.getElementById('editPriority').value,
-        contacts: taskData[category][taskId].contacts,
-        subtasks: taskData[category][taskId].subtasks,
+    let updatedTask = {
+        id: taskId, 
+        category: category, 
     };
+
+    let inputTitle = document.getElementById('inputTitle');
+    updatedTask.title = inputTitle ? inputTitle.value.trim() : "";
+
+    let textareaDescription = document.getElementById('textareaDescription');
+    updatedTask.description = textareaDescription ? textareaDescription.value.trim() : "";
+
+    let dueDate = document.getElementById('dueDate');
+    updatedTask.dueDate = dueDate ? dueDate.value : "";
+
+    let priorityButtons = document.querySelectorAll('.prioButton.active');
+    updatedTask.prio = priorityButtons.length > 0 ? priorityButtons[0].id : "";
+
+    return updatedTask;
 }
 
 /**
@@ -231,7 +241,7 @@ function finalizeTaskUpdate(updatedTask, category, taskId) {
 }
 
 /**
- * Saves changes made to the task in edit mode, including updated subtasks.
+ * Saves changes made to the task in edit mode, updates the overlay with the changes, and closes the edit window.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The category of the task.
  */
@@ -245,16 +255,56 @@ async function saveChanges(taskId, category) {
     }));
 
     await updateTaskInDatabase(category, taskId, updatedTask);
-    finalizeTaskUpdate(updatedTask, category, taskId);
+    updateOverlayContent(category, updatedTask);
+    closeEditWindow();
 }
 
+/**
+ * Closes the edit window and resets any temporary states.
+ */
+function closeEditWindow() {
+    let editWindow = document.querySelector('.edit-window');
+    if (editWindow) {
+        editWindow.classList.add('d-none');
+    }
+
+    let overlay = document.getElementById('taskOverlay');
+    if (overlay) {
+        overlay.classList.remove('d-none');
+    }
+}
 
 /**
- * Cancels edit mode and reloads the original task data in the overlay.
+ * Updates the overlay content with the task details.
+ * @param {string} category - The category of the task.
+ * @param {object} task - The task object with updated details.
  */
-function cancelEdit() {
-    let overlay = document.querySelector('.board-overlay');
-    let taskId = overlay.getAttribute('data-task-id');
-    let category = document.querySelector('.task-category').textContent.trim();
-    showTaskOverlay(category, taskId);
+function updateOverlayContent(category, task) {
+    let overlayHtml = getBoardOverlayTemplate(category, task);
+    let overlayDetails = document.getElementById('overlayDetails');
+    if (overlayDetails) {
+        overlayDetails.innerHTML = overlayHtml;
+    }
+}
+
+/**
+ * Closes the task overlay.
+ */
+function closeTaskOverlay() {
+    let overlay = document.getElementById('taskOverlay');
+    if (overlay) {
+        overlay.classList.add('d-none');
+    }
+
+    let backgroundOverlay = document.getElementById('backgroundOverlay');
+    if (backgroundOverlay) {
+        backgroundOverlay.classList.add('d-none'); 
+    }
+}
+
+/**
+ * Refreshes the page or updates the UI dynamically.
+ */
+function refreshPageOrUpdateUI() {
+    location.reload(); 
 }
