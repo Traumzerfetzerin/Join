@@ -8,7 +8,7 @@
     width: 525px;
     padding: 48px 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 999;
 }
 
 .overlay-header {
@@ -41,6 +41,11 @@
     flex-direction: column;
     gap: 24px;
     border-radius: 0 0 20px 20px;
+    z-index: 1002;
+}
+
+body.no-interaction *:not(.overlay):not(.overlay *) {
+    pointer-events: none;
 }
 
 .task-title {
@@ -164,4 +169,23 @@
 
 .dNone {
     display: none;
+}
+
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 998; 
+    display: none;
+}
+
+.background-overlay.active {
+    display: block;
+}
+
+.no-scroll {
+    overflow: hidden;
 }

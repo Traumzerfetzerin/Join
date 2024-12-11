@@ -91,12 +91,13 @@
                 </div>
             </div>
         </div>
-        <div id="taskOverlay" class="overlay dNone">
-            <div class="overlay-content" onclick="event.stopPropagation()">
-                <button class="close-button" onclick="closeTaskOverlay(event)">X</button>
-                <div id="overlayDetails"></div>
-            </div>
-        </div>        
+        <div id="backgroundOverlay" class="background-overlay dNone" onclick="closeTaskOverlay(event)"></div>
+<div id="taskOverlay" class="overlay dNone">
+    <div class="overlay-content" onclick="event.stopPropagation()">
+        <button class="close-button" onclick="closeTaskOverlay(event)">X</button>
+        <div id="overlayDetails"></div>
+    </div>
+</div>
     </main>
 
     <footer></footer>

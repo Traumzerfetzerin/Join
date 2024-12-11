@@ -4,7 +4,6 @@
  * @param {string} taskId - Task ID.
  */
 async function showTaskOverlay(category, taskId) {
-    console.log("showTaskOverlay called with:", category, taskId);
     let task = findTaskInData(taskId);
     if (!task) return Promise.resolve(null); 
     updateOverlayContent(category, task);
@@ -14,32 +13,40 @@ async function showTaskOverlay(category, taskId) {
 
 
 /**
- * Opens the task overlay.
+ * Opens the task overlay and the background overlay, disabling interactions with the background.
  */
 function showOverlay() {
     let taskOverlay = document.getElementById("taskOverlay");
-    if (!taskOverlay) return;
+    let backgroundOverlay = document.getElementById("backgroundOverlay");
+    if (!taskOverlay || !backgroundOverlay) return;
 
     taskOverlay.classList.remove("dNone");
     taskOverlay.style.display = "block";
+
+    backgroundOverlay.classList.add("active");
+    document.body.classList.add("no-scroll");
 }
 
 
 /**
- * Closes the task overlay.
+ * Closes the task overlay and the background overlay, re-enabling interactions with the background.
  * @param {Event} event - The event triggering the close action.
  */
 function closeTaskOverlay(event) {
     let taskOverlay = document.getElementById("taskOverlay");
-    if (!taskOverlay) return;
+    let backgroundOverlay = document.getElementById("backgroundOverlay");
+    if (!taskOverlay || !backgroundOverlay) return;
 
-    if (event && event.target !== taskOverlay && event.target.tagName !== "BUTTON") {
-        return;
+    // Schließen, wenn auf den Hintergrund oder den Schließen-Button geklickt wird
+    if (event.target === backgroundOverlay || event.target === taskOverlay || event.target.tagName === "BUTTON") {
+        taskOverlay.classList.add("dNone");
+        taskOverlay.style.display = "none";
+
+        backgroundOverlay.classList.remove("active");
+        document.body.classList.remove("no-scroll");
     }
-
-    taskOverlay.classList.add("dNone");
-    taskOverlay.style.display = "none";
 }
+
 
 
 
