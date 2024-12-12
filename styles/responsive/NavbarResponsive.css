@@ -102,7 +102,8 @@
 
 @media(max-width:860px){
     .sidelinks {
-        width: 60%; /* Reduced further */
+        /* width: 60%;  */
+        /* Reduced further */
         padding: 0px 6px;
     }
     
@@ -149,10 +150,12 @@
     }
 
     .sidelinks {
-        width: 50%; /* Narrower width */
+        /* width: 50%;  */
+        /* Narrower width */
         padding: 0px 4px;
         flex-direction: row; /* Keep links in a row */
-        justify-content: center; /* Center links */
+        /* justify-content: center;  */
+        /* Center links */
         align-items: center;
     }
 
@@ -225,7 +228,8 @@
     }
 
     .sidelinks {
-        width: 45%; /* Further narrow width */
+        /* width: 45%;  */
+        /* Further narrow width */
         padding: 0 2px;
     }
 
