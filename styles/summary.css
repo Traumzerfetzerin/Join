@@ -2,7 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
     height: 73px;
     width: 625px;
     gap: 30px;
