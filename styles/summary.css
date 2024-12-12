@@ -1,11 +1,12 @@
 .titeljoin {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     height: 73px;
-    top: 206px;
+    top: 150px;
     left: 328px;
     gap: 30px;
+    position: fixed;
 }
 
 .victor {
@@ -71,7 +72,7 @@
     display: flex;
     justify-content: center;
     position: absolute;
-    width: 560px;
+
     height: 562px;
     top: 335px;
     left: 328px;
