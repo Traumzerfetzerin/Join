@@ -1,45 +1,84 @@
-@media (max-width: 850px) {
+@media (max-width: 1290px) {
+
+    .titeljoin,
     .details {
-        grid-template-columns: 1fr;
-        width: 100%; 
-        gap: 16px; 
-        margin-left: 0; 
-        padding-left: 0; 
-    }
-    
-    .undertask, .tasks, .goodmorning {
-        width: 100%; 
-        height: auto; 
-    }    
-
-    .titeljoin h1 {
-        font-size: 8vw;  
-    }
-
-    .titeljoin p {
-        font-size: 4vw;  
-    }
-
-    .undertask, .tasks, .goodmorning {
-        width: 100%; 
-        height: auto; 
-        margin: 0; 
-        padding: 0; 
+        left: 250px;
     }
 
     .goodmorning {
+        left: 830px;
+    }
+}
+
+@media (max-width: 1165px) {
+    .goodmorning {
         display: none;
     }
-    
+}
+
+@media (max-width: 880px) {
+
+    .titeljoin,
+    .details {
+        left: 140px;
+    }
+}
+
+@media (max-width: 760px) {
+
+    .titeljoin,
+    .details {
+        left: 75px;
+    }
+
     .titeljoin {
-        position: relative;
-        display: flex;
         flex-direction: column;
-        height: auto; 
-        width: 100%; 
-        gap: 20px; 
-        top: 60px;
-        margin-left: 0; 
-        padding-left: 0; 
+        display: flex;
+        justify-content: space-between;
+        position: absolute;
+        height: 0;
+        top: 130px;
+        align-items: unset;
+    }
+}
+
+@media (max-width: 690px) {
+
+    .titeljoin,
+    .details {
+        left: 30px;
+    }
+}
+
+@media (max-width: 620px) {
+
+    .titeljoin,
+    .details {
+        left: auto;
+    }
+}
+
+@media (max-width: 580px) {
+
+    .urgent {
+        left: 90px;
+        width: 380px;
+        gap: unset;
+    }
+
+    .checkpencil,
+    .tasks {
+        width: 380px;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 490px) {
+
+    .urgent,
+    .checkpencil,
+    .tasks {
+        left: 50px;
+        position: inherit;
     }
 }

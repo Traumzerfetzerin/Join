@@ -4,24 +4,28 @@ let selectedPrio = null;
  * Sets the selected priority and highlights the selected button.
  * 
  * @param {string} prio - The priority to be set (e.g., 'Urgent', 'Medium', 'Low').
- * @param {Event} event - The event to prevent default behavior.
+ * @param {Event|null} event - The event to prevent default behavior (can be null for direct calls).
  */
-
-function setPrio(prio, event) {
-    // Prevent default action (in case it's triggering form submission or reset)
-    event.preventDefault();
-
+function setPrio(prio, event = null) {
+    // Prevent default action if an event is provided
+    if (event) {
+        event.preventDefault();
+    }
 
     selectedPrio = prio;
 
-    let priorityButton = event.currentTarget.id;
+    // Deselect all priority buttons
+    document.getElementById('low').classList.remove('active');
+    document.getElementById('medium').classList.remove('active');
+    document.getElementById('urgent').classList.remove('active');
 
-    if (priorityButton === "low") {
-        lowPrioButton(priorityButton);
-    } else if (priorityButton === "medium") {
-        mediumPrioButton(priorityButton);
-    } else if (priorityButton === "urgent") {
-        urgentPrioButton(priorityButton);
+    // Set the specific button style based on the priority
+    if (prio === 'low') {
+        lowPrioButton('low');
+    } else if (prio === 'medium') {
+        mediumPrioButton('medium');
+    } else if (prio === 'urgent') {
+        urgentPrioButton('urgent');
     }
 }
 

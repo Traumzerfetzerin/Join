@@ -17,9 +17,9 @@
     <link rel="stylesheet" href="../styles/responsive/NavbarResponsive.css">
     <link rel="stylesheet" href="../styles/addTask.css">
     <link rel="stylesheet" href="../styles/responsive/addTaskResponsive.css">
+    <link rel="stylesheet" href="../styles/boardOverlayEdit.css">
 
     <script src="../script/header.js"></script>
-    <script src="../script/board.js"></script>
     <script src="../templates/boardTemplate.js"></script>
     <script src="../script/boardSearch.js"></script>
     <script src="../script/boardPopUp.js"></script>
@@ -28,8 +28,10 @@
     <script src="../script/addTaskContactDropdown.js"></script>
     <script src="../script/addTaskPrio.js"></script>
     <script src="../script/addTaskSubtask.js"></script>
+    <script src="../script/boardPopUpDeleteEdit.js"></script>
+    <script src="../script/boardProgressbar.js"></script>
 
-<body onload="fetchTasks()">
+<body onload="fetchAllTasks()">
     <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
@@ -90,12 +92,13 @@
                 </div>
             </div>
         </div>
-        <div id="taskOverlay" class="overlay dNone" onclick="closeTaskOverlay(event)">
-            <div class="overlay-content" onclick="event.stopPropagation()">
-                <button class="close-button" onclick="closeTaskOverlay()">X</button>
-                <div id="overlayDetails"></div>
-            </div>
-        </div>        
+        <div id="backgroundOverlay" class="background-overlay dNone" onclick="closeTaskOverlay(event)"></div>
+<div id="taskOverlay" class="overlay dNone">
+    <div class="overlay-content" onclick="event.stopPropagation()">
+        <button class="close-button" onclick="closeTaskOverlay(event)">X</button>
+        <div id="overlayDetails"></div>
+    </div>
+</div>
     </main>
 
     <footer></footer>
@@ -103,6 +106,10 @@
     <script>
         w3.includeHTML();
     </script>
+    <script src="../script/board.js"></script>
+    <script src="../script/boardFirebase.js"></script>
+    <script src="../script/boardTask.js"></script>
+    <script src="../script/boardDragDrop.js"></script>
 </body>
 
 </html>

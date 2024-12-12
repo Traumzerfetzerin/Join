@@ -1,27 +1,30 @@
-const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
-
-/** Fetch data from Firebase API */
-
-async function fetchTasks() {
-    try {
-        let response = await fetch(`${TASK_URL}.json`);
-        let data = await response.json();
-        console.log("Fetched data from Firebase:", data);
-
-        if (data) {
-            loadTasks(data);
-        } else {
-            console.log("No data found.");
+/**
+ * Loads tasks into their respective columns on the board.
+ * @param {object} tasks - Tasks retrieved from Firebase.
+ */
+function loadTasks(tasks) {
+    clearColumns();
+    let columns = {
+        toDo: "toDoColumn",
+        inProgress: "inProgressColumn",
+        awaitFeedback: "awaitFeedbackColumn",
+        done: "doneColumn",
+    };
+    for (let category in tasks) {
+        let categoryTasks = tasks[category];
+        for (let taskId in categoryTasks) {
+            let task = categoryTasks[taskId];
+            task.id = taskId;
+            addTaskToColumn(task, category, taskId, columns);
         }
-    } catch (error) {
-        console.error("Error fetching data:", error);
     }
+    checkEmptyColumns(columns);
+    enableDragAndDrop(columns);
 }
 
-
-
-
-/** Clear all task columns */
+/**
+ * Clears all task columns.
+ */
 function clearColumns() {
     document.getElementById("toDoColumn").innerHTML = "";
     document.getElementById("inProgressColumn").innerHTML = "";
@@ -29,227 +32,171 @@ function clearColumns() {
     document.getElementById("doneColumn").innerHTML = "";
 }
 
-/** Get CSS class based on task title */
-function getTaskClass(title) {
-    if (title === "User Story") return "user-story";
-    if (title === "Technical Task") return "technical-task";
-    return "";
-}
-
-/** Load tasks and add them to the appropriate columns */
-/*function loadTasks(tasks) {
-    clearColumns();
-
-    let columns = {
-        toDo: "toDoColumn",
-        inProgress: "inProgressColumn",
-        awaitFeedback: "awaitFeedbackColumn",
-        done: "doneColumn"
-    };
-
-    for (let category in tasks) {
-        let categoryTasks = tasks[category];
-        for (let taskId in categoryTasks) {
-            let task = categoryTasks[taskId];
-            addTaskToColumn(task, category, taskId, columns);
-        }
-    }
-
-    checkEmptyColumns(columns);
-    enableDragAndDrop(columns);
-}*/
-function loadTasks(tasks) {
-    clearColumns();
-
-    let columns = {
-        toDo: "toDoColumn",
-        inProgress: "inProgressColumn",
-        awaitFeedback: "awaitFeedbackColumn",
-        done: "doneColumn"
-    };
-
-    for (let category in tasks) {
-        let categoryTasks = tasks[category]; 
-        for (let taskId in categoryTasks) {
-            let task = categoryTasks[taskId];
-            task.id = taskId; // Add the ID to the task object
-            addTaskToColumn(task, category, taskId, columns); 
-        }
-    }
-
-    checkEmptyColumns(columns);
-    enableDragAndDrop(columns);
-}
-
-
-
-/** Add a task to the specified column */
-
-
-
-
-function addTaskToColumn(task, category, taskId, columns) {
-    let contactList = formatContactList(task.contacts);
-    let subtaskData = calculateSubtaskData(task.subtasks);
-    let prioIcon = getPrioIcon(task.prio);
-    let taskHtml = createTaskHtml(
-        category,
-        task,
-        taskId,
-        contactList,
-        subtaskData,
-        prioIcon
-    );
-    insertTaskIntoColumn(task.column, taskHtml, columns);
-}
-
-
-/** Format the contact list as HTML */
-function formatContactList(contacts) {
-    return contacts
-        ? contacts.map(contact => `<li>${contact}</li>`).join('')
-        : '';
-}
-
-
-/** Calculate subtask data: total and completed */
-function calculateSubtaskData(subtasks) {
-    if (!subtasks) return { count: 0, completed: 0 };
-    return {
-        count: subtasks.length,
-        completed: subtasks.filter(subtask => subtask.completed).length
-    };
-}
-
-
-/** Get the priority icon based on the priority value */
+/**
+ * Gets the priority icon based on the priority value.
+ * @param {string} prio - The priority level.
+ * @returns {string} - Path to the priority icon.
+ */
 function getPrioIcon(prio) {
     if (prio === "urgent") return "../Assets/addTask/Prio alta.svg";
     if (prio === "medium") return "../Assets/addTask/Prio media white.svg";
     return "../Assets/addTask/Prio baja.svg";
 }
 
-/** Generate the task HTML */
-function createTaskHtml(category, task, taskId, contactList, subtaskData, prioIcon) {
-    return getTaskBoardTemplate(
+/**
+ * Adds a task to the specified column.
+ * @param {object} task - Task object.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ * @param {object} columns - Mapping of column names to HTML element IDs.
+ */
+function addTaskToColumn(task, category, taskId, columns) {
+    if (!task.column) {
+        task.column = "toDo";
+    }
+
+    let columnElement = document.getElementById(columns[task.column]);
+    if (!columnElement) {
+        console.error(`Column element for column ${task.column} not found in DOM.`);
+        return;
+    }
+
+    let progress = calculateSubtaskProgress(task.subtasks);
+    task.subtaskProgress = `${progress.completed}/${progress.total}`;
+
+    let contactList = task.contacts ? generateContactList(task.contacts) : "";
+    let taskClass = getTaskClass(task.title);
+    let prioIcon = getPrioIcon(task.prio);
+    let taskHtml = getTaskBoardTemplate(
         category,
         task,
         taskId,
         contactList,
-        getTaskClass(task.title),
-        subtaskData.count,
-        subtaskData.completed,
-        prioIcon
+        taskClass,
+        progress.total,
+        progress.completed
     );
+
+    addTaskToColumnDom(taskHtml, columnElement, category, taskId)    
 }
 
 
-/** Insert the task HTML into the specified column */
-function insertTaskIntoColumn(column, taskHtml, columns) {
-    let columnId = column || "toDo";
-    let columnElement = document.getElementById(columns[columnId]);
-    if (columnElement) {
-        columnElement.innerHTML += taskHtml;
-    }
+/**
+ * Adds a task to the DOM for the given column.
+ * @param {string} taskHtml - HTML content of the task.
+ * @param {HTMLElement} columnElement - Column element.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ */
+function addTaskToColumnDom(taskHtml, columnElement, category, taskId) {
+    let taskContainer = document.createElement("div");
+    taskContainer.id = `task-${taskId}`;
+    taskContainer.className = "task draggable";
+    taskContainer.setAttribute("draggable", "true");
+    taskContainer.setAttribute("onclick", `showTaskOverlay('${category}', '${taskId}')`);
+    taskContainer.innerHTML = taskHtml;
+    columnElement.insertBefore(taskContainer, null);
 }
 
 
-/** Enable drag and drop functionality */
-function enableDragAndDrop(columns) {
-    let draggableTasks = document.querySelectorAll('.draggable');
-    let dropZones = Object.values(columns).map(column => document.getElementById(column));
 
-    draggableTasks.forEach(task => {
-        task.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setData('task-id', task.id);
-        });
-    });
-
-    dropZones.forEach(zone => {
-        zone.addEventListener('dragover', function (event) {
-            event.preventDefault();
-        });
-        
-        zone.addEventListener('drop', async function (event) {
-            event.preventDefault();
-            let taskId = event.dataTransfer.getData('task-id');
-            let taskElement = document.getElementById(taskId);
-            
-            if (taskElement) {
-                zone.insertAdjacentElement('beforeend', taskElement);
-                
-                let column = Object.keys(columns).find(key => columns[key] === zone.id);
-                await updateTaskColumn(taskId, column);
-            
-                checkEmptyColumns(columns); 
-            }
-        });
-    });
-}
-
-/** Handle the dragging of a task */
-function drag(event) {
-    event.dataTransfer.setData("text", event.target.id);
-}
-
-/** Update the task's column in the database */
-async function updateTaskColumn(taskId, column) {
-    try {
-        let response = await fetch(`${TASK_URL}.json`);
-        let data = await response.json();
-
-        for (let category in data) {
-            if (data[category][taskId]) {
-                data[category][taskId].column = column;
-                await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-                    method: "PUT",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data[category][taskId])
-                });
-                break;
-            }
-        }
-    } catch (error) {
-        console.error("Fehler beim Aktualisieren der Spalte:", error);
-    }
-}
-
-
+/**
+ * Checks and updates the display for empty columns.
+ * @param {object} columns - Mapping of column names to DOM element IDs.
+ */
 function checkEmptyColumns(columns) {
-    for (let columnId in columns) {
-        let columnElement = document.getElementById(columns[columnId]);
-        if (columnElement) {
-            let tasks = columnElement.querySelectorAll(".task");
-            if (tasks.length === 0) {
-                columnElement.innerHTML = `<p class="no-tasks">No tasks available</p>`;
-            } else {
-                let noTasksMessage = columnElement.querySelector(".no-tasks");
-                if (noTasksMessage) {
-                    noTasksMessage.remove();
-                }
+    Object.values(columns).forEach(columnId => {
+        let column = document.getElementById(columnId);
+        if (!column) return;
+        let tasks = column.querySelectorAll(".task");
+        let noTasksMessage = column.querySelector(".no-tasks");
+
+        if (tasks.length === 0) {
+            if (!noTasksMessage) {
+                column.innerHTML = `<p class="no-tasks">No tasks available</p>`;
+            }
+        } else {
+            if (noTasksMessage) {
+                noTasksMessage.remove();
             }
         }
+    });
+}
+
+/**
+ * Updates the progress bar for a task.
+ * @param {string} taskId - The ID of the task.
+ * @param {number} progressPercentage - The progress percentage.
+ */
+function updateProgressBar(taskId, progressPercentage) {
+    let taskElement = document.getElementById(`task-${taskId}`);
+    if (!taskElement) return;
+    let progressElement = taskElement.querySelector("progress");
+    if (progressElement) {
+        progressElement.value = progressPercentage;
     }
 }
 
-
-/** Show the task form on the board */
+/**
+* Shows the task form on the board.
+*/
 function addTaskOnBoard() {
-    document.getElementById('templateAddTask').classList.remove('d-none');
+   document.getElementById('templateAddTask').classList.remove('d-none');
 }
 
-/** Hide the task form on the board */
+/**
+* Hides the task form on the board.
+*/
 function closeTaskOnBoard() {
-    document.getElementById('templateAddTask').classList.add('d-none');
+   document.getElementById('templateAddTask').classList.add('d-none');
 }
 
-/** Prevents closing when clicking inside the form */
+/**
+* Prevents closing when clicking inside the form.
+* @param {Event} event - The click event.
+*/
 function dontClose(event) {
-    event.stopPropagation();
+   event.stopPropagation();
 }
-/** Delete a task both from the UI and the Firebase database */
 
-/** Delete a task both from the UI and the Firebase database */
+window.onload = async function () {
+   let taskOverlay = document.getElementById("taskOverlay");
+   taskOverlay.classList.add("d-none");
+   await fetchTasks();
+};
 
+/**
+ * Extracts the initials from a contact name.
+ * @param {string} name - The full name of the contact.
+ * @returns {string} - The initials of the contact.
+ */
+function getInitials(name) {
+    if (!name || typeof name !== "string") {
+        return "?";
+    }
+    let parts = name.split(" ");
+    let initials = parts.map((part) => part.charAt(0).toUpperCase()).join("");
+    return initials.slice(0, 2);
+}
+
+/**
+ * Calculates the progress of subtasks.
+ * @param {Array} subtasks - The list of subtasks.
+ * @returns {object} - An object containing completed and total subtasks.
+ */
+function calculateSubtaskProgress(subtasks) {
+    if (!Array.isArray(subtasks)) {
+        return { completed: 0, total: 0 };
+    }
+    let completed = subtasks.filter(subtask => subtask.completed).length;
+    let total = subtasks.length;
+    return { completed, total };
+}
+
+document.querySelectorAll(".task").forEach(task => {
+    task.addEventListener("click", function () {
+        let taskId = this.id.replace("task-", "");
+        let category = getCategoryFromTaskId(taskId);
+        showTaskOverlay(category, taskId);
+    });
+});

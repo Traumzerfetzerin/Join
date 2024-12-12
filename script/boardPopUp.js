@@ -1,35 +1,73 @@
-//Overlay
+/**
+ * Shows the overlay with task details.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ */
 async function showTaskOverlay(category, taskId) {
-    try {
-        let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
-        let task = await response.json();
+    let task = findTaskInData(taskId);
+    if (!task) return Promise.resolve(null); 
+    updateOverlayContent(category, task);
+    showOverlay();
+    return Promise.resolve("Overlay displayed successfully");
+}
 
-        // Debugging: Zeigt die Task-Daten in der Konsole an
-        console.log("Loaded task:", task);
 
-        if (!task) {
-            alert("Task not found!");
-            return;
-        }
+/**
+ * Opens the task overlay and the background overlay, disabling interactions with the background.
+ */
+function showOverlay() {
+    let taskOverlay = document.getElementById("taskOverlay");
+    let backgroundOverlay = document.getElementById("backgroundOverlay");
+    if (!taskOverlay || !backgroundOverlay) return;
 
-        let overlayHtml = getBoardOverlayTemplate(category, task);
+    taskOverlay.classList.remove("dNone");
+    taskOverlay.style.display = "block";
 
-        let overlayDetails = document.getElementById("overlayDetails");
-        overlayDetails.innerHTML = overlayHtml;
+    backgroundOverlay.classList.add("active");
+    document.body.classList.add("no-scroll");
+}
 
-        let taskOverlay = document.getElementById("taskOverlay");
-        taskOverlay.classList.remove("dNone");
-    } catch (error) {
-        console.error("Fehler beim Laden der Aufgabe:", error);
+
+/**
+ * Closes the task overlay and the background overlay, re-enabling interactions with the background.
+ * @param {Event} event - The event triggering the close action.
+ */
+function closeTaskOverlay(event) {
+    let taskOverlay = document.getElementById("taskOverlay");
+    let backgroundOverlay = document.getElementById("backgroundOverlay");
+    if (!taskOverlay || !backgroundOverlay) return;
+
+    // Schließen, wenn auf den Hintergrund oder den Schließen-Button geklickt wird
+    if (event.target === backgroundOverlay || event.target === taskOverlay || event.target.tagName === "BUTTON") {
+        taskOverlay.classList.add("dNone");
+        taskOverlay.style.display = "none";
+
+        backgroundOverlay.classList.remove("active");
+        document.body.classList.remove("no-scroll");
     }
 }
 
 
 
 
-function closeTaskOverlay(event) {
-    let taskOverlay = document.getElementById("taskOverlay");
+/**
+ * Updates the overlay content with task details.
+ * @param {string} category - Task category.
+ * @param {Object} task - The task object.
+ */
+function updateOverlayContent(category, task) {
+    let overlayHtml = getBoardOverlayTemplate(category, task);
+    let overlayDetails = document.getElementById("overlayDetails");
+    if (overlayDetails) overlayDetails.innerHTML = overlayHtml;
+}
 
+/**
+ * Hides the task overlay if the event matches the conditions.
+ * @param {Event} event - Event that triggered the function.
+ */
+function hideOverlay(event) {
+    let taskOverlay = document.getElementById("taskOverlay");
+    if (!taskOverlay) return;
     if (event && event.target === taskOverlay) {
         taskOverlay.classList.add("dNone");
     } else if (!event || event.target.tagName === "BUTTON") {
@@ -37,6 +75,44 @@ function closeTaskOverlay(event) {
     }
 }
 
+/**
+ * Resets the values of the form fields in the overlay.
+ */
+function resetFormFields() {
+    let titleField = document.getElementById('inputTitle');
+    let descriptionField = document.getElementById('textareaDescription');
+    let dueDateField = document.getElementById('dueDate');
+    let categoryField = document.getElementById('categorySelect');
+    let subtaskContainer = document.getElementById('editSubtasks');
+    let contactsDropdown = document.getElementById('assigned-to');
+
+    if (titleField) titleField.value = '';
+    if (descriptionField) descriptionField.value = '';
+    if (dueDateField) dueDateField.value = '';
+    if (categoryField) categoryField.value = '';
+    if (subtaskContainer) subtaskContainer.innerHTML = '';
+    if (contactsDropdown) contactsDropdown.innerHTML = '';
+}
+
+/**
+ * Resets the priority selection in the overlay.
+ */
+function resetPriority() {
+    selectedPrio = null;
+    document.getElementById('urgent').classList.remove('active');
+    document.getElementById('medium').classList.remove('active');
+    document.getElementById('low').classList.remove('active');
+}
+
+/**
+ * Closes the task overlay and resets its content.
+ * @param {Event} event - Event that triggered the function.
+ */
+function closeOverlay(event) {
+    hideOverlay(event);
+    resetFormFields();
+    resetPriority();
+}
 
 
 window.onload = function () {
@@ -44,45 +120,137 @@ window.onload = function () {
     taskOverlay.classList.add("dNone");
 };
 
-
-function addTaskToColumn(task, category, taskId, columns) {
-    // Ensure task.id is set
-    task.id = taskId;
-
-    let contactList = task.contacts
-        ? task.contacts.map(contact => {
-              const initials = getInitials(contact); // Extract initials
-              const bgColor = getRandomColor(); // Generate a random background color
-              return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
-          }).join('') // No space between spans for stacking
-        : '';
-
-    let subtaskCount = task.subtasks ? task.subtasks.length : 0;
-    let taskClass = getTaskClass(task.title);
-
-    let taskHtml = getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount);
-
-    let columnId = task.column ? task.column : "toDo";
-    let columnElement = document.getElementById(columns[columnId]);
-
-    // Set the task's DOM element ID to include taskId for deletion
-    columnElement.innerHTML += `<div id="task-${taskId}">${taskHtml}</div>`;
+async function fetchContactFromFirebase(contactId) {
+    try {
+        let encodedContactId = encodeURIComponent(contactId);
+        let response = await fetch(`https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${encodedContactId}.json`);
+        if (response.ok) {
+            let contact = await response.json();
+            return contact || { name: "Unknown" };
+        } else {
+            console.error(`Error fetching contact with ID ${encodedContactId}: ${response.statusText}`);
+            return { name: "Unknown" };
+        }
+    } catch (error) {
+        console.error("Error fetching contact:", error);
+        return { name: "Unknown" };
+    }
 }
 
-
-function getInitials(name) {
-    return name
-        .split(' ')
-        .map(part => part[0]?.toUpperCase()) // Take the first letter of each part
-        .join('');
-}
+/**
+ * Generates a random RGB color.
+ * @returns {string} - RGB color string.
+ */
 function getRandomColor() {
-    // Generate a random RGB color
-    const r = Math.floor(Math.random() * 256); // Red: 0-255
-    const g = Math.floor(Math.random() * 256); // Green: 0-255
-    const b = Math.floor(Math.random() * 256); // Blue: 0-255
-
-    return `rgb(${r}, ${g}, ${b})`; // Return the RGB color string
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
 }
 
+/**
+ * Toggles the completion status of a subtask and updates the progress bar.
+ * @param {string} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask in the subtasks array.
+ */
+function toggleSubtaskCompletion(taskId, subtaskIndex) {
+    let task = findTaskInData(taskId);
+    if (!task) {
+        console.error(`Task with ID ${taskId} not found.`);
+        return;
+    }
+    let subtasks = task.subtasks || [];
+    subtasks[subtaskIndex].completed = !subtasks[subtaskIndex].completed;
+    let progressPercentage = calculateProgressPercentage(subtasks);
+    updateProgressBar(taskId, progressPercentage);
+    updateSubtasksInFirebase(taskId, subtasks, task.category);
 
+    let completed = subtasks.filter(st => st.completed).length;
+    let total = subtasks.length;
+    let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
+    if (subtaskCounter) {
+        subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+    }
+}
+
+/**
+ * Calculates the progress percentage for subtasks.
+ * @param {Array} subtasks - Array of subtasks.
+ * @returns {number} - Progress percentage.
+ */
+function calculateProgressPercentage(subtasks) {
+    let completed = subtasks.filter(subtask => subtask.completed).length;
+    return subtasks.length === 0 ? 0 : Math.round((completed / subtasks.length) * 100);
+}
+
+/**
+ * Updates the state of a subtask and triggers UI updates.
+ * @param {object} task - The task object.
+ * @param {number} subtaskIndex - The index of the subtask.
+ */
+function updateSubtaskState(task, subtaskIndex) {
+    let subtasks = task.subtasks || [];
+    if (!subtasks[subtaskIndex]) {
+        console.error(`Subtask with index ${subtaskIndex} not found.`);
+        return;
+    }
+    subtasks[subtaskIndex].completed = !subtasks[subtaskIndex].completed;
+    updateSubtaskProgress(task.id, subtasks, task.category);
+}
+
+/**
+ * Updates progress bar and syncs with Firebase.
+ * @param {string} taskId - The ID of the task.
+ * @param {Array} subtasks - The list of subtasks.
+ * @param {string} category - The category of the task.
+ */
+function updateSubtaskProgress(taskId, subtasks, category) {
+    let progress = calculateProgress(subtasks);
+    updateProgressBar(taskId, progress);
+    syncSubtasksWithFirebase(taskId, subtasks, category);
+}
+
+/**
+ * Syncs subtasks with Firebase.
+ * @param {string} taskId - The ID of the task.
+ * @param {Array} subtasks - The updated subtasks array.
+ * @param {string} category - The task category.
+ */
+async function syncSubtasksWithFirebase(taskId, subtasks, category) {
+    try {
+        console.log(`Syncing subtasks for Task ID ${taskId} in category ${category}:`, subtasks);
+        let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(subtasks)
+        });
+        if (!response.ok) {
+            console.error(`Failed to sync subtasks: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error(`Error syncing subtasks for Task ID ${taskId}:`, error);
+    }
+}
+
+/**
+ * Updates the subtasks for a specific task in Firebase.
+ * @param {string} taskId - ID of the task to update.
+ * @param {Array} subtasks - Array of updated subtasks.
+ * @param {string} category - Category of the task (e.g., "Technical Task").
+ */
+async function updateSubtasksInFirebase(taskId, subtasks, category) {
+    try {
+        let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(subtasks)
+        });
+        if (response.ok) {
+            // Optional: Additional actions upon successful update
+        } else {
+            console.error(`Failed to update subtasks for Task ID ${taskId}:`, response.statusText);
+        }
+    } catch (error) {
+        console.error(`Error updating subtasks for Task ID ${taskId}:`, error);
+    }
+}

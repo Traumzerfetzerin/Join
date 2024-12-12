@@ -17,62 +17,56 @@ async function loadContactsForDropdown() {
 // Populate the custom dropdown with checkboxes for each contact
 function populateCheckboxDropdown() {
     const dropdown = document.getElementById("assignTaskDropdown");
-    dropdown.innerHTML = ''; // Clear previous options
-
+    if (!dropdown) {
+        // console.error("Dropdown element with ID 'assignTaskDropdown' not found!");
+        return; // Abbrechen, wenn das Dropdown nicht existiert
+    }
+    // Bestehende Optionen im Dropdown löschen
+    dropdown.innerHTML = '';
     contacts.forEach(contact => {
-        // Create a container for each entry
+        // Erstelle einen Container für den Eintrag
         const entryContainer = document.createElement('div');
-        entryContainer.classList.add('entry-container'); // Add a class for styling
-
-        // Generate initials from the name
+        entryContainer.classList.add('entry-container'); // Für Styling
+        // Initialen aus dem Namen generieren
         const initials = contact.name
             .split(' ')
             .map(word => word.charAt(0).toUpperCase())
             .join('');
-
-        // Create a span for initials
+        // Erstellt ein <span>-Element für die Initialen
         const initialsSpan = document.createElement('span');
-        initialsSpan.classList.add('contact-initials'); // Add a class for styling
+        initialsSpan.classList.add('contact-initials');
         initialsSpan.textContent = initials;
-        
-        // Apply the background color from the contact
+        // Hintergrundfarbe anwenden (falls vorhanden oder generieren)
         if (contact.color) {
-            initialsSpan.style.backgroundColor = contact.color; // Use color from the contact object
+            initialsSpan.style.backgroundColor = contact.color;
         } else {
-            // Generate and assign a color if not already present
             const randomColor = getRandomColor();
             initialsSpan.style.backgroundColor = randomColor;
-            contact.color = randomColor; // Save the generated color back to the contact
+            contact.color = randomColor; // Speichert die generierte Farbe zurück
         }
-
-        // Create a span for the contact name
+        // Erstellt ein <span>-Element für den Namen
         const nameSpan = document.createElement('span');
-        nameSpan.classList.add('contact-name'); // Add a class for styling
+        nameSpan.classList.add('contact-name');
         nameSpan.textContent = contact.name;
-
-        // Create checkbox element
+        // Erstellt das Checkbox-Element
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
-        checkbox.value = contact.name; // Use contact name as value
-        checkbox.addEventListener('change', updateAssignedContacts); // Add event listener
-
-        // Append initials and name to the left side
+ checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
+        checkbox.value = contact.name;
+        checkbox.addEventListener('change', updateAssignedContacts);
+        // Verpacke Initialen und Namen
         const nameContainer = document.createElement('div');
-        nameContainer.classList.add('name-container'); // Wrapper for initials and name
+        nameContainer.classList.add('name-container');
         nameContainer.appendChild(initialsSpan);
         nameContainer.appendChild(nameSpan);
-
-        // Append name container and checkbox to the entry container
+        // Füge den Namen und die Checkbox dem Container hinzu
         entryContainer.appendChild(nameContainer);
         entryContainer.appendChild(checkbox);
-
-        // Append the entry to the dropdown
+        // Füge den Eintrag dem Dropdown hinzu
         dropdown.appendChild(entryContainer);
     });
-
-    dropdown.classList.remove('d-none'); // Ensure the dropdown is visible
-}
+    dropdown.classList.remove('d-none'); // Macht das Dropdown sichtbar
+ }
 
 
 function getRandomColor() {

@@ -1,0 +1,7 @@
+.subtask-item .subtask-icons {
+    display: none;
+}
+
+.subtask-item:hover .subtask-icons {
+    display: flex;
+}

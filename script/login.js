@@ -101,16 +101,9 @@ function logIn(event) {
         })
         .then(user => {
             if (user && user.password === password) {
-                // Extract the initials from the user's name
-                const initials = getInitials(user.name || user.email);
-                localStorage.setItem('currentUserInitial', initials);
+                let fullName = user.name || email; 
+                localStorage.setItem('loggedInUserName', fullName);
 
-                const userIcon = document.getElementById('name_menu');
-                if (userIcon) {
-                    userIcon.textContent = initials; // Update UI with initials
-                }
-
-                // Show toast for successful login
                 showToast('Login successful! Redirecting...');
 
                 setTimeout(() => {
@@ -127,6 +120,7 @@ function logIn(event) {
             responseMessage.style.color = 'red';
         });
 }
+
 
 
 /**
