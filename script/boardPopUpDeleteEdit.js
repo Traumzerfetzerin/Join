@@ -85,14 +85,16 @@ async function enableEditMode(task, category) {
     if (contactsData) {
         let contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
         dropdownContainer.innerHTML = `
-            <strong>Assigned To:</strong>
-            <div class="dropdown-header" onclick="toggleEditDropdown()">
-                <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly <span class="dropdown-arrow">▼</span>
-            </div>
-            <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-                ${generateContactDropdownHTML(contacts)}
-            </div>
-        `;
+    <strong>Assigned To:</strong>
+    <div class="dropdown-header" onclick="toggleEditDropdown()">
+        <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
+        <span class="dropdown-arrow">▼</span>
+    </div>
+    <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+        ${generateContactDropdownHTML(contacts)}
+    </div>
+`;
+
     }
 
     let actionLinks = document.querySelector('.action-links');
