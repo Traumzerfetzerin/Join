@@ -153,23 +153,40 @@ function getRandomColor() {
  * @param {string} taskId - The ID of the task.
  * @param {number} subtaskIndex - The index of the subtask in the subtasks array.
  */
-function toggleSubtaskCompletion(taskId, subtaskIndex) {
-    let task = findTaskInData(taskId);
-    if (!task) {
-        console.error(`Task with ID ${taskId} not found.`);
-        return;
-    }
-    let subtasks = task.subtasks || [];
-    subtasks[subtaskIndex].completed = !subtasks[subtaskIndex].completed;
-    let progressPercentage = calculateProgressPercentage(subtasks);
-    updateProgressBar(taskId, progressPercentage);
-    updateSubtasksInFirebase(taskId, subtasks, task.category);
+async function toggleSubtaskCompletion(taskId, subtaskIndex) {
+    let taskUrl = `${TASK_URL}/User%20Story/${taskId}.json`;
+    try {
+        let response = await fetch(taskUrl);
+        let task = await response.json();
 
-    let completed = subtasks.filter(st => st.completed).length;
-    let total = subtasks.length;
-    let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
-    if (subtaskCounter) {
-        subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+        if (task && Array.isArray(task.subtasks)) {
+            task.subtasks[subtaskIndex].completed = !task.subtasks[subtaskIndex].completed;
+            await fetch(taskUrl, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(task),
+            });
+
+            let progressPercentage = calculateProgress(task.subtasks);
+            updateProgressBar(taskId, progressPercentage);
+
+            let completed = task.subtasks.filter(st => st.completed).length;
+            let total = task.subtasks.length;
+            let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
+            if (subtaskCounter) {
+                subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+            }
+
+            let progressBar = document.querySelector(`#task-${taskId} .progress-bar-fill`);
+            if (progressBar) {
+                progressBar.style.width = `${progressPercentage}%`;
+                progressBar.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
+            } else {
+                console.warn(`Progress bar for Task ID ${taskId} not found.`);
+            }
+        }
+    } catch (error) {
+        console.error(`Failed to toggle subtask completion for Task ID ${taskId}:`, error);
     }
 }
 

@@ -35,5 +35,3 @@ function updateProgressBar(taskId, progressPercentage) {
         console.warn(`Progress bar for Task ID ${taskId} not found.`);
     }
 }
-
-

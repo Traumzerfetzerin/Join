@@ -5,3 +5,67 @@
 .subtask-item:hover .subtask-icons {
     display: flex;
 }
+
+.dropdown-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-entry {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-entry:hover {
+    background-color: #f0f0f0;
+}
+
+.contact-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+}
+
+.dropdown-entry input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#editAssignedTo {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+button[onclick="toggleEditDropdown()"] {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[onclick="toggleEditDropdown()"]:hover {
+    background-color: #0056b3;
+}

@@ -194,3 +194,28 @@ function generateSubtaskList(task) {
         `).join("")
         : "<li>No subtasks available</li>";
 }
+
+/**
+ * Populates the contact dropdown in the overlay edit mode.
+ * @param {Array} contacts - List of contact objects fetched from the database.
+ * @returns {string} - Generated HTML for the dropdown with user icons styled as in the provided design.
+ */
+function generateContactDropdownHTML(contacts) {
+    return contacts.map(contact => {
+        let initials = contact.name
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase())
+            .join('');
+        let color = contact.color || getRandomColor();
+
+        return `
+            <div class="dropdown-entry">
+                <div class="contact-icon" style="background-color: ${color};">${initials}</div>
+                <label>
+                    <input type="checkbox" id="edit_checkbox_${contact.id}" value="${contact.name}" onchange="updateAssignedContacts()">
+                    ${contact.name}
+                </label>
+            </div>
+        `;
+    }).join('');
+}

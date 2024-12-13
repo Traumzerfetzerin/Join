@@ -36,7 +36,12 @@ function editTask(taskId, category) {
     renderSubtasksInEditMode(task); // Subtasks im Bearbeitungsmodus rendern
 }
 
-function enableEditMode(task, category) {
+/**
+ * Enables edit mode for a task, including the contact dropdown.
+ * @param {Object} task - Task object containing details.
+ * @param {string} category - Category of the task.
+ */
+async function enableEditMode(task, category) {
     let titleElement = document.querySelector('.task-title');
     titleElement.innerHTML = `<input type="text" id="editTitle" value="${task.title}" />`;
 
@@ -73,14 +78,37 @@ function enableEditMode(task, category) {
     setTimeout(() => {
         setPrio(task.prio);
     }, 0);
-    
+
+    let dropdownContainer = document.querySelector('.contacts-section');
+    const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+    const contactsData = await response.json();
+    if (contactsData) {
+        let contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+        dropdownContainer.innerHTML = `
+            <strong>Assigned To:</strong>
+            <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+                ${generateContactDropdownHTML(contacts)}
+            </div>
+            <div class="dropdown-header" onclick="toggleEditDropdown()">
+                <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+        `;
+    }
+
     let actionLinks = document.querySelector('.action-links');
     actionLinks.innerHTML = `
         <button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
     `;
 }
 
-
+/**
+ * Toggles the visibility of the contact dropdown.
+ */
+function toggleEditDropdown() {
+    const dropdown = document.getElementById('editAssignTaskDropdown');
+    dropdown.classList.toggle('dNone');
+}
 
 /**
  * Fills the fields of the edit overlay with task data.
