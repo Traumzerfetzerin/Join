@@ -93,29 +93,29 @@ async function enableEditMode(task, category) {
         let assignedContacts = contacts.filter(contact => taskAssignedContactIds.includes(contact.id));
     
         dropdownContainer.innerHTML = `
-            <strong>Assigned To:</strong>
-            <div class="dropdown-header" onclick="toggleEditDropdown()">
-                <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-                <span class="dropdown-arrow">▼</span>
-            </div>
-            <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-                ${contacts.map(contact => `
-                    <div class="dropdown-entry">
-                        <label>
-                            <input type="checkbox" value="${contact.id}">
-                            ${contact.name}
-                        </label>
-                    </div>
-                `).join('')}
-            </div>
-            <div id="contact-icons-container" class="contact-icons">
-                ${assignedContacts.map(contact => `
-                    <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                        ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                    </div>
-                `).join('')}
-            </div>
-        `;
+        <strong>Assigned To:</strong>
+        <div class="dropdown-header" onclick="toggleEditDropdown()">
+            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
+            <span class="dropdown-arrow">▼</span>
+        </div>
+        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+            ${contacts.map(contact => `
+                <div class="dropdown-entry">
+                    <label>
+                        <input type="checkbox" value="${contact.id}">
+                        ${contact.name}
+                    </label>
+                </div>
+            `).join('')}
+        </div>
+        <div id="contact-icons-container" class="contact-icons">
+            ${assignedContacts.map(contact => `
+                <div class="contact-icon" style="background-color: ${getRandomColor()};">
+                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+                </div>
+            `).join('')}
+        </div>
+    `;
     }
     
     
@@ -127,12 +127,16 @@ async function enableEditMode(task, category) {
 }
 
 /**
- * Toggles the visibility of the contact dropdown.
+ * Toggles the visibility of the contact dropdown and the icons.
  */
 function toggleEditDropdown() {
-    const dropdown = document.getElementById('editAssignTaskDropdown');
+    let dropdown = document.getElementById('editAssignTaskDropdown');
+    let vanishIcons = document.getElementById('contact-icons-container');
     dropdown.classList.toggle('dNone');
+    vanishIcons.classList.toggle('dNone');
 }
+
+
 
 /**
  * Fills the fields of the edit overlay with task data.
