@@ -54,8 +54,13 @@ function closeTaskOverlay(event) {
  */
 function updateOverlayContent(category, task) {
     let overlayHtml = getBoardOverlayTemplate(category, task);
-    let overlayDetails = document.getElementById("overlayDetails");
-    if (overlayDetails) overlayDetails.innerHTML = overlayHtml;
+    let overlayDetails = document.getElementById('overlayDetails');
+    if (overlayDetails) {
+        overlayDetails.innerHTML = overlayHtml;
+    }
+    if (document.getElementById('contact-icons-container')) {
+        syncContactIcons(task.contacts); 
+    }
 }
 
 /**

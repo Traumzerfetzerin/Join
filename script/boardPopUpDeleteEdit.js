@@ -22,8 +22,62 @@ async function deleteTask(category, taskId) {
     }
 }
 
+
 /**
- * Enables edit mode for a specific task.
+ * Updates the overlay content with the task details, ensuring correct contact icons.
+ * @param {string} category - The category of the task.
+ * @param {object} task - The task object with updated details.
+ */
+function updateOverlayContent(category, task) {
+    let overlayHtml = getBoardOverlayTemplate(category, task);
+    let overlayDetails = document.getElementById('overlayDetails');
+    if (overlayDetails) {
+        overlayDetails.innerHTML = overlayHtml;
+    }
+    syncContactIcons(task.contacts); // Synchronisiert die Icons nach dem Update
+}
+
+/**
+ * Synchronizes the contact icons in the overlay with the task details.
+ * @param {Array} contactIds - Array of contact IDs assigned to the task.
+ */
+async function syncContactIcons(contactIds) {
+    if (typeof contactIds[0] === 'object') {
+        contactIds = contactIds.map(contact => contact.id);
+    }
+
+    let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+    let contactsData = await response.json();
+
+    if (contactsData) {
+        let contacts = Object.keys(contactsData).map(key => ({
+            id: key,
+            ...contactsData[key],
+        }));
+
+        let assignedContacts = contacts.filter(contact => contactIds.includes(contact.id));
+        console.log("Filtered assigned contacts:", assignedContacts);
+
+        let contactIconsContainer = document.getElementById('contact-icons-container');
+        if (contactIconsContainer) {
+            contactIconsContainer.innerHTML = assignedContacts
+                .map(contact => `
+                    <div class="contact-icon" style="background-color: ${getRandomColor()};">
+                        ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+                    </div>
+                `)
+                .join('');
+        }
+    } else {
+        console.error("Failed to fetch contacts from Firebase.");
+    }
+}
+
+
+
+
+/**
+ * Enables edit mode for a specific task, ensuring the correct contact dropdown and icons.
  * @param {string} taskId - The ID of the task to edit.
  * @param {string} category - The category of the task.
  */
@@ -32,13 +86,80 @@ function editTask(taskId, category) {
     if (!task) return;
 
     enableEditMode(task, category);
-    renderSubtasksInEditMode(task); // Subtasks im Bearbeitungsmodus rendern
+    renderSubtasksInEditMode(task);
+    syncContactIcons(task.contacts); // Synchronisiert die Kontakt-Icons nach dem Wechsel in den Edit-Modus
 }
 
 /**
- * Enables edit mode for a task, including the contact dropdown.
+ * Updates the dropdown with all contacts and ensures icons are displayed.
+ * @param {Array} allContacts - Array of all contact objects.
+ * @param {Array} assignedContactIds - Array of assigned contact objects or IDs.
+ */
+function updateContactDropdown(allContacts, assignedContactIds) {
+    let dropdownContainer = document.querySelector('.contacts-section');
+
+    if (!dropdownContainer) {
+        console.error("Dropdown container not found.");
+        return;
+    }
+    if (typeof assignedContactIds[0] === 'object') {
+        assignedContactIds = assignedContactIds.map(contact => contact.id);
+    }
+
+    console.log("Assigned contact IDs (processed):", assignedContactIds);
+
+    let assignedContacts = allContacts.filter(contact => assignedContactIds.includes(contact.id));
+    console.log("Filtered assigned contacts for dropdown:", assignedContacts);
+
+    dropdownContainer.innerHTML = `
+        <strong>Assigned To:</strong>
+        <div class="dropdown-header" onclick="toggleEditDropdown()">
+            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
+            <span class="dropdown-arrow">▼</span>
+        </div>
+        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+            ${allContacts.map(contact => `
+                <div class="dropdown-entry">
+                    <label>
+                        <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''}>
+                        ${contact.name}
+                    </label>
+                </div>
+            `).join('')}
+        </div>
+        <div id="contact-icons-container" class="contact-icons">
+            ${assignedContacts.map(contact => `
+                <div class="contact-icon" style="background-color: ${getRandomColor()};">
+                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+
+
+function updateContactIcons(assignedContacts) {
+    let contactIconsContainer = document.getElementById('contact-icons-container');
+    if (!contactIconsContainer) {
+        console.error("contact-icons-container not found");
+        return;
+    }
+
+    contactIconsContainer.innerHTML = assignedContacts
+        .map(contact => `
+            <div class="contact-icon" style="background-color: ${getRandomColor()};">
+                ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+            </div>
+        `)
+        .join('');
+}
+
+
+/**
+ * Enables edit mode for a task, including contacts and subtasks.
  * @param {Object} task - Task object containing details.
- * @param {string} category - Category of the task.
+ * @param {string} category - The category of the task.
  */
 async function enableEditMode(task, category) {
     let titleElement = document.querySelector('.task-title');
@@ -54,20 +175,15 @@ async function enableEditMode(task, category) {
     priorityElement.innerHTML = `
         <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
-            <button id="urgent" type="button" class="prioButton cursorPointer fonts"
-                onclick="setPrio('urgent', event)">
+            <button id="urgent" type="button" class="prioButton cursorPointer fonts" onclick="setPrio('urgent', event)">
                 Urgent
                 <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
             </button>
-
-            <button id="medium" type="button" class="prioButton cursorPointer fonts mediumWhite"
-                onclick="setPrio('medium', event)">
+            <button id="medium" type="button" class="prioButton cursorPointer fonts mediumWhite" onclick="setPrio('medium', event)">
                 Medium
                 <img id="mediumSvg" src="../Assets/addTask/Prio media white.svg" alt="">
             </button>
-
-            <button id="low" type="button" class="prioButton cursorPointer fonts"
-                onclick="setPrio('low', event)">
+            <button id="low" type="button" class="prioButton cursorPointer fonts" onclick="setPrio('low', event)">
                 Low
                 <img id="lowSvg" src="../Assets/addTask/Prio baja.svg" alt="">
             </button>
@@ -78,52 +194,22 @@ async function enableEditMode(task, category) {
         setPrio(task.prio);
     }, 0);
 
-    let dropdownContainer = document.querySelector('.contacts-section');
     let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
     let contactsData = await response.json();
-    
+
     if (contactsData) {
-        let contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-    
-        // Beispiel: IDs der zugewiesenen Kontakte aus der Task-Datenstruktur
-        let taskAssignedContactIds = ["-OBq_I3OeuDlef4x9a-Q", "-OBvubxH3L5O2-rdee4J"]; // IDs von KH und BG
-    
-        // Zu den IDs passende Kontakte filtern
-        let assignedContacts = contacts.filter(contact => taskAssignedContactIds.includes(contact.id));
-    
-        dropdownContainer.innerHTML = `
-        <strong>Assigned To:</strong>
-        <div class="dropdown-header" onclick="toggleEditDropdown()">
-            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-            <span class="dropdown-arrow">▼</span>
-        </div>
-        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-            ${contacts.map(contact => `
-                <div class="dropdown-entry">
-                    <label>
-                        <input type="checkbox" value="${contact.id}">
-                        ${contact.name}
-                    </label>
-                </div>
-            `).join('')}
-        </div>
-        <div id="contact-icons-container" class="contact-icons">
-            ${assignedContacts.map(contact => `
-                <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                </div>
-            `).join('')}
-        </div>
-    `;
+        let allContacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+        updateContactDropdown(allContacts, task.contacts || []);
+    } else {
+        console.error("Failed to fetch contacts from Firebase.");
     }
-    
-    
 
     let actionLinks = document.querySelector('.action-links');
     actionLinks.innerHTML = `
         <button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
     `;
 }
+
 
 /**
  * Toggles the visibility of the contact dropdown and the icons.
