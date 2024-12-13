@@ -10,11 +10,10 @@ async function deleteTask(category, taskId) {
         });
 
         if (response.ok) {
-            console.log(`Task with ID ${taskId} deleted successfully.`);
             delete taskData[category][taskId];
             loadTasks(taskData);
-            closeTaskOverlay();
             refreshPageOrUpdateUI();
+            closeTaskOverlay();
         } else {
             console.error(`Failed to delete task with ID ${taskId}: ${response.statusText}`);
         }
@@ -135,7 +134,6 @@ function toggleEditDropdown() {
     dropdown.classList.toggle('dNone');
     vanishIcons.classList.toggle('dNone');
 }
-
 
 
 /**

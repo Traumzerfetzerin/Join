@@ -29,15 +29,14 @@ function showOverlay() {
 
 
 /**
- * Closes the task overlay and the background overlay, re-enabling interactions with the background.
- * @param {Event} event - The event triggering the close action.
+ * Closes the task overlay when the background or close button is clicked.
+ * @param {Event} event - The event that triggers the overlay close.
  */
 function closeTaskOverlay(event) {
     let taskOverlay = document.getElementById("taskOverlay");
     let backgroundOverlay = document.getElementById("backgroundOverlay");
     if (!taskOverlay || !backgroundOverlay) return;
 
-    // Schließen, wenn auf den Hintergrund oder den Schließen-Button geklickt wird
     if (event.target === backgroundOverlay || event.target === taskOverlay || event.target.tagName === "BUTTON") {
         taskOverlay.classList.add("dNone");
         taskOverlay.style.display = "none";
@@ -46,8 +45,6 @@ function closeTaskOverlay(event) {
         document.body.classList.remove("no-scroll");
     }
 }
-
-
 
 
 /**
