@@ -288,21 +288,6 @@ function updateOverlayContent(category, task) {
 }
 
 /**
- * Closes the task overlay.
- */
-function closeTaskOverlay() {
-    let overlay = document.getElementById('taskOverlay');
-    if (overlay) {
-        overlay.classList.add('d-none');
-    }
-
-    let backgroundOverlay = document.getElementById('backgroundOverlay');
-    if (backgroundOverlay) {
-        backgroundOverlay.classList.add('d-none'); 
-    }
-}
-
-/**
  * Refreshes the page or updates the UI dynamically.
  */
 function refreshPageOrUpdateUI() {

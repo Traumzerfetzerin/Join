@@ -71,13 +71,7 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 }
 
 .contact-list {
-    display: flex;
-<<<<<<< HEAD
-    
-=======
-    gap: 10px;
-    margin-top: 10px;
->>>>>>> 8eedd36b90b92f22820eeeff05fc2fabbdc95dac
+    display: flex;    
 }
 
 .contact-initials {
