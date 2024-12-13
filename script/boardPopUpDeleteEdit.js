@@ -80,22 +80,45 @@ async function enableEditMode(task, category) {
     }, 0);
 
     let dropdownContainer = document.querySelector('.contacts-section');
-    const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-    const contactsData = await response.json();
+    let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+    let contactsData = await response.json();
+    
     if (contactsData) {
         let contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+    
+        // Beispiel: IDs der zugewiesenen Kontakte aus der Task-Datenstruktur
+        let taskAssignedContactIds = ["-OBq_I3OeuDlef4x9a-Q", "-OBvubxH3L5O2-rdee4J"]; // IDs von KH und BG
+    
+        // Zu den IDs passende Kontakte filtern
+        let assignedContacts = contacts.filter(contact => taskAssignedContactIds.includes(contact.id));
+    
         dropdownContainer.innerHTML = `
-    <strong>Assigned To:</strong>
-    <div class="dropdown-header" onclick="toggleEditDropdown()">
-        <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-        <span class="dropdown-arrow">▼</span>
-    </div>
-    <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-        ${generateContactDropdownHTML(contacts)}
-    </div>
-`;
-
+            <strong>Assigned To:</strong>
+            <div class="dropdown-header" onclick="toggleEditDropdown()">
+                <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+                ${contacts.map(contact => `
+                    <div class="dropdown-entry">
+                        <label>
+                            <input type="checkbox" value="${contact.id}">
+                            ${contact.name}
+                        </label>
+                    </div>
+                `).join('')}
+            </div>
+            <div id="contact-icons-container" class="contact-icons">
+                ${assignedContacts.map(contact => `
+                    <div class="contact-icon" style="background-color: ${getRandomColor()};">
+                        ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+                    </div>
+                `).join('')}
+            </div>
+        `;
     }
+    
+    
 
     let actionLinks = document.querySelector('.action-links');
     actionLinks.innerHTML = `
@@ -121,6 +144,21 @@ function fillFields(task) {
     document.getElementById('dueDate').value = task.dueDate || '';
     document.getElementById('categorySelect').value = task.category || '';
     setPrio(task.prio);
+}
+
+/**
+ * Displays assigned contacts as icons below the dropdown.
+ * @param {Array} assignedContacts - Array of contacts assigned to the task.
+ */
+function displayAssignedContacts(assignedContacts) {
+    let container = document.getElementById("contact-icons-container");
+    container.innerHTML = "";
+    let iconsHTML = assignedContacts.map(contact => {
+        return `<div class="contact-icon" style="background-color: ${contact.color};">
+                    ${contact.initials}
+                </div>`;
+    }).join("");
+    container.innerHTML = iconsHTML;
 }
 
 /**
