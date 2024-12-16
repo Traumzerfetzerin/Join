@@ -41,7 +41,9 @@
     height: 136px;
     top: 547.5px;
     left: 968px;
-    gap: 3px;
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
 }
 
 .good {
