@@ -29,23 +29,17 @@ async function deleteTask(category, taskId) {
  * @param {number} subtaskIndex - The index of the subtask to delete.
  */
 async function deleteSubtaskEdit(taskId, category, subtaskIndex) {
-    // Remove the subtask from the DOM
     let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
     if (subtaskElement) {
         subtaskElement.remove();
     }
 
-    // Fetch the current task from Firebase
     let task = await fetchTaskById(category, taskId);
     if (!task || !Array.isArray(task.subtasks)) {
         console.error("Task or subtasks not found.");
         return;
     }
-
-    // Remove the subtask from the list
     task.subtasks.splice(subtaskIndex, 1);
-
-    // Save the updated task to Firebase
     try {
         await updateTaskInDatabase(category, taskId, task);
         console.log(`Subtask ${subtaskIndex} deleted successfully.`);
@@ -53,6 +47,68 @@ async function deleteSubtaskEdit(taskId, category, subtaskIndex) {
         console.error("Error deleting subtask from Firebase:", error);
     }
 }
+
+/**
+ * Enables editing of a subtask in edit mode.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {number} subtaskIndex - The index of the subtask to edit.
+ */
+function editSubtaskEdit(taskId, category, subtaskIndex) {
+    let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
+    if (!subtaskElement) {
+        console.error("Subtask element not found.");
+        return;
+    }
+
+    let currentText = subtaskElement.querySelector('.editSubtaskText').innerText;
+    subtaskElement.innerHTML = `
+        <input type="text" id="editSubtaskInput_${subtaskIndex}" value="${currentText}" 
+               onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+        <button onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
+    `;
+}
+
+/**
+ * Saves the changes to a subtask in edit mode.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {number} subtaskIndex - The index of the subtask to save.
+ */
+async function saveSubtaskEdit(taskId, category, subtaskIndex) {
+    let inputField = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
+    if (!inputField) {
+        console.error("Input field not found.");
+        return;
+    }
+
+    let newText = inputField.value.trim();
+    let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
+    subtaskElement.innerHTML = `
+        <span contenteditable="true" class="editSubtaskText">${newText}</span>
+        <div class="subtask-icons">
+            <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                 alt="Edit" onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+            <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                 alt="Delete" onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+        </div>
+    `;
+
+    let task = await fetchTaskById(category, taskId);
+    if (!task || !Array.isArray(task.subtasks)) {
+        console.error("Task or subtasks not found.");
+        return;
+    }
+    task.subtasks[subtaskIndex].text = newText;
+
+    try {
+        await updateTaskInDatabase(category, taskId, task);
+        console.log(`Subtask ${subtaskIndex} updated successfully.`);
+    } catch (error) {
+        console.error("Error saving subtask to Firebase:", error);
+    }
+}
+
 
 /**
  * Synchronizes the contact icons in the overlay with the task details.
@@ -305,14 +361,14 @@ function renderSubtasksInEditMode(task, category) {
                     <span contenteditable="true" class="editSubtaskText">${subtask.text}</span>
                     <div class="subtask-icons">
                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                             alt="Edit" onclick="editSubtask('${task.id}', '${category}', ${index})">
+                             alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
                         <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
                              alt="Delete" onclick="deleteSubtaskEdit('${task.id}', '${category}', ${index})">
                     </div>
                 </div>
             `;
             subtaskContainer.innerHTML += subtaskHTML;
-        });
+        });        
     }
 }
 
