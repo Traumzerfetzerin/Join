@@ -151,44 +151,46 @@ function getRandomColor() {
 }
 
 /**
- * Toggles the completion status of a subtask and updates the progress bar.
+ * Toggles the completion status of a subtask and updates the UI and database.
  * @param {string} taskId - The ID of the task.
  * @param {number} subtaskIndex - The index of the subtask in the subtasks array.
  */
 async function toggleSubtaskCompletion(taskId, subtaskIndex) {
-    let taskUrl = `${TASK_URL}/User%20Story/${taskId}.json`;
+    let task = findTaskInData(taskId);
+    if (!task || !task.subtasks) return;
+
+    task.subtasks[subtaskIndex].completed = !task.subtasks[subtaskIndex].completed;
+
     try {
-        let response = await fetch(taskUrl);
-        let task = await response.json();
+        await fetch(`${TASK_URL}/${task.category}/${taskId}/subtasks.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(task.subtasks),
+        });
 
-        if (task && Array.isArray(task.subtasks)) {
-            task.subtasks[subtaskIndex].completed = !task.subtasks[subtaskIndex].completed;
-            await fetch(taskUrl, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(task),
-            });
+        let completed = task.subtasks.filter(st => st.completed).length;
+        let total = task.subtasks.length;
+        let progressPercentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-            let progressPercentage = calculateProgress(task.subtasks);
-            updateProgressBar(taskId, progressPercentage);
+        let progressBarFill = document.querySelector(`#task-${taskId} .progress-bar-fill`);
+        if (progressBarFill) {
+            progressBarFill.style.width = `${progressPercentage}%`;
+            progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
+        }
 
-            let completed = task.subtasks.filter(st => st.completed).length;
-            let total = task.subtasks.length;
-            let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
-            if (subtaskCounter) {
-                subtaskCounter.textContent = `${completed}/${total} Subtasks`;
-            }
+        let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
+        if (subtaskCounter) {
+            subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+        }
 
-            let progressBar = document.querySelector(`#task-${taskId} .progress-bar-fill`);
-            if (progressBar) {
-                progressBar.style.width = `${progressPercentage}%`;
-                progressBar.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
-            } else {
-                console.warn(`Progress bar for Task ID ${taskId} not found.`);
+        if (document.getElementById('taskOverlay').style.display === 'block') {
+            let overlayDetails = document.getElementById('overlayDetails');
+            if (overlayDetails) {
+                overlayDetails.innerHTML = getBoardOverlayTemplate(task.category, task);
             }
         }
     } catch (error) {
-        console.error(`Failed to toggle subtask completion for Task ID ${taskId}:`, error);
+        console.error(`Failed to save updated subtasks for Task ID ${taskId}:`, error);
     }
 }
 

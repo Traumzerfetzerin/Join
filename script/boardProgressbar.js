@@ -26,7 +26,6 @@ function updateProgressBar(taskId, progressPercentage) {
         progressBar.style.width = `${progressPercentage}%`;
         progressBar.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
 
-        // Optional: Update progress text inside the progress bar
         let progressText = document.querySelector(`#task-${taskId} .progress-bar-text`);
         if (progressText) {
             progressText.textContent = `${progressPercentage}%`;
