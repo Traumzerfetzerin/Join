@@ -22,58 +22,49 @@ async function deleteTask(category, taskId) {
     }
 }
 
-
-/**
- * Updates the overlay content with the task details, ensuring correct contact icons.
- * @param {string} category - The category of the task.
- * @param {object} task - The task object with updated details.
- */
-function updateOverlayContent(category, task) {
-    let overlayHtml = getBoardOverlayTemplate(category, task);
-    let overlayDetails = document.getElementById('overlayDetails');
-    if (overlayDetails) {
-        overlayDetails.innerHTML = overlayHtml;
-    }
-    syncContactIcons(task.contacts); // Synchronisiert die Icons nach dem Update
-}
-
 /**
  * Synchronizes the contact icons in the overlay with the task details.
- * @param {Array} contactIds - Array of contact IDs assigned to the task.
+ * @param {Array} contactIds - Array of contact IDs or contact names assigned to the task.
  */
 async function syncContactIcons(contactIds) {
     if (typeof contactIds[0] === 'object') {
-        contactIds = contactIds.map(contact => contact.id);
+        contactIds = contactIds.map(contact => contact.id || contact.name);
     }
 
-    let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-    let contactsData = await response.json();
+    try {
+        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+        let contactsData = await response.json();
 
-    if (contactsData) {
-        let contacts = Object.keys(contactsData).map(key => ({
-            id: key,
-            ...contactsData[key],
-        }));
+        if (contactsData) {
+            let contacts = Object.keys(contactsData).map(key => ({
+                id: key,
+                ...contactsData[key],
+            }));
 
-        let assignedContacts = contacts.filter(contact => contactIds.includes(contact.id));
-        console.log("Filtered assigned contacts:", assignedContacts);
+            let assignedContacts = contacts.filter(contact => contactIds.includes(contact.id) || contactIds.includes(contact.name));
+            console.log("Assigned contacts:", assignedContacts);
 
-        let contactIconsContainer = document.getElementById('contact-icons-container');
-        if (contactIconsContainer) {
-            contactIconsContainer.innerHTML = assignedContacts
-                .map(contact => `
-                    <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                        ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                    </div>
-                `)
-                .join('');
+            let contactIconsContainer = document.getElementById('contact-icons-container');
+            if (contactIconsContainer) {
+                contactIconsContainer.innerHTML = assignedContacts
+                    .map(contact => {
+                        let initials = contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
+                        let bgColor = contact.color || getRandomColor();
+                        return `
+                            <div class="contact-icon" style="background-color: ${bgColor};">
+                                ${initials}
+                            </div>
+                        `;
+                    })
+                    .join('');
+            }
+        } else {
+            console.error("Failed to fetch contacts from Firebase.");
         }
-    } else {
-        console.error("Failed to fetch contacts from Firebase.");
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
     }
 }
-
-
 
 
 /**
@@ -426,19 +417,6 @@ function closeEditWindow() {
     let overlay = document.getElementById('taskOverlay');
     if (overlay) {
         overlay.classList.remove('d-none');
-    }
-}
-
-/**
- * Updates the overlay content with the task details.
- * @param {string} category - The category of the task.
- * @param {object} task - The task object with updated details.
- */
-function updateOverlayContent(category, task) {
-    let overlayHtml = getBoardOverlayTemplate(category, task);
-    let overlayDetails = document.getElementById('overlayDetails');
-    if (overlayDetails) {
-        overlayDetails.innerHTML = overlayHtml;
     }
 }
 

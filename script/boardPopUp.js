@@ -46,22 +46,19 @@ function closeTaskOverlay(event) {
     }
 }
 
-
-/**
- * Updates the overlay content with task details.
- * @param {string} category - Task category.
- * @param {Object} task - The task object.
- */
-function updateOverlayContent(category, task) {
+async function updateOverlayContent(category, task) {
     let overlayHtml = getBoardOverlayTemplate(category, task);
     let overlayDetails = document.getElementById('overlayDetails');
     if (overlayDetails) {
         overlayDetails.innerHTML = overlayHtml;
     }
-    if (document.getElementById('contact-icons-container')) {
-        syncContactIcons(task.contacts); 
+
+    let contactIconsContainer = document.getElementById('contact-icons-container');
+    if (contactIconsContainer && task.contacts) {
+        await syncContactIcons(task.contacts);
     }
 }
+
 
 /**
  * Hides the task overlay if the event matches the conditions.
@@ -130,7 +127,6 @@ async function fetchContactFromFirebase(contactId) {
             let contact = await response.json();
             return contact || { name: "Unknown" };
         } else {
-            console.error(`Error fetching contact with ID ${encodedContactId}: ${response.statusText}`);
             return { name: "Unknown" };
         }
     } catch (error) {

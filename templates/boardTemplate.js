@@ -149,17 +149,12 @@ function generateContactList(contacts) {
     }).join('');
 }
 
-/**
- * Generates the HTML for the contact list in the overlay.
- * @param {Array} contacts - List of contacts assigned to the task.
- * @returns {string} - HTML string for the contact list in the overlay.
- */
 function generateOverlayContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
     return contacts.map(function(contact) {
         let name = contact && contact.name ? contact.name : "Unknown";
-        let initials = name !== "Unknown" ? getInitials(contact.name) : "?";
-        let bgColor = getRandomColor();
+        let initials = name.split(" ").map(word => word.charAt(0).toUpperCase()).join("");
+        let bgColor = contact.color || getRandomColor();
 
         return `
             <div class="contact-item">
