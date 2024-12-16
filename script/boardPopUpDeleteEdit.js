@@ -230,6 +230,17 @@ function updateContactIcons(assignedContacts) {
 }
 
 
+// CALCULATE DUE DATE OVERLAY
+function calculateDueDateOverlay() {
+    let dueDateOverlay = new Date(); // Korrigierter Variablenname
+    let formattedDateOverlay = dueDateOverlay.toISOString().split('T')[0];
+    const dateInput = document.getElementById('editDueDate');
+    if (dateInput) {
+        dateInput.setAttribute('min', formattedDateOverlay);
+    }
+}
+
+
 /**
  * Enables edit mode for a task, including contacts and subtasks.
  * @param {Object} task - Task object containing details.
@@ -243,13 +254,26 @@ async function enableEditMode(task, category) {
     descriptionElement.innerHTML = `<textarea id="editDescription">${task.description}</textarea>`;
 
     let dueDateElement = document.querySelector('.task-info p:nth-child(1)');
-    dueDateElement.innerHTML = `<input type="date" id="editDueDate" value="${task.dueDate}" />`;
+    dueDateElement.innerHTML = `<input type="date" id="editDueDate" onclick="calculateDueDateOverlay()" value="${task.dueDate || ''}"/>`;
 
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
-    priorityElement.innerHTML = /*HTML*/`<section w3-include-html="../templates/prioButtonsTemplate.html" class=""></section>`;
-    w3.includeHTML();
-    
-
+    priorityElement.innerHTML = /*HTML*/`
+        <div class="fonts font_2A3647">Prio</div>
+        <div class="flex space-between">
+            <button id="urgentBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('urgentBoard', event)">
+                Urgent
+                <img id="urgentSvgBoard" src="../Assets/addTask/Prio alta.svg" alt="">
+            </button>
+            <button id="mediumBoard" type="button" class="prioButton cursorPointer fonts mediumWhite" onclick="setPrioBoard('mediumBoard', event)">
+                Medium
+                <img id="mediumSvgBoard" src="../Assets/addTask/Prio media white.svg" alt="">
+            </button>
+            <button id="lowBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('lowBoard', event)">
+                Low
+                <img id="lowSvgBoard" src="../Assets/addTask/Prio baja.svg" alt="">
+            </button>
+        </div>
+    `;
 
     setTimeout(() => {
         setPrio(task.prio);
