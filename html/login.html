@@ -7,12 +7,12 @@
     <title>Join Program</title>
 
     <link rel="stylesheet" href="../styles/login.css?v=1.0"> <!-- Force cache refresh -->
-    
+
     <script src="../scripts/script.js" defer></script>
     <script src="../scripts/signup.js" defer></script>
 
     <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
-    
+
 
     <link rel="stylesheet" href="../styles/login.css?v=1.0"> <!-- Force cache refresh -->
 
@@ -20,69 +20,79 @@
     <script src="../scripts/signup.js" defer></script>
     <script src="../scripts/script.js" defer></script>
     <script src="../script/contacts.js"></script>
+
+    <script src="../script/summary.js"></script>
 </head>
 
 <body>
-    <div  class="content-wrapper">
-    
-    <div class="join-login">
-        <div class="joinLogo" id="login-logoContainer">
+    <div class="content-wrapper">
+        <div class="join-login" id="forGreeting">
+            <div class="joinLogo" id="login-logoContainer">
 
-            <img src="../Assets/joinLogo.svg" alt=""> <!-- Fixed 'Assets' typo -->
+                <img src="../Assets/joinLogo.svg" alt=""> <!-- Fixed 'Assets' typo -->
 
+            </div>
+
+            <div class="login-joinContainer">
+                <h1>Log in</h1>
+                <form id="join-form" onsubmit="logIn(event)">
+                    <div class="input-group">
+                        <input type="text" id="name" name="name" placeholder="Email" required>
+                        <span class="icon cursorPointer">
+                            <img id="passwordImg" src="../Assets/mail.svg" alt="">
+
+                        </span>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="login-password" name="password" placeholder="Password" required
+                            autocomplete="new-password">
+                        <span class="icon"
+                            onclick="togglePasswordVisibility('login-password', 'loginTogglePasswordIcon')">
+                            <img id="loginTogglePasswordIcon" src="../Assets/visibility_off - Copy.svg"
+                                alt="Show Password" style="cursor: pointer;">
+                        </span>
+                    </div>
+
+                    <div class="checkbox">
+                        <input type="checkbox" id="passCheckBox">
+                        <label for="passCheckBox">Remind me</label>
+                    </div>
+
+                    <div class="buttons User-Guest">
+                        <button type="submit" class="btn login-button">Log in</button>
+                        <button type="button" class="login-button guest-btn cursorPointer" onclick="guestLogin()">Guest
+                            log
+                            in</button>
+                        <p id="response-message" class="response-message"></p>
+                        <div id="toast" class="toast"></div>
+                    </div>
+                </form>
+            </div>
         </div>
-       
-        <div class="login-joinContainer">
-            <h1>Log in</h1>
-            <form id="join-form" onsubmit="logIn(event)">
-                <div class="input-group">
-                    <input type="text" id="name" name="name" placeholder="Email" required>
-                    <span class="icon cursorPointer">
-                        <img id="passwordImg" src="../Assets/mail.svg" alt="">
 
-                    </span>
-                </div>
-
-                <div class="input-group">
-                    <input type="password" id="login-password" name="password" placeholder="Password" required
-                        autocomplete="new-password">
-                    <span class="icon" onclick="togglePasswordVisibility('login-password', 'loginTogglePasswordIcon')">
-                        <img id="loginTogglePasswordIcon" src="../Assets/visibility_off - Copy.svg" alt="Show Password"
-                            style="cursor: pointer;">
-                    </span>
-                </div>
-
-                <div class="checkbox">
-                    <input type="checkbox" id="passCheckBox">
-                    <label for="passCheckBox">Remind me</label>
-                </div>
-
-                <div class="buttons User-Guest">
-                    <button type="submit" class="btn login-button">Log in</button>
-                    <button type="button" class="login-button guest-btn cursorPointer" onclick="guestLogin()">Guest log
-                        in</button>
-                    <p id="response-message" class="response-message"></p>
-                    <div id="toast" class="toast"></div>
-                </div>
-            </form>
+        <div id="greetingLogin" class="dnone">
+            <aside w3-include-html="../templates/greetingTemplate.html"></aside>
         </div>
-    </div>
-    <div class="login-signup-button">
-        <span>Not a Join User?</span>
-        <a href="../html/signUp.html">
-            <button class="login-button cursorPointer">Sign Up</button>
-        </a>
-    </div>
-    <div id="sidefoot" class="legalPolicy">
-        <a class="sidebartext widget" href="../html/policy.html">Privacy Policy</a>        
-        <a class="sidebartext widget" href="../html/legalNotice.html">Legal Notice</a>        
-    </div>
-    
-   
-    
-</div>
 
-    
+        <div id="buttonLoginForGreeting" class="login-signup-button">
+            <span>Not a Join User?</span>
+            <a href="../html/signUp.html">
+                <button class="login-button cursorPointer">Sign Up</button>
+            </a>
+        </div>
+        <div id="sidefoot" class="legalPolicy">
+            <a class="sidebartext widget" href="../html/policy.html">Privacy Policy</a>
+            <a class="sidebartext widget" href="../html/legalNotice.html">Legal Notice</a>
+        </div>
+
+
+
+    </div>
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+    <script>
+        w3.includeHTML();
+    </script>
 </body>
 
 </html>

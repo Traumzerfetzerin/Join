@@ -101,7 +101,7 @@ function logIn(event) {
         })
         .then(user => {
             if (user && user.password === password) {
-                let fullName = user.name || email; 
+                let fullName = user.name || email;
                 localStorage.setItem('loggedInUserName', fullName);
 
                 showToast('Login successful! Redirecting...');
@@ -147,7 +147,7 @@ function getInitials(nameOrEmail) {
  * Function to log in as a guest.
  * Sets 'G' as the guest initial and redirects to the board page.
  */
-function guestLogin() {
+async function guestLogin() {
     const guestInitial = 'G';
 
     const userIcon = document.getElementById('name_menu');
@@ -156,8 +156,24 @@ function guestLogin() {
     }
 
     localStorage.setItem('currentUserInitial', guestInitial);
-    window.location.href = 'summary.html';
+
+    if (window.matchMedia("(max-width: 1000px)").matches) {
+        greetingTemplate();
+    }
+
+    setTimeout(() => {
+        window.location.href = 'summary.html';
+    }, 1000);
 }
+
+
+async function greetingTemplate() {
+    document.getElementById('greetingLogin').classList.remove('dnone');
+    document.getElementById('forGreeting').classList.add('dnone');
+    document.getElementById('sidefoot').classList.add('dnone');
+    document.getElementById('buttonLoginForGreeting').classList.add('d-none');
+}
+
 
 /**
  * Check if email already exists in the Firebase database.
@@ -217,7 +233,7 @@ function logout() {
     if (userIcon) {
         userIcon.textContent = 'G';
     }
-    
+
     // Redirect to login page
     window.location.href = 'html/summary.html'; // Update the path if needed
 }
