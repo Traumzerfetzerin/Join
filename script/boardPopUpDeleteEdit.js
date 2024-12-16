@@ -166,7 +166,7 @@ function editTask(taskId, category) {
     enableEditMode(task, category);
     renderSubtasksInEditMode(task, category);
     syncContactIcons(task.contacts);
-}    
+}
 
 /**
  * Updates the dropdown with all contacts and ensures icons are displayed.
@@ -246,23 +246,10 @@ async function enableEditMode(task, category) {
     dueDateElement.innerHTML = `<input type="date" id="editDueDate" value="${task.dueDate}" />`;
 
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
-    priorityElement.innerHTML = `
-        <div class="fonts font_2A3647">Prio</div>
-        <div class="flex space-between">
-            <button id="urgent" type="button" class="prioButton cursorPointer fonts" onclick="setPrio('urgent', event)">
-                Urgent
-                <img id="urgentSvg" src="../Assets/addTask/Prio alta.svg" alt="">
-            </button>
-            <button id="medium" type="button" class="prioButton cursorPointer fonts mediumWhite" onclick="setPrio('medium', event)">
-                Medium
-                <img id="mediumSvg" src="../Assets/addTask/Prio media white.svg" alt="">
-            </button>
-            <button id="low" type="button" class="prioButton cursorPointer fonts" onclick="setPrio('low', event)">
-                Low
-                <img id="lowSvg" src="../Assets/addTask/Prio baja.svg" alt="">
-            </button>
-        </div>
-    `;
+    priorityElement.innerHTML = /*HTML*/`<section w3-include-html="../templates/prioButtonsTemplate.html" class=""></section>`;
+    w3.includeHTML();
+    
+
 
     setTimeout(() => {
         setPrio(task.prio);
@@ -368,7 +355,7 @@ function renderSubtasksInEditMode(task, category) {
                 </div>
             `;
             subtaskContainer.innerHTML += subtaskHTML;
-        });        
+        });
     }
 }
 
@@ -423,8 +410,8 @@ async function saveEditedTask(taskId, category) {
  */
 function getUpdatedTask(taskId, category) {
     let updatedTask = {
-        id: taskId, 
-        category: category, 
+        id: taskId,
+        category: category,
     };
 
     let inputTitle = document.getElementById('inputTitle');
@@ -513,5 +500,5 @@ function closeEditWindow() {
  * Refreshes the page or updates the UI dynamically.
  */
 function refreshPageOrUpdateUI() {
-    location.reload(); 
+    location.reload();
 }
