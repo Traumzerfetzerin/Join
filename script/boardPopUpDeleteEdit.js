@@ -23,6 +23,38 @@ async function deleteTask(category, taskId) {
 }
 
 /**
+ * Deletes a subtask from the DOM and Firebase in edit mode.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {number} subtaskIndex - The index of the subtask to delete.
+ */
+async function deleteSubtaskEdit(taskId, category, subtaskIndex) {
+    // Remove the subtask from the DOM
+    let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
+    if (subtaskElement) {
+        subtaskElement.remove();
+    }
+
+    // Fetch the current task from Firebase
+    let task = await fetchTaskById(category, taskId);
+    if (!task || !Array.isArray(task.subtasks)) {
+        console.error("Task or subtasks not found.");
+        return;
+    }
+
+    // Remove the subtask from the list
+    task.subtasks.splice(subtaskIndex, 1);
+
+    // Save the updated task to Firebase
+    try {
+        await updateTaskInDatabase(category, taskId, task);
+        console.log(`Subtask ${subtaskIndex} deleted successfully.`);
+    } catch (error) {
+        console.error("Error deleting subtask from Firebase:", error);
+    }
+}
+
+/**
  * Synchronizes the contact icons in the overlay with the task details.
  * @param {Array} contactIds - Array of contact IDs or contact names assigned to the task.
  */
@@ -42,7 +74,6 @@ async function syncContactIcons(contactIds) {
             }));
 
             let assignedContacts = contacts.filter(contact => contactIds.includes(contact.id) || contactIds.includes(contact.name));
-            console.log("Assigned contacts:", assignedContacts);
 
             let contactIconsContainer = document.getElementById('contact-icons-container');
             if (contactIconsContainer) {
@@ -77,9 +108,9 @@ function editTask(taskId, category) {
     if (!task) return;
 
     enableEditMode(task, category);
-    renderSubtasksInEditMode(task);
-    syncContactIcons(task.contacts); // Synchronisiert die Kontakt-Icons nach dem Wechsel in den Edit-Modus
-}
+    renderSubtasksInEditMode(task, category);
+    syncContactIcons(task.contacts);
+}    
 
 /**
  * Updates the dropdown with all contacts and ensures icons are displayed.
@@ -97,11 +128,7 @@ function updateContactDropdown(allContacts, assignedContactIds) {
         assignedContactIds = assignedContactIds.map(contact => contact.id);
     }
 
-    console.log("Assigned contact IDs (processed):", assignedContactIds);
-
     let assignedContacts = allContacts.filter(contact => assignedContactIds.includes(contact.id));
-    console.log("Filtered assigned contacts for dropdown:", assignedContacts);
-
     dropdownContainer.innerHTML = `
         <strong>Assigned To:</strong>
         <div class="dropdown-header" onclick="toggleEditDropdown()">
@@ -254,35 +281,41 @@ function fillSubtasks(subtasks) {
     });
 }
 
-function renderSubtasksInEditMode(task) {
+/**
+ * Renders the subtasks in edit mode.
+ * @param {Object} task - The task containing the subtasks.
+ * @param {string} category - The category of the task.
+ */
+function renderSubtasksInEditMode(task, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
 
+    if (!Array.isArray(task.subtasks)) {
+        console.error("Subtasks are not defined or are not an array.");
+        return;
+    }
+
     subtaskContainer.innerHTML = '';
-
-    subtaskContainer.innerHTML += `
-        <div class="input-with-icon" id="inputSubtask">
-            <input type="text" id="newSubtaskInput" placeholder="Add new subtask" class="add-task-title">
-            <img id="addSubtaskButton" class="subtaskImg cursorPointer" 
-                src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask()">
-        </div>
-    `;
-
-    task.subtasks.forEach((subtask, index) => {
-        let subtaskHTML = `
-            <div class="subtask-item">
-                <span contenteditable="true" class="editSubtaskText">${subtask.text}</span>
-                <div class="subtask-icons">
-                    <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                         alt="Edit" onclick="editSubtask('${index}')">
-                    <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                         alt="Delete" onclick="deleteSubtask('${index}')">
+    if (task.subtasks.length === 0) {
+        subtaskContainer.innerHTML = "<li>No subtasks available</li>";
+    } else {
+        task.subtasks.forEach((subtask, index) => {
+            let subtaskHTML = `
+                <div id="subtaskDiv_${index}" class="subtask-item">
+                    <span contenteditable="true" class="editSubtaskText">${subtask.text}</span>
+                    <div class="subtask-icons">
+                        <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                             alt="Edit" onclick="editSubtask('${task.id}', '${category}', ${index})">
+                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                             alt="Delete" onclick="deleteSubtaskEdit('${task.id}', '${category}', ${index})">
+                    </div>
                 </div>
-            </div>
-        `;
-        subtaskContainer.innerHTML += subtaskHTML;
-    });
+            `;
+            subtaskContainer.innerHTML += subtaskHTML;
+        });
+    }
 }
+
 
 
 

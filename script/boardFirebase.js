@@ -177,3 +177,52 @@ async function fetchTaskById(category, taskId) {
         return null;
     }
 }
+
+/**
+ * Aktualisiert einen Subtask in Firebase.
+ * @param {string} taskId - Die ID der Aufgabe.
+ * @param {string} category - Die Kategorie der Aufgabe.
+ * @param {number} subtaskIndex - Der Index des zu aktualisierenden Subtasks.
+ * @param {string} newText - Der neue Text des Subtasks.
+ */
+async function updateSubtaskInFirebase(taskId, category, subtaskIndex, newText) {
+    try {
+        let task = await fetchTaskById(category, taskId);
+        if (!task) return;
+
+        if (task.subtasks && task.subtasks[subtaskIndex]) {
+            task.subtasks[subtaskIndex].text = newText;
+
+            await saveTaskToCategory(taskId, category, task);
+            console.log(`Subtask ${subtaskIndex} erfolgreich aktualisiert.`);
+        } else {
+            console.error("Subtask nicht gefunden.");
+        }
+    } catch (error) {
+        console.error("Fehler beim Aktualisieren des Subtasks:", error);
+    }
+}
+
+/**
+ * Löscht einen Subtask aus Firebase.
+ * @param {string} taskId - Die ID der Aufgabe.
+ * @param {string} category - Die Kategorie der Aufgabe.
+ * @param {number} subtaskIndex - Der Index des zu löschenden Subtasks.
+ */
+async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
+    try {
+        let task = await fetchTaskById(category, taskId);
+        if (!task) return;
+
+        if (task.subtasks && task.subtasks[subtaskIndex]) {
+            task.subtasks.splice(subtaskIndex, 1); // Entfernt den Subtask aus der Liste
+
+            await saveTaskToCategory(taskId, category, task);
+            console.log(`Subtask ${subtaskIndex} erfolgreich gelöscht.`);
+        } else {
+            console.error("Subtask nicht gefunden.");
+        }
+    } catch (error) {
+        console.error("Fehler beim Löschen des Subtasks:", error);
+    }
+}
