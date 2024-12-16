@@ -262,15 +262,15 @@ async function enableEditMode(task, category) {
         <div class="flex space-between">
             <button id="urgentBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('urgentBoard', event)">
                 Urgent
-                <img id="urgentSvgBoard" src="../Assets/addTask/Prio alta.svg" alt="">
+                <img id="urgentBoardSvg" src="../Assets/addTask/Prio alta.svg" alt="">
             </button>
             <button id="mediumBoard" type="button" class="prioButton cursorPointer fonts mediumWhite" onclick="setPrioBoard('mediumBoard', event)">
                 Medium
-                <img id="mediumSvgBoard" src="../Assets/addTask/Prio media white.svg" alt="">
+                <img id="mediumBoardSvg" src="../Assets/addTask/Prio media white.svg" alt="">
             </button>
             <button id="lowBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('lowBoard', event)">
                 Low
-                <img id="lowSvgBoard" src="../Assets/addTask/Prio baja.svg" alt="">
+                <img id="lowBoardSvg" src="../Assets/addTask/Prio baja.svg" alt="">
             </button>
         </div>
     `;

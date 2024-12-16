@@ -32,31 +32,31 @@ function setPrioBoard(prioBoard, event = null) {
 // PRIO BUTTON LOW
 function lowPrioButtonBoard(priorityButtonBoard) {
     document.getElementById(priorityButtonBoard).classList.add('lowWhite');
-    document.getElementById(`${priorityButtonBoard}SvgBoard`).src = "../Assets/addTask/Prio_baja_white.svg";
+    document.getElementById(`${priorityButtonBoard}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
     document.getElementById('mediumBoard').classList.remove('mediumWhite');
     document.getElementById('urgentBoard').classList.remove('urgentWhite');
-    document.getElementById(`mediumSvgBoard`).src = "../Assets/addTask/Prio media.svg";
-    document.getElementById(`urgentSvgBoard`).src = "../Assets/addTask/Prio alta.svg";
+    document.getElementById(`mediumBoardSvg`).src = "../Assets/addTask/Prio media.svg";
+    document.getElementById(`urgentBoardSvg`).src = "../Assets/addTask/Prio alta.svg";
 }
 
 
 // PRIO BUTTON MEDIUM
 function mediumPrioButtonBoard(priorityButtonBoard) {
     document.getElementById(priorityButtonBoard).classList.add('mediumWhite');
-    document.getElementById(`${priorityButtonBoard}SvgBoard`).src = "../Assets/addTask/Prio media white.svg";
+    document.getElementById(`${priorityButtonBoard}Svg`).src = "../Assets/addTask/Prio media white.svg";
     document.getElementById('lowBoard').classList.remove('lowWhite');
     document.getElementById('urgentBoard').classList.remove('urgentWhite');
-    document.getElementById(`lowSvgBoard`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`urgentSvgBoard`).src = "../Assets/addTask/Prio alta.svg";
+    document.getElementById(`lowBoardSvg`).src = "../Assets/addTask/Prio baja.svg";
+    document.getElementById(`urgentBoardSvg`).src = "../Assets/addTask/Prio alta.svg";
 }
 
 
 // PRIO BUTTON URGENT
 function urgentPrioButtonBoard(priorityButtonBoard) {
     document.getElementById(priorityButtonBoard).classList.add('urgentWhite');
-    document.getElementById(`${priorityButtonBoard}SvgBoard`).src = "../Assets/addTask/Prio_alta_white.svg";
+    document.getElementById(`${priorityButtonBoard}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
     document.getElementById('lowBoard').classList.remove('lowWhite');
     document.getElementById('mediumBoard').classList.remove('mediumWhite');
-    document.getElementById(`lowSvgBoard`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`mediumSvgBoard`).src = "../Assets/addTask/Prio media.svg";
+    document.getElementById(`lowBoardSvg`).src = "../Assets/addTask/Prio baja.svg";
+    document.getElementById(`mediumBoardSvg`).src = "../Assets/addTask/Prio media.svg";
 }
