@@ -27,25 +27,29 @@ function showOverlay() {
     document.body.classList.add("no-scroll");
 }
 
-
 /**
  * Closes the task overlay when the background or close button is clicked.
- * @param {Event} event - The event that triggers the overlay close.
+ * @param {Event} [event] - The event that triggers the overlay close.
  */
 function closeTaskOverlay(event) {
     let taskOverlay = document.getElementById("taskOverlay");
     let backgroundOverlay = document.getElementById("backgroundOverlay");
     if (!taskOverlay || !backgroundOverlay) return;
 
-    if (event.target === backgroundOverlay || event.target === taskOverlay || event.target.tagName === "BUTTON") {
+    if (!event || event.target === backgroundOverlay || event.target === taskOverlay || event.target.tagName === "BUTTON") {
         taskOverlay.classList.add("dNone");
         taskOverlay.style.display = "none";
-
         backgroundOverlay.classList.remove("active");
         document.body.classList.remove("no-scroll");
     }
 }
 
+/**
+ * Updates the overlay content with the latest task data.
+ * @param {string} category - The category of the task.
+ * @param {Object} task - The updated task data.
+ * @returns {Promise<void>}
+ */
 async function updateOverlayContent(category, task) {
     let overlayHtml = getBoardOverlayTemplate(category, task);
     let overlayDetails = document.getElementById('overlayDetails');
@@ -119,6 +123,11 @@ window.onload = function () {
     taskOverlay.classList.add("dNone");
 };
 
+/**
+ * Fetches contact data from Firebase.
+ * @param {string} contactId - The ID of the contact.
+ * @returns {Promise<Object>} - The contact data.
+ */
 async function fetchContactFromFirebase(contactId) {
     try {
         let encodedContactId = encodeURIComponent(contactId);

@@ -62,11 +62,24 @@ function editSubtaskEdit(taskId, category, subtaskIndex) {
     }
 
     let currentText = subtaskElement.querySelector('.editSubtaskText').innerText;
-    subtaskElement.innerHTML = `
-        <input type="text" id="editSubtaskInput_${subtaskIndex}" value="${currentText}" 
-               onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-        <button onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
-    `;
+    let existingInput = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
+    
+    if (!existingInput) {
+        let inputHtml = `
+            <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}" 
+                   onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+            <button class="save-subtask-button" onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
+        `;
+        subtaskElement.innerHTML += inputHtml;
+    } else {
+        existingInput.value = currentText;
+        existingInput.style.display = 'block';
+        existingInput.nextElementSibling.style.display = 'inline-block'; // Show the save button
+    }
+
+    subtaskElement.querySelector('.editSubtaskText').style.display = 'none';
+    subtaskElement.querySelector('.subtask-icons').style.display = 'none';
+    subtaskElement.classList.add('editing');
 }
 
 /**
@@ -84,15 +97,15 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
 
     let newText = inputField.value.trim();
     let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
-    subtaskElement.innerHTML = `
-        <span contenteditable="true" class="editSubtaskText">${newText}</span>
-        <div class="subtask-icons">
-            <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                 alt="Edit" onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-            <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                 alt="Delete" onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-        </div>
-    `;
+    let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
+
+    subtaskTextElement.innerText = newText;
+    subtaskTextElement.style.display = 'block';
+    subtaskElement.querySelector('.subtask-icons').style.display = 'flex';
+
+    inputField.style.display = 'none';
+    inputField.nextElementSibling.style.display = 'none'; // Hide the save button
+    subtaskElement.classList.remove('editing');
 
     let task = await fetchTaskById(category, taskId);
     if (!task || !Array.isArray(task.subtasks)) {
@@ -109,12 +122,17 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
     }
 }
 
-
 /**
- * Synchronizes the contact icons in the overlay with the task details.
- * @param {Array} contactIds - Array of contact IDs or contact names assigned to the task.
+ * Syncs contact icons in the overlay with the task details.
+ * @param {Array} contactIds - An array of contact IDs.
+ * @returns {Promise<void>}
  */
 async function syncContactIcons(contactIds) {
+    if (!contactIds || contactIds.length === 0) {
+        console.error("No contact IDs provided for syncing.");
+        return;
+    }
+
     if (typeof contactIds[0] === 'object') {
         contactIds = contactIds.map(contact => contact.id || contact.name);
     }
@@ -153,7 +171,6 @@ async function syncContactIcons(contactIds) {
     }
 }
 
-
 /**
  * Enables edit mode for a specific task, ensuring the correct contact dropdown and icons.
  * @param {string} taskId - The ID of the task to edit.
@@ -165,7 +182,12 @@ function editTask(taskId, category) {
 
     enableEditMode(task, category);
     renderSubtasksInEditMode(task, category);
-    syncContactIcons(task.contacts);
+
+    if (task.contacts && task.contacts.length > 0) {
+        syncContactIcons(task.contacts);
+    } else {
+        console.error("No contacts found for the task.");
+    }
 }
 
 /**
@@ -240,7 +262,6 @@ function calculateDueDateOverlay() {
     }
 }
 
-
 /**
  * Enables edit mode for a task, including contacts and subtasks.
  * @param {Object} task - Task object containing details.
@@ -257,7 +278,7 @@ async function enableEditMode(task, category) {
     dueDateElement.innerHTML = `<input type="date" id="editDueDate" onclick="calculateDueDateOverlay()" value="${task.dueDate || ''}"/>`;
 
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
-    priorityElement.innerHTML = /*HTML*/`
+    priorityElement.innerHTML = `
         <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
             <button id="urgentBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('urgentBoard', event)">
@@ -285,6 +306,7 @@ async function enableEditMode(task, category) {
     if (contactsData) {
         let allContacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
         updateContactDropdown(allContacts, task.contacts || []);
+        syncContactIcons(task.contacts || []);
     } else {
         console.error("Failed to fetch contacts from Firebase.");
     }
@@ -294,7 +316,6 @@ async function enableEditMode(task, category) {
         <button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
     `;
 }
-
 
 /**
  * Toggles the visibility of the contact dropdown and the icons.
@@ -357,19 +378,18 @@ function renderSubtasksInEditMode(task, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
 
-    if (!Array.isArray(task.subtasks)) {
-        console.error("Subtasks are not defined or are not an array.");
-        return;
-    }
+    subtaskContainer.innerHTML = `
+        <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
+        <img id="addSubtaskButton" class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask('${task.id}', '${category}')">
+    `;
 
-    subtaskContainer.innerHTML = '';
-    if (task.subtasks.length === 0) {
-        subtaskContainer.innerHTML = "<li>No subtasks available</li>";
+    if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
+        subtaskContainer.innerHTML += "<div>No subtasks available</div>";
     } else {
         task.subtasks.forEach((subtask, index) => {
             let subtaskHTML = `
                 <div id="subtaskDiv_${index}" class="subtask-item">
-                    <span contenteditable="true" class="editSubtaskText">${subtask.text}</span>
+                    <span class="editSubtaskText" contenteditable="true">${subtask.text}</span>
                     <div class="subtask-icons">
                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
                              alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
@@ -383,30 +403,32 @@ function renderSubtasksInEditMode(task, category) {
     }
 }
 
-
-
-
-function addNewSubtask() {
+/**
+ * Adds a new subtask to the list in edit mode.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ */
+function addNewSubtask(taskId, category) {
     let newSubtaskInput = document.getElementById('newSubtaskInput');
     let subtaskText = newSubtaskInput.value.trim();
     if (subtaskText === "") return;
 
-    let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
+    let subtaskContainer = document.querySelector('.subtasks-list');
+    let subtaskIndex = subtaskContainer.querySelectorAll('.subtask-item').length;
     let subtaskHTML = `
-        <div class="subtask-item">
+        <div id="subtaskDiv_${subtaskIndex}" class="subtask-item">
             <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
             <div class="subtask-icons">
                 <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                     alt="Edit" onclick="editSubtask('${subtaskText}')">
+                     alt="Edit" onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
                 <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                     alt="Delete" onclick="deleteSubtask('${subtaskText}')">
+                     alt="Delete" onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
             </div>
         </div>
     `;
-    subtaskContainer.innerHTML += subtaskHTML;
+    subtaskContainer.insertAdjacentHTML('beforeend', subtaskHTML);
     newSubtaskInput.value = "";
 }
-
 
 /**
  * Saves the edited task to Firebase and updates the board.
@@ -438,17 +460,28 @@ function getUpdatedTask(taskId, category) {
         category: category,
     };
 
-    let inputTitle = document.getElementById('inputTitle');
+    let inputTitle = document.getElementById('editTitle');
     updatedTask.title = inputTitle ? inputTitle.value.trim() : "";
 
-    let textareaDescription = document.getElementById('textareaDescription');
+    let textareaDescription = document.getElementById('editDescription');
     updatedTask.description = textareaDescription ? textareaDescription.value.trim() : "";
 
-    let dueDate = document.getElementById('dueDate');
+    let dueDate = document.getElementById('editDueDate');
     updatedTask.dueDate = dueDate ? dueDate.value : "";
 
-    let priorityButtons = document.querySelectorAll('.prioButton.active');
-    updatedTask.prio = priorityButtons.length > 0 ? priorityButtons[0].id : "";
+    updatedTask.prio = selectedPrioBoard;
+
+    let contactCheckboxes = document.querySelectorAll('#editAssignTaskDropdown input[type="checkbox"]:checked');
+    updatedTask.contacts = Array.from(contactCheckboxes).map(checkbox => checkbox.value);
+
+    let subtaskInputs = document.querySelectorAll('.editSubtaskText');
+    updatedTask.subtasks = Array.from(subtaskInputs).map((input, index) => {
+        let checkbox = document.querySelector(`#subtaskDiv_${index} input[type="checkbox"]`);
+        return {
+            text: input.innerText.trim(),
+            completed: checkbox ? checkbox.checked : false
+        };
+    });
 
     return updatedTask;
 }
@@ -494,15 +527,18 @@ function finalizeTaskUpdate(updatedTask, category, taskId) {
 async function saveChanges(taskId, category) {
     let updatedTask = getUpdatedTask(taskId, category);
 
-    let subtaskInputs = document.querySelectorAll('.editSubtaskInput');
-    updatedTask.subtasks = Array.from(subtaskInputs).map(input => ({
-        text: input.value.trim(),
-        completed: input.previousElementSibling.checked
-    }));
-
     await updateTaskInDatabase(category, taskId, updatedTask);
-    updateOverlayContent(category, updatedTask);
-    closeEditWindow();
+
+    if (!taskData[category]) {
+        taskData[category] = {};
+    }
+
+    taskData[category][taskId] = updatedTask; 
+
+    setTimeout(() => {
+        loadTasks(taskData); 
+        closeEditWindow();
+    }, 500); 
 }
 
 /**
@@ -518,6 +554,8 @@ function closeEditWindow() {
     if (overlay) {
         overlay.classList.remove('d-none');
     }
+
+    closeTaskOverlay();
 }
 
 /**

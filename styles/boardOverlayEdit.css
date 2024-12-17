@@ -97,3 +97,45 @@ button[onclick="toggleEditDropdown()"]:hover {
     pointer-events: none;
     margin-left: 10px;
 }
+
+.subtasks-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subtask-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.subtask-icons {
+    display: flex;
+    gap: 5px;
+}
+
+.subtask-icons img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#newSubtaskInput {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#addSubtaskButton {
+    cursor: pointer;
+    margin-left: 10px;
+}
+

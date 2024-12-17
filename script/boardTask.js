@@ -1,13 +1,12 @@
 /**
- * Finds a task in taskData by its ID.
- * @param {string} taskId - ID of the task to find.
- * @returns {object|null} - The task object if found, otherwise null.
+ * Finds a task in the local task data by its ID.
+ * @param {string} taskId - The ID of the task to find.
+ * @returns {Object|null} - The task object if found, otherwise null.
  */
 function findTaskInData(taskId) {
     for (let category in taskData) {
-        let tasks = taskData[category];
-        if (tasks[taskId]) {
-            return tasks[taskId];
+        if (taskData[category][taskId]) {
+            return taskData[category][taskId];
         }
     }
     return null;

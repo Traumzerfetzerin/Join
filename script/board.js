@@ -77,7 +77,8 @@ function addTaskToColumn(task, category, taskId, columns) {
         progress.completed
     );
 
-    addTaskToColumnDom(taskHtml, columnElement, category, taskId)    
+    addTaskToColumnDom(taskHtml, columnElement, category, taskId);
+    syncContactIcons(task.contacts || []);
 }
 
 

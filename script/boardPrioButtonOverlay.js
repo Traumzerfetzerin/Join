@@ -2,7 +2,6 @@ let selectedPrioBoard = null;
 
 /**
  * Sets the selected priority and highlights the selected button.
- * 
  * @param {string} prioBoard - The priority to be set (e.g., 'lowBoard', 'mediumBoard', 'urgentBoard').
  * @param {Event|null} event - The event to prevent default behavior (can be null for direct calls).
  */
@@ -13,21 +12,21 @@ function setPrioBoard(prioBoard, event = null) {
 
     selectedPrioBoard = prioBoard;
 
-    // Deselect all priority buttons
     document.getElementById('lowBoard').classList.remove('lowWhite');
     document.getElementById('mediumBoard').classList.remove('mediumWhite');
     document.getElementById('urgentBoard').classList.remove('urgentWhite');
 
-    // Update the specific button style
     if (prioBoard === 'lowBoard') {
-        lowPrioButtonBoard('lowBoard');
+        document.getElementById('lowBoard').classList.add('lowWhite');
+        document.getElementById('lowBoardSvg').src = "../Assets/addTask/Prio_baja_white.svg";
     } else if (prioBoard === 'mediumBoard') {
-        mediumPrioButtonBoard('mediumBoard');
+        document.getElementById('mediumBoard').classList.add('mediumWhite');
+        document.getElementById('mediumBoardSvg').src = "../Assets/addTask/Prio_media_white.svg";
     } else if (prioBoard === 'urgentBoard') {
-        urgentPrioButtonBoard('urgentBoard');
+        document.getElementById('urgentBoard').classList.add('urgentWhite');
+        document.getElementById('urgentBoardSvg').src = "../Assets/addTask/Prio_alta_white.svg";
     }
 }
-
 
 // PRIO BUTTON LOW
 function lowPrioButtonBoard(priorityButtonBoard) {
