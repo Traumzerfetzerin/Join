@@ -1,57 +1,4 @@
 /**
- * Deletes a task from Firebase, updates the board, and closes the overlay.
- * @param {string} category - The category of the task.
- * @param {string} taskId - The ID of the task to delete.
- */
-async function deleteTask(category, taskId) {
-    try {
-        let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-            method: "DELETE"
-        });
-
-        if (response.ok) {
-            delete taskData[category][taskId];
-            loadTasks(taskData);
-            refreshPageOrUpdateUI();
-            closeTaskOverlay();
-        } else {
-            console.error(`Failed to delete task with ID ${taskId}: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error(`Error deleting task with ID ${taskId}:`, error);
-    }
-}
-
-/**
- * Deletes a subtask from the DOM and Firebase in edit mode.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask.
- */
-async function deleteSubtask(taskId, category, subtaskIndex) {
-    try {
-        let task = taskData[category][taskId];
-        if (task && task.subtasks) {
-            task.subtasks.splice(subtaskIndex, 1);
-
-            let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(task.subtasks)
-            });
-
-            if (!response.ok) {
-                console.error(`Failed to delete subtask: ${response.statusText}`);
-            } else {
-                refreshPageOrUpdateUI();
-            }
-        }
-    } catch (error) {
-        console.error(`Error deleting subtask:`, error);
-    }
-}
-
-/**
  * Enables editing of a subtask in edit mode.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The category of the task.
@@ -439,96 +386,6 @@ async function saveEditedTask(taskId, category) {
     }
 }
 
-/**
- * Retrieves updated task details from the form inputs.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @returns {object} - The updated task object containing the new details.
- */
-function getUpdatedTask(taskId, category) {
-    let updatedTask = {
-        id: taskId,
-        category: category,
-    };
-
-    // Title
-    let inputTitle = document.getElementById('task-title');
-    if (!inputTitle) {
-        console.error("Title input not found.");
-        return null;
-    }
-    updatedTask.title = inputTitle.value.trim();
-
-    // Description
-    let textareaDescription = document.getElementById('task-description');
-    if (!textareaDescription) {
-        console.error("Description input not found.");
-        return null;
-    }
-    updatedTask.description = textareaDescription.value.trim();
-
-    // Due Date
-    let dueDate = document.getElementById('task-due-date');
-    if (!dueDate) {
-        console.error("Due date input not found.");
-        return null;
-    }
-    updatedTask.dueDate = dueDate.value;
-
-    // Priority
-    if (!selectedPrioBoard) {
-        console.error("Priority not selected.");
-        return null;
-    }
-    updatedTask.prio = selectedPrioBoard;
-
-    // Subtasks
-    let subtaskElements = document.querySelectorAll('#subtasks-container div');
-    if (!subtaskElements || subtaskElements.length === 0) {
-        console.warn("No subtasks found.");
-    }
-    updatedTask.subtasks = Array.from(subtaskElements).map(subtaskElement => {
-        let checkbox = subtaskElement.querySelector('input[type="checkbox"]');
-        let textInput = subtaskElement.querySelector('input[type="text"]');
-        if (checkbox && textInput) {
-            return {
-                text: textInput.value.trim(),
-                completed: checkbox.checked
-            };
-        }
-        console.error("Invalid subtask element:", subtaskElement);
-        return null;
-    }).filter(subtask => subtask !== null);
-
-    return updatedTask;
-}
-
-
-/**
- * Updates a task in Firebase with new data from the overlay.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {object} newTaskData - The updated task data.
- */
-async function updateTask(taskId, category, newTaskData) {
-    try {
-        let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newTaskData)
-        });
-
-        if (response.ok) {
-            taskData[category][taskId] = newTaskData;
-            loadTasks(taskData);
-            refreshPageOrUpdateUI();
-        } else {
-            console.error(`Failed to update task with ID ${taskId}: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error(`Error updating task with ID ${taskId}:`, error);
-    }
-}
 
 /**
  * Loads the task data into the edit overlay for modifications.
@@ -580,27 +437,6 @@ function finalizeTaskUpdate(updatedTask, category, taskId) {
     loadTasks(taskData);
 }
 
-/**
- * Saves changes made to the task in edit mode, updates the overlay with the changes, and closes the edit window.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- */
-async function saveChanges(taskId, category) {
-    let updatedTask = getUpdatedTask(taskId, category);
-
-    await updateTaskInDatabase(category, taskId, updatedTask);
-
-    if (!taskData[category]) {
-        taskData[category] = {};
-    }
-
-    taskData[category][taskId] = updatedTask; 
-
-    setTimeout(() => {
-        loadTasks(taskData); 
-        closeEditWindow();
-    }, 500); 
-}
 
 /**
  * Closes the edit window and resets any temporary states.

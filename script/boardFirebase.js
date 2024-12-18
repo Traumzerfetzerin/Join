@@ -228,25 +228,22 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
 }
 
 /**
- * Updates a specific task in Firebase.
- * @param {string} category - The category of the task.
- * @param {string} taskId - The ID of the task to update.
- * @param {object} updatedData - The updated task data to save.
+ * Updates the task in the Firebase database.
+ * @param {string} category - Task category.
+ * @param {string} taskId - ID of the task.
+ * @param {object} updatedTask - Updated task data.
  */
-async function updateTaskInDatabase(category, taskId, updatedData) {
-    let url = `${TASK_URL}/${category}/${taskId}.json`;
+async function updateTaskInDatabase(category, taskId, updatedTask) {
+    let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks/${category}/${taskId}.json`;
+    let response = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedTask)
+    });
 
-    try {
-        let response = await fetch(url, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedData),
-        });
-
-        if (!response.ok) {
-            console.error(`Failed to update task: ${response.statusText}`);
-        }
-    } catch (error) {
-        console.error("Error updating task in database:", error);
+    if (!response.ok) {
+        throw new Error(`Failed to update task in Firebase: ${response.statusText}`);
     }
+
+    return response.json();
 }
