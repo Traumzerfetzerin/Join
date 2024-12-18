@@ -161,10 +161,15 @@ function dontClose(event) {
 }
 
 window.onload = async function () {
-   let taskOverlay = document.getElementById("taskOverlay");
-   taskOverlay.classList.add("d-none");
-   await fetchTasks();
-};
+    let taskOverlay = document.getElementById("taskOverlay");
+    if (taskOverlay) {
+        taskOverlay.classList.add("dNone");
+    } else {
+        console.warn("Element mit der ID 'taskOverlay' nicht gefunden.");
+    }
+    await fetchTasks();
+ };
+ 
 
 /**
  * Extracts the initials from a contact name.

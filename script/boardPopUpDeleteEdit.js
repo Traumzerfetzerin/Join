@@ -26,25 +26,28 @@ async function deleteTask(category, taskId) {
  * Deletes a subtask from the DOM and Firebase in edit mode.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask to delete.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
-async function deleteSubtaskEdit(taskId, category, subtaskIndex) {
-    let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
-    if (subtaskElement) {
-        subtaskElement.remove();
-    }
-
-    let task = await fetchTaskById(category, taskId);
-    if (!task || !Array.isArray(task.subtasks)) {
-        console.error("Task or subtasks not found.");
-        return;
-    }
-    task.subtasks.splice(subtaskIndex, 1);
+async function deleteSubtask(taskId, category, subtaskIndex) {
     try {
-        await updateTaskInDatabase(category, taskId, task);
-        console.log(`Subtask ${subtaskIndex} deleted successfully.`);
+        let task = taskData[category][taskId];
+        if (task && task.subtasks) {
+            task.subtasks.splice(subtaskIndex, 1);
+
+            let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(task.subtasks)
+            });
+
+            if (!response.ok) {
+                console.error(`Failed to delete subtask: ${response.statusText}`);
+            } else {
+                refreshPageOrUpdateUI();
+            }
+        }
     } catch (error) {
-        console.error("Error deleting subtask from Firebase:", error);
+        console.error(`Error deleting subtask:`, error);
     }
 }
 
@@ -234,7 +237,6 @@ function updateContactDropdown(allContacts, assignedContactIds) {
 }
 
 
-
 function updateContactIcons(assignedContacts) {
     let contactIconsContainer = document.getElementById('contact-icons-container');
     if (!contactIconsContainer) {
@@ -279,20 +281,9 @@ async function enableEditMode(task, category) {
 
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
     priorityElement.innerHTML = `
-        <div class="fonts font_2A3647">Prio</div>
+        <div class="fonts font_2A3647"></div>
         <div class="flex space-between">
-            <button id="urgentBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('urgentBoard', event)">
-                Urgent
-                <img id="urgentBoardSvg" src="../Assets/addTask/Prio alta.svg" alt="">
-            </button>
-            <button id="mediumBoard" type="button" class="prioButton cursorPointer fonts mediumWhite" onclick="setPrioBoard('mediumBoard', event)">
-                Medium
-                <img id="mediumBoardSvg" src="../Assets/addTask/Prio media white.svg" alt="">
-            </button>
-            <button id="lowBoard" type="button" class="prioButton cursorPointer fonts" onclick="setPrioBoard('lowBoard', event)">
-                Low
-                <img id="lowBoardSvg" src="../Assets/addTask/Prio baja.svg" alt="">
-            </button>
+            ${generatePrioButtonsHTML(task.prio, "setPrio")}
         </div>
     `;
 
@@ -460,49 +451,119 @@ function getUpdatedTask(taskId, category) {
         category: category,
     };
 
-    let inputTitle = document.getElementById('editTitle');
-    updatedTask.title = inputTitle ? inputTitle.value.trim() : "";
+    // Title
+    let inputTitle = document.getElementById('task-title');
+    if (!inputTitle) {
+        console.error("Title input not found.");
+        return null;
+    }
+    updatedTask.title = inputTitle.value.trim();
 
-    let textareaDescription = document.getElementById('editDescription');
-    updatedTask.description = textareaDescription ? textareaDescription.value.trim() : "";
+    // Description
+    let textareaDescription = document.getElementById('task-description');
+    if (!textareaDescription) {
+        console.error("Description input not found.");
+        return null;
+    }
+    updatedTask.description = textareaDescription.value.trim();
 
-    let dueDate = document.getElementById('editDueDate');
-    updatedTask.dueDate = dueDate ? dueDate.value : "";
+    // Due Date
+    let dueDate = document.getElementById('task-due-date');
+    if (!dueDate) {
+        console.error("Due date input not found.");
+        return null;
+    }
+    updatedTask.dueDate = dueDate.value;
 
+    // Priority
+    if (!selectedPrioBoard) {
+        console.error("Priority not selected.");
+        return null;
+    }
     updatedTask.prio = selectedPrioBoard;
 
-    let contactCheckboxes = document.querySelectorAll('#editAssignTaskDropdown input[type="checkbox"]:checked');
-    updatedTask.contacts = Array.from(contactCheckboxes).map(checkbox => checkbox.value);
-
-    let subtaskInputs = document.querySelectorAll('.editSubtaskText');
-    updatedTask.subtasks = Array.from(subtaskInputs).map((input, index) => {
-        let checkbox = document.querySelector(`#subtaskDiv_${index} input[type="checkbox"]`);
-        return {
-            text: input.innerText.trim(),
-            completed: checkbox ? checkbox.checked : false
-        };
-    });
+    // Subtasks
+    let subtaskElements = document.querySelectorAll('#subtasks-container div');
+    if (!subtaskElements || subtaskElements.length === 0) {
+        console.warn("No subtasks found.");
+    }
+    updatedTask.subtasks = Array.from(subtaskElements).map(subtaskElement => {
+        let checkbox = subtaskElement.querySelector('input[type="checkbox"]');
+        let textInput = subtaskElement.querySelector('input[type="text"]');
+        if (checkbox && textInput) {
+            return {
+                text: textInput.value.trim(),
+                completed: checkbox.checked
+            };
+        }
+        console.error("Invalid subtask element:", subtaskElement);
+        return null;
+    }).filter(subtask => subtask !== null);
 
     return updatedTask;
 }
 
+
 /**
- * Updates the task in the Firebase database.
- * @param {string} category - The category of the task.
+ * Updates a task in Firebase with new data from the overlay.
  * @param {string} taskId - The ID of the task.
- * @param {Object} updatedTask - The updated task data.
- * @returns {Promise<void>}
+ * @param {string} category - The category of the task.
+ * @param {object} newTaskData - The updated task data.
  */
-async function updateTaskInDatabase(category, taskId, updatedTask) {
+async function updateTask(taskId, category, newTaskData) {
     try {
-        await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedTask),
+        let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newTaskData)
         });
+
+        if (response.ok) {
+            taskData[category][taskId] = newTaskData;
+            loadTasks(taskData);
+            refreshPageOrUpdateUI();
+        } else {
+            console.error(`Failed to update task with ID ${taskId}: ${response.statusText}`);
+        }
     } catch (error) {
-        console.error("Error updating task in database:", error);
-        throw error;
+        console.error(`Error updating task with ID ${taskId}:`, error);
+    }
+}
+
+/**
+ * Loads the task data into the edit overlay for modifications.
+ * @param {string} taskId - The ID of the task to edit.
+ * @param {string} category - The category of the task.
+ */
+function loadTaskToOverlay(taskId, category) {
+    let task = taskData[category][taskId];
+    if (!task) {
+        console.error("Task not found:", taskId);
+        return;
+    }
+
+    document.getElementById('task-title').value = task.title || '';
+    document.getElementById('task-description').value = task.description || '';
+    document.getElementById('task-due-date').value = task.dueDate || '';
+
+    if (task.prio) {
+        console.log("Setting Priority on Load:", task.prio);
+        setPrioBoard(task.prio, null); 
+    } else {
+        console.error("Priority is missing in task data:", task);
+    }
+
+    let subtasksContainer = document.getElementById('subtasks-container');
+    subtasksContainer.innerHTML = '';
+    if (Array.isArray(task.subtasks)) {
+        task.subtasks.forEach((subtask, index) => {
+            let subtaskElement = document.createElement('div');
+            subtaskElement.innerHTML = `
+                <input type="checkbox" ${subtask.completed ? 'checked' : ''} data-index="${index}">
+                <input type="text" value="${subtask.text || ''}" data-index="${index}">
+            `;
+            subtasksContainer.appendChild(subtaskElement);
+        });
     }
 }
 

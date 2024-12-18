@@ -1,75 +1,71 @@
 let selectedPrio = null;
 
 /**
- * Sets the selected priority and highlights the selected button.
- * 
- * @param {string} prio - The priority to be set (e.g., 'Urgent', 'Medium', 'Low').
- * @param {Event|null} event - The event to prevent default behavior (can be null for direct calls).
+ * Sets the selected priority and updates the corresponding button and icon.
+ * @param {string} priority - The priority to set (e.g., 'low', 'medium', 'urgent').
+ * @param {Event|null} event - The event to prevent default behavior (optional).
  */
-function setPrio(prio, event = null) {
-    // Prevent default action if an event is provided
-    if (event) {
-        event.preventDefault();
+function setPrio(priority, event = null) {
+    if (event) event.preventDefault();
+
+    let prioOptions = [
+        { id: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
+        { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
+        { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
+    ]
+
+    prioOptions.forEach(option => {
+        let button = document.getElementById(option.id);
+        let img = document.getElementById(`${option.id}Svg`);
+
+        if (button) button.classList.remove("active");
+        if (img) img.src = option.src;
+    });
+
+    let activeButton = document.getElementById(priority);
+    let activeImg = document.getElementById(`${priority}Svg`);
+
+    if (activeButton) activeButton.classList.add("active");
+    if (activeImg) activeImg.src = prioOptions.find(option => option.id === priority).activeSrc;
+}
+
+
+/**
+ * Renders the priority buttons in the Add Task form.
+ */
+function renderAddTaskPrioButtons() {
+    let prioButtonsContainer = document.getElementById("prioButtonsContainer");
+    if (!prioButtonsContainer) {
+        console.error("Prio buttons container not found.");
+        return;
     }
-
-    selectedPrio = prio;
-
-    // Deselect all priority buttons
-    document.getElementById('low').classList.remove('active');
-    document.getElementById('medium').classList.remove('active');
-    document.getElementById('urgent').classList.remove('active');
-
-    // Set the specific button style based on the priority
-    if (prio === 'low') {
-        lowPrioButton('low');
-    } else if (prio === 'medium') {
-        mediumPrioButton('medium');
-    } else if (prio === 'urgent') {
-        urgentPrioButton('urgent');
-    }
+    prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio");
 }
 
+window.onload = function () {
+    renderAddTaskPrioButtons();
+};
 
-// PRIO BUTTON LOW
-function lowPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('lowWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_baja_white.svg";
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
+/**
+ * Marks the selected priority in the edit overlay based on the task data.
+ * @param {string} priority - The priority value from the task.
+ */
+function markSelectedPriority(priority) {
+    let priorityButtons = document.querySelectorAll('.prio-button');
+    priorityButtons.forEach(button => {
+        if (button.dataset.prio === priority) {
+            button.classList.add('selected-prio');
+        } else {
+            button.classList.remove('selected-prio');
+        }
+    });
 }
 
-
-// PRIO BUTTON MEDIUM
-function mediumPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('mediumWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio media white.svg";
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
-}
-
-
-// PRIO BUTTON URGENT
-function urgentPrioButton(priorityButton) {
-    document.getElementById(priorityButton).classList.add('urgentWhite');
-    document.getElementById(`${priorityButton}Svg`).src = "../Assets/addTask/Prio_alta_white.svg";
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg";
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media.svg";
-}
-
-
-// CLEAR PRIO BUTTON
-async function clearPrioButtons() {
-    document.getElementById('low').classList.remove('lowWhite');
-    document.getElementById('medium').classList.remove('mediumWhite');
-    document.getElementById('urgent').classList.remove('urgentWhite');
-    document.getElementById(`lowSvg`).src = "../Assets/addTask/Prio baja.svg"
-    document.getElementById(`mediumSvg`).src = "../Assets/addTask/Prio media white.svg";
-    document.getElementById(`urgentSvg`).src = "../Assets/addTask/Prio alta.svg";
-    document.getElementById('medium').classList.add('mediumWhite');
+/**
+ * Updates the selected priority in the task data and marks it in the UI.
+ * @param {string} priority - The new priority value.
+ */
+function updatePriority(priority) {
+    selectedPrioBoard = priority;
+    markSelectedPriority(priority);
 }

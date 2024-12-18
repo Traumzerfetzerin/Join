@@ -136,7 +136,8 @@ function collectTaskData() {
  * @returns {boolean} - Returns true if valid, otherwise false.
  */
 async function validateTaskData(data) {
-    if (!data.title || !data.dueDate || !data.contacts || !data.category) {
+    if (!data.title || !data.dueDate || !data.contacts || !data.category || !data.prio) {
+        console.error("Task validation failed. Missing required fields:", data);
         await popUpRequired();
         await redBorder();
         return false;
@@ -145,14 +146,19 @@ async function validateTaskData(data) {
 }
 
 
+
 /**
  * Sends the task data to Firebase.
- * Subtasks are automatically extended with `completed: false`.
  * @param {Object} taskData - The task data to save.
  * @returns {Promise<string|undefined>} - Returns the generated task ID or undefined on failure.
  */
 async function saveTaskToFirebase(taskData) {
     try {
+        if (!taskData.prio) {
+            console.error("Priority is missing. Cannot save task.");
+            return;
+        }
+
         if (taskData.subtasks) {
             taskData.subtasks = taskData.subtasks.map(subtask => {
                 if (typeof subtask === 'object' && subtask.text) {
@@ -164,26 +170,25 @@ async function saveTaskToFirebase(taskData) {
                 };
             });
         }
+
         let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(taskData),
         });
-        if (response.ok) {
-            let json = await response.json();
-            let generatedKey = Object.keys(json)[0];
-            console.log("Task created with ID:", generatedKey);
 
- taskData.id = generatedKey;
-            showToast(`Task created in category: ${taskData.category}`);
-            return generatedKey;
-        } else {
-            console.error("Error:", response.statusText);
+        if (!response.ok) {
+            console.error("Failed to save task to Firebase:", response.statusText);
+            return;
         }
+
+        let data = await response.json();
+        return data.name; // The generated ID
     } catch (error) {
-        console.error("Error saving task:", error);
+        console.error("Error saving task to Firebase:", error);
     }
- }
+}
+
 
 // /**
 //  * Handles the save button click event.

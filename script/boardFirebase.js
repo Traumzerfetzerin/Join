@@ -226,3 +226,27 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
         console.error("Fehler beim Löschen des Subtasks:", error);
     }
 }
+
+/**
+ * Updates a specific task in Firebase.
+ * @param {string} category - The category of the task.
+ * @param {string} taskId - The ID of the task to update.
+ * @param {object} updatedData - The updated task data to save.
+ */
+async function updateTaskInDatabase(category, taskId, updatedData) {
+    let url = `${TASK_URL}/${category}/${taskId}.json`;
+
+    try {
+        let response = await fetch(url, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedData),
+        });
+
+        if (!response.ok) {
+            console.error(`Failed to update task: ${response.statusText}`);
+        }
+    } catch (error) {
+        console.error("Error updating task in database:", error);
+    }
+}

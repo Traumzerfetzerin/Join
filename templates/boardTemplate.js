@@ -11,7 +11,13 @@
  */
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks) {
     let categoryClass = category.toLowerCase().replace(" ", "-");
+    console.log("Task Priority:", task.prio); // Debugging priority value
+
     let priorityIcon = getPrioIcon(task.prio);
+    if (!priorityIcon) {
+        console.warn(`No icon found for priority: ${task.prio}`); // Debugging missing priority icons
+    }
+
     let progressPercentage = subtaskCount === 0 ? 0 : Math.round((completedSubtasks / subtaskCount) * 100);
     let barColor = progressPercentage === 0 ? 'lightgray' : 'blue';
 
@@ -213,4 +219,36 @@ function generateContactDropdownHTML(contacts) {
             </div>
         `;
     }).join('');
+}
+
+let prioOptions = [
+    { id: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
+    { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
+    { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
+];
+
+
+/**
+ * Generates the HTML for priority buttons and binds click events.
+ * @param {string|null} selectedPrio - The selected priority (e.g., "urgent", "medium", "low").
+ * @param {string} onClickHandler - Name of the function to handle button clicks.
+ * @returns {string} - HTML for the priority buttons.
+ */
+function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
+    return `
+        <div class="prio-buttons-container">
+            ${prioOptions.map(option => `
+                <button 
+                    id="${option.id}" 
+                    class="prioButton ${option.id === selectedPrio ? "active" : ""}" 
+                    onclick="${onClickHandler}('${option.id}')">
+                    ${option.label}
+                    <img 
+                        id="${option.id}Svg" 
+                        src="${option.id === selectedPrio ? option.activeSrc : option.src}" 
+                        alt="${option.label}">
+                </button>
+            `).join("")}
+        </div>
+    `;
 }
