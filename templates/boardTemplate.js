@@ -11,11 +11,9 @@
  */
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks) {
     let categoryClass = category.toLowerCase().replace(" ", "-");
-    console.log("Task Priority:", task.prio); // Debugging priority value
-
     let priorityIcon = getPrioIcon(task.prio);
     if (!priorityIcon) {
-        console.warn(`No icon found for priority: ${task.prio}`); // Debugging missing priority icons
+        console.warn(`No icon found for priority: ${task.prio}`);
     }
 
     let progressPercentage = subtaskCount === 0 ? 0 : Math.round((completedSubtasks / subtaskCount) * 100);
@@ -221,11 +219,7 @@ function generateContactDropdownHTML(contacts) {
     }).join('');
 }
 
-let prioOptions = [
-    { id: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
-    { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
-    { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
-];
+
 
 
 /**
@@ -235,6 +229,11 @@ let prioOptions = [
  * @returns {string} - HTML for the priority buttons.
  */
 function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
+    let prioOptions = [
+        { id: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
+        { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
+        { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
+    ];
     return `
         <div class="prio-buttons-container">
             ${prioOptions.map(option => `
