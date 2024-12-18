@@ -14,26 +14,24 @@ function setPrio(priority, event = null) {
         { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
     ];
 
-    // Reset all buttons and icons to their default state
     prioOptions.forEach(option => {
         let button = document.getElementById(option.id);
         let img = document.getElementById(`${option.id}Svg`);
 
         if (button) button.classList.remove("lowWhite", "mediumWhite", "urgentWhite");
-        if (img) img.src = option.src; // Set to default image
+        if (img) img.src = option.src; 
     });
 
-    // Activate the selected priority button and update its icon
     let activeButton = document.getElementById(priority);
     let activeImg = document.getElementById(`${priority}Svg`);
 
     if (activeButton) activeButton.classList.add(`${priority}White`);
     if (activeImg) {
         let activeOption = prioOptions.find(option => option.id === priority);
-        if (activeOption) activeImg.src = activeOption.activeSrc; // Set to active image
+        if (activeOption) activeImg.src = activeOption.activeSrc; 
     }
 
-    selectedPrio = priority; // Store the selected priority
+    selectedPrio = priority;
 }
 
 
@@ -41,18 +39,16 @@ function setPrio(priority, event = null) {
  * Renders the priority buttons in the Add Task form.
  */
 function renderAddTaskPrioButtons() {
+    console.log("Rendering Prio Buttons...");
     let prioButtonsContainer = document.getElementById("prioButtonsContainer");
     if (!prioButtonsContainer) {
-        console.error("Prio buttons container not found.");
+        console.error("Prio Buttons Container not found.");
         return;
     }
     prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio");
+    console.log("Prio Buttons successfully rendered.");
 }
 
-window.onload = function () {
-    renderAddTaskPrioButtons();
-    setPrio("medium");
-};
 
 /**
  * Marks the selected priority in the edit overlay based on the task data.
