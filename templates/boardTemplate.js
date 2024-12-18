@@ -220,8 +220,6 @@ function generateContactDropdownHTML(contacts) {
 }
 
 
-
-
 /**
  * Generates the HTML for priority buttons and binds click events.
  * @param {string|null} selectedPrio - The selected priority (e.g., "urgent", "medium", "low").
@@ -234,20 +232,24 @@ function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
         { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
         { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
     ];
+
     return `
-        <div class="prio-buttons-container">
+        <div class="fonts font_2A3647">Prio</div>
+        <div class="flex space-between">
             ${prioOptions.map(option => `
                 <button 
                     id="${option.id}" 
-                    class="prioButton ${option.id === selectedPrio ? "active" : ""}" 
-                    onclick="${onClickHandler}('${option.id}')">
+                    type="button" 
+                    class="prioButton cursorPointer fonts ${selectedPrio === option.id ? `${option.id}White` : ""}" 
+                    onclick="${onClickHandler}('${option.id}', event)">
                     ${option.label}
                     <img 
                         id="${option.id}Svg" 
-                        src="${option.id === selectedPrio ? option.activeSrc : option.src}" 
+                        src="${selectedPrio === option.id ? option.activeSrc : option.src}" 
                         alt="${option.label}">
                 </button>
             `).join("")}
         </div>
     `;
 }
+
