@@ -219,9 +219,9 @@ function generateContactDropdownHTML(contacts) {
     }).join('');
 }
 
-
 /**
  * Generates the HTML for priority buttons and binds click events.
+ * Ensures the priority buttons are correctly generated with appropriate classes and event handlers.
  * @param {string|null} selectedPrio - The selected priority (e.g., "urgent", "medium", "low").
  * @param {string} onClickHandler - Name of the function to handle button clicks.
  * @returns {string} - HTML for the priority buttons.
@@ -252,4 +252,3 @@ function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
         </div>
     `;
 }
-

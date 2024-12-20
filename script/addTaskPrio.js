@@ -36,19 +36,19 @@ function setPrio(priority, event = null) {
 
 
 /**
- * Renders the priority buttons in the Add Task form.
+ * Renders the priority buttons inside the prioButtonsContainer.
+ * Ensures the container exists and fills it with generated buttons.
  */
 function renderAddTaskPrioButtons() {
-    console.log("Rendering Prio Buttons...");
     let prioButtonsContainer = document.getElementById("prioButtonsContainer");
     if (!prioButtonsContainer) {
         console.error("Prio Buttons Container not found.");
         return;
     }
+
     prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio");
     console.log("Prio Buttons successfully rendered.");
 }
-
 
 /**
  * Marks the selected priority in the edit overlay based on the task data.

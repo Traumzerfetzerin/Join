@@ -42,7 +42,7 @@ function clearColumns() {
  */
 function getPrioIcon(prio) {
     if (prio === "urgent") return "../Assets/addTask/Prio alta.svg";
-    if (prio === "medium") return "../Assets/addTask/Prio media white.svg";
+    if (prio === "medium") return "../Assets/addTask/Prio media.svg";
     return "../Assets/addTask/Prio baja.svg";
 }
 

@@ -1,0 +1,55 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board</title>
+    <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/style.css">
+
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+    <link rel="stylesheet" href="../styles/board.css">
+    <link rel="stylesheet" href="../styles/boardOverlay.css">
+    <link rel="stylesheet" href="../styles/responsive/boardResponsive.css">
+    <link rel="stylesheet" href="../styles/responsive/NavbarResponsive.css">
+    <link rel="stylesheet" href="../styles/addTask.css">
+    <link rel="stylesheet" href="../styles/responsive/addTaskResponsive.css">
+    <link rel="stylesheet" href="../styles/boardOverlayEdit.css">
+
+    <script src="../script/header.js"></script>
+    <script src="../templates/boardTemplate.js"></script>
+    <script src="../script/boardSearch.js"></script>
+    <script src="../script/boardPopUp.js"></script>
+    <script src="../script/addTask.js"></script>
+    <script src="../templates/addTaskTemplateHTML.js"></script>
+    <script src="../script/addTaskContactDropdown.js"></script>
+    <script src="../script/addTaskPrio.js"></script>
+    <script src="../script/addTaskSubtask.js"></script>
+    <script src="../script/boardPopUpEdit.js"></script>
+    <script src="../script/boardPopUpDelete.js"></script>
+    <script src="../script/boardProgressbar.js"></script>
+    <script src="../script/boardSaveChanges.js"></script>
+
+<body onload="fetchAllTasks()">
+    <aside w3-include-html="../templates/header.html"></aside>
+    <aside w3-include-html="../templates/navbar.html"></aside>
+<div id="task-test-medium-task" class="task draggable technical-task" draggable="true"
+     onclick="showTaskOverlay('Technical Task', 'test-medium-task')">
+    <h4 class="task-category">Technical Task</h4>
+    <h3>Medium Task</h3>
+    <p>A test task with medium priority</p>
+    <div class="progress-bar-container">
+        <div class="progress-bar-background">
+            <div class="progress-bar-fill" style="width: 50%;"></div>
+        </div>
+        <span>1/2 Subtasks</span>
+    </div>
+    <div class="contact-priority-container">
+        <div class="contact">Test User</div>
+        <div class="priority-symbol">
+            <img src="../Assets/addTask/Prio media white.svg" alt="Medium Priority" class="priority-icon">
+            <img src="../Assets/addTask/Prio media.svg" alt="Medium Priority" class="priority-icon">
+        </div>
+    </div>
+</div>
+</body>
