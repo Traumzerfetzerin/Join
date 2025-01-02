@@ -36,10 +36,10 @@ function setPrio(priority, event = null) {
 }
 
 
-
 /**
  * Renders the priority buttons inside the prioButtonsContainer.
  * Ensures the container exists and fills it with generated buttons.
+ * Marks the "medium" button as default.
  */
 function renderAddTaskPrioButtons() {
     let prioButtonsContainer = document.getElementById("prioButtonsContainer");
@@ -49,7 +49,9 @@ function renderAddTaskPrioButtons() {
     }
 
     prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio");
+    setPrio("medium");
 }
+
 
 /**
  * Marks the selected priority in the edit overlay based on the task data.
@@ -73,4 +75,23 @@ function markSelectedPriority(priority) {
 function updatePriority(priority) {
     selectedPrioBoard = priority;
     markSelectedPriority(priority);
+}
+
+/**
+ * Initializes the priority buttons in the edit overlay.
+ * @param {string|null} selectedPrio - The currently selected priority (e.g., "urgent", "medium", "low").
+ */
+function initializePrioButtons(selectedPrio) {
+    if (!selectedPrio) selectedPrio = "medium";
+    let prioButtons = document.querySelectorAll('.overlay-content .prio-button');
+    prioButtons.forEach(button => {
+        let prio = button.getAttribute('data-priority');
+        button.classList.remove('lowWhite', 'mediumWhite', 'urgentWhite');
+        if (prio === selectedPrio) button.classList.add(`${prio}White`);
+        button.onclick = function () {
+            prioButtons.forEach(btn => btn.classList.remove('lowWhite', 'mediumWhite', 'urgentWhite'));
+            button.classList.add(`${prio}White`);
+            selectedPrio = prio;
+        };
+    });
 }

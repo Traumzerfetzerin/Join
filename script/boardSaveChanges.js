@@ -13,15 +13,11 @@ function collectOverlayData() {
     let dueDate = dueDateElement ? dueDateElement.value.trim() : "";
     let priority = priorityElement ? priorityElement.getAttribute("data-priority") : "low";
 
-    if (!priorityElement) {
-        console.warn("No priority selected. Defaulting to 'low'.");
-    }
-
     let subtasks = Array.from(
         document.querySelectorAll('.subtasks-section .subtasks-list li')
     ).map(li => ({
         text: li.textContent.trim(),
-        completed: li.classList.contains("completed")
+        completed: li.classList.contains("completed"),
     }));
 
     let contacts = Array.from(
@@ -34,10 +30,9 @@ function collectOverlayData() {
         dueDate,
         prio: priority,
         subtasks,
-        contacts
+        contacts,
     };
 }
-
 
 
 /**
@@ -48,8 +43,9 @@ function collectOverlayData() {
 async function saveChanges(taskId, category) {
     let updatedTask = collectOverlayData();
 
-    if (!updatedTask.title && !updatedTask.description && !updatedTask.dueDate && !updatedTask.prio) {
-        console.error("No valid data to save.");
+    if (!updatedTask.title || !updatedTask.description || !updatedTask.dueDate) {
+        console.error("Task data is incomplete. Please check the input fields.");
+        alert("Please fill in all required fields.");
         return;
     }
 
@@ -60,15 +56,18 @@ async function saveChanges(taskId, category) {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedTask)
+            body: JSON.stringify(updatedTask),
         });
 
         if (response.ok) {
             console.log("Task successfully updated:", updatedTask);
+            alert("Task changes saved successfully.");
         } else {
             console.error(`Failed to update task with ID ${taskId}: ${response.statusText}`);
+            alert("Failed to save changes. Please try again.");
         }
     } catch (error) {
         console.error("Error saving task changes:", error);
+        alert("An error occurred while saving changes.");
     }
 }

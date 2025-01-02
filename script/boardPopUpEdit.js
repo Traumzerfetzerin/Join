@@ -386,7 +386,6 @@ async function saveEditedTask(taskId, category) {
     }
 }
 
-
 /**
  * Loads the task data into the edit overlay for modifications.
  * @param {string} taskId - The ID of the task to edit.
@@ -394,35 +393,29 @@ async function saveEditedTask(taskId, category) {
  */
 function loadTaskToOverlay(taskId, category) {
     let task = taskData[category][taskId];
-    if (!task) {
-        console.error("Task not found:", taskId);
-        return;
-    }
+    if (!task) return;
 
     document.getElementById('task-title').value = task.title || '';
     document.getElementById('task-description').value = task.description || '';
     document.getElementById('task-due-date').value = task.dueDate || '';
 
-    if (task.prio) {
-        console.log("Setting Priority on Load:", task.prio);
-        setPrioBoard(task.prio, null); 
-    } else {
-        console.error("Priority is missing in task data:", task);
-    }
+    initializePrioButtons(task.prio);
 
     let subtasksContainer = document.getElementById('subtasks-container');
-    subtasksContainer.innerHTML = '';
+    let subtasksHTML = '';
     if (Array.isArray(task.subtasks)) {
         task.subtasks.forEach((subtask, index) => {
-            let subtaskElement = document.createElement('div');
-            subtaskElement.innerHTML = `
-                <input type="checkbox" ${subtask.completed ? 'checked' : ''} data-index="${index}">
-                <input type="text" value="${subtask.text || ''}" data-index="${index}">
+            subtasksHTML += `
+                <div>
+                    <input type="checkbox" ${subtask.completed ? 'checked' : ''} data-index="${index}">
+                    <input type="text" value="${subtask.text || ''}" data-index="${index}">
+                </div>
             `;
-            subtasksContainer.appendChild(subtaskElement);
         });
     }
+    subtasksContainer.innerHTML = subtasksHTML;
 }
+
 
 /**
  * Finalizes the task update process by closing the overlay and reloading tasks.
