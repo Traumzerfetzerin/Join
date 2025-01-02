@@ -124,7 +124,7 @@ function collectTaskData() {
         prio: selectedPrio,
         column: "toDo",
         contacts: selectedContacts,
-        subtasks: subtasks, // Direkt korrekt formatiert
+        subtasks: subtasks,
         category: document.getElementById('categorySelect').value
     };
 }
@@ -144,7 +144,6 @@ async function validateTaskData(data) {
     }
     return true;
 }
-
 
 
 /**
@@ -189,19 +188,6 @@ async function saveTaskToFirebase(taskData) {
     }
 }
 
-
-// /**
-//  * Handles the save button click event.
-//  * Collects form data and saves it to Firebase.
-//  */
-// document.getElementById('saveTaskButton').addEventListener('click', async function () {
-//     let taskData = collectTaskData();
-    
-//     let taskId = await saveTaskToFirebase(taskData);
-//     if (taskId) {
-//         console.log("Task successfully created with ID:", taskId);
-//     }
-// });
 
 async function finalizeTaskCreation() {
     await redBorder();

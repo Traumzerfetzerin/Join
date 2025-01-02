@@ -1,158 +1,74 @@
 /**
- * Retrieves the title input value.
- * @returns {string|null} - The title input value or null if not found.
+ * Collects all input values from the overlay and returns them as an object.
+ * @returns {Object} - Task data including title, description, dueDate, priority, subtasks, and contacts.
  */
-function getTitleInput() {
-    let inputTitle = document.querySelector('#taskOverlay #task-title');
-    let overlay = document.querySelector('#taskOverlay');
-    console.log("Overlay content:", overlay?.innerHTML);
+function collectOverlayData() {
+    let titleElement = document.querySelector('.overlay-content .task-title');
+    let descriptionElement = document.querySelector('.overlay-content .task-description');
+    let dueDateElement = document.querySelector('.overlay-content input[type="date"]');
+    let priorityElement = document.querySelector('.overlay-content .prio-button.active');
 
-    if (!inputTitle) {
-        console.error("Title input not found. Ensure the input element with ID 'task-title' exists within the task overlay container.");
-        alert("Task title input is missing. Please check the overlay setup.");
-        return null;
+    let title = titleElement ? titleElement.textContent.trim() : "";
+    let description = descriptionElement ? descriptionElement.textContent.trim() : "";
+    let dueDate = dueDateElement ? dueDateElement.value.trim() : "";
+    let priority = priorityElement ? priorityElement.getAttribute("data-priority") : "low";
+
+    if (!priorityElement) {
+        console.warn("No priority selected. Defaulting to 'low'.");
     }
-    return inputTitle.value.trim();
-}
 
-/**
- * Retrieves the description input value.
- * @returns {string|null} - The description input value or null if not found.
- */
-function getDescriptionInput() {
-    let textareaDescription = document.querySelector('#taskOverlay #task-description');
-    if (!textareaDescription) {
-        console.error("Description input not found. Ensure the textarea with ID 'task-description' exists within the task overlay container.");
-        alert("Task description input is missing. Please check the overlay setup.");
-        return null;
-    }
-    return textareaDescription.value.trim();
-}
+    let subtasks = Array.from(
+        document.querySelectorAll('.subtasks-section .subtasks-list li')
+    ).map(li => ({
+        text: li.textContent.trim(),
+        completed: li.classList.contains("completed")
+    }));
 
-/**
- * Retrieves the due date input value.
- * @returns {string|null} - The due date input value or null if not found.
- */
-function getDueDateInput() {
-    let dueDate = document.querySelector('#taskOverlay #task-due-date');
-    if (!dueDate) {
-        console.error("Due date input not found. Ensure the input element with ID 'task-due-date' exists within the task overlay container.");
-        alert("Task due date input is missing. Please check the overlay setup.");
-        return null;
-    }
-    return dueDate.value;
-}
-
-/**
- * Retrieves the priority value.
- * @returns {string|null} - The selected priority or null if not set.
- */
-function getPriorityValue() {
-    if (!selectedPrioBoard) {
-        console.error("Priority not selected. Ensure a priority is set before saving the task.");
-        alert("Task priority is missing. Please select a priority.");
-        return null;
-    }
-    return selectedPrioBoard;
-}
-
-/**
- * Retrieves the subtasks as an array of objects.
- * @returns {Array} - An array of subtask objects.
- */
-function getSubtasks() {
-    let subtaskElements = document.querySelectorAll('#taskOverlay #subtasks-container div');
-    if (!subtaskElements || subtaskElements.length === 0) {
-        console.warn("No subtasks found.");
-    }
-    return Array.from(subtaskElements).map(subtaskElement => {
-        let checkbox = subtaskElement.querySelector('input[type="checkbox"]');
-        let textInput = subtaskElement.querySelector('input[type="text"]');
-        if (checkbox && textInput) {
-            return {
-                text: textInput.value.trim(),
-                completed: checkbox.checked
-            };
-        }
-        console.error("Invalid subtask element:", subtaskElement);
-        return null;
-    }).filter(subtask => subtask !== null);
-}
-
-/**
- * Combines all input values into a task object.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @returns {object|null} - The combined task object or null if any input is invalid.
- */
-function getUpdatedTask(taskId, category) {
-    let title = getTitleInput();
-    let description = getDescriptionInput();
-    let dueDate = getDueDateInput();
-    let priority = getPriorityValue();
-    let subtasks = getSubtasks();
-
-    if (!title || !description || !dueDate || !priority) {
-        return null;
-    }
+    let contacts = Array.from(
+        document.querySelectorAll('.contacts-section .contact-list input[type="checkbox"]:checked')
+    ).map(input => input.closest('.contact').textContent.trim());
 
     return {
-        id: taskId,
-        category: category,
-        title: title,
-        description: description,
-        dueDate: dueDate,
+        title,
+        description,
+        dueDate,
         prio: priority,
-        subtasks: subtasks
+        subtasks,
+        contacts
     };
 }
 
+
+
 /**
- * Saves changes to a task and updates Firebase.
- * @param {string} taskId - ID of the task being updated.
- * @param {string} category - Task category.
+ * Saves the edited task data to Firebase.
+ * @param {string} taskId - ID of the task being edited.
+ * @param {string} category - Category of the task.
  */
 async function saveChanges(taskId, category) {
-    let updatedTask = getUpdatedTask(taskId, category);
-    if (!updatedTask) return;
+    let updatedTask = collectOverlayData();
 
-    try {
-        await updateTaskInDatabase(category, taskId, updatedTask);
-        console.log("Task successfully updated in Firebase:", updatedTask);
-
-        // Update local data and refresh UI
-        if (!taskData[category]) taskData[category] = {};
-        taskData[category][taskId] = updatedTask;
-        loadTasks(taskData);
-        closeEditWindow();
-    } catch (error) {
-        console.error("Error saving task to Firebase:", error);
-        alert("Failed to save task. Please try again.");
+    if (!updatedTask.title && !updatedTask.description && !updatedTask.dueDate && !updatedTask.prio) {
+        console.error("No valid data to save.");
+        return;
     }
-}
 
-/**
- * Updates a task in Firebase with new data from the overlay.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {object} newTaskData - The updated task data.
- */
-async function updateTask(taskId, category, newTaskData) {
+    updatedTask.id = taskId;
+    updatedTask.category = category;
+
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newTaskData)
+            body: JSON.stringify(updatedTask)
         });
 
         if (response.ok) {
-            taskData[category][taskId] = newTaskData;
-            loadTasks(taskData);
-            refreshPageOrUpdateUI();
+            console.log("Task successfully updated:", updatedTask);
         } else {
             console.error(`Failed to update task with ID ${taskId}: ${response.statusText}`);
         }
     } catch (error) {
-        console.error(`Error updating task with ID ${taskId}:`, error);
+        console.error("Error saving task changes:", error);
     }
 }

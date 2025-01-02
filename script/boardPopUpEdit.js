@@ -54,7 +54,7 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
     subtaskElement.querySelector('.subtask-icons').style.display = 'flex';
 
     inputField.style.display = 'none';
-    inputField.nextElementSibling.style.display = 'none'; // Hide the save button
+    inputField.nextElementSibling.style.display = 'none';
     subtaskElement.classList.remove('editing');
 
     let task = await fetchTaskById(category, taskId);
@@ -79,7 +79,6 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
  */
 async function syncContactIcons(contactIds) {
     if (!contactIds || contactIds.length === 0) {
-        console.error("No contact IDs provided for syncing.");
         return;
     }
 

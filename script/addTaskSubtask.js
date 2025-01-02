@@ -17,12 +17,14 @@ function createSubtaskElement(subtaskText, subtaskDivId, subtaskUlId, subtaskLiI
 }
 
 
-// ADD SUBTASK
+/**
+ * Adds a new subtask to the list and updates visibility.
+ */
 function addSubtask() {
     let addSubtask = document.getElementById('subtaskSelect').value;
 
     if (addSubtask.trim() !== "") {
-        subtaskCounter++; 
+        subtaskCounter++;
 
         let subtaskDivId = `subtaskDiv_${subtaskCounter}`;
         let subtaskUlId = `subtaskUl_${subtaskCounter}`;
@@ -30,9 +32,23 @@ function addSubtask() {
 
         createSubtaskElement(addSubtask, subtaskDivId, subtaskUlId, subtaskLiId);
         document.getElementById('subtaskSelect').value = ""; 
+        updateSubtaskVisibility();
     }
 }
 
+/**
+ * Updates the visibility of the "No Subtasks Available" message.
+ */
+function updateSubtaskVisibility() {
+    let subtaskList = document.querySelector('.subtasks-section .subtasks-list');
+    let noSubtasksMessage = document.querySelector('.subtasks-section .no-subtasks-message');
+
+    if (subtaskList && subtaskList.children.length > 0) {
+        noSubtasksMessage.style.display = "none";
+    } else {
+        noSubtasksMessage.style.display = "block";
+    }
+}
 
 function saveSubtask() {
     let subtaskAsText = JSON.stringify(subtask);

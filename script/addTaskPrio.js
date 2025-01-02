@@ -32,7 +32,9 @@ function setPrio(priority, event = null) {
     }
 
     selectedPrio = priority;
+    selectedPrioBoard = priority;
 }
+
 
 
 /**
@@ -47,7 +49,6 @@ function renderAddTaskPrioButtons() {
     }
 
     prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio");
-    console.log("Prio Buttons successfully rendered.");
 }
 
 /**
