@@ -63,7 +63,7 @@ function updateTaskUI(task, taskId, column, columns) {
     let columnElement = document.getElementById(columns[column]);
     if (columnElement) {
         let subtasks = task.subtasks || [];
-        let html = getTaskBoardTemplate(
+        let taskHtml = getTaskBoardTemplate(
             column,
             task,
             taskId,
@@ -73,7 +73,7 @@ function updateTaskUI(task, taskId, column, columns) {
             subtasks.filter(s => s.completed).length
         );
 
-        columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${html}</div>`;
+        columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
     }
     enableDragAndDrop(columns);
     checkEmptyColumns(columns);

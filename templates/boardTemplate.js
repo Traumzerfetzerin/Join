@@ -12,10 +12,6 @@
 function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, subtaskCount, completedSubtasks) {
     let categoryClass = category.toLowerCase().replace(" ", "-");
     let priorityIcon = getPrioIcon(task.prio);
-    if (!priorityIcon) {
-        console.warn(`No icon found for priority: ${task.prio}`);
-    }
-
     let progressPercentage = subtaskCount === 0 ? 0 : Math.round((completedSubtasks / subtaskCount) * 100);
     let barColor = progressPercentage === 0 ? 'lightgray' : 'blue';
 

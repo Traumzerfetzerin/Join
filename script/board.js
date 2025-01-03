@@ -26,14 +26,18 @@ function loadTasks(tasks) {
 }
 
 /**
- * Clears all task columns.
+ * Clears all task columns to avoid duplicates.
  */
 function clearColumns() {
-    document.getElementById("toDoColumn").innerHTML = "";
-    document.getElementById("inProgressColumn").innerHTML = "";
-    document.getElementById("awaitFeedbackColumn").innerHTML = "";
-    document.getElementById("doneColumn").innerHTML = "";
+    let columns = ["toDoColumn", "inProgressColumn", "awaitFeedbackColumn", "doneColumn"];
+    columns.forEach(columnId => {
+        let columnElement = document.getElementById(columnId);
+        if (columnElement) {
+            columnElement.innerHTML = ""; 
+        }
+    });
 }
+
 
 /**
  * Gets the priority icon based on the priority value.
@@ -66,10 +70,8 @@ function addTaskToColumn(task, category, taskId, columns) {
 
     let progress = calculateSubtaskProgress(task.subtasks);
     task.subtaskProgress = `${progress.completed}/${progress.total}`;
-
     let contactList = task.contacts ? generateContactList(task.contacts) : "";
     let taskClass = getTaskClass(task.title);
-    let prioIcon = getPrioIcon(task.prio);
     let taskHtml = getTaskBoardTemplate(
         category,
         task,
@@ -83,6 +85,7 @@ function addTaskToColumn(task, category, taskId, columns) {
     addTaskToColumnDom(taskHtml, columnElement, category, taskId);
     syncContactIcons(task.contacts || []);
 }
+
 
 
 /**
