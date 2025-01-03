@@ -56,6 +56,13 @@ function getCategoryFromTaskId(taskId) {
     return null;
 }
 
+/**
+ * Updates the task UI by rendering the task with its category instead of the column.
+ * @param {object} task - The task object.
+ * @param {string} taskId - The unique ID of the task.
+ * @param {string} column - The column where the task is located.
+ * @param {object} columns - Mapping of column names to DOM element IDs.
+ */
 function updateTaskUI(task, taskId, column, columns) {
     let taskElement = document.getElementById(`task-${taskId}`);
     if (taskElement) taskElement.remove();
@@ -64,7 +71,7 @@ function updateTaskUI(task, taskId, column, columns) {
     if (columnElement) {
         let subtasks = task.subtasks || [];
         let taskHtml = getTaskBoardTemplate(
-            column,
+            task.category, 
             task,
             taskId,
             generateContactList(task.contacts || []),
