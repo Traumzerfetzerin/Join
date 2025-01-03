@@ -28,7 +28,7 @@ main {
     position: relative;
 }
 
-.searchbarBoard{
+.searchbarBoard {
     display: flex;
     align-items: center;
     padding: 12px 16px;
@@ -40,7 +40,6 @@ main {
     outline: none;
     transition: border-color 0.3s ease;
     margin-right: 32px;
-
 }
 
 #boardSearchbar {
@@ -68,7 +67,7 @@ main {
     border-radius: 10px;
     border: solid 1px;
     border-color: #2A3647;
-    padding: 8px 16px 8px 16px;
+    padding: 8px 16px;
     background-color: #2A3647;
     color: white;
     font-weight: 700;
@@ -111,7 +110,7 @@ main {
     padding-left: 64px;
     padding-right: 64px;
     position: relative;
-    left: 232px;    
+    left: 232px;
 }
 
 .column-wrapper {
@@ -129,7 +128,7 @@ main {
 }
 
 #toDoColumn {
-    width: 246px ;
+    width: 246px;
 }
 
 .task {
@@ -137,7 +136,6 @@ main {
     padding: 16px;
     gap: 10px;
     border-radius: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: white;
     margin-bottom: 10px;
 }
@@ -182,12 +180,13 @@ main {
     text-align: center;
     font-style: italic;
 }
+
 .task-category {
-    padding: 2px 6px; /* Add some spacing */
-    border-radius: 3px; /* Rounded corners */
-    display: inline-block; /* Ensure width matches text */
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
     font-size: 14px;
-    text-transform: capitalize; /* Ensure category names look consistent */
+    text-transform: capitalize;
     font-weight: bold;
 }
 
@@ -200,6 +199,7 @@ main {
     background-color: #1FD7C1;
     color: white;
 }
+
 .contact-initial {
     display: inline-block;
     color: white;
@@ -209,17 +209,18 @@ main {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    margin-right: -5px; /* Slight negative margin for overlapping effect */
-    border: 2px solid white; /* Optional: Add a border for better separation */
-    z-index: 1; /* Ensure initials don't stack visually in the wrong order */
+    margin-right: -5px;
+    border: 2px solid white;
+    z-index: 1;
 }
+
 .action-links {
-    position: absolute; /* Enable positioning relative to the card */
-    right: 10px; /* Align to the far right of the card */
-    bottom: 10px; /* Align to the bottom of the card */
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
     display: flex;
-    flex-direction: row; /* Stack links vertically */
-    align-items: flex-end; /* Align links to the right */
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .action-link {
@@ -227,56 +228,49 @@ main {
     color: gray;
     align-items: center;
     text-decoration: none;
-     /* Neutral text color */
-    margin-top: 5px; /* Add spacing between links */
+    margin-top: 5px;
 }
 
 .action-link:hover {
-    color:#3498db;
-    /* Darker color on hover */
+    color: #3498db;
 }
 
 .link-icon {
-    width: 16px; /* Icon size */
+    width: 16px;
     height: 16px;
-    margin-left: 8px; /* Space between text and icon */
+    margin-left: 8px;
 }
 
 .card-container {
-    position: relative; /* Ensure the container is positioned for absolute positioning */
-    padding-bottom: 40px; /* Add space to avoid overlap at the bottom */
+    position: relative;
+    padding-bottom: 40px;
 }
+
 .priority-symbol {
-    margin-top: 5px; /* Add space between text and priority symbol */
+    margin-top: 5px;
 }
 
 .priority-icon {
-    width: 24px; /* Adjust size to fit */
+    width: 24px;
     height: 24px;
-    vertical-align: middle; /* Align icon with text */
+    vertical-align: middle;
     display: inline-block;
 }
 
 .contact-priority-container {
     display: flex;
-    justify-content: space-between; /* Space between the contact list and priority symbol */
-    align-items: center; /* Vertically center the elements */
-    margin-top: 10px; /* Add some space above */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
 }
-
-
 
 .priority-symbol {
     display: flex;
-    justify-content: flex-end; /* Align the symbol to the right */
-    align-items: center; /* Center the symbol vertically */
-    margin-left: 10px; /* Adjust space between the contact list and priority symbol */
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 10px;
 }
 
-.priority-icon {
-    width: 24px; /* Adjust icon size */
-    height: 24px;
-}
 .subtask-progress-container {
     display: flex;
     align-items: center;
@@ -286,7 +280,7 @@ main {
 .subtask-progress-bar {
     height: 5px;
     border-radius: 5px;
-    background-color: lightgray; /* Default background color for toDo */
+    background-color: lightgray;
     flex-grow: 1;
     margin-left: 10px;
     position: relative;
@@ -295,12 +289,12 @@ main {
 
 .subtask-progress-bar .filled {
     height: 100%;
-    background-color: blue; /* Default filled color */
-    width: 0%; /* Initial width */
-    transition: width 0.3s ease; /* Smooth animation for width changes */
+    background-color: blue;
+    width: 0%;
+    transition: width 0.3s ease;
 }
 
-#cardOverlayContacts{
+#cardOverlayContacts {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -324,6 +318,6 @@ main {
 .progress-bar-fill {
     height: 100%;
     background-color: blue;
-    width: 0%; /* Initial */
+    width: 0%;
     transition: width 0.3s ease;
 }
