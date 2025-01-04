@@ -48,8 +48,43 @@ function renderAddTaskPrioButtons() {
         return;
     }
 
-    prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio");
+    prioButtonsContainer.innerHTML = generatePrioButtonsHTMLAddTask(null, "setPrio");
     setPrio("medium");
+}
+
+
+/**
+ * Generates the HTML for priority buttons and binds click events.
+ * Ensures the priority buttons are correctly generated with appropriate classes and event handlers.
+ * @param {string|null} selectedPrio - The selected priority (e.g., "urgent", "medium", "low").
+ * @param {string} onClickHandler - Name of the function to handle button clicks.
+ * @returns {string} - HTML for the priority buttons.
+ */
+function generatePrioButtonsHTMLAddTask(selectedPrio, onClickHandler) {
+    let prioOptions = [
+        { id: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
+        { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
+        { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
+    ];
+
+    return `
+        <div class="fonts font_2A3647">Prio</div>
+        <div class="flex space-between">
+            ${prioOptions.map(option => `
+                <button 
+                    id="${option.id}" 
+                    type="button" 
+                    class="prioButton cursorPointer fonts ${selectedPrio === option.id ? `${option.id}White` : ""}" 
+                    onclick="${onClickHandler}('${option.id}', event)">
+                    ${option.label}
+                    <img 
+                        id="${option.id}Svg" 
+                        src="${selectedPrio === option.id ? option.activeSrc : option.src}" 
+                        alt="${option.label}">
+                </button>
+            `).join("")}
+        </div>
+    `;
 }
 
 

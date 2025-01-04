@@ -62,12 +62,12 @@ function getPrioritySymbol(priority) {
 * @returns {string} - HTML template for the task overlay.
 */
 function getBoardOverlayTemplate(category, task) {
-   let priorityIcon = getPrioIcon(task.prio);
-   let categoryClass = category.toLowerCase().replace(" ", "-");
-   let contactList = generateOverlayContactList(task.contacts); 
-   let subtasksList = generateSubtaskList(task);
+    let priorityIcon = getPrioIcon(task.prio);
+    let categoryClass = category.toLowerCase().replace(" ", "-");
+    let contactList = generateOverlayContactList(task.contacts);
+    let subtasksList = generateSubtaskList(task);
 
-   return `
+    return `
        <div class="board-overlay" data-task-id="${task.id}">
            <div class="overlay-header">
                <h2 class="task-category ${categoryClass}">${category}</h2>
@@ -110,7 +110,7 @@ function getBoardOverlayTemplate(category, task) {
  */
 function generateContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
-    return contacts.map(function(contact) {
+    return contacts.map(function (contact) {
         let name = contact && contact.name ? contact.name : "Unknown";
         let initials = getInitials(name);
         let bgColor = getRandomColor();
@@ -120,7 +120,7 @@ function generateContactList(contacts) {
 
 function generateOverlayContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
-    return contacts.map(function(contact) {
+    return contacts.map(function (contact) {
         let name = contact && contact.name ? contact.name : "Unknown";
         let initials = name.split(" ").map(word => word.charAt(0).toUpperCase()).join("");
         let bgColor = contact.color || getRandomColor();
@@ -184,6 +184,7 @@ function generateContactDropdownHTML(contacts) {
     }).join('');
 }
 
+
 /**
  * Generates the HTML for priority buttons and binds click events.
  * Ensures the priority buttons are correctly generated with appropriate classes and event handlers.
@@ -193,9 +194,9 @@ function generateContactDropdownHTML(contacts) {
  */
 function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
     let prioOptions = [
-        { id: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
-        { id: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
-        { id: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
+        { id: "urgentOverlay", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
+        { id: "mediumOverlay", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
+        { id: "lowOverlay", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
     ];
 
     return `
@@ -216,4 +217,40 @@ function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
             `).join("")}
         </div>
     `;
+}
+
+
+/**
+ * Sets the selected priority and updates the corresponding button and icon.
+ * @param {string} priority - The priority to set ('low', 'medium', 'urgent').
+ * @param {Event|null} event - Optional event to prevent default behavior.
+ */
+function setPrioOverlay(priority, event = null) {
+    if (event) event.preventDefault();
+
+    let prioOptions = [
+        { id: "urgentOverlay", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
+        { id: "mediumOverlay", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
+        { id: "lowOverlay", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
+    ];
+
+    prioOptions.forEach(option => {
+        let button = document.getElementById(option.id);
+        let img = document.getElementById(`${option.id}Svg`);
+
+        if (button) button.classList.remove("lowOverlayWhite", "mediumOverlayWhite", "urgentOverlayWhite");
+        if (img) img.src = option.src;
+    });
+
+    let activeButton = document.getElementById(priority);
+    let activeImg = document.getElementById(`${priority}Svg`);
+
+    if (activeButton) activeButton.classList.add(`${priority}White`);
+    if (activeImg) {
+        let activeOption = prioOptions.find(option => option.id === priority);
+        if (activeOption) activeImg.src = activeOption.activeSrc;
+    }
+
+    selectedPrio = priority;
+    selectedPrioBoard = priority;
 }

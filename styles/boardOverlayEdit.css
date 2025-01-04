@@ -139,3 +139,21 @@ button[onclick="toggleEditDropdown()"]:hover {
     margin-left: 10px;
 }
 
+/* Priority Button Colors */
+.lowOverlayWhite {
+    border-color: #7AE229;
+    background-color: #7AE229;
+    color: #FFF;
+}
+
+.mediumOverlayWhite {
+    border-color: #FFA800;
+    background-color: #FFA800;
+    color: #FFF;
+}
+
+.urgentOverlayWhite {
+    border-color: #FF3D00;
+    background-color: #FF3D00;
+    color: #FFF;
+}
