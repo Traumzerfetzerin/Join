@@ -5,32 +5,71 @@
  * @param {number} subtaskIndex - The index of the subtask to edit.
  */
 function editSubtaskEdit(taskId, category, subtaskIndex) {
-    let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
-    if (!subtaskElement) {
-        console.error("Subtask element not found.");
-        return;
-    }
+    let subtaskElement = getSubtaskElement(subtaskIndex);
+    if (!subtaskElement) return;
 
     let currentText = subtaskElement.querySelector('.editSubtaskText').innerText;
+    if (!toggleExistingInput(subtaskElement, subtaskIndex, currentText)) {
+        createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText);
+    }
+    updateSubtaskDisplay(subtaskElement, false);
+}
+
+/**
+ * Retrieves the subtask element by its index.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @returns {HTMLElement|null} The subtask element or null if not found.
+ */
+function getSubtaskElement(subtaskIndex) {
+    return document.getElementById(`subtaskDiv_${subtaskIndex}`);
+}
+
+/**
+ * Toggles the display of an existing input field.
+ * @param {HTMLElement} subtaskElement - The subtask element.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} currentText - The current text of the subtask.
+ * @returns {boolean} True if the input field exists, false otherwise.
+ */
+function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
     let existingInput = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
-    
-    if (!existingInput) {
-        let inputHtml = `
-            <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}" 
-                   onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-            <button class="save-subtask-button" onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
-        `;
-        subtaskElement.innerHTML += inputHtml;
-    } else {
+    if (existingInput) {
         existingInput.value = currentText;
         existingInput.style.display = 'block';
-        existingInput.nextElementSibling.style.display = 'inline-block'; // Show the save button
+        existingInput.nextElementSibling.style.display = 'inline-block';
+        return true;
     }
-
-    subtaskElement.querySelector('.editSubtaskText').style.display = 'none';
-    subtaskElement.querySelector('.subtask-icons').style.display = 'none';
-    subtaskElement.classList.add('editing');
+    return false;
 }
+
+/**
+ * Creates an input field for editing the subtask.
+ * @param {HTMLElement} subtaskElement - The subtask element.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {string} currentText - The current text of the subtask.
+ */
+function createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText) {
+    let inputHtml = `
+        <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}" 
+               onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+        <button class="save-subtask-button" onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
+    `;
+    subtaskElement.innerHTML += inputHtml;
+}
+
+/**
+ * Updates the display of a subtask element.
+ * @param {HTMLElement} subtaskElement - The subtask element.
+ * @param {boolean} show - Whether to show or hide the text and icons.
+ */
+function updateSubtaskDisplay(subtaskElement, show) {
+    subtaskElement.querySelector('.editSubtaskText').style.display = show ? 'block' : 'none';
+    subtaskElement.querySelector('.subtask-icons').style.display = show ? 'flex' : 'none';
+    subtaskElement.classList.toggle('editing', !show);
+}
+
 
 /**
  * Saves the changes to a subtask in edit mode.
