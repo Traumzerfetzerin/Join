@@ -16,7 +16,7 @@ async function enableEditMode(task, category) {
     let priorityElement = document.querySelector('.task-info p:nth-child(2)');
     priorityElement.innerHTML = `
         <div class="fonts font_2A3647"></div>
-        <div class="flex space-between">
+        <div id="prioOverlay" class="flex space-between">
             ${generatePrioButtonsHTML(task.prio, "setPrioOverlay")}
         </div>
     `;

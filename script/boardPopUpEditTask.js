@@ -9,7 +9,7 @@ function editTask(taskId, category) {
 
     enableEditMode(task, category);
     renderSubtasksInEditMode(task, category);
-    renderAddTaskPrioButtons();
+    renderAddTaskPrioButtonsOverlay(task);
 
     if (task.contacts && task.contacts.length > 0) {
         syncContactIcons(task.contacts);

@@ -184,6 +184,27 @@ function generateContactDropdownHTML(contacts) {
     }).join('');
 }
 
+/**
+ * Renders the priority buttons inside the prioButtonsContainer.
+ * Ensures the container exists and fills it with generated buttons.
+ * Marks the "medium" button as default.
+ */
+function renderAddTaskPrioButtonsOverlay() {
+    let prioButtonsContainer = document.getElementById("prioOverlay");
+    if (!prioButtonsContainer) {
+        console.error("Prio Buttons Container not found.");
+        return;
+    }
+
+    let defaultPrio = "mediumOverlay";
+
+    let selectedPrio = window.selectedPrio || defaultPrio;
+
+    prioButtonsContainer.innerHTML = generatePrioButtonsHTML(selectedPrio, "setPrioOverlay");
+    setPrioOverlay(selectedPrio);
+}
+
+
 
 /**
  * Generates the HTML for priority buttons and binds click events.
@@ -198,7 +219,7 @@ function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
         { id: "mediumOverlay", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
         { id: "lowOverlay", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
     ];
-
+    
     return `
         <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
