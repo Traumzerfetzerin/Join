@@ -27,6 +27,7 @@ function showOverlay() {
     document.body.classList.add("no-scroll");
 }
 
+
 /**
  * Closes the task overlay when the background or close button is clicked.
  * @param {Event} [event] - The event that triggers the overlay close.
@@ -43,6 +44,7 @@ function closeTaskOverlay(event) {
         document.body.classList.remove("no-scroll");
     }
 }
+
 
 /**
  * Updates the overlay content with the latest task data.
@@ -78,6 +80,7 @@ function hideOverlay(event) {
     }
 }
 
+
 /**
  * Resets the values of the form fields in the overlay.
  */
@@ -97,6 +100,7 @@ function resetFormFields() {
     if (contactsDropdown) contactsDropdown.innerHTML = '';
 }
 
+
 /**
  * Resets the priority selection in the overlay.
  */
@@ -106,6 +110,7 @@ function resetPriority() {
     document.getElementById('medium').classList.remove('active');
     document.getElementById('low').classList.remove('active');
 }
+
 
 /**
  * Closes the task overlay and resets its content.
@@ -118,10 +123,15 @@ function closeOverlay(event) {
 }
 
 
+/**
+ * Hides the task overlay by adding the "dNone" class to its element.
+ * This function is executed when the window finishes loading.
+ */
 window.onload = function () {
     let taskOverlay = document.getElementById("taskOverlay");
     taskOverlay.classList.add("dNone");
 };
+
 
 /**
  * Fetches contact data from Firebase.
@@ -144,6 +154,7 @@ async function fetchContactFromFirebase(contactId) {
     }
 }
 
+
 /**
  * Generates a random RGB color.
  * @returns {string} - RGB color string.
@@ -154,6 +165,7 @@ function getRandomColor() {
     let b = Math.floor(Math.random() * 256);
     return `rgb(${r}, ${g}, ${b})`;
 }
+
 
 /**
  * Toggles the completion status of a subtask and updates the UI and database.
@@ -199,6 +211,7 @@ async function toggleSubtaskCompletion(taskId, subtaskIndex) {
     }
 }
 
+
 /**
  * Calculates the progress percentage for subtasks.
  * @param {Array} subtasks - Array of subtasks.
@@ -208,6 +221,7 @@ function calculateProgressPercentage(subtasks) {
     let completed = subtasks.filter(subtask => subtask.completed).length;
     return subtasks.length === 0 ? 0 : Math.round((completed / subtasks.length) * 100);
 }
+
 
 /**
  * Updates the state of a subtask and triggers UI updates.
@@ -224,6 +238,7 @@ function updateSubtaskState(task, subtaskIndex) {
     updateSubtaskProgress(task.id, subtasks, task.category);
 }
 
+
 /**
  * Updates progress bar and syncs with Firebase.
  * @param {string} taskId - The ID of the task.
@@ -235,6 +250,7 @@ function updateSubtaskProgress(taskId, subtasks, category) {
     updateProgressBar(taskId, progress);
     syncSubtasksWithFirebase(taskId, subtasks, category);
 }
+
 
 /**
  * Syncs subtasks with Firebase.
@@ -257,6 +273,7 @@ async function syncSubtasksWithFirebase(taskId, subtasks, category) {
         console.error(`Error syncing subtasks for Task ID ${taskId}:`, error);
     }
 }
+
 
 /**
  * Updates the subtasks for a specific task in Firebase.
