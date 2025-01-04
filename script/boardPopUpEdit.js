@@ -1,256 +1,4 @@
 /**
- * Enables editing of a subtask in edit mode.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask to edit.
- */
-function editSubtaskEdit(taskId, category, subtaskIndex) {
-    let subtaskElement = getSubtaskElement(subtaskIndex);
-    if (!subtaskElement) return;
-
-    let currentText = subtaskElement.querySelector('.editSubtaskText').innerText;
-    if (!toggleExistingInput(subtaskElement, subtaskIndex, currentText)) {
-        createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText);
-    }
-    updateSubtaskDisplay(subtaskElement, false);
-}
-
-/**
- * Retrieves the subtask element by its index.
- * @param {number} subtaskIndex - The index of the subtask.
- * @returns {HTMLElement|null} The subtask element or null if not found.
- */
-function getSubtaskElement(subtaskIndex) {
-    return document.getElementById(`subtaskDiv_${subtaskIndex}`);
-}
-
-/**
- * Toggles the display of an existing input field.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {number} subtaskIndex - The index of the subtask.
- * @param {string} currentText - The current text of the subtask.
- * @returns {boolean} True if the input field exists, false otherwise.
- */
-function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
-    let existingInput = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
-    if (existingInput) {
-        existingInput.value = currentText;
-        existingInput.style.display = 'block';
-        existingInput.nextElementSibling.style.display = 'inline-block';
-        return true;
-    }
-    return false;
-}
-
-/**
- * Creates an input field for editing the subtask.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {number} subtaskIndex - The index of the subtask.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {string} currentText - The current text of the subtask.
- */
-function createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText) {
-    let inputHtml = `
-        <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}" 
-               onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-        <button class="save-subtask-button" onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
-    `;
-    subtaskElement.innerHTML += inputHtml;
-}
-
-/**
- * Updates the display of a subtask element.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {boolean} show - Whether to show or hide the text and icons.
- */
-function updateSubtaskDisplay(subtaskElement, show) {
-    subtaskElement.querySelector('.editSubtaskText').style.display = show ? 'block' : 'none';
-    subtaskElement.querySelector('.subtask-icons').style.display = show ? 'flex' : 'none';
-    subtaskElement.classList.toggle('editing', !show);
-}
-
-
-/**
- * Saves the changes to a subtask in edit mode.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask to save.
- */
-async function saveSubtaskEdit(taskId, category, subtaskIndex) {
-    let inputField = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
-    if (!inputField) {
-        console.error("Input field not found.");
-        return;
-    }
-
-    let newText = inputField.value.trim();
-    let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
-    let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
-
-    subtaskTextElement.innerText = newText;
-    subtaskTextElement.style.display = 'block';
-    subtaskElement.querySelector('.subtask-icons').style.display = 'flex';
-
-    inputField.style.display = 'none';
-    inputField.nextElementSibling.style.display = 'none';
-    subtaskElement.classList.remove('editing');
-
-    let task = await fetchTaskById(category, taskId);
-    if (!task || !Array.isArray(task.subtasks)) {
-        console.error("Task or subtasks not found.");
-        return;
-    }
-    task.subtasks[subtaskIndex].text = newText;
-
-    try {
-        await updateTaskInDatabase(category, taskId, task);
-        console.log(`Subtask ${subtaskIndex} updated successfully.`);
-    } catch (error) {
-        console.error("Error saving subtask to Firebase:", error);
-    }
-}
-
-/**
- * Syncs contact icons in the overlay with the task details.
- * @param {Array} contactIds - An array of contact IDs.
- * @returns {Promise<void>}
- */
-async function syncContactIcons(contactIds) {
-    if (!contactIds || contactIds.length === 0) {
-        return;
-    }
-
-    if (typeof contactIds[0] === 'object') {
-        contactIds = contactIds.map(contact => contact.id || contact.name);
-    }
-
-    try {
-        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-        let contactsData = await response.json();
-
-        if (contactsData) {
-            let contacts = Object.keys(contactsData).map(key => ({
-                id: key,
-                ...contactsData[key],
-            }));
-
-            let assignedContacts = contacts.filter(contact => contactIds.includes(contact.id) || contactIds.includes(contact.name));
-
-            let contactIconsContainer = document.getElementById('contact-icons-container');
-            if (contactIconsContainer) {
-                contactIconsContainer.innerHTML = assignedContacts
-                    .map(contact => {
-                        let initials = contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
-                        let bgColor = contact.color || getRandomColor();
-                        return `
-                            <div class="contact-icon" style="background-color: ${bgColor};">
-                                ${initials}
-                            </div>
-                        `;
-                    })
-                    .join('');
-            }
-        } else {
-            console.error("Failed to fetch contacts from Firebase.");
-        }
-    } catch (error) {
-        console.error("Error fetching contacts:", error);
-    }
-}
-
-/**
- * Enables edit mode for a specific task, ensuring the correct contact dropdown and icons.
- * @param {string} taskId - The ID of the task to edit.
- * @param {string} category - The category of the task.
- */
-function editTask(taskId, category) {
-    let task = findTaskInData(taskId);
-    if (!task) return;
-
-    enableEditMode(task, category);
-    renderSubtasksInEditMode(task, category);
-    renderAddTaskPrioButtons();
-
-    if (task.contacts && task.contacts.length > 0) {
-        syncContactIcons(task.contacts);
-    } else {
-        console.error("No contacts found for the task.");
-    }
-}
-
-/**
- * Updates the dropdown with all contacts and ensures icons are displayed.
- * @param {Array} allContacts - Array of all contact objects.
- * @param {Array} assignedContactIds - Array of assigned contact objects or IDs.
- */
-function updateContactDropdown(allContacts, assignedContactIds) {
-    let dropdownContainer = document.querySelector('.contacts-section');
-
-    if (!dropdownContainer) {
-        console.error("Dropdown container not found.");
-        return;
-    }
-    if (typeof assignedContactIds[0] === 'object') {
-        assignedContactIds = assignedContactIds.map(contact => contact.id);
-    }
-
-    let assignedContacts = allContacts.filter(contact => assignedContactIds.includes(contact.id));
-    dropdownContainer.innerHTML = `
-        <strong>Assigned To:</strong>
-        <div class="dropdown-header" onclick="toggleEditDropdown()">
-            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-            <span class="dropdown-arrow">▼</span>
-        </div>
-        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-            ${allContacts.map(contact => `
-                <div class="dropdown-entry">
-                    <label>
-                        <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''}>
-                        ${contact.name}
-                    </label>
-                </div>
-            `).join('')}
-        </div>
-        <div id="contact-icons-container" class="contact-icons">
-            ${assignedContacts.map(contact => `
-                <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                </div>
-            `).join('')}
-        </div>
-    `;
-}
-
-
-function updateContactIcons(assignedContacts) {
-    let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (!contactIconsContainer) {
-        console.error("contact-icons-container not found");
-        return;
-    }
-
-    contactIconsContainer.innerHTML = assignedContacts
-        .map(contact => `
-            <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-            </div>
-        `)
-        .join('');
-}
-
-
-// CALCULATE DUE DATE OVERLAY
-function calculateDueDateOverlay() {
-    let dueDateOverlay = new Date(); // Korrigierter Variablenname
-    let formattedDateOverlay = dueDateOverlay.toISOString().split('T')[0];
-    const dateInput = document.getElementById('editDueDate');
-    if (dateInput) {
-        dateInput.setAttribute('min', formattedDateOverlay);
-    }
-}
-
-/**
  * Enables edit mode for a task, including contacts and subtasks.
  * @param {Object} task - Task object containing details.
  * @param {string} category - The category of the task.
@@ -294,6 +42,17 @@ async function enableEditMode(task, category) {
     `;
 }
 
+// CALCULATE DUE DATE OVERLAY
+function calculateDueDateOverlay() {
+    let dueDateOverlay = new Date(); // Korrigierter Variablenname
+    let formattedDateOverlay = dueDateOverlay.toISOString().split('T')[0];
+    const dateInput = document.getElementById('editDueDate');
+    if (dateInput) {
+        dateInput.setAttribute('min', formattedDateOverlay);
+    }
+}
+
+
 /**
  * Toggles the visibility of the contact dropdown and the icons.
  */
@@ -304,18 +63,6 @@ function toggleEditDropdown() {
     vanishIcons.classList.toggle('dNone');
 }
 
-
-/**
- * Fills the fields of the edit overlay with task data.
- * @param {Object} task - The task data to populate the fields.
- */
-function fillFields(task) {
-    document.getElementById('inputTitle').value = task.title || '';
-    document.getElementById('textareaDescription').value = task.description || '';
-    document.getElementById('dueDate').value = task.dueDate || '';
-    document.getElementById('categorySelect').value = task.category || '';
-    setPrio(task.prio);
-}
 
 /**
  * Displays assigned contacts as icons below the dropdown.
@@ -346,84 +93,6 @@ function fillSubtasks(subtasks) {
     });
 }
 
-/**
- * Renders the subtasks in edit mode.
- * @param {Object} task - The task containing the subtasks.
- * @param {string} category - The category of the task.
- */
-function renderSubtasksInEditMode(task, category) {
-    let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
-    if (!subtaskContainer) return;
-
-    subtaskContainer.innerHTML = `
-        <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
-        <img id="addSubtaskButton" class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask('${task.id}', '${category}')">
-    `;
-
-    if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
-        subtaskContainer.innerHTML += "<div>No subtasks available</div>";
-    } else {
-        task.subtasks.forEach((subtask, index) => {
-            let subtaskHTML = `
-                <div id="subtaskDiv_${index}" class="subtask-item">
-                    <span class="editSubtaskText" contenteditable="true">${subtask.text}</span>
-                    <div class="subtask-icons">
-                        <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                             alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
-                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                             alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})">
-                    </div>
-                </div>
-            `;
-            subtaskContainer.innerHTML += subtaskHTML;
-        });
-    }
-}
-
-/**
- * Adds a new subtask to the list in edit mode.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- */
-function addNewSubtask(taskId, category) {
-    let newSubtaskInput = document.getElementById('newSubtaskInput');
-    let subtaskText = newSubtaskInput.value.trim();
-    if (subtaskText === "") return;
-
-    let subtaskContainer = document.querySelector('.subtasks-list');
-    let subtaskIndex = subtaskContainer.querySelectorAll('.subtask-item').length;
-    let subtaskHTML = `
-        <div id="subtaskDiv_${subtaskIndex}" class="subtask-item">
-            <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
-            <div class="subtask-icons">
-                <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                     alt="Edit" onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
-                <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                     alt="Delete" onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
-            </div>
-        </div>
-    `;
-    subtaskContainer.insertAdjacentHTML('beforeend', subtaskHTML);
-    newSubtaskInput.value = "";
-}
-
-/**
- * Saves the edited task to Firebase and updates the board.
- * @param {string} taskId - The ID of the task to save.
- * @param {string} category - The category of the task.
- */
-async function saveEditedTask(taskId, category) {
-    let updatedTask = collectTaskData();
-
-    try {
-        await saveTaskToFirebase(updatedTask, category, taskId);
-        taskData[category][taskId] = updatedTask;
-        loadTasks(taskData);
-        closeTaskOnBoard();
-    } catch (error) {
-        console.error(`Error saving task:`, error);
-    }
-}
 
 /**
  * Loads the task data into the edit overlay for modifications.
@@ -454,21 +123,6 @@ function loadTaskToOverlay(taskId, category) {
     }
     subtasksContainer.innerHTML = subtasksHTML;
 }
-
-
-/**
- * Finalizes the task update process by closing the overlay and reloading tasks.
- * @param {Object} updatedTask - The updated task data.
- * @param {string} category - The category of the task.
- * @param {string} taskId - The ID of the task.
- */
-function finalizeTaskUpdate(updatedTask, category, taskId) {
-    taskData[category][taskId] = updatedTask;
-    alert("Task updated successfully!");
-    closeTaskOverlay();
-    loadTasks(taskData);
-}
-
 
 /**
  * Closes the edit window and resets any temporary states.
