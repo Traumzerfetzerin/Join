@@ -82,27 +82,14 @@ function addTaskToColumn(task, category, taskId, columns) {
         progress.completed
     );
 
-    addTaskToColumnDom(taskHtml, columnElement, category, taskId);
+    let existingTask = document.getElementById(`task-${taskId}`);
+    if (existingTask) {
+        existingTask.outerHTML = taskHtml;
+    } else {
+        columnElement.insertAdjacentHTML("beforeend", taskHtml);
+    }
+
     syncContactIcons(task.contacts || []);
-}
-
-
-
-/**
- * Adds a task to the DOM for the given column.
- * @param {string} taskHtml - HTML content of the task.
- * @param {HTMLElement} columnElement - Column element.
- * @param {string} category - Task category.
- * @param {string} taskId - Task ID.
- */
-function addTaskToColumnDom(taskHtml, columnElement, category, taskId) {
-    let taskContainer = document.createElement("div");
-    taskContainer.id = `task-${taskId}`;
-    taskContainer.className = "task draggable";
-    taskContainer.setAttribute("draggable", "true");
-    taskContainer.setAttribute("onclick", `showTaskOverlay('${category}', '${taskId}')`);
-    taskContainer.innerHTML = taskHtml;
-    columnElement.insertBefore(taskContainer, null);
 }
 
 

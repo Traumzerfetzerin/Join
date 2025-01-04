@@ -19,10 +19,8 @@
 
     #taskBoard {
         width: 100%;
-        max-width: 428px;
         height: auto;
         margin: 0 auto;
-        top: 0;
         left: 0;
         gap: 26px;
         flex-direction: column;
@@ -81,6 +79,7 @@
 
     #boardSearchbar {
         height: 1px;
+        width: 548px;
     }
 
     .board-column {
@@ -91,7 +90,8 @@
     #buttonAddTask {
         position: relative;
         font-size: 0;
-        right: 0px;
+        top: -62px;
+        left: -99px;
     }
 
     #buttonAddTask::before {
@@ -108,16 +108,28 @@
     }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 680px) {
     #buttonAddTask {
         position: relative;
-        left: -187px;
-        top: -64px;
+        left: -95px;
     }
 
     .searchbarBoard {
-        height: 45px;
-        width: 247px;
+        width: 443px;
+    }
+}    
+
+@media (max-width: 450px) {
+    #boardHeader {
+        left: 86px;
+    }
+
+    #buttonAddTask {
+        left: -152px;
+    }
+
+    .searchbarBoard {
+        width: 360px;
     }
 
     .column-title {
@@ -126,6 +138,7 @@
     }
 
     .task {
-        left: 2;
+        padding-left: 5%
     }
+
 }
