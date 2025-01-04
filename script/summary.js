@@ -172,16 +172,19 @@ function setSummaryCounts(counts) {
 }
 
 /**
- * Updates the urgent task count and next deadline in the UI.
- * @param {object} tasks - The tasks retrieved from Firebase.
+ * Updates the urgent task count in the UI.
+ * @param {Array} urgentTasks - The urgent tasks.
  */
-function updateUrgentTaskDate(tasks) {
-    let urgentTasks = findUrgentTasks(tasks);
+function updateUrgentTaskCount(urgentTasks) {
     let urgentCount = urgentTasks.length;
-    let closestDate = findClosestDate(urgentTasks);
-
     document.querySelector(".urgentnmb").textContent = urgentCount;
+}
 
+/**
+ * Updates the next deadline in the UI.
+ * @param {Date|null} closestDate - The closest deadline date.
+ */
+function updateNextDeadline(closestDate) {
     let dateElement = document.querySelector(".date");
     let underDateElement = document.querySelector(".underdate");
 
@@ -197,16 +200,37 @@ function updateUrgentTaskDate(tasks) {
     }
 }
 
+/**
+ * Updates the urgent task count and next deadline in the UI.
+ * @param {object} tasks - The tasks retrieved from Firebase.
+ */
+function updateUrgentTaskDate(tasks) {
+    let urgentTasks = findUrgentTasks(tasks);
+    updateUrgentTaskCount(urgentTasks);
 
+    let closestDate = findClosestDate(urgentTasks);
+    updateNextDeadline(closestDate);
+}
+
+
+
+/**
+ * Sets the current date in the designated HTML element after the DOM is fully loaded.
+ */
 document.addEventListener('DOMContentLoaded', setCurrentDate);
 
+/**
+ * Updates the text content of the element with ID 'currentDate' to display the current date.
+ * The date is formatted as 'Month Day, Year' (e.g., January 4, 2025).
+ */
 function setCurrentDate() {
-    const dateElement = document.getElementById('currentDate');
+    let dateElement = document.getElementById('currentDate');
     if (dateElement) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
         dateElement.textContent = new Date().toLocaleDateString('en-US', options);
     }
 }
+
 
 
 /**
@@ -253,7 +277,11 @@ window.onload = function () {
 };
 
 
-// CHANGE TO BOARD
+/**
+ * Redirects the user to the board page after a short delay.
+ * The delay is set to 0 milliseconds for immediate execution.
+ * @returns {Promise<void>} A promise that resolves when the redirection is complete.
+ */
 async function summaryToBoard() {
     setTimeout(() => {
         window.location.href = "board.html";
