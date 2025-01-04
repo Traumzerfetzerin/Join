@@ -57,16 +57,6 @@
         overflow: visible;
     }
 
-    .task {
-        min-width: 280px;
-        max-width: 350px;
-        flex: 0 1 auto;
-        margin: 10px;
-        background-color: #fff;
-        padding: 10px;
-        border-radius: 5px;
-    }
-
     #boardTitle {
         font-size: 1.8rem;
         text-align: center;

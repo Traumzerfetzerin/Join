@@ -27,6 +27,7 @@ function enableDragAndDrop(columns) {
     });
 }
 
+
 /**
  * Handles the logic after a task is dropped into a new column.
  * @param {object} task - The task object.
@@ -42,6 +43,7 @@ async function handleTaskDrop(task, taskId, category, newColumn, columns) {
     if (updatedTask) updateTaskUI(updatedTask, taskId, newColumn, columns);
 }
 
+
 /**
  * Finds the category of a task based on its ID.
  * @param {string} taskId - The ID of the task.
@@ -55,6 +57,7 @@ function getCategoryFromTaskId(taskId) {
     }
     return null;
 }
+
 
 /**
  * Updates the task UI by rendering the task with its category instead of the column.

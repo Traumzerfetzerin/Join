@@ -25,6 +25,7 @@ function loadTasks(tasks) {
     resetFormFields();
 }
 
+
 /**
  * Clears all task columns to avoid duplicates.
  */
@@ -49,6 +50,7 @@ function getPrioIcon(prio) {
     if (prio === "medium") return "../Assets/addTask/Prio media.svg";
     return "../Assets/addTask/Prio baja.svg";
 }
+
 
 /**
  * Adds a task to the specified column.
@@ -93,7 +95,6 @@ function addTaskToColumn(task, category, taskId, columns) {
 }
 
 
-
 /**
  * Checks and updates the display for empty columns.
  * @param {object} columns - Mapping of column names to DOM element IDs.
@@ -117,6 +118,7 @@ function checkEmptyColumns(columns) {
     });
 }
 
+
 /**
  * Updates the progress bar for a task.
  * @param {string} taskId - The ID of the task.
@@ -130,6 +132,7 @@ function updateProgressBar(taskId, progressPercentage) {
         progressElement.value = progressPercentage;
     }
 }
+
 
 /**
 * Shows the task form on the board.
@@ -145,6 +148,7 @@ function closeTaskOnBoard() {
    document.getElementById('templateAddTask').classList.add('d-none');
 }
 
+
 /**
 * Prevents closing when clicking inside the form.
 * @param {Event} event - The click event.
@@ -153,6 +157,13 @@ function dontClose(event) {
    event.stopPropagation();
 }
 
+
+/**
+ * Initializes the page by hiding the task overlay and fetching tasks from the database.
+ * This function is executed when the window finishes loading.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the tasks have been fetched.
+ */
 window.onload = async function () {
     let taskOverlay = document.getElementById("taskOverlay");
     if (taskOverlay) {
@@ -161,8 +172,8 @@ window.onload = async function () {
         console.warn("Element mit der ID 'taskOverlay' nicht gefunden.");
     }
     await fetchTasks();
- };
- 
+};
+
 
 /**
  * Extracts the initials from a contact name.
@@ -178,6 +189,7 @@ function getInitials(name) {
     return initials.slice(0, 2);
 }
 
+
 /**
  * Calculates the progress of subtasks.
  * @param {Array} subtasks - The list of subtasks.
@@ -192,6 +204,12 @@ function calculateSubtaskProgress(subtasks) {
     return { completed, total };
 }
 
+
+/**
+ * Adds click event listeners to all elements with the class "task".
+ * When a task is clicked, its ID is used to determine the category, 
+ * and the task overlay is displayed for the selected task.
+ */
 document.querySelectorAll(".task").forEach(task => {
     task.addEventListener("click", function () {
         let taskId = this.id.replace("task-", "");
