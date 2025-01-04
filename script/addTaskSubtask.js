@@ -37,18 +37,21 @@ function addSubtask() {
 }
 
 /**
- * Updates the visibility of the "No Subtasks Available" message.
+ * Updates the visibility of the "No Subtasks" message based on the number of subtasks.
  */
 function updateSubtaskVisibility() {
     let subtaskList = document.querySelector('.subtasks-section .subtasks-list');
     let noSubtasksMessage = document.querySelector('.subtasks-section .no-subtasks-message');
 
-    if (subtaskList && subtaskList.children.length > 0) {
-        noSubtasksMessage.style.display = "none";
-    } else {
-        noSubtasksMessage.style.display = "block";
+    if (noSubtasksMessage) {
+        if (subtaskList && subtaskList.children.length > 0) {
+            noSubtasksMessage.style.display = "none";
+        } else {
+            noSubtasksMessage.style.display = "block";
+        }
     }
 }
+
 
 function saveSubtask() {
     let subtaskAsText = JSON.stringify(subtask);
