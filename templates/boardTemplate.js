@@ -54,37 +54,6 @@ function getPrioritySymbol(priority) {
     return "";
 }
 
-/**
- * Generates the progress bar HTML for a task based on subtasks.
- * @param {object} task - Task object containing subtasks and column information.
- * @param {number} subtaskCount - Total number of subtasks for the task.
- * @returns {string} - HTML for the progress bar.
- */
-function getSubtaskProgressBar(task, subtaskCount) {
-    if (!subtaskCount || subtaskCount <= 0) {
-        return "";
-    }
-
-    let progressPercentage = calculateProgressPercentage(task.subtasks);
-    return `
-        <div style="display: flex; align-items: center; margin-top: 5px;">
-            <span>${subtaskCount} Subtasks</span>
-            <div style="margin-left: 10px; width: 50%; height: 5px; background-color: lightgray; border-radius: 5px; overflow: hidden;">
-                <div style="width: ${progressPercentage}%; height: 100%; background-color: blue;"></div>
-            </div>
-        </div>
-    `;
-}
-
-/**
- * Calculates the progress percentage for subtasks.
- * @param {Array} subtasks - Array of subtasks.
- * @returns {number} - Progress percentage.
- */
-function calculateProgressPercentage(subtasks) {
-    let completed = subtasks.filter(subtask => subtask.completed).length;
-    return subtasks.length === 0 ? 0 : Math.round((completed / subtasks.length) * 100);
-}
 
 /**
 * Generates the HTML template for the task overlay popup.
