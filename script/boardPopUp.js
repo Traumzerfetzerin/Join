@@ -189,27 +189,41 @@ async function toggleSubtaskCompletion(taskId, subtaskIndex) {
         let total = task.subtasks.length;
         let progressPercentage = total === 0 ? 0 : Math.round((completed / total) * 100);
 
-        let progressBarFill = document.querySelector(`#task-${taskId} .progress-bar-fill`);
-        if (progressBarFill) {
-            progressBarFill.style.width = `${progressPercentage}%`;
-            progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
-        }
-
-        let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
-        if (subtaskCounter) {
-            subtaskCounter.textContent = `${completed}/${total} Subtasks`;
-        }
-
-        if (document.getElementById('taskOverlay').style.display === 'block') {
-            let overlayDetails = document.getElementById('overlayDetails');
-            if (overlayDetails) {
-                overlayDetails.innerHTML = getBoardOverlayTemplate(task.category, task);
-            }
-        }
+        progressBarfilling(taskId, task.category, progressPercentage, completed, total, task);
     } catch (error) {
         console.error(`Failed to save updated subtasks for Task ID ${taskId}:`, error);
     }
 }
+
+/**
+ * Updates the progress bar, subtask counter, and overlay content.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {number} progressPercentage - The progress percentage.
+ * @param {number} completed - The number of completed subtasks.
+ * @param {number} total - The total number of subtasks.
+ * @param {Object} task - The task object.
+ */
+function progressBarfilling(taskId, category, progressPercentage, completed, total, task) {
+    let progressBarFill = document.querySelector(`#task-${taskId} .progress-bar-fill`);
+    if (progressBarFill) {
+        progressBarFill.style.width = `${progressPercentage}%`;
+        progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
+    }
+
+    let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
+    if (subtaskCounter) {
+        subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+    }
+
+    if (document.getElementById('taskOverlay').style.display === 'block') {
+        let overlayDetails = document.getElementById('overlayDetails');
+        if (overlayDetails) {
+            overlayDetails.innerHTML = getBoardOverlayTemplate(category, task);
+        }
+    }
+}
+
 
 
 /**

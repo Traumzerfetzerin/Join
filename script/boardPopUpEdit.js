@@ -332,7 +332,7 @@ function renderSubtasksInEditMode(task, category) {
                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
                              alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
                         <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                             alt="Delete" onclick="deleteSubtaskEdit('${task.id}', '${category}', ${index})">
+                             alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})">
                     </div>
                 </div>
             `;
