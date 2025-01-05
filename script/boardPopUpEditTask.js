@@ -3,7 +3,7 @@
  * @param {string} taskId - The ID of the task to edit.
  * @param {string} category - The category of the task.
  */
-function editTask(taskId, category) {
+async function editTask(taskId, category) {
     let task = findTaskInData(taskId);
     if (!task) return;
 

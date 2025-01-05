@@ -184,26 +184,66 @@ function generateContactDropdownHTML(contacts) {
     }).join('');
 }
 
+
+// async function getPrioEditOverlayFromFirebase(taskId) {
+//     if (!taskId) {
+//         console.error("taskId is missing");
+//         return;
+//     }
+
+//     try {
+//         let db = firebase.database();
+//         let taskRef = db.ref(`tasks/${taskId}`);
+
+//         let taskSnapshot = await taskRef.once('value');
+//         let taskData = taskSnapshot.val();
+
+//         if (!taskData) {
+//             console.error(`Task with ID ${taskId} not found.`);
+//             return;
+//         }
+
+//         let prio = taskData.priority;
+
+//         if (!prio) {
+//             console.error(`Priority not found for task with ID ${taskId}.`);
+//             return;
+//         }
+
+//         let overlay = document.getElementById("prioOverlay");
+//         if (!overlay) {
+//             console.error("Prio overlay element not found.");
+//             return;
+//         }
+
+//         overlay.classList.remove('urgentOverlayWhite', 'mediumOverlayWhite', 'lowOverlayWhite');
+
+//         if (prio === "urgent") overlay.classList.add('urgentOverlayWhite');
+//         if (prio === "medium") overlay.classList.add('mediumOverlayWhite');
+//         if (prio === "low") overlay.classList.add('lowOverlayWhite');
+//     } catch (error) {
+//         console.error("Error fetching priority from Firebase:", error);
+//     }
+// }
+
+
 /**
  * Renders the priority buttons inside the prioButtonsContainer.
  * Ensures the container exists and fills it with generated buttons.
  * Marks the "medium" button as default.
  */
-function renderAddTaskPrioButtonsOverlay() {
+function renderAddTaskPrioButtonsOverlay(taskId) {
     let prioButtonsContainer = document.getElementById("prioOverlay");
     if (!prioButtonsContainer) {
-        console.error("Prio Buttons Container not found.");
         return;
     }
 
     let defaultPrio = "mediumOverlay";
-
     let selectedPrio = window.selectedPrio || defaultPrio;
 
     prioButtonsContainer.innerHTML = generatePrioButtonsHTML(selectedPrio, "setPrioOverlay");
     setPrioOverlay(selectedPrio);
 }
-
 
 
 /**
@@ -219,7 +259,7 @@ function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
         { id: "mediumOverlay", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
         { id: "lowOverlay", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
     ];
-    
+
     return `
         <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
@@ -237,7 +277,7 @@ function generatePrioButtonsHTML(selectedPrio, onClickHandler) {
                 </button>
             `).join("")}
         </div>
-    `;
+    `;   
 }
 
 

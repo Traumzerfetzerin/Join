@@ -5,9 +5,10 @@
  */
 async function showTaskOverlay(category, taskId) {
     let task = findTaskInData(taskId);
-    if (!task) return Promise.resolve(null); 
+    if (!task) return Promise.resolve(null);
     updateOverlayContent(category, task);
     showOverlay();
+
     return Promise.resolve("Overlay displayed successfully");
 }
 
