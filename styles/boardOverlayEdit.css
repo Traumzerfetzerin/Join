@@ -107,12 +107,10 @@ button[onclick="toggleEditDropdown()"]:hover {
 .subtask-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 5px;
     margin-bottom: 5px;
-    border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #f9f9f9;
 }
 
 .subtask-icons {

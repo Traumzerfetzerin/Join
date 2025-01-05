@@ -117,11 +117,48 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 }
 
 .subtask-checkbox {
+    appearance: none;
     width: 16px;
     height: 16px;
     cursor: pointer;
-    border-radius: 3px; 
+    border: 1px solid #1F1F1F;
+    border-radius: 5px;
+    background-color: #ffffff;
+    position: relative;
+    outline: none;
+    padding: 0 !important;
 }
+
+.subtask-checkbox:checked {
+    background-color: #ffffff;
+    border-color: #1F1F1F;
+}
+
+.subtask-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 4px;
+    width: 6px;
+    height: 12px;
+    border: solid #000000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    z-index: 2;
+}
+
+.subtask-checkbox:checked::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    width: 6px;
+    height: 10px;
+    background-color: #ffffff;
+    z-index: 2;
+    border-radius: 0 5px 0 0;
+}
+
 
 .action-links {
     display: flex;
