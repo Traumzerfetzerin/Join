@@ -1,11 +1,18 @@
 @media (max-width: 550px) {
 
     .board-overlay {
-        width: 396px;
+        width: 340px;
         padding: 20px 20px;
+        min-height: 690px;
+        margin-top: 15px;
     }
 
     .subtasks-section{
         margin-bottom: 20px;
+    }
+
+    .subtasks-list {
+        overflow: scroll;
+        height: 85px;
     }
 }
