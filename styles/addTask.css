@@ -229,11 +229,6 @@ textarea {
     align-self: stretch;
 }
 
-#editSubtasks{
-    overflow: scroll;
-    height: 125px;
-}
-
 /* Button Container */
 .buttons {
     display: flex;
