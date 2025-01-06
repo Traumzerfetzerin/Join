@@ -34,7 +34,7 @@ main {
 }
 
 ::-webkit-scrollbar-track {
-    background: #fff;
+    background: none;
     border: none;
 }
 

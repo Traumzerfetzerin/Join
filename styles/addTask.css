@@ -201,6 +201,11 @@ textarea {
     display: inline;
 }
 
+#editSubtasks {
+    height: 100px;
+    overflow-y: scroll;
+}
+
 .editSubtask:hover,
 .deleteSubtask:hover {
     transform: scale(1.1);
@@ -347,6 +352,11 @@ textarea {
 .required {
     font-size: 16px;
     color: #FF3D00;
+}
+
+.requiredAndButtons {
+    position: relative;
+    top: 150px;
 }
 
 /* Label for each contact */
