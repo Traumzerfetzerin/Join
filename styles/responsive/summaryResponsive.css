@@ -17,17 +17,20 @@
 }
 
 @media (max-width: 990px) {
-    .summaryimg {
+    .summaryimg, 
+    .urgentimg {
         width: 50px;
         height: 50px;
     }
 
-    .summarynmb {
+    .summarynmb,
+    .urgentnmb,
+    .tasknmb {
         font-size: 40px;
     }
 
-    .checkpencil {
-        height: 100px;
+    .pencil {
+        height: 110px;
     }
 
     .urgent {
@@ -54,6 +57,20 @@
         left: 75px;
     }
 
+    .titleHeader {
+        font-size: 47px;
+    }
+
+    .titleText {
+        position: relative;
+        top: -65px;
+        font-size: 20px;
+    }
+
+    .victor {
+        width: 75px;
+    }
+
     .titeljoin {
         flex-direction: column;
         display: flex;
@@ -66,53 +83,69 @@
 
 @media (max-width: 690px) {
 
-    .titeljoin,
-    .details {
-        left: 30px;
-    }
-}
-
-@media (max-width: 620px) {
-
-    .urgent {
-        width: 380px;
-        gap: unset;
-    }
-
-    .checkpencil,
-    .tasks {
-        width: 380px;
-        gap: 10px;
+    .titeljoin {
+        left: 15px;
     }
 }
 
 @media (max-width: 490px) {
 
     .urgent,
-    .checkpencil,
+    .pencil,
     .tasks {
-        left: 0;
-        position: inherit;
+        left: -70px;
     }
 
-    .summaryimg {
-        width: 50px;
-        height: 50px;
+    .summaryimg, 
+    .urgentimg {
+        width: 40px;
+        height: 40px;
     }
 
-    .summarynmb {
-        font-size: 40px;
+    .tasktext,
+    #upcomingDeadline,
+    .summarymission {
+        font-size: 14px;
     }
 
     .checkpencil {
-        height: 100px;
+        width: 336px;
+        gap: 15px;
+    }
+
+    .pencil {
+        height: 110px;
+        width: 142px;
+        top: -50px;
+        position: relative;
+
     }
 
     .urgent {
-        top: 150px;
+        top: 110px;
+        height: 110px;
+        width: 320px;
     }
 
     .tasks {
-        top: 330px;
+        top: 255px;
+        height: 85px;
+        width: 320px;
+        gap: 10px;
+    }
+
+    .tasknmb {
+        line-height: 1;
+        height: 30px;
+    }
+    
+    .tasktext {
+        line-height: 1;
+        height: 46px;
+    }
+
+    .undertask {
+        height: 95px;
+        padding-bottom: 0;
     }
 }

@@ -38,7 +38,7 @@ function updateUserGreeting(isGuest, firstName, lastName) {
     if (!nameElement) return;
 
     if (isGuest) {
-        nameElement.textContent = "Guest";
+        nameElement.textContent = "";
     } else {
         let fullName = `${firstName} ${lastName}`;
         localStorage.setItem('loggedInUserName', fullName);
@@ -185,17 +185,14 @@ function updateUrgentTaskCount(urgentTasks) {
  * @param {Date|null} closestDate - The closest deadline date.
  */
 function updateNextDeadline(closestDate) {
-    let dateElement = document.querySelector(".date");
-    let underDateElement = document.querySelector(".underdate");
+    let dateElement = document.getElementById('upcomingDeadline');
 
-    if (dateElement && underDateElement) {
+    if (dateElement) {
         if (closestDate) {
             let options = { year: 'numeric', month: 'long', day: 'numeric' };
-            dateElement.textContent = closestDate.toLocaleDateString('en-GB', options);
-            underDateElement.textContent = "Upcoming Deadline";
+            dateElement.innerHTML = `<strong>${closestDate.toLocaleDateString('en-GB', options)}</strong> - Upcoming Deadline`;
         } else {
             dateElement.textContent = "";
-            underDateElement.textContent = "";
         }
     }
 }
@@ -211,26 +208,6 @@ function updateUrgentTaskDate(tasks) {
     let closestDate = findClosestDate(urgentTasks);
     updateNextDeadline(closestDate);
 }
-
-
-
-/**
- * Sets the current date in the designated HTML element after the DOM is fully loaded.
- */
-document.addEventListener('DOMContentLoaded', setCurrentDate);
-
-/**
- * Updates the text content of the element with ID 'currentDate' to display the current date.
- * The date is formatted as 'Month Day, Year' (e.g., January 4, 2025).
- */
-function setCurrentDate() {
-    let dateElement = document.getElementById('currentDate');
-    if (dateElement) {
-        let options = { year: 'numeric', month: 'long', day: 'numeric' };
-        dateElement.textContent = new Date().toLocaleDateString('en-US', options);
-    }
-}
-
 
 
 /**
