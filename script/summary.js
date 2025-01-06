@@ -1,4 +1,4 @@
-const TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
+let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 
 /**
  * Navigates to the "To-Do" section.
@@ -248,7 +248,7 @@ function findClosestDate(tasks) {
  */
 window.onload = function () {
     loadSummaryData();
-    setCurrentDate();
+    // setCurrentDate();
     updateGreeting();
     displayFullName();
 };

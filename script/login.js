@@ -1,5 +1,5 @@
 // Base URL for Firebase
-const BASE_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL_LOGIN = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
 // Store user data globally
 let users = [];
@@ -181,7 +181,7 @@ async function greetingTemplate() {
  * @returns {Promise<boolean>}
  */
 async function isEmailExists(email) {
-    return fetch(`${BASE_URL}/users.json`)
+    return fetch(`${BASE_URL_LOGIN}/users.json`)
         .then(response => response.json())
         .then(data => {
             return Object.values(data || {}).some(user => user.email === email);
@@ -194,7 +194,7 @@ async function isEmailExists(email) {
  * @returns {Promise<object>}
  */
 async function fetchUserData(email) {
-    return fetch(`${BASE_URL}/users.json`)
+    return fetch(`${BASE_URL_LOGIN}/users.json`)
         .then(response => response.json())
         .then(data => {
             const user = Object.values(data || {}).find(user => user.email === email);
