@@ -48,7 +48,8 @@ function renderAddTaskPrioButtons() {
         return;
     }
 
-    prioButtonsContainer.innerHTML = generatePrioButtonsHTMLAddTask(null, "setPrio");
+    prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio", "Overlay");
+    // prioButtonsContainer.innerHTML = generatePrioButtonsHTMLAddTask(null, "setPrio");
     setPrio("medium");
 }
 

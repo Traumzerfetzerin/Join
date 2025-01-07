@@ -17,7 +17,7 @@ async function enableEditMode(task, category) {
     priorityElement.innerHTML = `
         <div class="fonts font_2A3647"></div>
         <div id="prioOverlay" class="flex space-between">
-            ${generatePrioButtonsHTML(task.prio, "setPrioOverlay")}
+            ${generatePrioButtonsHTML(task.prio, "setPrioOverlay", "")}
         </div>
     `;
 
