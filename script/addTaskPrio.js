@@ -16,10 +16,9 @@ function setPrio(priority, context = "normal", event = null) {
 
     let buttons = document.querySelectorAll(`.prio-button`);
     buttons.forEach(function (button) {
-        // Entferne alle Farbklassen
+
         button.classList.remove(`low${suffix}White`, `medium${suffix}White`, `urgent${suffix}White`);
 
-        // Zurücksetzen des Icons
         let img = button.querySelector("img");
         let prioClass = button.dataset.prio;
         let option = prioOptions.find(function (opt) {
@@ -28,7 +27,6 @@ function setPrio(priority, context = "normal", event = null) {
         if (img && option) img.src = option.src; 
     });
 
-    // Setzen der aktiven Klasse und des Icons
     let activeButton = document.querySelector(`.prio-button[data-prio="${priority}"]`);
     if (activeButton) {
         activeButton.classList.add(`${priority}${suffix}White`);
@@ -41,7 +39,6 @@ function setPrio(priority, context = "normal", event = null) {
         console.warn(`No button found for priority: ${priority}`);
     }
 
-    // Aktualisieren des Zustands
     selectedPrio = priority;
     selectedPrioBoard = priority;
 
