@@ -17,12 +17,12 @@ async function enableEditMode(task, category) {
     priorityElement.innerHTML = `
         <div class="fonts font_2A3647"></div>
         <div id="prioOverlay" class="flex space-between">
-            ${generatePrioButtonsHTML(task.prio, "setPrioOverlay", "")}
+            ${generatePrioButtonsHTML(task.prio, "setPrio", "Overlay")}
         </div>
     `;
 
     setTimeout(() => {
-        setPrio(task.prio);
+        setPrio(task.prio, "overlay");
     }, 0);
 
     let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
@@ -41,6 +41,7 @@ async function enableEditMode(task, category) {
         <button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
     `;
 }
+
 
 // CALCULATE DUE DATE OVERLAY
 function calculateDueDateOverlay() {

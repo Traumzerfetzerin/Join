@@ -111,7 +111,9 @@
     <footer></footer>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
-        w3.includeHTML();
+        w3.includeHTML(() => {
+    renderPrioButtons(".prioButtonsContainer", "normal");
+        });
     </script>
     <script src="../script/board.js"></script>
     <script src="../script/boardFirebase.js"></script>

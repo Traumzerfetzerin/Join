@@ -145,17 +145,13 @@ textarea {
 .seperator {
     background-color: #D1D1D1;
     width: 2px;
-    /* Make the separator slightly thicker */
     height: 424px;
-    /* Adjusts to the height of the container */
     margin: 0 20px;
-    /* Add spacing to the left and right */
     align-self: stretch;
-    /* Ensures it takes the full height of the container */
 }
 
 /* Priority Button Styles */
-.prioButton {
+.prio-button {
     display: inline-block;
     padding: 10px 16px;
     border-radius: 10px;

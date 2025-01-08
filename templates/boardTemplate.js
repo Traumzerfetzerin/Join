@@ -185,93 +185,31 @@ function generateContactDropdownHTML(contacts) {
 }
 
 
-/**
- * Renders the priority buttons inside the prioButtonsContainer.
- * Ensures the container exists and fills it with generated buttons.
- * Marks the "medium" button as default.
- */
-function renderAddTaskPrioButtonsOverlay(test) {
-    let prioButtonsContainer = document.getElementById(`${test}`);
-    // let prioButtonsContainer = document.getElementById("prioOverlay");
-    // let prioButtonsContainer = document.getElementById("prioButtonsContainer");
-    if (!prioButtonsContainer) {
-        return;
-    }
-
-    let defaultPrio = "mediumOverlay";
-    let selectedPrio = window.selectedPrio || defaultPrio;
-
-    prioButtonsContainer.innerHTML = generatePrioButtonsHTML(selectedPrio, "setPrioOverlay", "");
-    setPrioOverlay(selectedPrio);
-}
-
 
 /**
  * Generates the HTML for priority buttons and binds click events.
  * Ensures the priority buttons are correctly generated with appropriate classes and event handlers.
  * @param {string|null} selectedPrio - The selected priority (e.g., "urgent", "medium", "low").
  * @param {string} onClickHandler - Name of the function to handle button clicks.
+ * @param {string} overlaySuffix - Suffix for overlay-specific styling or functionality.
  * @returns {string} - HTML for the priority buttons.
  */
-function generatePrioButtonsHTML(selectedPrio, onClickHandler, Overlay) {
-    let prioOptions = [
-        { id: `urgent${Overlay}`, label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
-        { id: `medium${Overlay}`, label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
-        { id: `low${Overlay}`, label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
-    ];
-
+function generatePrioButtonsHTML(selectedPrio, onClickHandler, overlaySuffix) {
     return `
         <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
             ${prioOptions.map(option => `
                 <button 
-                    id="${option.id}" 
                     type="button" 
-                    class="prioButton cursorPointer fonts ${selectedPrio === option.id ? `${option.id}White` : ""}" 
-                    onclick="${onClickHandler}('${option.id}', event)">
+                    class="prio-button cursorPointer fonts ${option.class}${overlaySuffix} ${selectedPrio === option.class ? `${option.class}White` : ""}" 
+                    data-prio="${option.class}" 
+                    onclick="${onClickHandler}('${option.class}', event)">
                     ${option.label}
                     <img 
-                        id="${option.id}Svg" 
-                        src="${selectedPrio === option.id ? option.activeSrc : option.src}" 
+                        src="${selectedPrio === option.class ? option.activeSrc : option.src}" 
                         alt="${option.label}">
                 </button>
             `).join("")}
         </div>
-    `;   
-}
-
-
-/**
- * Sets the selected priority and updates the corresponding button and icon.
- * @param {string} priority - The priority to set ('low', 'medium', 'urgent').
- * @param {Event|null} event - Optional event to prevent default behavior.
- */
-function setPrioOverlay(priority, event = null) {
-    if (event) event.preventDefault();
-
-    let prioOptions = [
-        { id: "urgentOverlay", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
-        { id: "mediumOverlay", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
-        { id: "lowOverlay", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
-    ];
-
-    prioOptions.forEach(option => {
-        let button = document.getElementById(option.id);
-        let img = document.getElementById(`${option.id}Svg`);
-
-        if (button) button.classList.remove("lowOverlayWhite", "mediumOverlayWhite", "urgentOverlayWhite");
-        if (img) img.src = option.src;
-    });
-
-    let activeButton = document.getElementById(priority);
-    let activeImg = document.getElementById(`${priority}Svg`);
-
-    if (activeButton) activeButton.classList.add(`${priority}White`);
-    if (activeImg) {
-        let activeOption = prioOptions.find(option => option.id === priority);
-        if (activeOption) activeImg.src = activeOption.activeSrc;
-    }
-
-    selectedPrio = priority;
-    selectedPrioBoard = priority;
+    `;
 }

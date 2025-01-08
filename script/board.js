@@ -20,7 +20,7 @@ function loadTasks(tasks) {
     }
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
-    renderAddTaskPrioButtonsOverlay("prioButtonsContainer");
+    renderPrioButtons("#prioOverlay", "overlay");
     calculateDueDate();
     resetFormFields();
 }

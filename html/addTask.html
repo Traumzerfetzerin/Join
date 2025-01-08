@@ -26,7 +26,7 @@
 
 </head>
 
-<body onload="loadContactsForDropdown(), renderAddTaskPrioButtons();">
+<body onload="loadContactsForDropdown(), renderPrioButtons();">
     <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
@@ -38,6 +38,7 @@
     <script>
         w3.includeHTML(() => {
             loadContactsForDropdown();
+            renderPrioButtons(".prioButtonsContainer", "normal");
         });
     </script>
 </body>

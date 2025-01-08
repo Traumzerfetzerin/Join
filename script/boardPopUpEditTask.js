@@ -9,7 +9,7 @@ async function editTask(taskId, category) {
 
     enableEditMode(task, category);
     renderSubtasksInEditMode(task, category);
-    renderAddTaskPrioButtonsOverlay("prioOverlay");
+    renderPrioButtons("#prioOverlay", "overlay");
 
     if (task.contacts && task.contacts.length > 0) {
         syncContactIcons(task.contacts);
@@ -28,7 +28,7 @@ function fillFields(task) {
     document.getElementById('textareaDescription').value = task.description || '';
     document.getElementById('dueDate').value = task.dueDate || '';
     document.getElementById('categorySelect').value = task.category || '';
-    setPrio(task.prio);
+    setPrio(task.prio, "normal");
 }
 
 
