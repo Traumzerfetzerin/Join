@@ -91,7 +91,6 @@
 @media (max-width: 490px) {
 
     .urgent,
-    .pencil,
     .tasks {
         left: -70px;
     }
@@ -115,10 +114,10 @@
 
     .pencil {
         height: 110px;
-        width: 142px;
+        width: 151px;
         top: -50px;
         position: relative;
-
+        left: -78px;
     }
 
     .urgent {

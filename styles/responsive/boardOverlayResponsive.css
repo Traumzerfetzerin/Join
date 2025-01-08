@@ -3,11 +3,24 @@
     .board-overlay {
         width: 340px;
         padding: 20px 20px;
-        min-height: 690px;
-        margin-top: 15px;
+        max-height: 600px;
+        margin-top: -20px;
     }
 
+    .overlay-header {
+        margin-bottom: -5px;
+    }
+
+    .task-title {
+        margin-bottom: -20px;
+    }
+
+    .task-info {
+        margin-top: -23px;
+        margin-bottom: -37px;
+    }
     .subtasks-section{
+        margin-top: 5px;
         margin-bottom: 20px;
     }
 
