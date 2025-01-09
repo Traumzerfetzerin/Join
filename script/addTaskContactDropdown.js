@@ -1,14 +1,8 @@
 /**
- * Loads contact data from a remote Firebase database and populates the contact dropdown.
- * 
- * This asynchronous function fetches the contacts data from the specified Firebase Realtime Database URL.
- * It processes the response to extract contact information and stores it in the `contacts` array. 
- * If the data is successfully retrieved, the function then calls `populateCheckboxDropdown` to update the UI.
- * If no contacts are found or an error occurs during the fetch process, an appropriate message is logged to the console.
+ * Loads contacts from the Firebase database and populates the checkbox dropdown.
  * 
  * @async
- * @function
- * @returns {Promise<void>} A promise that resolves when the contacts have been loaded and the dropdown populated.
+ * @returns {Promise<void>} Resolves when contacts are loaded and the dropdown is populated.
  */
 async function loadContactsForDropdown() {
     try {
@@ -27,24 +21,45 @@ async function loadContactsForDropdown() {
 
 
 /**
- * Creates a span element for the contact's initials.
+ * Generates initials from the contact name and creates a span element to display them.
  * 
- * This function generates a span element displaying the initials of the contact's name.
- * If the contact has a color, it applies that color to the initials. Otherwise, it generates a random color.
- * 
- * @param {Object} contact - The contact object containing the name and color (optional).
- * @returns {HTMLElement} The span element with the initials and background color.
+ * @param {Object} contact - The contact object containing the name and color.
+ * @returns {HTMLElement} The span element displaying the contact's initials.
  */
 function createInitialsSpan(contact) {
-    let initials = contact.name
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase())
-        .join('');
+    let initials = generateInitials(contact.name);
 
     let initialsSpan = document.createElement('span');
     initialsSpan.classList.add('contact-initials');
     initialsSpan.textContent = initials;
 
+    setInitialsBackgroundColor(initialsSpan, contact);
+
+    return initialsSpan;
+}
+
+
+/**
+ * Generates initials from a contact's name.
+ * 
+ * @param {string} name - The name of the contact.
+ * @returns {string} The initials derived from the name.
+ */
+function generateInitials(name) {
+    return name
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase())
+        .join('');
+}
+
+
+/**
+ * Sets the background color for the initials span element.
+ * 
+ * @param {HTMLElement} initialsSpan - The span element displaying the initials.
+ * @param {Object} contact - The contact object containing the color property.
+ */
+function setInitialsBackgroundColor(initialsSpan, contact) {
     if (contact.color) {
         initialsSpan.style.backgroundColor = contact.color;
     } else {
@@ -52,31 +67,43 @@ function createInitialsSpan(contact) {
         initialsSpan.style.backgroundColor = randomColor;
         contact.color = randomColor;
     }
-
-    return initialsSpan;
 }
 
 
 /**
- * Creates a contact entry element with initials, name, and a checkbox.
+ * Creates a container with the contact's initials and name.
  * 
- * This function generates a container for a contact entry, including the initials, name, and checkbox.
- * It calls the `createInitialsSpan` function to generate the initials for the contact.
+ * @param {Object} contact - The contact object.
+ * @returns {HTMLElement} The name container.
+ */
+function createNameContainer(contact) {
+    let initialsSpan = createInitialsSpan(contact);
+    
+    let nameSpan = document.createElement('span');
+    nameSpan.classList.add('contact-name');
+    nameSpan.textContent = contact.name;
+    
+    let nameContainer = document.createElement('div');
+    nameContainer.classList.add('name-container');
+    nameContainer.appendChild(initialsSpan);
+    nameContainer.appendChild(nameSpan);
+    
+    return nameContainer;
+}
+
+
+/**
+ * Creates a contact entry with a name container and checkbox.
  * 
- * @param {Object} contact - The contact object containing the name and color (optional).
- * @returns {HTMLElement} The contact entry container with the initials, name, and checkbox.
+ * @param {Object} contact - The contact object containing name and other details.
+ * @returns {HTMLElement} The entry container with name and checkbox elements.
  */
 function createContactEntry(contact) {
     let entryContainer = document.createElement('div');
     entryContainer.classList.add('entry-container');
 
-    // Create initials span using the helper function
-    let initialsSpan = createInitialsSpan(contact);
-
-    // Create name span
-    let nameSpan = document.createElement('span');
-    nameSpan.classList.add('contact-name');
-    nameSpan.textContent = contact.name;
+    // Create name container
+    let nameContainer = createNameContainer(contact);
 
     // Create checkbox element
     let checkbox = document.createElement('input');
@@ -84,12 +111,6 @@ function createContactEntry(contact) {
     checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
     checkbox.value = contact.name;
     checkbox.addEventListener('change', updateAssignedContacts);
-
-    // Create name container and append initials and name
-    let nameContainer = document.createElement('div');
-    nameContainer.classList.add('name-container');
-    nameContainer.appendChild(initialsSpan);
-    nameContainer.appendChild(nameSpan);
 
     // Append name container and checkbox to entry container
     entryContainer.appendChild(nameContainer);
@@ -99,14 +120,15 @@ function createContactEntry(contact) {
 }
 
 
+
+
 /**
- * Populates the task assignment dropdown with contact options and checkboxes.
+ * Populates the task assignment dropdown with contact entries.
  * 
- * This function loops through the contacts array and calls the `createContactEntry` function
- * to generate the HTML for each contact. It then appends each entry to the dropdown.
+ * This function clears the existing dropdown options, creates a contact entry for each contact, 
+ * and appends it to the dropdown. Finally, it ensures the dropdown is visible.
  * 
- * @function
- * @returns {void} This function does not return any value.
+ * @returns {void}
  */
 function populateCheckboxDropdown() {
     let dropdown = document.getElementById("assignTaskDropdown");
@@ -130,12 +152,7 @@ function populateCheckboxDropdown() {
 
 /**
  * Generates a random hex color code.
- * 
- * This function generates a random hexadecimal color code (e.g., "#A3C1F7") by selecting
- * random characters from the set of hexadecimal digits (0-9 and A-F). The color code 
- * is returned as a string.
- * 
- * @returns {string} A randomly generated hex color code.
+ * @returns {string} A random hex color code (e.g., '#A3F4D2').
  */
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -152,13 +169,9 @@ let selectedContacts = [];
 
 
 /**
- * Updates the list of assigned contacts based on selected checkboxes.
- * 
- * This function retrieves all checked checkboxes within the `#assignTaskDropdown` element,
- * collects their values (contact names), and updates the input field with the ID `assigned-to` 
- * with a comma-separated list of the selected contact names.
- * 
- * @returns {void} This function does not return any value.
+ * Updates the 'assigned-to' input field with a comma-separated list of selected contact names.
+ *
+ * @returns {void}
  */
 function updateAssignedContacts() {
     selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
@@ -170,13 +183,9 @@ function updateAssignedContacts() {
 
 
 /**
- * Toggles the visibility of the task assignment dropdown.
+ * Toggles the visibility of the task assignment dropdown and changes the dropdown icon.
  * 
- * This function checks the current display state of the dropdown with the ID `assignTaskDropdown`.
- * If the dropdown is currently hidden or has no display style set, it will be shown, and the 
- * corresponding dropdown icon will be swapped. If the dropdown is visible, it will be hidden.
- * 
- * @returns {void} This function does not return any value.
+ * @returns {void}
  */
 function toggleDropdown() {
     const dropdown = document.getElementById('assignTaskDropdown');
@@ -195,14 +204,10 @@ function toggleDropdown() {
 
 
 /**
- * Closes the task assignment dropdown when clicking outside of the input container.
+ * Closes the task assignment dropdown when clicking outside the input container.
  * 
- * This event listener listens for a `click` event on the document. If the user clicks outside of the 
- * input container with the class `input-with-icon`, the dropdown with the ID `assignTaskDropdown` 
- * is hidden, and the corresponding dropdown icons are toggled accordingly.
- * 
- * @param {Event} event - The click event that triggered this function.
- * @returns {void} This function does not return any value.
+ * @param {Event} event - The click event.
+ * @returns {void}
  */
 document.addEventListener('click', function (event) {
     const dropdown = document.getElementById('assignTaskDropdown');
