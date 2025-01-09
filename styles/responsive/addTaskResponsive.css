@@ -28,6 +28,7 @@
 
     .requiredAndButtons {
         flex-direction: column;
+        top: 0;
     }
 }
 
