@@ -235,5 +235,5 @@ function logout() {
     }
 
     // Redirect to login page
-    window.location.href = 'html/summary.html'; // Update the path if needed
+    window.location.href = '/html/login.html'; // Update the path if needed
 }
