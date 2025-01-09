@@ -4,13 +4,13 @@
  */
 function collectBasicInfo() {
     let titleElement = document.querySelector('.overlay-content .task-title');
-    let descriptionElement = document.querySelector('.overlay-content .task-description');
-    let dueDateElement = document.querySelector('.overlay-content input[type="date"]');
+    let descriptionElement = document.querySelector('.overlay-content .task-description'); 
+    let dueDateElement = document.querySelector('.overlay-content input[type="date"]'); 
 
     return {
-        title: titleElement ? titleElement.textContent.trim() : "",
-        description: descriptionElement ? descriptionElement.textContent.trim() : "",
-        dueDate: dueDateElement ? dueDateElement.value.trim() : "",
+        title: titleElement && titleElement.value ? titleElement.value.trim() : "",
+        description: descriptionElement && descriptionElement.value ? descriptionElement.value.trim() : "",
+        dueDate: dueDateElement && dueDateElement.value ? dueDateElement.value.trim() : "",
     };
 }
 
@@ -24,7 +24,6 @@ function collectPriority() {
     return priorityElement ? priorityElement.getAttribute("data-priority") : "low";
 }
 
-
 /**
  * Collects subtasks from the overlay.
  * @returns {Array<Object>} - List of subtasks with text and completion status.
@@ -33,11 +32,10 @@ function collectSubtasks() {
     return Array.from(
         document.querySelectorAll('.subtasks-section .subtasks-list li')
     ).map(li => ({
-        text: li.textContent.trim(),
-        completed: li.classList.contains("completed"),
+        text: li.querySelector('.subtask-text').value.trim(), 
+        completed: li.querySelector('.subtask-checkbox').checked, 
     }));
 }
-
 
 /**
  * Collects contacts from the overlay.
@@ -46,9 +44,8 @@ function collectSubtasks() {
 function collectContacts() {
     return Array.from(
         document.querySelectorAll('.contacts-section .contact-list input[type="checkbox"]:checked')
-    ).map(input => input.closest('.contact').textContent.trim());
+    ).map(input => input.closest('.contact').querySelector('.contact-name').textContent.trim());
 }
-
 
 /**
  * Combines all collected data into a single task object.
@@ -56,12 +53,14 @@ function collectContacts() {
  */
 function collectOverlayData() {
     let basicInfo = collectBasicInfo();
-    return {
+    let data = {
         ...basicInfo,
         prio: collectPriority(),
         subtasks: collectSubtasks(),
         contacts: collectContacts(),
     };
+    console.log("Collected Data:", data);
+    return data;
 }
 
 
@@ -76,22 +75,25 @@ function validateTaskData(task) {
 
 
 /**
- * Saves the edited task data to Firebase.
+ * Saves the edited task data to Firebase and reloads the page.
  * @param {string} taskId - ID of the task being edited.
  * @param {string} category - Category of the task.
  */
 async function saveChanges(taskId, category) {
     let updatedTask = collectOverlayData();
-
-    if (!validateTaskData(updatedTask)) {
-        alert("Please fill in all required fields.");
-        return;
-    }
-
     updatedTask.id = taskId;
     updatedTask.category = category;
-    await updateTaskInFirebase(taskId, category, updatedTask);
+
+    try {
+        await updateTaskInDatabase(category, taskId, updatedTask);
+        console.log("Task successfully updated.");
+        location.reload(); 
+    } catch (error) {
+        console.error("Error saving task:", error);
+        alert("Failed to save the changes. Please try again.");
+    }
 }
+
 
 
 /**

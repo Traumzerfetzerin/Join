@@ -292,11 +292,12 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
  * @param {object} updatedTask - Updated task data.
  */
 async function updateTaskInDatabase(category, taskId, updatedTask) {
+    console.log("Updated Task:", updatedTask);
     let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks/${category}/${taskId}.json`;
     let response = await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedTask)
+        body: JSON.stringify(updatedTask),
     });
 
     if (!response.ok) {

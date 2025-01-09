@@ -36,7 +36,6 @@ function setPrio(priority, context = "normal", event = null) {
     }
 
     selectedPrio = priority;
-    console.log(`Priority set to (${context}): ${priority}`);
 }
 
 
@@ -48,7 +47,6 @@ function setPrio(priority, context = "normal", event = null) {
 function renderPrioButtons(containerSelector, context = "normal") {
     let prioButtonsContainer = document.querySelector(containerSelector);
     if (!prioButtonsContainer) {
-        console.warn(`Container not found: ${containerSelector}`);
         return;
     }
 
