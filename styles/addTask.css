@@ -11,15 +11,13 @@
 /* Header Styling */
 .h1Task {
     width: 278px;
-    height: 73px;
-    top: 206px;
-    left: 328px;
     gap: 1px;
     font-size: 61px;
     line-height: 73.2px;
     font-weight: bold;
     color: #000000;
     padding: 10px;
+    margin: 0;
 }
 
 /* Layout for Task Sections */
@@ -352,7 +350,7 @@ textarea {
 
 .requiredAndButtons {
     position: relative;
-    top: 150px;
+    top: 55px;
 }
 
 /* Label for each contact */
