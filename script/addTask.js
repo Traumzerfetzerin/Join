@@ -1,7 +1,12 @@
 const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 
 
-// CALCULATE DUE DATE
+/**
+ * Updates the minimum allowed value for an input field with ID 'dueDate' to the current date.
+ * 
+ * This function calculates the current date, formats it as a string in 'YYYY-MM-DD' format,
+ * and sets it as the 'min' attribute of the input element with the ID 'dueDate'.
+ */
 function calculateDueDate() {
     let duoDate = new Date();
     let formattedDate = duoDate.toISOString().split('T')[0];
@@ -9,19 +14,38 @@ function calculateDueDate() {
 }
 
 
-// CATEGORY
+/**
+ * Selects the "Technical Task" category in a dropdown menu and toggles the category dropdown.
+ * 
+ * This function sets the value of the dropdown element with the ID 'categorySelect' to "Technical Task"
+ * and then calls the `toggleDropdownCategory` function to update the dropdown's visibility or state.
+ */
 function selectTechnicalTask() {
     document.getElementById('categorySelect').value = "Technical Task";
     toggleDropdownCategory();
 }
 
 
+/**
+ * Selects the "User Story" category in a dropdown menu and toggles the category dropdown.
+ * 
+ * This function sets the value of the dropdown element with the ID 'categorySelect' to "User Story"
+ * and then calls the `toggleDropdownCategory` function to update the dropdown's visibility or state.
+ */
 function selectUserStory() {
     document.getElementById('categorySelect').value = "User Story";
     toggleDropdownCategory();
 }
 
 
+/**
+ * Toggles the visibility of the category dropdown and updates the state of dropdown icons.
+ * 
+ * This function checks if the element with the ID 'categoryDropdown' has the 'd-none' class,
+ * which indicates it is hidden. If hidden, the function removes the 'd-none' class to display it
+ * and updates the icons by toggling the 'd-none' class on elements with IDs 'dropdownCategory' 
+ * and 'dropdownCategory1'. If the dropdown is visible, the function reverses these actions.
+ */
 function toggleDropdownCategory() {
     let categoryDropdown = document.getElementById('categoryDropdown');
     let dropdownImg = document.getElementById('dropdownCategory');
@@ -39,7 +63,14 @@ function toggleDropdownCategory() {
 }
 
 
-// CLOSE DROPDOWN
+/**
+ * Adds a click event listener to the document to hide the category dropdown when clicking outside its container.
+ * 
+ * This event listener checks if the click event target is outside the element with the ID 'inputCategory'.
+ * If so, it hides the dropdown menu by adding the 'd-none' class to the element with the ID 'categoryDropdown'.
+ * Additionally, it resets the dropdown icons by toggling the 'd-none' class on the elements with IDs
+ * 'dropdownCategory' and 'dropdownCategory1'.
+ */
 document.addEventListener('click', function (event) {
     let categoryDropdown = document.getElementById('categoryDropdown');
     let categoryInputContainer = document.getElementById('inputCategory');
@@ -54,7 +85,17 @@ document.addEventListener('click', function (event) {
 });
 
 
-// CLEAR BUTTON
+/**
+ * Clears all task-related input fields and resets dropdowns, subtasks, and assigned contacts.
+ * 
+ * This asynchronous function performs the following actions:
+ * - Clears the values of input fields for title, description, due date, category, subtasks, and assigned tasks.
+ * - Resets the category dropdown to its default state and hides it.
+ * - Unchecks all contact checkboxes associated with the task.
+ * - Calls `clearPrioButtons` to reset priority button states.
+ * 
+ * It also ensures that the `contacts` array is iterated over to uncheck dynamically generated contact checkboxes.
+ */
 async function clearTasks() {
     document.getElementById('inputTitle').value = "";
     document.getElementById('textareaDescription').value = "";
@@ -78,6 +119,7 @@ async function clearTasks() {
 
 let taskCategory = "";
 
+
 /**
  * Creates a new task and sends it to Firebase.
  * @param {Event} event - Prevents default form submission.
@@ -98,7 +140,13 @@ async function createTasks(event) {
 }
 
 
-// AFTER CREATE TASK CHANGE TO BOARD
+/**
+ * Redirects the user to the "board.html" page after a 1-second delay.
+ * 
+ * This asynchronous function uses `setTimeout` to wait for 1 second (1000 milliseconds) 
+ * before changing the `window.location.href` to "board.html", effectively navigating 
+ * the user to the board page.
+ */
 async function changeToBoard() {
     setTimeout(() => {
         window.location.href = "board.html";
@@ -189,6 +237,15 @@ async function saveTaskToFirebase(taskData) {
 }
 
 
+/**
+ * Finalizes the task creation process by applying visual feedback and displaying a confirmation popup.
+ * 
+ * This asynchronous function performs the following steps:
+ * 1. Calls `redBorder()` to apply visual feedback (e.g., highlighting invalid inputs or required fields).
+ * 2. Calls `popUpAddTask()` to display a confirmation popup indicating the task was successfully added.
+ * 
+ * Both functions are awaited to ensure sequential execution and proper timing of the task creation flow.
+ */
 async function finalizeTaskCreation() {
     await redBorder();
     await popUpAddTask();
@@ -238,6 +295,15 @@ function resetBorders(elements) {
 }
 
 
+/**
+ * Displays a temporary "required fields" popup to notify the user of missing inputs.
+ * 
+ * This asynchronous function performs the following steps:
+ * 1. Retrieves the popup element with the ID 'popUpRequired'.
+ * 2. Removes the 'd-none' class to make the popup visible.
+ * 3. Sets the popup's inner HTML using the `popUpRequiredHTML()` function.
+ * 4. Uses `setTimeout` to reapply the 'd-none' class after 1 second, hiding the popup.
+ */
 async function popUpRequired() {
     let popUpElement = document.getElementById('popUpRequired');
 
@@ -251,7 +317,16 @@ async function popUpRequired() {
 }
 
 
-// POP UP ADD TASK
+/**
+ * Displays a popup confirming the addition of a task and resets the task input fields.
+ * 
+ * This asynchronous function performs the following actions:
+ * 1. Makes the popup element with the ID 'popUpAddTask' visible by removing the 'd-none' class.
+ * 2. Sets the inner HTML of the popup using the `popUpAddTaskHTML()` function.
+ * 3. Clears the values of task input fields: title, description, due date, category, and assigned user.
+ * 4. Unchecks all contact checkboxes associated with the task.
+ * 5. Uses `setTimeout` to hide the popup after 1 second by setting its `display` style to "none".
+ */
 async function popUpAddTask() {
     document.getElementById('popUpAddTask').classList.remove('d-none');
     document.getElementById('popUpAddTask').innerHTML = popUpAddTaskHTML();
