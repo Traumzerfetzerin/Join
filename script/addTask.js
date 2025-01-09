@@ -2,10 +2,7 @@ const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatab
 
 
 /**
- * Updates the minimum allowed value for an input field with ID 'dueDate' to the current date.
- * 
- * This function calculates the current date, formats it as a string in 'YYYY-MM-DD' format,
- * and sets it as the 'min' attribute of the input element with the ID 'dueDate'.
+ * Sets the minimum allowed due date to today's date in the due date input field.
  */
 function calculateDueDate() {
     let duoDate = new Date();
@@ -15,10 +12,7 @@ function calculateDueDate() {
 
 
 /**
- * Selects the "Technical Task" category in a dropdown menu and toggles the category dropdown.
- * 
- * This function sets the value of the dropdown element with the ID 'categorySelect' to "Technical Task"
- * and then calls the `toggleDropdownCategory` function to update the dropdown's visibility or state.
+ * Sets the category to "Technical Task" and toggles the category dropdown.
  */
 function selectTechnicalTask() {
     document.getElementById('categorySelect').value = "Technical Task";
@@ -27,10 +21,7 @@ function selectTechnicalTask() {
 
 
 /**
- * Selects the "User Story" category in a dropdown menu and toggles the category dropdown.
- * 
- * This function sets the value of the dropdown element with the ID 'categorySelect' to "User Story"
- * and then calls the `toggleDropdownCategory` function to update the dropdown's visibility or state.
+ * Sets the category to "User Story" and toggles the category dropdown.
  */
 function selectUserStory() {
     document.getElementById('categorySelect').value = "User Story";
@@ -39,12 +30,7 @@ function selectUserStory() {
 
 
 /**
- * Toggles the visibility of the category dropdown and updates the state of dropdown icons.
- * 
- * This function checks if the element with the ID 'categoryDropdown' has the 'd-none' class,
- * which indicates it is hidden. If hidden, the function removes the 'd-none' class to display it
- * and updates the icons by toggling the 'd-none' class on elements with IDs 'dropdownCategory' 
- * and 'dropdownCategory1'. If the dropdown is visible, the function reverses these actions.
+ * Toggles the visibility of the category dropdown and updates the dropdown icons.
  */
 function toggleDropdownCategory() {
     let categoryDropdown = document.getElementById('categoryDropdown');
@@ -64,12 +50,8 @@ function toggleDropdownCategory() {
 
 
 /**
- * Adds a click event listener to the document to hide the category dropdown when clicking outside its container.
- * 
- * This event listener checks if the click event target is outside the element with the ID 'inputCategory'.
- * If so, it hides the dropdown menu by adding the 'd-none' class to the element with the ID 'categoryDropdown'.
- * Additionally, it resets the dropdown icons by toggling the 'd-none' class on the elements with IDs
- * 'dropdownCategory' and 'dropdownCategory1'.
+ * Hides the category dropdown and resets the dropdown icons when clicking outside the input container.
+ * @param {Event} event - The click event triggered by the user.
  */
 document.addEventListener('click', function (event) {
     let categoryDropdown = document.getElementById('categoryDropdown');
@@ -86,15 +68,11 @@ document.addEventListener('click', function (event) {
 
 
 /**
- * Clears all task-related input fields and resets dropdowns, subtasks, and assigned contacts.
+ * Resets all task-related fields to their default state.
+ * Clears inputs, dropdowns, checkboxes, and hides the category dropdown.
  * 
- * This asynchronous function performs the following actions:
- * - Clears the values of input fields for title, description, due date, category, subtasks, and assigned tasks.
- * - Resets the category dropdown to its default state and hides it.
- * - Unchecks all contact checkboxes associated with the task.
- * - Calls `clearPrioButtons` to reset priority button states.
- * 
- * It also ensures that the `contacts` array is iterated over to uncheck dynamically generated contact checkboxes.
+ * @async
+ * @returns {Promise<void>} Resolves when all fields are cleared.
  */
 async function clearTasks() {
     document.getElementById('inputTitle').value = "";
@@ -121,8 +99,12 @@ let taskCategory = "";
 
 
 /**
- * Creates a new task and sends it to Firebase.
- * @param {Event} event - Prevents default form submission.
+ * Handles task creation, validates data, and saves it to Firebase.
+ * Clears subtasks, finalizes task creation, and navigates to the board.
+ * 
+ * @async
+ * @param {Event} event - The event object from the form submission.
+ * @returns {Promise<void>} Resolves when the task is created and board is updated.
  */
 async function createTasks(event) {
     event.preventDefault();
@@ -141,11 +123,10 @@ async function createTasks(event) {
 
 
 /**
- * Redirects the user to the "board.html" page after a 1-second delay.
+ * Redirects to the board page after a brief delay.
  * 
- * This asynchronous function uses `setTimeout` to wait for 1 second (1000 milliseconds) 
- * before changing the `window.location.href` to "board.html", effectively navigating 
- * the user to the board page.
+ * @async
+ * @returns {Promise<void>} Resolves after the delay and redirects to the board.
  */
 async function changeToBoard() {
     setTimeout(() => {
@@ -155,8 +136,9 @@ async function changeToBoard() {
 
 
 /**
- * Collects data from the form and returns it as an object.
- * @returns {Object} - Task data.
+ * Collects and returns task data from the form.
+ * 
+ * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
  */
 function collectTaskData() {
     let subtasks = Array.from(
@@ -179,9 +161,11 @@ function collectTaskData() {
 
 
 /**
- * Validates the task data.
- * @param {Object} data - The task data to validate.
- * @returns {boolean} - Returns true if valid, otherwise false.
+ * Validates the task data to ensure all required fields are present.
+ * 
+ * @async
+ * @param {Object} data - The task data to be validated.
+ * @returns {Promise<boolean>} `true` if the data is valid, `false` otherwise.
  */
 async function validateTaskData(data) {
     if (!data.title || !data.dueDate || !data.contacts || !data.category || !data.prio) {
@@ -195,56 +179,83 @@ async function validateTaskData(data) {
 
 
 /**
- * Sends the task data to Firebase.
- * @param {Object} taskData - The task data to save.
- * @returns {Promise<string|undefined>} - Returns the generated task ID or undefined on failure.
+ * Processes an array of subtasks, ensuring each subtask is an object with text and completion status.
+ * 
+ * @param {(string|Object)[]} subtasks - The list of subtasks to process.
+ * @returns {Object[]} The processed subtasks, each containing `text` and `completed` properties.
+ */
+function processSubtasks(subtasks) {
+    return subtasks.map(subtask => {
+        if (typeof subtask === 'object' && subtask.text) {
+            return subtask;
+        }
+        return {
+            text: subtask.trim(),
+            completed: false
+        };
+    });
+}
+
+
+/**
+ * Prepares task data by ensuring all required fields are properly formatted for saving.
+ * 
+ * @param {Object} taskData - The task data to be prepared.
+ * @param {string} taskData.prio - The priority of the task.
+ * @param {Array} [taskData.subtasks] - The subtasks associated with the task.
+ * @returns {Object|null} The prepared task data, or `null` if priority is missing.
+ */
+function prepareTaskDataForFirebase(taskData) {
+    if (!taskData.prio) {
+        console.error("Priority is missing. Cannot save task.");
+        return null;
+    }
+
+    if (taskData.subtasks) {
+        taskData.subtasks = processSubtasks(taskData.subtasks);
+    }
+
+    return taskData;
+}
+
+
+/**
+ * Saves the task data to Firebase after preparing it.
+ * 
+ * @async
+ * @param {Object} taskData - The task data to be saved.
+ * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
  */
 async function saveTaskToFirebase(taskData) {
     try {
-        if (!taskData.prio) {
-            console.error("Priority is missing. Cannot save task.");
-            return;
-        }
+        let preparedTaskData = prepareTaskDataForFirebase(taskData);
+        if (!preparedTaskData) return null;
 
-        if (taskData.subtasks) {
-            taskData.subtasks = taskData.subtasks.map(subtask => {
-                if (typeof subtask === 'object' && subtask.text) {
-                    return subtask;
-                }
-                return {
-                    text: subtask.trim(),
-                    completed: false      
-                };
-            });
-        }
-
-        let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
+        let response = await fetch(`${CREATETASK_URL}/${preparedTaskData.category}.json`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(taskData),
+            body: JSON.stringify(preparedTaskData),
         });
 
         if (!response.ok) {
             console.error("Failed to save task to Firebase:", response.statusText);
-            return;
+            return null;
         }
 
         let data = await response.json();
         return data.name; // The generated ID
     } catch (error) {
         console.error("Error saving task to Firebase:", error);
+        return null;
     }
 }
 
 
 /**
- * Finalizes the task creation process by applying visual feedback and displaying a confirmation popup.
+ * Finalizes the task creation process by triggering UI updates.
  * 
- * This asynchronous function performs the following steps:
- * 1. Calls `redBorder()` to apply visual feedback (e.g., highlighting invalid inputs or required fields).
- * 2. Calls `popUpAddTask()` to display a confirmation popup indicating the task was successfully added.
- * 
- * Both functions are awaited to ensure sequential execution and proper timing of the task creation flow.
+ * @async
+ * @returns {Promise<void>} Resolves when the UI updates are completed.
  */
 async function finalizeTaskCreation() {
     await redBorder();
@@ -253,7 +264,10 @@ async function finalizeTaskCreation() {
 
 
 /**
- * Highlights invalid inputs and resets their border after 2 seconds.
+ * Highlights invalid or missing required fields and resets borders after a delay.
+ * 
+ * @async
+ * @returns {Promise<void>}
  */
 async function redBorder() {
     let inputs = document.querySelectorAll('input:required:invalid');
@@ -269,8 +283,9 @@ async function redBorder() {
 
 
 /**
- * Adds a red border to invalid elements.
- * @param {NodeList} elements - List of elements to highlight.
+ * Highlights invalid form elements by setting a red border.
+ * 
+ * @param {HTMLElement[]} elements - The elements to highlight.
  */
 function highlightInvalid(elements) {
     elements.forEach(el => el.style.border = '2px solid #FF3D00');
@@ -278,8 +293,9 @@ function highlightInvalid(elements) {
 
 
 /**
- * Highlights a specific element.
- * @param {HTMLElement} element - Element to highlight.
+ * Highlights a single element by setting a red border.
+ * 
+ * @param {HTMLElement} element - The element to highlight.
  */
 function highlightElement(element) {
     element.style.border = '2px solid #FF3D00';
@@ -287,8 +303,9 @@ function highlightElement(element) {
 
 
 /**
- * Resets the border for given elements.
- * @param {HTMLElement[]} elements - Elements to reset.
+ * Resets the border style of the given elements.
+ * 
+ * @param {HTMLElement[]} elements - The elements whose borders will be reset.
  */
 function resetBorders(elements) {
     elements.forEach(el => (el.style.border = ''));
@@ -296,13 +313,10 @@ function resetBorders(elements) {
 
 
 /**
- * Displays a temporary "required fields" popup to notify the user of missing inputs.
+ * Displays a pop-up message indicating that required fields are missing.
+ * The pop-up will be shown for 1 second before disappearing.
  * 
- * This asynchronous function performs the following steps:
- * 1. Retrieves the popup element with the ID 'popUpRequired'.
- * 2. Removes the 'd-none' class to make the popup visible.
- * 3. Sets the popup's inner HTML using the `popUpRequiredHTML()` function.
- * 4. Uses `setTimeout` to reapply the 'd-none' class after 1 second, hiding the popup.
+ * @async
  */
 async function popUpRequired() {
     let popUpElement = document.getElementById('popUpRequired');
@@ -318,23 +332,30 @@ async function popUpRequired() {
 
 
 /**
- * Displays a popup confirming the addition of a task and resets the task input fields.
+ * Shows the "Add Task" popup and sets its content.
  * 
- * This asynchronous function performs the following actions:
- * 1. Makes the popup element with the ID 'popUpAddTask' visible by removing the 'd-none' class.
- * 2. Sets the inner HTML of the popup using the `popUpAddTaskHTML()` function.
- * 3. Clears the values of task input fields: title, description, due date, category, and assigned user.
- * 4. Unchecks all contact checkboxes associated with the task.
- * 5. Uses `setTimeout` to hide the popup after 1 second by setting its `display` style to "none".
+ * @async
+ * @returns {Promise<void>} Resolves when the popup is displayed.
  */
-async function popUpAddTask() {
+async function showPopUpAddTask() {
     document.getElementById('popUpAddTask').classList.remove('d-none');
     document.getElementById('popUpAddTask').innerHTML = popUpAddTaskHTML();
+}
+
+
+/**
+ * Resets the task form fields and hides the "Add Task" popup.
+ * 
+ * @async
+ * @returns {Promise<void>} Resolves after resetting the form and hiding the popup.
+ */
+async function resetTaskForm() {
     document.getElementById('inputTitle').value = "";
     document.getElementById('textareaDescription').value = "";
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
+    
     contacts.forEach(contact => {
         const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {

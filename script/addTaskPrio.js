@@ -5,6 +5,7 @@ let prioOptions = [
     { class: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
 ];
 
+
 /**
  * Updates the priority for a task and applies shared CSS classes.
  * @param {string} priority - The priority level (e.g., "low", "medium", "urgent").
