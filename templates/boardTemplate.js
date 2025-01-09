@@ -185,25 +185,24 @@ function generateContactDropdownHTML(contacts) {
 }
 
 
-
 /**
  * Generates the HTML for priority buttons and binds click events.
  * Ensures the priority buttons are correctly generated with appropriate classes and event handlers.
  * @param {string|null} selectedPrio - The selected priority (e.g., "urgent", "medium", "low").
- * @param {string} onClickHandler - Name of the function to handle button clicks.
- * @param {string} overlaySuffix - Suffix for overlay-specific styling or functionality.
+ * @param {string} context - The context for the buttons ("normal" or "overlay").
  * @returns {string} - HTML for the priority buttons.
  */
-function generatePrioButtonsHTML(selectedPrio, onClickHandler, overlaySuffix) {
+function generatePrioButtonsHTML(selectedPrio, context) {
+    let suffix = context === "overlay" ? "Overlay" : "";
     return `
         <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
             ${prioOptions.map(option => `
                 <button 
                     type="button" 
-                    class="prio-button cursorPointer fonts ${option.class}${overlaySuffix} ${selectedPrio === option.class ? `${option.class}White` : ""}" 
+                    class="prio-button cursorPointer fonts ${option.class}${suffix} ${selectedPrio === option.class ? `${option.class}White` : ""}" 
                     data-prio="${option.class}" 
-                    onclick="${onClickHandler}('${option.class}', event)">
+                    onclick="setPrio('${option.class}', '${context}', event)">
                     ${option.label}
                     <img 
                         src="${selectedPrio === option.class ? option.activeSrc : option.src}" 

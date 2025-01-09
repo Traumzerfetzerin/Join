@@ -5,70 +5,61 @@ let prioOptions = [
     { class: "low", label: "Low", src: "../Assets/addTask/Prio baja.svg", activeSrc: "../Assets/addTask/Prio_baja_white.svg" }
 ];
 
+/**
+ * Updates the priority for a task and applies shared CSS classes.
+ * @param {string} priority - The priority level (e.g., "low", "medium", "urgent").
+ * @param {string} context - The context for the buttons (e.g., "normal", "overlay").
+ * @param {Event|null} event - Optional event to prevent default behavior.
+ */
 function setPrio(priority, context = "normal", event = null) {
     if (event) event.preventDefault();
 
-    let suffix = context === "overlay" ? "Overlay" : "";
-    if (!prioOptions || prioOptions.length === 0) {
-        console.error("Prio options are not defined or empty.");
-        return;
-    }
+    let containerSelector = context === "overlay" ? "#prioOverlay" : ".prioButtonsContainer";
+    let buttons = document.querySelectorAll(`${containerSelector} .prio-button`);
 
-    let buttons = document.querySelectorAll(`.prio-button`);
-    buttons.forEach(function (button) {
-
-        button.classList.remove(`low${suffix}White`, `medium${suffix}White`, `urgent${suffix}White`);
-
+    buttons.forEach(button => {
+        button.classList.remove("lowWhite", "mediumWhite", "urgentWhite");
         let img = button.querySelector("img");
         let prioClass = button.dataset.prio;
-        let option = prioOptions.find(function (opt) {
-            return opt.class === prioClass;
-        });
-        if (img && option) img.src = option.src; 
+        let option = prioOptions.find(opt => opt.class === prioClass);
+        if (img && option) img.src = option.src;
     });
 
-    let activeButton = document.querySelector(`.prio-button[data-prio="${priority}"]`);
+    let activeButton = document.querySelector(`${containerSelector} .prio-button[data-prio="${priority}"]`);
     if (activeButton) {
-        activeButton.classList.add(`${priority}${suffix}White`);
+        activeButton.classList.add(`${priority}White`);
         let img = activeButton.querySelector("img");
-        let activeOption = prioOptions.find(function (opt) {
-            return opt.class === priority;
-        });
-        if (img && activeOption) img.src = activeOption.activeSrc; 
+        let activeOption = prioOptions.find(opt => opt.class === priority);
+        if (img && activeOption) img.src = activeOption.activeSrc;
     } else {
-        console.warn(`No button found for priority: ${priority}`);
+        console.warn(`No button found for priority: ${priority} in ${context} context`);
     }
 
     selectedPrio = priority;
-    selectedPrioBoard = priority;
-
-    console.log("Priority set to:", priority);
+    console.log(`Priority set to (${context}): ${priority}`);
 }
 
 
 /**
- * Renders the priority buttons inside the specified container.
- * Ensures the container exists and fills it with generated buttons.
- * Marks the "medium" button as default.
+ * Renders the priority buttons inside the specified container with shared classes.
  * @param {string} containerSelector - The CSS selector of the container.
- * @param {string} context - Context for the buttons ('normal' or 'overlay').
+ * @param {string} context - The context for the buttons (e.g., "normal", "overlay").
  */
 function renderPrioButtons(containerSelector, context = "normal") {
-    console.log("Checking for container:", containerSelector);
     let prioButtonsContainer = document.querySelector(containerSelector);
     if (!prioButtonsContainer) {
+        console.warn(`Container not found: ${containerSelector}`);
         return;
     }
 
-    console.log("Prio Buttons Container found:", prioButtonsContainer);
-    prioButtonsContainer.innerHTML = generatePrioButtonsHTML(null, "setPrio", context === "overlay" ? "Overlay" : "");
+    prioButtonsContainer.innerHTML = generatePrioButtonsHTML("medium", context);
     setPrio("medium", context);
 }
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded");
     renderPrioButtons(".prioButtonsContainer", "normal");
+    renderPrioButtons("#prioOverlay", "overlay");
 });
 
 
@@ -97,18 +88,19 @@ function updatePriority(priority) {
 }
 
 /**
- * Initializes the priority buttons in the edit overlay.
- * @param {string|null} selectedPrio - The currently selected priority (e.g., "urgent", "medium", "low").
+ * Initializes the priority buttons with shared classes for the edit overlay.
+ * @param {string|null} selectedPrio - The currently selected priority.
  */
 function initializePrioButtons(selectedPrio) {
     if (!selectedPrio) selectedPrio = "medium";
-    let prioButtons = document.querySelectorAll('.overlay-content .prio-button');
+    let prioButtons = document.querySelectorAll(".prio-button");
+
     prioButtons.forEach(button => {
-        let prio = button.getAttribute('data-priority');
-        button.classList.remove('lowWhite', 'mediumWhite', 'urgentWhite');
+        let prio = button.getAttribute("data-priority");
+        button.classList.remove("lowWhite", "mediumWhite", "urgentWhite");
         if (prio === selectedPrio) button.classList.add(`${prio}White`);
         button.onclick = function () {
-            prioButtons.forEach(btn => btn.classList.remove('lowWhite', 'mediumWhite', 'urgentWhite'));
+            prioButtons.forEach(btn => btn.classList.remove("lowWhite", "mediumWhite", "urgentWhite"));
             button.classList.add(`${prio}White`);
             selectedPrio = prio;
         };
