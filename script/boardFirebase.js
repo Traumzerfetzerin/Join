@@ -28,10 +28,40 @@ function prepareTaskData(taskId, taskData) {
         console.warn(`Task ${taskId} has no subtasks or invalid subtasks.`);
         taskData.subtasks = [];
     }
+
     if (Array.isArray(taskData.contacts)) {
-        taskData.contacts = taskData.contacts.map(contact => contact.name || contact.id || contact);
+        taskData.contacts = taskData.contacts.map(contact => {
+            if (typeof contact === 'string') {
+                return getContactById(contact) || { id: contact, name: "Unknown" };
+            }
+            return contact;
+        });
+    } else {
+        taskData.contacts = [];
     }
 }
+
+/**
+ * Retrieves a contact by ID from the Firebase database.
+ * @param {string} contactId - The ID of the contact.
+ * @returns {Promise<object|null>} - A promise resolving to the contact object or null if not found.
+ */
+async function getContactById(contactId) {
+    try {
+        let response = await fetch(`https://<your-database-url>/contacts/${contactId}.json`);
+        if (response.ok) {
+            let contact = await response.json();
+            return contact || null;
+        } else {
+            console.warn(`Contact with ID ${contactId} not found.`);
+            return null;
+        }
+    } catch (error) {
+        console.error("Error fetching contact from database:", error);
+        return null;
+    }
+}
+
 
 /**
  * Sends the task data to the database.
