@@ -16,12 +16,11 @@ function collectBasicInfo() {
 
 
 /**
- * Collects priority from the overlay.
- * @returns {string} - Priority value (e.g., "urgent", "medium", "low").
+ * Collects the currently selected priority.
+ * @returns {string} - The priority level (e.g., "low", "medium", "urgent").
  */
 function collectPriority() {
-    let activePriorityButton = document.querySelector('.prio-button.active');
-    return activePriorityButton ? activePriorityButton.getAttribute('data-prio') : "low";
+    return selectedPrio || "low"; 
 }
 
 
@@ -68,14 +67,13 @@ function collectOverlayData() {
     let basicInfo = collectBasicInfo();
     let data = {
         ...basicInfo,
-        prio: collectPriority(),
-        subtasks: collectSubtasks(), 
-        contacts: collectContacts() 
+        prio: collectPriority(), // Priorität hinzufügen
+        subtasks: collectSubtasks(),
+        contacts: collectContacts(),
     };
     console.log("Collected Data:", data);
     return data;
 }
-
 
 
 /**
@@ -97,7 +95,8 @@ async function saveChanges(taskId, category) {
     let updatedTask = collectOverlayData();
     updatedTask.id = taskId;
     updatedTask.category = category;
-
+    updatedTask.prio = collectPriority();
+    
     console.log("Saving task with updated data:", updatedTask);
 
     try {
@@ -135,6 +134,3 @@ async function updateTaskInFirebase(taskId, category, taskData) {
         alert("An error occurred while saving changes.");
     }
 }
-
-console.log("Priority:", collectPriority());
-console.log("Contacts:", collectContacts());
