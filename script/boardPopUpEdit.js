@@ -83,35 +83,20 @@ function fillSubtasks(subtasks) {
 }
 
 
-/**
- * Loads the task data into the edit overlay for modifications.
- * @param {string} taskId - The ID of the task to edit.
- * @param {string} category - The category of the task.
- */
 function loadTaskToOverlay(taskId, category) {
     let task = taskData[category][taskId];
-    if (!task) return;
-
-    document.getElementById('task-title').value = task.title || '';
-    document.getElementById('task-description').value = task.description || '';
-    document.getElementById('task-due-date').value = task.dueDate || '';
-
-    initializePrioButtons(task.prio);
-
-    let subtasksContainer = document.getElementById('subtasks-container');
-    let subtasksHTML = '';
-    if (Array.isArray(task.subtasks)) {
-        task.subtasks.forEach((subtask, index) => {
-            subtasksHTML += `
-                <div>
-                    <input type="checkbox" ${subtask.completed ? 'checked' : ''} data-index="${index}">
-                    <input type="text" value="${subtask.text || ''}" data-index="${index}">
-                </div>
-            `;
-        });
+    if (!task) {
+        console.error("Task not found:", taskId, category);
+        return;
     }
-    subtasksContainer.innerHTML = subtasksHTML;
+
+    console.log("Task contacts (names):", task.contacts);
+    console.log("All contacts:", allContacts);
+
+    let contactDropdownHTML = generateContactDropdownHTML(allContacts, task.contacts || []);
+    document.querySelector('#editAssignTaskDropdown').innerHTML = contactDropdownHTML;
 }
+
 
 /**
  * Closes the edit window and resets any temporary states.

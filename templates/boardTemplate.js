@@ -161,22 +161,30 @@ function generateSubtaskList(task) {
 
 /**
  * Populates the contact dropdown in the overlay edit mode.
- * @param {Array} contacts - List of contact objects fetched from the database.
- * @returns {string} - Generated HTML for the dropdown with user icons styled as in the provided design.
+ * @param {Array} allContacts - List of all contact objects fetched from the database.
+ * @param {Array} selectedContacts - List of contact names assigned to the task.
+ * @returns {string} - Generated HTML for the dropdown with checkboxes.
  */
-function generateContactDropdownHTML(contacts) {
-    return contacts.map(contact => {
+function generateContactDropdownHTML(allContacts, selectedContacts) {
+    if (!allContacts || !selectedContacts) {
+        console.error("Missing contact data:", { allContacts, selectedContacts });
+        return "";
+    }
+
+    return allContacts.map(contact => {
         let initials = contact.name
             .split(' ')
             .map(word => word.charAt(0).toUpperCase())
             .join('');
         let color = contact.color || getRandomColor();
 
+        let isChecked = selectedContacts.includes(contact.name);
+
         return `
             <div class="dropdown-entry">
                 <div class="contact-icon" style="background-color: ${color};">${initials}</div>
                 <label>
-                    <input type="checkbox" id="edit_checkbox_${contact.id}" value="${contact.name}" onchange="updateAssignedContacts()">
+                    <input type="checkbox" id="edit_checkbox_${contact.id}" value="${contact.name}" ${isChecked ? 'checked' : ''} onchange="updateAssignedContacts()">
                     ${contact.name}
                 </label>
             </div>

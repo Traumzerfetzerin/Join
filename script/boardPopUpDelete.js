@@ -110,6 +110,7 @@ async function updateSubtasksInFirebase(taskId, category, subtasks) {
     });
 }
 
+
 /**
  * Handles post-deletion updates, such as refreshing the UI.
  * @param {string} taskId - The ID of the task.

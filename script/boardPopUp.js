@@ -196,6 +196,7 @@ async function toggleSubtaskCompletion(taskId, subtaskIndex) {
     }
 }
 
+
 /**
  * Updates the progress bar, subtask counter, and overlay content.
  * @param {string} taskId - The ID of the task.
@@ -224,7 +225,6 @@ function progressBarfilling(taskId, category, progressPercentage, completed, tot
         }
     }
 }
-
 
 
 /**

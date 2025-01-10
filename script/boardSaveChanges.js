@@ -37,11 +37,12 @@ function collectSubtasks() {
 
 
 /**
- * Collects contacts from the overlay.
+ * Collects selected contact names from the overlay.
  * @returns {Array<string>} - List of selected contact names.
  */
 function collectContacts() {
-    return Array.from(document.querySelectorAll('.contacts-section input[type="checkbox"]:checked')).map(input => input.value.trim());
+    return Array.from(document.querySelectorAll('.contacts-section input[type="checkbox"]:checked'))
+        .map(input => input.value.trim());
 }
 
 
@@ -67,7 +68,7 @@ function collectOverlayData() {
     let basicInfo = collectBasicInfo();
     let data = {
         ...basicInfo,
-        prio: collectPriority(), // Priorität hinzufügen
+        prio: collectPriority(),
         subtasks: collectSubtasks(),
         contacts: collectContacts(),
     };
@@ -96,7 +97,8 @@ async function saveChanges(taskId, category) {
     updatedTask.id = taskId;
     updatedTask.category = category;
     updatedTask.prio = collectPriority();
-    
+    updatedTask.contacts = collectContacts();
+
     console.log("Saving task with updated data:", updatedTask);
 
     try {

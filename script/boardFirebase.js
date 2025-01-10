@@ -1,4 +1,5 @@
 let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
+let allContacts = [];
 
 /**
  * Saves a task to a specified category in the database.
@@ -183,17 +184,27 @@ async function deleteTaskFromCategory(taskId, category) {
 
 
 /**
- * Fetches all contacts from the Firebase database.
- * @returns {Promise<Object>} - The contacts object or an empty object if an error occurs.
+ * Fetches all contacts from the Firebase database and processes the data.
+ * 
+ * @async
+ * @function fetchAllContacts
+ * @throws Will throw an error if the fetch request fails.
+ * @returns {Promise<void>} Resolves when all contacts are successfully fetched and processed.
  */
 async function fetchAllContacts() {
     try {
-        let response = await fetch("https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json");
-        let contacts = await response.json();
-        return contacts || {};
+        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+        if (!response.ok) throw new Error('Failed to fetch contacts');
+        let contactsData = await response.json();
+
+        allContacts = Object.keys(contactsData).map(key => ({
+            id: key,
+            ...contactsData[key]
+        }));
+
+        console.log("All contacts loaded:", allContacts);
     } catch (error) {
-        console.error("Error fetching all contacts:", error);
-        return {};
+        console.error("Error fetching contacts:", error);
     }
 }
 

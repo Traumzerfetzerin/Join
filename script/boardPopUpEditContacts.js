@@ -49,8 +49,11 @@ async function syncContactIcons(contactIds) {
 
 /**
  * Updates the dropdown with all contacts and ensures icons are displayed.
+ *
+ * @function updateContactDropdown
  * @param {Array} allContacts - Array of all contact objects.
  * @param {Array} assignedContactIds - Array of assigned contact objects or IDs.
+ * @returns {void}
  */
 function updateContactDropdown(allContacts, assignedContactIds) {
     let dropdownContainer = document.querySelector('.contacts-section');
@@ -64,7 +67,21 @@ function updateContactDropdown(allContacts, assignedContactIds) {
     }
 
     let assignedContacts = allContacts.filter(contact => assignedContactIds.includes(contact.id));
-    dropdownContainer.innerHTML = `
+    dropdownContainer.innerHTML = generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds);
+}
+
+
+/**
+ * Generates the HTML content for the contact dropdown and icons.
+ *
+ * @function generateContactDropdownHTML
+ * @param {Array} allContacts - Array of all contact objects.
+ * @param {Array} assignedContacts - Array of assigned contact objects.
+ * @param {Array} assignedContactIds - Array of assigned contact IDs.
+ * @returns {string} The generated HTML content for the dropdown and icons.
+ */
+function generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds) {
+    return `
         <strong>Assigned To:</strong>
         <div class="dropdown-header" onclick="toggleEditDropdown()">
             <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
@@ -91,6 +108,14 @@ function updateContactDropdown(allContacts, assignedContactIds) {
 }
 
 
+/**
+ * Updates the contact icons displayed in the designated container.
+ *
+ * @function updateContactIcons
+ * @param {Array<Object>} assignedContacts - An array of contact objects, each containing a name.
+ * @throws Will log an error if the contact icons container is not found.
+ * @returns {void}
+ */
 function updateContactIcons(assignedContacts) {
     let contactIconsContainer = document.getElementById('contact-icons-container');
     if (!contactIconsContainer) {
@@ -106,4 +131,3 @@ function updateContactIcons(assignedContacts) {
         `)
         .join('');
 }
-
