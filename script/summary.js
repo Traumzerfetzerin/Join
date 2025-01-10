@@ -1,11 +1,13 @@
 let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 
+
 /**
  * Navigates to the "To-Do" section.
  */
 function navigateToToDo() {
     window.location.href = "board.html";
 }
+
 
 /**
  * Updates the greeting message based on the current time of day.
@@ -25,6 +27,7 @@ function updateGreeting() {
         greetingElement.textContent = "Good Evening";
     }
 }
+
 
 /**
  * Updates the user greeting with their full name or sets it to 'Guest' if no user is logged in.
@@ -46,6 +49,7 @@ function updateUserGreeting(isGuest, firstName, lastName) {
     }
 }
 
+
 /**
  * Displays the full name of the user, if available.
  * Retrieves the name from localStorage and inserts it into the designated element.
@@ -58,6 +62,7 @@ function displayFullName() {
         nameElement.textContent = fullName ? fullName : "Guest";
     }
 }
+
 
 /**
  * Loads the summary data for tasks and updates the UI with the relevant information.
@@ -74,6 +79,7 @@ async function loadSummaryData() {
     }
 }
 
+
 /**
  * Updates the summary metrics for tasks.
  * @param {object} tasks - The tasks retrieved from Firebase.
@@ -82,6 +88,7 @@ function updateSummaryMetrics(tasks) {
     let counts = countTasksByColumn(tasks);
     setSummaryCounts(counts);
 }
+
 
 /**
  * Counts tasks by their column and priority.
@@ -95,6 +102,7 @@ function countTasksByColumn(tasks) {
     }
     return counts;
 }
+
 
 /**
  * Initializes the counts object for task metrics.
@@ -111,6 +119,7 @@ function initializeCounts() {
     };
 }
 
+
 /**
  * Processes all tasks in a category and updates the counts.
  * @param {object} categoryTasks - The tasks in a specific category.
@@ -124,6 +133,7 @@ function processCategoryTasks(categoryTasks, counts) {
         updateUrgentCount(task, counts);
     }
 }
+
 
 /**
  * Updates counts based on the task's column.
@@ -147,6 +157,7 @@ function updateColumnCounts(task, counts) {
     }
 }
 
+
 /**
  * Updates the urgent count if the task is marked as urgent.
  * @param {object} task - A single task object.
@@ -157,6 +168,7 @@ function updateUrgentCount(task, counts) {
         counts.urgent++;
     }
 }
+
 
 /**
  * Updates the summary elements in the UI with the calculated task counts.
@@ -171,6 +183,7 @@ function setSummaryCounts(counts) {
     document.querySelector(".tasknmb.awaitFeedback").textContent = counts.awaitFeedback;
 }
 
+
 /**
  * Updates the urgent task count in the UI.
  * @param {Array} urgentTasks - The urgent tasks.
@@ -179,6 +192,7 @@ function updateUrgentTaskCount(urgentTasks) {
     let urgentCount = urgentTasks.length;
     document.querySelector(".urgentnmb").textContent = urgentCount;
 }
+
 
 /**
  * Updates the next deadline in the UI.
@@ -196,6 +210,7 @@ function updateNextDeadline(closestDate) {
         }
     }
 }
+
 
 /**
  * Updates the urgent task count and next deadline in the UI.
@@ -227,6 +242,7 @@ function findUrgentTasks(tasks) {
     return urgentTasks;
 }
 
+
 /**
  * Finds the closest due date from an array of tasks.
  * @param {Array} tasks - An array of tasks.
@@ -242,6 +258,7 @@ function findClosestDate(tasks) {
     });
     return closestDate;
 }
+
 
 /**
  * Initializes the application when the page is fully loaded.

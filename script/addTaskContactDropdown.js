@@ -120,8 +120,6 @@ function createContactEntry(contact) {
 }
 
 
-
-
 /**
  * Populates the task assignment dropdown with contact entries.
  * 

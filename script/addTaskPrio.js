@@ -6,6 +6,11 @@ let prioOptions = [
 ];
 
 
+/**
+ * Resets the priority buttons by removing selected styles and restoring default images.
+ * 
+ * @param {string} containerSelector - The CSS selector for the container holding the priority buttons.
+ */
 function resetPrioButtons(containerSelector) {
     let buttons = document.querySelectorAll(`${containerSelector} .prio-button`);
 
@@ -19,6 +24,12 @@ function resetPrioButtons(containerSelector) {
 }
 
 
+/**
+ * Activates a priority button by adding the selected style and updating the image source.
+ * 
+ * @param {string} priority - The priority to activate (e.g., "low", "medium", "urgent").
+ * @param {string} containerSelector - The CSS selector for the container holding the priority buttons.
+ */
 function activatePrioButton(priority, containerSelector) {
     let activeButton = document.querySelector(`${containerSelector} .prio-button[data-prio="${priority}"]`);
     if (activeButton) {
@@ -34,6 +45,13 @@ function activatePrioButton(priority, containerSelector) {
 }
 
 
+/**
+ * Sets the priority by activating the corresponding priority button and resetting others.
+ * 
+ * @param {string} priority - The priority to set (e.g., "low", "medium", "urgent").
+ * @param {string} [context="normal"] - The context in which the priority is set, either "normal" or "overlay".
+ * @param {Event|null} [event=null] - The event that triggered the function, used to prevent default behavior.
+ */
 function setPrio(priority, context = "normal", event = null) {
     if (event) event.preventDefault();
 
@@ -60,6 +78,11 @@ function renderPrioButtons(containerSelector, context = "normal") {
 }
 
 
+/**
+ * Initializes the priority buttons by rendering them in both normal and overlay contexts.
+ * 
+ * @event DOMContentLoaded - Triggers when the DOM has fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", function () {
     renderPrioButtons(".prioButtonsContainer", "normal");
     renderPrioButtons("#prioOverlay", "overlay");
@@ -89,6 +112,7 @@ function updatePriority(priority) {
     selectedPrioBoard = priority;
     markSelectedPriority(priority);
 }
+
 
 /**
  * Initializes the priority buttons with shared classes for the edit overlay.
