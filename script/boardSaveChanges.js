@@ -20,7 +20,7 @@ function collectBasicInfo() {
  * @returns {string} - Priority value (e.g., "urgent", "medium", "low").
  */
 function collectPriority() {
-    let activePriorityButton = document.querySelector('.prio-button.active'); 
+    let activePriorityButton = document.querySelector('.prio-button.active');
     return activePriorityButton ? activePriorityButton.getAttribute('data-prio') : "low";
 }
 
@@ -42,10 +42,7 @@ function collectSubtasks() {
  * @returns {Array<string>} - List of selected contact names.
  */
 function collectContacts() {
-    return Array.from(document.querySelectorAll('.contacts-section input[type="checkbox"]:checked')).map(input => {
-        let contactElement = input.closest('.contact-item'); // Geht von Checkbox zur Kontakt-Info
-        return contactElement?.querySelector('.contact-name')?.textContent.trim() || "";
-    });
+    return Array.from(document.querySelectorAll('.contacts-section input[type="checkbox"]:checked')).map(input => input.value.trim());
 }
 
 
@@ -101,14 +98,15 @@ async function saveChanges(taskId, category) {
     updatedTask.id = taskId;
     updatedTask.category = category;
 
+    console.log("Saving task with updated data:", updatedTask);
+
     try {
         await updateTaskInDatabase(category, taskId, updatedTask);
-        console.log("Task successfully updated:", updatedTask);
+        console.log("Task successfully updated.");
         closeTaskOverlay();
         location.reload();
     } catch (error) {
         console.error("Error saving task:", error);
-        alert("Failed to save the changes. Please try again.");
     }
 }
 
@@ -137,3 +135,6 @@ async function updateTaskInFirebase(taskId, category, taskData) {
         alert("An error occurred while saving changes.");
     }
 }
+
+console.log("Priority:", collectPriority());
+console.log("Contacts:", collectContacts());
