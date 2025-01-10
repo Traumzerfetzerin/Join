@@ -33,7 +33,6 @@ function handleTaskDeletion(category, taskId) {
 }
 
 
-
 /**
  * Deletes a subtask from Firebase and updates the local task data.
  * @param {string} taskId - The ID of the task.
@@ -51,13 +50,50 @@ async function deleteSubtask(taskId, category, subtaskIndex) {
             if (!response.ok) {
                 console.error(`Failed to delete subtask: ${response.statusText}`);
             } else {
-                handleSubtaskDeletion(taskId, category);
+                updateSubtaskUI(taskId, category); 
+                console.log(`Subtask deleted for Task ID: ${taskId} in Category: ${category}`);
             }
         }
     } catch (error) {
         console.error(`Error deleting subtask:`, error);
     }
 }
+
+
+/**
+ * Updates the UI of the subtask section in the overlay.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ */
+function updateSubtaskUI(taskId, category) {
+    let task = taskData[category][taskId];
+    if (!task) return;
+
+    let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
+    if (!subtaskContainer) return;
+
+    subtaskContainer.innerHTML = '';
+
+    if (!task.subtasks || task.subtasks.length === 0) {
+        subtaskContainer.innerHTML = '<div>No subtasks available</div>';
+    } else {
+        task.subtasks.forEach((subtask, index) => {
+            let subtaskHTML = `
+                <div id="subtaskDiv_${index}" class="subtask-item">
+                    <span class="editSubtaskText">${subtask.text}</span>
+                    <div class="subtask-icons">
+                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                             alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                             alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})"
+                    </div>
+                </div>
+            `;
+            subtaskContainer.innerHTML += subtaskHTML;
+        });
+    }
+}
+
 
 /**
  * Updates the subtasks in Firebase.
