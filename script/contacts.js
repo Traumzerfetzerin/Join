@@ -8,22 +8,33 @@ window.addEventListener('load', function() {
     loadContacts(); // Fetch contacts from Firebase on page load
 });
 
-// Function to load contacts from Firebase and display them in the contact list
-async function loadContacts() {
-    try {
-        const response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
-        const contactsData = await response.json();
-
-        if (contactsData) {
-            contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] })); // Store contacts with IDs
-            displayContacts(); // Call the new function to display contacts
-        } else {
-            console.log('No contacts found');
-        }
-    } catch (error) {
-        console.error('Error fetching contacts:', error);
-    }
+/**
+ * Retrieves all contact details for a list of contact IDs.
+ * @param {Array<string>} contactIds - List of contact IDs to fetch.
+ * @returns {Promise<Array<object>>} - Array of contact objects.
+ */
+async function loadContacts(contactIds) {
+    const databaseUrl = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts";
+    const contacts = await Promise.all(
+        contactIds.map(async contactId => {
+            try {
+                const response = await fetch(`${databaseUrl}/${contactId}.json`);
+                if (response.ok) {
+                    const contact = await response.json();
+                    return contact;
+                } else {
+                    console.warn(`Contact with ID ${contactId} not found.`);
+                    return null;
+                }
+            } catch (error) {
+                console.error(`Error fetching contact with ID ${contactId}`, error);
+                return null;
+            }
+        })
+    );
+    return contacts.filter(contact => contact !== null);
 }
+
 
 // Function to display contacts on the page
 function displayContacts() {

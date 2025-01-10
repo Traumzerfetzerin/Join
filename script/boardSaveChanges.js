@@ -3,9 +3,9 @@
  * @returns {Object} - Contains title, description, and dueDate.
  */
 function collectBasicInfo() {
-    let titleElement = document.querySelector('.overlay-content .task-title');
-    let descriptionElement = document.querySelector('.overlay-content .task-description'); 
-    let dueDateElement = document.querySelector('.overlay-content input[type="date"]'); 
+    let titleElement = document.querySelector('#edit-task-title');
+    let descriptionElement = document.querySelector('#edit-task-description');
+    let dueDateElement = document.querySelector('#edit-task-due-date');
 
     return {
         title: titleElement && titleElement.value ? titleElement.value.trim() : "",
@@ -16,35 +16,48 @@ function collectBasicInfo() {
 
 
 /**
- * Collects priority from the overlay.
- * @returns {string} - Priority value (e.g., "low").
+ * Collects the currently selected priority.
+ * @returns {string} - The priority level (e.g., "low", "medium", "urgent").
  */
 function collectPriority() {
-    let priorityElement = document.querySelector('.overlay-content .prio-button.active');
-    return priorityElement ? priorityElement.getAttribute("data-priority") : "low";
+    return selectedPrio || "low"; 
 }
+
 
 /**
  * Collects subtasks from the overlay.
  * @returns {Array<Object>} - List of subtasks with text and completion status.
  */
 function collectSubtasks() {
-    return Array.from(
-        document.querySelectorAll('.subtasks-section .subtasks-list li')
-    ).map(li => ({
-        text: li.querySelector('.subtask-text').value.trim(), 
-        completed: li.querySelector('.subtask-checkbox').checked, 
+    return Array.from(document.querySelectorAll('.subtasks-section .subtask-item')).map(subtask => ({
+        text: subtask.querySelector('.editSubtaskText')?.textContent.trim() || "",
+        completed: subtask.querySelector('.subtask-checkbox')?.checked || false
     }));
 }
 
+
 /**
- * Collects contacts from the overlay.
+ * Collects selected contact names from the overlay.
  * @returns {Array<string>} - List of selected contact names.
  */
 function collectContacts() {
-    return Array.from(
-        document.querySelectorAll('.contacts-section .contact-list input[type="checkbox"]:checked')
-    ).map(input => input.closest('.contact').querySelector('.contact-name').textContent.trim());
+    return Array.from(document.querySelectorAll('.contacts-section input[type="checkbox"]:checked'))
+        .map(input => input.value.trim());
+}
+
+
+/**
+ * Handles the save action from the Edit Overlay using collected data.
+ * @param {string} taskId - The ID of the task being edited.
+ * @param {string} category - The category of the task being edited.
+ */
+async function handleEditOverlaySave(taskId, category) {
+    let updatedTask = collectOverlayData();
+    updatedTask.id = taskId;
+    updatedTask.category = category;
+
+    await updateTaskInDatabase(category, taskId, updatedTask);
+    closeTaskOverlay();
 }
 
 /**
@@ -75,25 +88,28 @@ function validateTaskData(task) {
 
 
 /**
- * Saves the edited task data to Firebase and reloads the page.
- * @param {string} taskId - ID of the task being edited.
- * @param {string} category - Category of the task.
+ * Handles the save action for the edited task.
+ * @param {string} taskId - The ID of the task being edited.
+ * @param {string} category - The category of the task being edited.
  */
 async function saveChanges(taskId, category) {
     let updatedTask = collectOverlayData();
     updatedTask.id = taskId;
     updatedTask.category = category;
+    updatedTask.prio = collectPriority();
+    updatedTask.contacts = collectContacts();
+
+    console.log("Saving task with updated data:", updatedTask);
 
     try {
         await updateTaskInDatabase(category, taskId, updatedTask);
         console.log("Task successfully updated.");
-        location.reload(); 
+        closeTaskOverlay();
+        location.reload();
     } catch (error) {
         console.error("Error saving task:", error);
-        alert("Failed to save the changes. Please try again.");
     }
 }
-
 
 
 /**

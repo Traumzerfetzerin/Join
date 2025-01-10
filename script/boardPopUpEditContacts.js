@@ -49,8 +49,11 @@ async function syncContactIcons(contactIds) {
 
 /**
  * Updates the dropdown with all contacts and ensures icons are displayed.
+ *
+ * @function updateContactDropdown
  * @param {Array} allContacts - Array of all contact objects.
  * @param {Array} assignedContactIds - Array of assigned contact objects or IDs.
+ * @returns {void}
  */
 function updateContactDropdown(allContacts, assignedContactIds) {
     let dropdownContainer = document.querySelector('.contacts-section');
@@ -64,33 +67,18 @@ function updateContactDropdown(allContacts, assignedContactIds) {
     }
 
     let assignedContacts = allContacts.filter(contact => assignedContactIds.includes(contact.id));
-    dropdownContainer.innerHTML = `
-        <strong>Assigned To:</strong>
-        <div class="dropdown-header" onclick="toggleEditDropdown()">
-            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-            <span class="dropdown-arrow">▼</span>
-        </div>
-        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-            ${allContacts.map(contact => `
-                <div class="dropdown-entry">
-                    <label>
-                        <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''}>
-                        ${contact.name}
-                    </label>
-                </div>
-            `).join('')}
-        </div>
-        <div id="contact-icons-container" class="contact-icons">
-            ${assignedContacts.map(contact => `
-                <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                </div>
-            `).join('')}
-        </div>
-    `;
+    dropdownContainer.innerHTML = generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds);
 }
 
 
+/**
+ * Updates the contact icons displayed in the designated container.
+ *
+ * @function updateContactIcons
+ * @param {Array<Object>} assignedContacts - An array of contact objects, each containing a name.
+ * @throws Will log an error if the contact icons container is not found.
+ * @returns {void}
+ */
 function updateContactIcons(assignedContacts) {
     let contactIconsContainer = document.getElementById('contact-icons-container');
     if (!contactIconsContainer) {
@@ -106,4 +94,3 @@ function updateContactIcons(assignedContacts) {
         `)
         .join('');
 }
-

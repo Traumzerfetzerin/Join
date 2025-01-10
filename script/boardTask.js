@@ -66,3 +66,20 @@ function getInitials(name) {
     let initials = parts.map(part => part.charAt(0).toUpperCase()).join("");
     return initials.slice(0, 2);
 }
+
+
+/**
+ * Renders a task with its details, including contacts, to the DOM.
+ * @param {object} task - The task object containing task details and contacts.
+ * @returns {Promise<void>} - Resolves when the task is rendered.
+ */
+async function renderTask(task) {
+    let contactsHtml = task.contactsDetails
+        .map(contact => `<div>${contact.name} (${contact.email})</div>`)
+        .join("");
+    document.getElementById(`task-${task.id}`).innerHTML = `
+        <h3>${task.title}</h3>
+        <p>${task.description}</p>
+        <div>Contacts: ${contactsHtml}</div>
+    `;
+}

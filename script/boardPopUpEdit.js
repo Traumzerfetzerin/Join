@@ -1,29 +1,19 @@
 /**
- * Enables edit mode for a task, including contacts and subtasks.
+ * Prepares and enables the edit mode for a specific task.
  * @param {Object} task - Task object containing details.
  * @param {string} category - The category of the task.
  */
 async function enableEditMode(task, category) {
-    let titleElement = document.querySelector('.task-title');
-    titleElement.innerHTML = `<input type="text" id="editTitle" value="${task.title}" />`;
-
-    let descriptionElement = document.querySelector('.task-description');
-    descriptionElement.innerHTML = `<textarea id="editDescription">${task.description}</textarea>`;
-
-    let dueDateElement = document.querySelector('.task-info p:nth-child(1)');
-    dueDateElement.innerHTML = `<input type="date" id="editDueDate" onclick="calculateDueDateOverlay()" value="${task.dueDate || ''}"/>`;
-
-    let priorityElement = document.querySelector('.task-info p:nth-child(2)');
-    priorityElement.innerHTML = `
-        <div class="fonts font_2A3647"></div>
-        <div id="prioOverlay" class="flex space-between">
+    document.querySelector('.task-title').innerHTML = `<input type="text" id="edit-task-title" value="${task.title || ''}" />`;
+    document.querySelector('.task-description').innerHTML = `<textarea id="edit-task-description">${task.description || ''}</textarea>`;
+    document.querySelector('.task-info p:nth-child(1)').innerHTML = `<input type="date" id="edit-task-due-date" value="${task.dueDate || ''}" />`;
+    document.querySelector('.task-info p:nth-child(2)').innerHTML = `
+        <div id="prioOverlay">
             ${generatePrioButtonsHTML(task.prio, "setPrio", "Overlay")}
         </div>
     `;
 
-    setTimeout(() => {
-        setPrio(task.prio, "overlay");
-    }, 0);
+    setTimeout(() => setPrio(task.prio, "overlay"), 0);
 
     let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
     let contactsData = await response.json();
@@ -32,15 +22,13 @@ async function enableEditMode(task, category) {
         let allContacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
         updateContactDropdown(allContacts, task.contacts || []);
         syncContactIcons(task.contacts || []);
-    } else {
-        console.error("Failed to fetch contacts from Firebase.");
     }
 
-    let actionLinks = document.querySelector('.action-links');
-    actionLinks.innerHTML = `
-        <button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
-    `;
+    renderSubtasksInEditMode(task, category);
+
+    document.querySelector('.action-links').innerHTML = `<button class="okButton" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>`;
 }
+
 
 
 // CALCULATE DUE DATE OVERLAY
@@ -95,35 +83,20 @@ function fillSubtasks(subtasks) {
 }
 
 
-/**
- * Loads the task data into the edit overlay for modifications.
- * @param {string} taskId - The ID of the task to edit.
- * @param {string} category - The category of the task.
- */
 function loadTaskToOverlay(taskId, category) {
     let task = taskData[category][taskId];
-    if (!task) return;
-
-    document.getElementById('task-title').value = task.title || '';
-    document.getElementById('task-description').value = task.description || '';
-    document.getElementById('task-due-date').value = task.dueDate || '';
-
-    initializePrioButtons(task.prio);
-
-    let subtasksContainer = document.getElementById('subtasks-container');
-    let subtasksHTML = '';
-    if (Array.isArray(task.subtasks)) {
-        task.subtasks.forEach((subtask, index) => {
-            subtasksHTML += `
-                <div>
-                    <input type="checkbox" ${subtask.completed ? 'checked' : ''} data-index="${index}">
-                    <input type="text" value="${subtask.text || ''}" data-index="${index}">
-                </div>
-            `;
-        });
+    if (!task) {
+        console.error("Task not found:", taskId, category);
+        return;
     }
-    subtasksContainer.innerHTML = subtasksHTML;
+
+    console.log("Task contacts (names):", task.contacts);
+    console.log("All contacts:", allContacts);
+
+    let contactDropdownHTML = generateContactDropdownHTML(allContacts, task.contacts || []);
+    document.querySelector('#editAssignTaskDropdown').innerHTML = contactDropdownHTML;
 }
+
 
 /**
  * Closes the edit window and resets any temporary states.
@@ -147,4 +120,14 @@ function closeEditWindow() {
  */
 function refreshPageOrUpdateUI() {
     location.reload();
+}
+
+/**
+ * Directly closes the edit overlay without relying on an event.
+ */
+function closeEditOverlay() {
+    let editOverlay = document.getElementById("edit-overlay");
+    if (editOverlay) {
+        editOverlay.remove();
+    }
 }
