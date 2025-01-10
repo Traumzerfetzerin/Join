@@ -1,6 +1,4 @@
-/**
- * Adds an event listener to trigger a button click when the Enter key is pressed.
- */
+// ENTER SUBTASK
 let input = document.getElementById('subtaskSelect');
 document.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
@@ -10,17 +8,9 @@ document.addEventListener("keyup", function (event) {
 });
 
 
+// CREATE SUBTASK
 let subtaskCounter = 0;
 
-
-/**
- * Creates and appends a new subtask element to the 'editSubtasks' container.
- * 
- * @param {string} subtaskText - The text for the subtask.
- * @param {string} subtaskDivId - The ID for the subtask's container div.
- * @param {string} subtaskUlId - The ID for the subtask's list (ul).
- * @param {string} subtaskLiId - The ID for the subtask's list item (li).
- */
 function createSubtaskElement(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
     let subtaskHTML = createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId);
     document.getElementById('editSubtasks').innerHTML += subtaskHTML;
@@ -28,7 +18,7 @@ function createSubtaskElement(subtaskText, subtaskDivId, subtaskUlId, subtaskLiI
 
 
 /**
- * Adds a new subtask by creating a subtask element and updating the visibility.
+ * Adds a new subtask to the list and updates visibility.
  */
 function addSubtask() {
     let addSubtask = document.getElementById('subtaskSelect').value;
@@ -41,14 +31,13 @@ function addSubtask() {
         let subtaskLiId = `subtaskLi_${subtaskCounter}`;
 
         createSubtaskElement(addSubtask, subtaskDivId, subtaskUlId, subtaskLiId);
-        document.getElementById('subtaskSelect').value = "";
+        document.getElementById('subtaskSelect').value = ""; 
         updateSubtaskVisibility();
     }
 }
 
-
 /**
- * Updates the visibility of the "no subtasks" message based on the presence of subtasks in the list.
+ * Updates the visibility of the "No Subtasks" message based on the number of subtasks.
  */
 function updateSubtaskVisibility() {
     let subtaskList = document.querySelector('.subtasks-section .subtasks-list');
@@ -64,18 +53,12 @@ function updateSubtaskVisibility() {
 }
 
 
-/**
- * Saves the current subtask to localStorage as a JSON string.
- */
 function saveSubtask() {
     let subtaskAsText = JSON.stringify(subtask);
     localStorage.setItem('subtask', subtaskAsText);
 }
 
 
-/**
- * Loads the subtask from localStorage and parses it into the `subtask` variable.
- */
 function load() {
     let subtaskAsText = localStorage.getItem('subtask');
 
@@ -85,11 +68,7 @@ function load() {
 }
 
 
-/**
- * Edits a subtask by replacing its content with an editable HTML form.
- * 
- * @param {string} subtaskDivId - The ID of the subtask div to be edited.
- */
+// EDIT SUBTASK
 function editSubtask(subtaskDivId) {
     let createdSubtask = document.getElementById(subtaskDivId);
     let editSubtask = createdSubtask.innerText;
@@ -97,12 +76,6 @@ function editSubtask(subtaskDivId) {
 }
 
 
-/**
- * Updates the text of a subtask element with the given value.
- * 
- * @param {string} subtaskDivId - The ID of the subtask div to update.
- * @param {string} subtaskValue - The new text to set for the subtask.
- */
 function updateSubtaskText(subtaskDivId, subtaskValue) {
     let subtaskElement = document.getElementById(subtaskDivId);
     if (subtaskElement) {
@@ -115,11 +88,7 @@ function updateSubtaskText(subtaskDivId, subtaskValue) {
 }
 
 
-/**
- * Deletes a subtask element from the DOM based on its ID.
- * 
- * @param {string} subtaskDivId - The ID of the subtask div to be deleted.
- */
+// DELETE SUBTASK
 function deleteSubtask(subtaskDivId) {
     let deleteSubtask = document.getElementById(subtaskDivId);
     if (deleteSubtask) {
@@ -128,11 +97,6 @@ function deleteSubtask(subtaskDivId) {
 }
 
 
-/**
- * Displays the delete icon for a specific subtask by removing the "d-none" class.
- * 
- * @param {string} subtaskDivId - The ID of the subtask div to show the delete icon for.
- */
 function showDeleteIcon(subtaskDivId) {
     let subtaskDiv = document.getElementById(subtaskDivId);
     if (subtaskDiv) {
@@ -144,11 +108,7 @@ function showDeleteIcon(subtaskDivId) {
 }
 
 
-/**
- * Accepts the edited subtask by updating its text and replacing its content with the updated HTML.
- * 
- * @param {string} subtaskDivId - The ID of the subtask div to accept the changes for.
- */
+// ACCEPT SUBTASK
 function acceptSubtask(subtaskDivId) {
     let subtaskInput = document.getElementById(`editSubtask_${subtaskDivId}`);
     let subtaskValue = subtaskInput ? subtaskInput.value.trim() : "";
@@ -157,8 +117,7 @@ function acceptSubtask(subtaskDivId) {
 
     let subtaskElement = document.getElementById(subtaskDivId);
     if (subtaskElement) {
-        subtaskElement.innerHTML = subtaskChangeHTML(subtaskDivId, subtaskValue);
-    }
+        subtaskElement.innerHTML =  subtaskChangeHTML(subtaskDivId, subtaskValue);}
 
     let acceptIcon = document.getElementById(`acceptSubtask_${subtaskDivId}`);
     if (acceptIcon) {
@@ -167,11 +126,6 @@ function acceptSubtask(subtaskDivId) {
 }
 
 
-/**
- * Displays the accept icon for a specific subtask by removing the "d-none" class.
- * 
- * @param {string} subtaskDivId - The ID of the subtask div to show the accept icon for.
- */
 function showAcceptIconsIcon(subtaskDivId) {
     let subtaskDiv = document.getElementById(subtaskDivId);
     if (subtaskDiv) {

@@ -1,4 +1,4 @@
-let selectedPrio = "low";
+let selectedPrio = null;
 let prioOptions = [
     { class: "urgent", label: "Urgent", src: "../Assets/addTask/Prio alta.svg", activeSrc: "../Assets/addTask/Prio_alta_white.svg" },
     { class: "medium", label: "Medium", src: "../Assets/addTask/Prio media.svg", activeSrc: "../Assets/addTask/Prio media white.svg" },
@@ -6,11 +6,6 @@ let prioOptions = [
 ];
 
 
-/**
- * Resets priority buttons within a specified container by updating their styles and images.
- * 
- * @param {string} containerSelector - A CSS selector string to identify the container holding the priority buttons.
- */
 function resetPrioButtons(containerSelector) {
     let buttons = document.querySelectorAll(`${containerSelector} .prio-button`);
 
@@ -24,12 +19,6 @@ function resetPrioButtons(containerSelector) {
 }
 
 
-/**
- * Activates a priority button by applying the corresponding styles and updating its image.
- * 
- * @param {string} priority - The priority level to activate (e.g., "low", "medium", "urgent").
- * @param {string} containerSelector - A CSS selector string to identify the container holding the priority buttons.
- */
 function activatePrioButton(priority, containerSelector) {
     let activeButton = document.querySelector(`${containerSelector} .prio-button[data-prio="${priority}"]`);
     if (activeButton) {
@@ -45,13 +34,6 @@ function activatePrioButton(priority, containerSelector) {
 }
 
 
-/**
- * Sets the priority by resetting and activating the corresponding priority button.
- * 
- * @param {string} priority - The priority level to set (e.g., "low", "medium", "urgent").
- * @param {string} [context="normal"] - The context in which to set the priority ("normal" or "overlay").
- * @param {Event|null} [event=null] - An optional event to prevent its default behavior.
- */
 function setPrio(priority, context = "normal", event = null) {
     if (event) event.preventDefault();
 
@@ -63,10 +45,9 @@ function setPrio(priority, context = "normal", event = null) {
 
 
 /**
- * Renders priority buttons in a specified container and sets the default priority.
- * 
- * @param {string} containerSelector - A CSS selector string to identify the container for rendering the buttons.
- * @param {string} [context="normal"] - The context for the priority buttons ("normal" or "overlay").
+ * Renders the priority buttons inside the specified container with shared classes.
+ * @param {string} containerSelector - The CSS selector of the container.
+ * @param {string} context - The context for the buttons (e.g., "normal", "overlay").
  */
 function renderPrioButtons(containerSelector, context = "normal") {
     let prioButtonsContainer = document.querySelector(containerSelector);
@@ -79,9 +60,6 @@ function renderPrioButtons(containerSelector, context = "normal") {
 }
 
 
-/**
- * Initializes priority buttons on DOM content load for specified containers.
- */
 document.addEventListener("DOMContentLoaded", function () {
     renderPrioButtons(".prioButtonsContainer", "normal");
     renderPrioButtons("#prioOverlay", "overlay");
@@ -89,9 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 /**
- * Marks the selected priority button by applying the corresponding style and removing it from others.
- * 
- * @param {string} priority - The priority level to mark as selected (e.g., "low", "medium", "urgent").
+ * Marks the selected priority in the edit overlay based on the task data.
+ * @param {string} priority - The priority value from the task.
  */
 function markSelectedPriority(priority) {
     let buttons = document.querySelectorAll(".prio-button");
@@ -105,9 +82,8 @@ function markSelectedPriority(priority) {
 
 
 /**
- * Updates the selected priority and visually marks the corresponding priority button.
- * 
- * @param {string} priority - The priority level to update (e.g., "low", "medium", "urgent").
+ * Updates the selected priority in the task data and marks it in the UI.
+ * @param {string} priority - The new priority value.
  */
 function updatePriority(priority) {
     selectedPrioBoard = priority;
@@ -115,9 +91,8 @@ function updatePriority(priority) {
 }
 
 /**
- * Initializes priority buttons by setting the selected priority and adding click event handlers.
- * 
- * @param {string} [selectedPrio="medium"] - The initially selected priority (e.g., "low", "medium", "urgent").
+ * Initializes the priority buttons with shared classes for the edit overlay.
+ * @param {string|null} selectedPrio - The currently selected priority.
  */
 function initializePrioButtons(selectedPrio) {
     if (!selectedPrio) selectedPrio = "medium";

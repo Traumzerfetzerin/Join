@@ -264,6 +264,33 @@ async function finalizeTaskCreation() {
 
 
 /**
+ * Opens the popup for adding a new task, resets form fields, and clears any previously selected contacts.
+ * After a brief delay, hides the popup.
+ * 
+ * @async
+ * @function
+ */
+async function popUpAddTask() {
+    document.getElementById('popUpAddTask').classList.remove('d-none');
+    document.getElementById('popUpAddTask').innerHTML = popUpAddTaskHTML();
+    document.getElementById('inputTitle').value = "";
+    document.getElementById('textareaDescription').value = "";
+    document.getElementById('dueDate').value = "";
+    document.getElementById('categorySelect').value = "";
+    document.getElementById('assigned-to').value = "";
+    contacts.forEach(contact => {
+        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        if (checkbox) {
+            checkbox.checked = false;
+        }
+    });
+    setTimeout(() => {
+        document.getElementById("popUpAddTask").style.display = "none";
+    }, 1000);
+}
+
+
+/**
  * Highlights invalid or missing required fields and resets borders after a delay.
  * 
  * @async
@@ -355,7 +382,7 @@ async function resetTaskForm() {
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
-    
+
     contacts.forEach(contact => {
         const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
