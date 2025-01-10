@@ -3,9 +3,9 @@
  * @returns {Object} - Contains title, description, and dueDate.
  */
 function collectBasicInfo() {
-    let titleElement = document.querySelector('.overlay-content .task-title');
-    let descriptionElement = document.querySelector('.overlay-content .task-description'); 
-    let dueDateElement = document.querySelector('.overlay-content input[type="date"]'); 
+    let titleElement = document.querySelector('#edit-task-title');
+    let descriptionElement = document.querySelector('#edit-task-description');
+    let dueDateElement = document.querySelector('#edit-task-due-date');
 
     return {
         title: titleElement && titleElement.value ? titleElement.value.trim() : "",
@@ -17,34 +17,50 @@ function collectBasicInfo() {
 
 /**
  * Collects priority from the overlay.
- * @returns {string} - Priority value (e.g., "low").
+ * @returns {string} - Priority value (e.g., "urgent", "medium", "low").
  */
 function collectPriority() {
-    let priorityElement = document.querySelector('.overlay-content .prio-button.active');
-    return priorityElement ? priorityElement.getAttribute("data-priority") : "low";
+    let activePriorityButton = document.querySelector('.prio-button.active'); 
+    return activePriorityButton ? activePriorityButton.getAttribute('data-prio') : "low";
 }
+
 
 /**
  * Collects subtasks from the overlay.
  * @returns {Array<Object>} - List of subtasks with text and completion status.
  */
 function collectSubtasks() {
-    return Array.from(
-        document.querySelectorAll('.subtasks-section .subtasks-list li')
-    ).map(li => ({
-        text: li.querySelector('.subtask-text').value.trim(), 
-        completed: li.querySelector('.subtask-checkbox').checked, 
+    return Array.from(document.querySelectorAll('.subtasks-section .subtask-item')).map(subtask => ({
+        text: subtask.querySelector('.editSubtaskText')?.textContent.trim() || "",
+        completed: subtask.querySelector('.subtask-checkbox')?.checked || false
     }));
 }
+
 
 /**
  * Collects contacts from the overlay.
  * @returns {Array<string>} - List of selected contact names.
  */
 function collectContacts() {
-    return Array.from(
-        document.querySelectorAll('.contacts-section .contact-list input[type="checkbox"]:checked')
-    ).map(input => input.closest('.contact').querySelector('.contact-name').textContent.trim());
+    return Array.from(document.querySelectorAll('.contacts-section input[type="checkbox"]:checked')).map(input => {
+        let contactElement = input.closest('.contact-item'); // Geht von Checkbox zur Kontakt-Info
+        return contactElement?.querySelector('.contact-name')?.textContent.trim() || "";
+    });
+}
+
+
+/**
+ * Handles the save action from the Edit Overlay using collected data.
+ * @param {string} taskId - The ID of the task being edited.
+ * @param {string} category - The category of the task being edited.
+ */
+async function handleEditOverlaySave(taskId, category) {
+    let updatedTask = collectOverlayData();
+    updatedTask.id = taskId;
+    updatedTask.category = category;
+
+    await updateTaskInDatabase(category, taskId, updatedTask);
+    closeTaskOverlay();
 }
 
 /**
@@ -56,12 +72,13 @@ function collectOverlayData() {
     let data = {
         ...basicInfo,
         prio: collectPriority(),
-        subtasks: collectSubtasks(),
-        contacts: collectContacts(),
+        subtasks: collectSubtasks(), 
+        contacts: collectContacts() 
     };
     console.log("Collected Data:", data);
     return data;
 }
+
 
 
 /**
@@ -75,9 +92,9 @@ function validateTaskData(task) {
 
 
 /**
- * Saves the edited task data to Firebase and reloads the page.
- * @param {string} taskId - ID of the task being edited.
- * @param {string} category - Category of the task.
+ * Handles the save action for the edited task.
+ * @param {string} taskId - The ID of the task being edited.
+ * @param {string} category - The category of the task being edited.
  */
 async function saveChanges(taskId, category) {
     let updatedTask = collectOverlayData();
@@ -86,14 +103,14 @@ async function saveChanges(taskId, category) {
 
     try {
         await updateTaskInDatabase(category, taskId, updatedTask);
-        console.log("Task successfully updated.");
-        location.reload(); 
+        console.log("Task successfully updated:", updatedTask);
+        closeTaskOverlay();
+        location.reload();
     } catch (error) {
         console.error("Error saving task:", error);
         alert("Failed to save the changes. Please try again.");
     }
 }
-
 
 
 /**

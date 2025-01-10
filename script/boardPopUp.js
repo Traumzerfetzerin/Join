@@ -30,7 +30,7 @@ function showOverlay() {
 
 
 /**
- * Closes the task overlay when the background or close button is clicked.
+ * Closes the task overlay when triggered.
  * @param {Event} [event] - The event that triggers the overlay close.
  */
 function closeTaskOverlay(event) {

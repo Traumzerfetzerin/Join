@@ -40,7 +40,15 @@ async function handleTaskDrop(task, taskId, category, newColumn, columns) {
     task.column = newColumn;
     await saveTaskToCategory(taskId, category, task);
     let updatedTask = await fetchTaskById(category, taskId);
-    if (updatedTask) updateTaskUI(updatedTask, taskId, newColumn, columns);
+
+    if (updatedTask) {
+        updateTaskUI(updatedTask, taskId, newColumn, columns);
+
+        let overlay = document.getElementById("board-overlay-container");
+        if (overlay && overlay.style.display === "block") {
+            await updateOverlayContent(updatedTask.category, updatedTask);
+        }
+    }
 }
 
 
@@ -74,7 +82,7 @@ function updateTaskUI(task, taskId, column, columns) {
     if (columnElement) {
         let subtasks = task.subtasks || [];
         let taskHtml = getTaskBoardTemplate(
-            task.category, 
+            task.category,
             task,
             taskId,
             generateContactList(task.contacts || []),
@@ -87,4 +95,9 @@ function updateTaskUI(task, taskId, column, columns) {
     }
     enableDragAndDrop(columns);
     checkEmptyColumns(columns);
+
+    let overlay = document.getElementById("board-overlay-container");
+    if (overlay && overlay.style.display === "block") {
+        updateOverlayContent(task.category, task);
+    }
 }
