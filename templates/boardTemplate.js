@@ -118,6 +118,14 @@ function generateContactList(contacts) {
     }).join('');
 }
 
+
+/**
+ * Generates HTML for a list of contacts to display in an overlay.
+ *
+ * @function generateOverlayContactList
+ * @param {Array<Object>} contacts - Array of contact objects, each containing `name` and optionally `color`.
+ * @returns {string} The generated HTML string for the contact list. Returns an empty string if no contacts are provided.
+ */
 function generateOverlayContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
     return contacts.map(function (contact) {
@@ -132,6 +140,7 @@ function generateOverlayContactList(contacts) {
             </div>`;
     }).join('');
 }
+
 
 
 /**
@@ -160,36 +169,39 @@ function generateSubtaskList(task) {
 }
 
 /**
- * Populates the contact dropdown in the overlay edit mode.
- * @param {Array} allContacts - List of all contact objects fetched from the database.
- * @param {Array} selectedContacts - List of contact names assigned to the task.
- * @returns {string} - Generated HTML for the dropdown with checkboxes.
+ * Generates the HTML content for the contact dropdown and icons.
+ *
+ * @function generateContactDropdownHTML
+ * @param {Array} allContacts - Array of all contact objects.
+ * @param {Array} assignedContacts - Array of assigned contact objects.
+ * @param {Array} assignedContactIds - Array of assigned contact IDs.
+ * @returns {string} The generated HTML content for the dropdown and icons.
  */
-function generateContactDropdownHTML(allContacts, selectedContacts) {
-    if (!allContacts || !selectedContacts) {
-        console.error("Missing contact data:", { allContacts, selectedContacts });
-        return "";
-    }
-
-    return allContacts.map(contact => {
-        let initials = contact.name
-            .split(' ')
-            .map(word => word.charAt(0).toUpperCase())
-            .join('');
-        let color = contact.color || getRandomColor();
-
-        let isChecked = selectedContacts.includes(contact.name);
-
-        return `
-            <div class="dropdown-entry">
-                <div class="contact-icon" style="background-color: ${color};">${initials}</div>
-                <label>
-                    <input type="checkbox" id="edit_checkbox_${contact.id}" value="${contact.name}" ${isChecked ? 'checked' : ''} onchange="updateAssignedContacts()">
-                    ${contact.name}
-                </label>
-            </div>
-        `;
-    }).join('');
+function generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds) {
+    return `
+        <strong>Assigned To:</strong>
+        <div class="dropdown-header" onclick="toggleEditDropdown()">
+            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
+            <span class="dropdown-arrow">▼</span>
+        </div>
+        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+            ${allContacts.map(contact => `
+                <div class="dropdown-entry">
+                    <label>
+                        <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''}>
+                        ${contact.name}
+                    </label>
+                </div>
+            `).join('')}
+        </div>
+        <div id="contact-icons-container" class="contact-icons">
+            ${assignedContacts.map(contact => `
+                <div class="contact-icon" style="background-color: ${getRandomColor()};">
+                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
 

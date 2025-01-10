@@ -72,43 +72,6 @@ function updateContactDropdown(allContacts, assignedContactIds) {
 
 
 /**
- * Generates the HTML content for the contact dropdown and icons.
- *
- * @function generateContactDropdownHTML
- * @param {Array} allContacts - Array of all contact objects.
- * @param {Array} assignedContacts - Array of assigned contact objects.
- * @param {Array} assignedContactIds - Array of assigned contact IDs.
- * @returns {string} The generated HTML content for the dropdown and icons.
- */
-function generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds) {
-    return `
-        <strong>Assigned To:</strong>
-        <div class="dropdown-header" onclick="toggleEditDropdown()">
-            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-            <span class="dropdown-arrow">▼</span>
-        </div>
-        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-            ${allContacts.map(contact => `
-                <div class="dropdown-entry">
-                    <label>
-                        <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''}>
-                        ${contact.name}
-                    </label>
-                </div>
-            `).join('')}
-        </div>
-        <div id="contact-icons-container" class="contact-icons">
-            ${assignedContacts.map(contact => `
-                <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                </div>
-            `).join('')}
-        </div>
-    `;
-}
-
-
-/**
  * Updates the contact icons displayed in the designated container.
  *
  * @function updateContactIcons
