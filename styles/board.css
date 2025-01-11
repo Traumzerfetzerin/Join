@@ -132,18 +132,22 @@ main {
     overflow-y: auto;
 }
 
-#toDoColumn {
-    width: 246px;
+#toDoColumn,
+#inProgressColumn,
+#awaitFeedbackColumn,
+#doneColumn {
+    width: 100%;
+    overflow-y: scroll;
 }
 
 .task {
-    width: 100%;
+    min-width: 242px;
     padding: 8px;
     gap: 10px;
     border-radius: 25px;
     background-color: white;
     margin-bottom: 20px;
-    max-height: 260px;
+    height: auto;
 }
 
 .column:hover {

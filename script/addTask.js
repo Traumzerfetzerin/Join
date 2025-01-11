@@ -382,7 +382,7 @@ async function resetTaskForm() {
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
-
+    
     contacts.forEach(contact => {
         const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
