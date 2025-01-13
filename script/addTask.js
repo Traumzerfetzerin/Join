@@ -89,10 +89,10 @@ function collectSubtasks() {
  */
 function collectContactIDs() {
     let checkboxes = document.querySelectorAll('.contacts-section input[type="checkbox"]');
-    console.log("Checkboxen gefunden:", checkboxes);
     let selectedIDs = Array.from(checkboxes)
         .filter(checkbox => checkbox.checked)
-        .map(input => input.dataset.id.trim());
+        .map(input => input.dataset.id);
+
     console.log("Gesammelte Kontakt-IDs:", selectedIDs);
     return selectedIDs;
 }
@@ -103,7 +103,7 @@ function collectContactIDs() {
  * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
  */
 function collectTaskData() {
-    const data = {
+    let data = {
         title: document.getElementById('inputTitle').value.trim(),
         description: document.getElementById('textareaDescription').value.trim(),
         dueDate: document.getElementById('dueDate').value,
@@ -113,6 +113,7 @@ function collectTaskData() {
         subtasks: collectSubtasks(),
         category: document.getElementById('categorySelect').value
     };
+
     console.log("Gesammelte Task-Daten:", data);
     return data;
 }
@@ -133,16 +134,16 @@ function populateContactSection(allContacts, selectedContacts) {
         return;
     }
 
-    contactSection.innerHTML = allContacts.map(contact => `
+    let contactHTML = allContacts.map(contact => `
         <label>
             <input type="checkbox" data-id="${contact.id}" ${selectedContacts.includes(contact.id) ? 'checked' : ''} />
             ${contact.name}
         </label>
     `).join('');
 
+    contactSection.innerHTML = contactHTML;
     console.log("Generated HTML for contacts:", contactSection.innerHTML);
 }
-
 
 /**
  * Fetches contact data from Firebase.
@@ -179,7 +180,6 @@ async function fetchContactsFromFirebase() {
  */
 async function validateTaskData(data) {
     if (!data.title || !data.dueDate || !data.contacts || !data.category || !data.prio) {
-        console.error("Task validation failed. Missing required fields:", data);
         await popUpRequired();
         await redBorder();
         return false;
@@ -214,40 +214,13 @@ function processSubtasks(subtasks) {
  * @returns {Object} The prepared task data for Firebase.
  */
 function prepareTaskDataForFirebase(taskData) {
-    const preparedData = {
+    let preparedData = {
         ...taskData,
         contacts: taskData.contacts.map(contactId => ({ id: contactId }))
     };
+
     console.log("Vorbereitete Daten für Firebase:", preparedData);
     return preparedData;
-}
-
-
-/**
- * Prepares task data for Firebase by mapping contact IDs.
- * 
- * @param {Object} taskData - The task data to prepare.
- * @returns {Object} The prepared task data for Firebase.
- */
-function prepareTaskDataForFirebase(taskData) {
-    return {
-        ...taskData,
-        contacts: taskData.contacts.map(contactId => ({ id: contactId }))
-    };
-}
-
-
-/**
- * Prepares task data for Firebase by mapping contact IDs.
- * 
- * @param {Object} taskData - The task data to prepare.
- * @returns {Object} The prepared task data for Firebase.
- */
-function prepareTaskDataForFirebase(taskData) {
-    return {
-        ...taskData,
-        contacts: taskData.contacts.map(contactId => ({ id: contactId }))
-    };
 }
 
 
