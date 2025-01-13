@@ -3,23 +3,6 @@ let currentContactId = null;
 
 window.addEventListener('load', loadContacts);
 
-/**
- * Fetches all contacts from Firebase.
- * @returns {Promise<void>}
- */
-async function loadContacts() {
-    let databaseUrl = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
-    try {
-        let response = await fetch(databaseUrl);
-        if (!response.ok) throw new Error("Failed to fetch contacts.");
-
-        let data = await response.json();
-        contacts = data ? Object.keys(data).map(id => ({ id, ...data[id] })) : [];
-        displayContacts();
-    } catch (error) {
-        console.error("Error loading contacts:", error);
-    }
-}
 
 /**
  * Validates email format.
@@ -31,130 +14,103 @@ function validateEmail(email) {
     return emailRegex.test(email);
 }
 
-document.getElementById('create-contact-button')?.addEventListener('click', async (event) => {
+
+/**
+ * Validates that all required fields are filled.
+ * @param {string} name - Name of the contact.
+ * @param {string} email - Email of the contact.
+ * @param {string} phone - Phone number of the contact.
+ * @returns {boolean} - True if all fields are filled, otherwise false.
+ */
+function validateFields(name, email, phone) {
+    return [name, email, phone].every(Boolean);
+}
+
+
+/**
+ * Validates the email format.
+ * @param {string} email - Email to validate.
+ * @returns {boolean} - True if email is valid, otherwise false.
+ */
+function validateEmail(email) {
+    let emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return emailRegex.test(email);
+}
+
+
+/**
+ * Shows an error message if fields are invalid.
+ * @param {string} message - Message to display.
+ */
+function showError(message) {
+    showToast(message, "error");
+}
+
+
+/**
+ * Clears input fields after creating or updating a contact.
+ */
+function clearInputFields() {
+    ['name', 'email', 'phone'].forEach(id => document.getElementById(id).value = '');
+}
+
+
+/**
+ * Hides the overlay after the contact is created or updated.
+ */
+function hideOverlay() {
+    document.getElementById('overlay').style.display = 'none';
+}
+
+
+/**
+ * Fetches the contact data from input fields.
+ * @returns {object} - The contact data object containing name, email, and phone.
+ */
+function getContactData() {
+    return {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+    };
+}
+
+
+/**
+ * Event listener for the create contact button.
+ * @param {Event} event - The click event.
+ */
+document.getElementById('create-contact-button')?.addEventListener('click', (event) => {
     event.preventDefault();
 
-    let name = document.getElementById('name').value.trim();
-    let email = document.getElementById('email').value.trim();
-    let phone = document.getElementById('phone').value.trim();
+    let { name, email, phone } = getContactData();
 
-    if (![name, email, phone].every(Boolean)) {
-        return showToast("Please fill in all fields.", "error");
+    if (!validateFields(name, email, phone)) {
+        return showError("Please fill in all fields.");
     }
+
     if (!validateEmail(email)) {
-        return showToast("Invalid email format.", "error");
+        return showError("Invalid email format.");
     }
 
-    try {
-        let savedContact = await saveOrUpdateContactToFirebase({ name, email, phone });
-        showToast("Contact created successfully.", "success");
-        addNewContactToDOM(savedContact);
-
-        ['name', 'email', 'phone'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('overlay').style.display = 'none';
-    } catch (error) {
-        console.error("Error saving contact:", error);
-        showToast("Error saving contact. Please try again.", "error");
-    }
+    handleContactCreation({ name, email, phone });
 });
 
+
 /**
- * Saves or updates a contact in Firebase.
- * @param {object} contact - Contact object to save or update.
- * @returns {Promise<object>} - Saved or updated contact object.
+ * Checks if the contact has an ID.
+ * @param {object} contact - The contact object.
+ * @returns {boolean} - True if the contact has an ID, otherwise false.
  */
-async function saveOrUpdateContactToFirebase(contact) {
-    let firebaseUrl = contact.id 
-        ? `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contact.id}.json`
-        : 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json';
-
-    let method = contact.id ? 'PUT' : 'POST';
-
-    try {
-        let response = await fetch(firebaseUrl, {
-            method: method,
-            body: JSON.stringify(contact),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to save or update contact');
-        }
-
-        let data = await response.json();
-
-        if (!contact.id) {
-            contact.id = data.name;
-            contacts.push(contact);
-        } else {
-            let index = contacts.findIndex(c => c.id === contact.id);
-            if (index !== -1) {
-                contacts[index] = contact;
-            }
-        }
-
-        return contact;
-    } catch (error) {
-        console.error('Error saving or updating contact:', error);
-        throw error;
+function validateContactId(contact) {
+    if (!contact.id) {
+        console.error("Error: Contact ID is missing.");
+        showToast("Error updating contact. Contact ID is missing.", "error");
+        return false;
     }
+    return true;
 }
 
-
-/**
- * Deletes a contact.
- * @param {string} contactId - ID of the contact to be deleted.
- */
-async function deleteContact(contactId) {
-    let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`;
-    try {
-        let response = await fetch(url, {
-            method: 'DELETE'
-        });
-        if (!response.ok) throw new Error('Network response was not ok');
-        showToast('Contact deleted successfully');
-        loadContacts();
-        closeContactOverlay();
-        clearContactDetails();
-    } catch (error) {
-        showToast('Error deleting contact: ' + error);
-    }
-}
-
-
-/**
-* Updates a contact in Firebase.
-* @param {object} contact - The contact object to update.
-* @returns {Promise<void>}
-*/
-async function updateContactInFirebase(contact) {
-   if (!contact.id) {
-       console.error("Error: Contact ID is missing.");
-       showToast("Error updating contact. Contact ID is missing.", "error");
-       return;
-   }
-
-   let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contact.id}.json`;
-   try {
-       let response = await fetch(url, {
-           method: 'PUT',
-           body: JSON.stringify(contact),
-           headers: { 'Content-Type': 'application/json' },
-       });
-
-       if (!response.ok) {
-           throw new Error('Failed to update contact.');
-       }
-
-       updateLocalContacts(contact);
-       showToast('Contact updated successfully', 'success');
-   } catch (error) {
-       console.error('Error updating contact:', error);
-       showToast('Error updating contact. Please try again.', 'error');
-   }
-}
 
 /**
 * Updates the local contacts array with the updated contact.
@@ -169,41 +125,77 @@ function updateLocalContacts(contact) {
    contacts[contactIndex] = contact;
 }
 
+
 /**
-* Event listener for saving a contact.
-*/
+ * Validates the updated contact fields before saving.
+ * @param {object} updatedContact - The updated contact object.
+ * @returns {boolean} - True if all fields are valid, otherwise false.
+ */
+function validateUpdatedContact(updatedContact) {
+    return [updatedContact.name, updatedContact.email, updatedContact.phone].every(Boolean);
+}
+
+
+/**
+ * Creates an updated contact object based on the form input.
+ * @returns {object} - The updated contact object.
+ */
+function getUpdatedContact() {
+    return {
+        id: currentContactId,
+        name: document.getElementById('edit-contact-name')?.value.trim(),
+        email: document.getElementById('edit-contact-email')?.value.trim(),
+        phone: document.getElementById('edit-contact-phone')?.value.trim(),
+    };
+}
+
+
+/**
+ * Hides the contact overlay and resets the form.
+ */
+function hideContactOverlayAndResetForm() {
+    document.getElementById('contact-overlay').style.display = 'none';
+    resetEditForm();
+}
+
+
+/**
+ * Updates the contact details section on the page.
+ * @param {object} updatedContact - The updated contact object.
+ */
+function updateContactDetailsAndReload(updatedContact) {
+    updateContactDetailsSection(updatedContact);
+    loadContacts();
+}
+
+
+/**
+ * Event listener for saving a contact.
+ */
 document.getElementById('save-contact-button')?.addEventListener('click', async function () {
-   if (!currentContactId) {
-       console.error('Error: No contact ID found for updating.');
-       showToast('Error: No contact selected for saving.', 'error');
-       return;
-   }
+    if (!currentContactId) {
+        console.error('Error: No contact ID found for updating.');
+        showToast('Error: No contact selected for saving.', 'error');
+        return;
+    }
 
-   let updatedContact = {
-       id: currentContactId,
-       name: document.getElementById('edit-contact-name')?.value.trim(),
-       email: document.getElementById('edit-contact-email')?.value.trim(),
-       phone: document.getElementById('edit-contact-phone')?.value.trim(),
-   };
+    let updatedContact = getUpdatedContact();
 
-   if (![updatedContact.name, updatedContact.email, updatedContact.phone].every(Boolean)) {
-       showToast('Please fill in all fields before saving.', 'error');
-       return;
-   }
+    if (!validateUpdatedContact(updatedContact)) {
+        showToast('Please fill in all fields before saving.', 'error');
+        return;
+    }
 
-   try {
-       await updateContactInFirebase(updatedContact);
-
-       document.getElementById('contact-overlay').style.display = 'none';
-       resetEditForm();
-       updateContactDetailsSection(updatedContact);
-       loadContacts();
-
-       currentContactId = null;
-   } catch (error) {
-       console.error('Error saving contact:', error);
-   }
+    try {
+        await updateContactInFirebase(updatedContact);
+        hideContactOverlayAndResetForm();
+        updateContactDetailsAndReload(updatedContact);
+        currentContactId = null;
+    } catch (error) {
+        console.error('Error saving contact:', error);
+    }
 });
+
 
 /**
 * Resets the contact edit form fields.
@@ -213,6 +205,7 @@ function resetEditForm() {
    document.getElementById('edit-contact-email').value = '';
    document.getElementById('edit-contact-phone').value = '';
 }
+
 
 /**
 * Updates the contact details section with the updated contact information.
@@ -228,6 +221,7 @@ function updateContactDetailsSection(contact) {
    document.getElementById('contact-initials').style.backgroundColor = initialsColor;
 }
 
+
 /**
 * Displays a toast message with a specific type.
 * @param {string} message - The message to display.
@@ -242,6 +236,7 @@ function showToast(message, type = 'success') {
    setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
+
 /**
  * Opens the add contact overlay.
  */
@@ -254,6 +249,7 @@ function openAddContactOverlay() {
     }
 }
 
+
 /**
  * Hides the small overlay if a click occurs outside of it.
  * @param {Event} event - The click event.
@@ -265,6 +261,7 @@ function handleOutsideClick(event) {
         overlay.style.display = 'none';
     }
 }
+
 
 /**
  * Handles the edit link click event.
@@ -290,6 +287,7 @@ function handleEditLinkClick(event) {
     closeSmallOverlay();
 }
 
+
 /**
  * Handles the delete link click event.
  * @param {Event} event - The click event.
@@ -307,6 +305,7 @@ function handleDeleteLinkClick(event) {
         .then(() => processSuccessfulDeletion())
         .catch(handleDeletionError);
 }
+
 
 /**
  * Processes a successful contact deletion.
@@ -326,6 +325,7 @@ function processSuccessfulDeletion() {
     currentContactId = null;
 }
 
+
 /**
  * Handles errors during contact deletion.
  * @param {Error} error - The error object.
@@ -334,6 +334,7 @@ function handleDeletionError(error) {
     console.error("Error deleting contact:", error);
     showToast("Error deleting contact. Please try again.", "error");
 }
+
 
 // Event listeners
 document.addEventListener('click', handleOutsideClick);

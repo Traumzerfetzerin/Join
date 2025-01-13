@@ -1,24 +1,4 @@
-/**
- * Displays contacts on the page.
- */
-function displayContacts() {
-    clearContactList();
-    displayAddContactButtons();
-    addContactsToDOM();
-}
 
-
-/**
- * Clears the contact list container on the page.
- */
-function clearContactList() {
-    let contactList = document.querySelector('.contact-list');
-    if (contactList) {
-        contactList.innerHTML = '';
-    } else {
-        console.warn("Contact list container not found.");
-    }
-}
 
 
 /**
@@ -63,46 +43,6 @@ function generateAddButtonSmallHTML() {
         <div class="add-contact-icon" id="add-contact-icon">
             <img src="../Assets/personAdd.svg" alt="Add Contact">
         </div>`;
-}
-
-
-
-
-
-/**
- * Adds all contacts to the DOM.
- */
-function addContactsToDOM() {
-    if (!Array.isArray(contacts) || contacts.length === 0) {
-        return;
-    }
-
-    contacts.forEach(contact => addNewContactToDOM(contact));
-}
-
-
-/**
- * Adds a new contact to the contact list in the DOM.
- * @param {object} contact - Contact object containing name, email, phone, and id.
- */
-function addNewContactToDOM(contact) {
-    let contactList = document.querySelector('.contact-list');
-    if (!contactList) {
-        console.error("Contact list container not found.");
-        return;
-    }
-
-    let contactHTML = generateContactHTML(contact);
-    contactList.insertAdjacentHTML('beforeend', contactHTML);
-
-    let newContact = contactList.querySelector(`.contact-item[data-id="${contact.id}"]`);
-    if (newContact) {
-        newContact.addEventListener('click', () => {
-            showContactDetails(contact.id);
-        });
-    } else {
-        console.warn(`Failed to attach event listener to contact with ID: ${contact.id}`);
-    }
 }
 
 
@@ -339,15 +279,6 @@ function handleBackArrowClick() {
 }
 
 
-/**
- * Handles the delete contact action.
- */
-function handleDeleteContact() {
-    if (currentContactId) {
-        deleteContact(currentContactId);
-    } else {
-        console.warn("No current contact selected for deletion.");
-    }
-}
+
 
 
