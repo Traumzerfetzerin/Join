@@ -99,30 +99,6 @@ let taskCategory = "";
 
 
 /**
- * Handles task creation, validates data, and saves it to Firebase.
- * Clears subtasks, finalizes task creation, and navigates to the board.
- * 
- * @async
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>} Resolves when the task is created and board is updated.
- */
-async function createTasks(event) {
-    event.preventDefault();
-
-    let taskData = collectTaskData();
-
-    let isValid = await validateTaskData(taskData);
-    if (!isValid) return;
-
-    document.getElementById('editSubtasks').innerHTML = "";
-
-    await saveTaskToFirebase(taskData);
-    await finalizeTaskCreation();
-    await changeToBoard();
-}
-
-
-/**
  * Redirects to the board page after a brief delay.
  * 
  * @async
@@ -137,7 +113,6 @@ async function changeToBoard() {
 
 /**
  * Collects and returns task data from the form.
- * 
  * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
  */
 function collectTaskData() {
@@ -147,16 +122,85 @@ function collectTaskData() {
         text: li.textContent.trim(),
         completed: false
     }));
+
+    let contacts = Array.from(
+        document.querySelectorAll('.contacts-section input[type="checkbox"]:checked')
+    ).map(input => input.value.trim());
+
+    console.log("Collected Contacts:", contacts);
+
     return {
         title: document.getElementById('inputTitle').value.trim(),
         description: document.getElementById('textareaDescription').value.trim(),
         dueDate: document.getElementById('dueDate').value,
         prio: selectedPrio,
         column: "toDo",
-        contacts: selectedContacts,
+        contacts: contacts,
         subtasks: subtasks,
         category: document.getElementById('categorySelect').value
     };
+}
+
+
+/**
+ * Fetches and dynamically populates the contact list for task creation.
+ * @async
+ * @param {Array<string>} selectedContacts - List of pre-selected contact IDs.
+ * @returns {Promise<void>} Resolves when the contact list is populated.
+ */
+async function fetchAndPopulateContacts(selectedContacts = []) {
+    try {
+        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+        let contactsData = await response.json();
+
+        console.log("Fetched Contacts Data:", contactsData);
+
+        if (contactsData) {
+            let allContacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+            let contactSection = document.querySelector('.contacts-section');
+
+            if (!contactSection) {
+                console.error("contacts-section not found in DOM");
+                return;
+            }
+
+            contactSection.innerHTML = allContacts.map(contact => `
+                <label>
+                    <input type="checkbox" value="${contact.id}" ${selectedContacts.includes(contact.id) ? 'checked' : ''} />
+                    ${contact.name}
+                </label>
+            `).join('');
+
+            console.log("Generated HTML for contacts:", contactSection.innerHTML);
+        } else {
+            console.warn("No contacts found in Firebase.");
+        }
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+}
+
+
+/**
+ * Handles task creation, validates data, and saves it to Firebase.
+ * @async
+ * @param {Event} event - The event object from the form submission.
+ * @returns {Promise<void>} Resolves when the task is created and the board is updated.
+ */
+async function createTasks(event) {
+    event.preventDefault();
+
+    let taskData = collectTaskData();
+    console.log("Task Data before saving:", taskData);
+
+    let isValid = await validateTaskData(taskData);
+    if (!isValid) return;
+
+    document.getElementById('editSubtasks').innerHTML = "";
+
+    await saveTaskToFirebase(taskData);
+    await finalizeTaskCreation();
+    await changeToBoard();
 }
 
 
@@ -221,17 +265,20 @@ function prepareTaskDataForFirebase(taskData) {
 
 /**
  * Saves the task data to Firebase after preparing it.
- * 
  * @async
  * @param {Object} taskData - The task data to be saved.
  * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
  */
 async function saveTaskToFirebase(taskData) {
     try {
-        let preparedTaskData = prepareTaskDataForFirebase(taskData);
-        if (!preparedTaskData) return null;
+        let preparedTaskData = {
+            ...taskData,
+            contacts: taskData.contacts.map(contactId => ({ id: contactId })),
+        };
 
-        let response = await fetch(`${CREATETASK_URL}/${preparedTaskData.category}.json`, {
+        console.log("Prepared Task Data:", preparedTaskData);
+
+        let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(preparedTaskData),
@@ -243,7 +290,7 @@ async function saveTaskToFirebase(taskData) {
         }
 
         let data = await response.json();
-        return data.name; // The generated ID
+        return data.name;
     } catch (error) {
         console.error("Error saving task to Firebase:", error);
         return null;

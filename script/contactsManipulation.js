@@ -1,0 +1,418 @@
+/**
+ * Displays contacts on the page.
+ */
+function displayContacts() {
+    clearContactList();
+    displayAddContactButtons();
+    addContactsToDOM();
+}
+
+
+/**
+ * Clears the contact list container on the page.
+ */
+function clearContactList() {
+    let contactList = document.querySelector('.contact-list');
+    if (contactList) {
+        contactList.innerHTML = '';
+    } else {
+        console.warn("Contact list container not found.");
+    }
+}
+
+
+/**
+ * Displays the add contact buttons (large and small) on the page.
+ */
+function displayAddContactButtons() {
+    let contactList = document.querySelector('.contact-list');
+    if (!contactList) {
+        console.error("Contact list container not found.");
+        return;
+    }
+
+    let addButtonLarge = generateAddButtonLargeHTML();
+    let addButtonSmall = generateAddButtonSmallHTML();
+
+    contactList.insertAdjacentHTML('beforeend', addButtonLarge);
+    document.body.insertAdjacentHTML('beforeend', addButtonSmall);
+
+    attachAddContactButtonListeners();
+}
+
+
+/**
+ * Generates the HTML for the large add contact button.
+ * @returns {string} - HTML string for the large add contact button.
+ */
+function generateAddButtonLargeHTML() {
+    return `
+        <div class="add-contact-button" id="show-overlay">
+            <span>Add New Contact</span>
+            <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
+        </div>`;
+}
+
+
+/**
+ * Generates the HTML for the small add contact button.
+ * @returns {string} - HTML string for the small add contact button.
+ */
+function generateAddButtonSmallHTML() {
+    return `
+        <div class="add-contact-icon" id="add-contact-icon">
+            <img src="../Assets/personAdd.svg" alt="Add Contact">
+        </div>`;
+}
+
+
+
+
+
+/**
+ * Adds all contacts to the DOM.
+ */
+function addContactsToDOM() {
+    if (!Array.isArray(contacts) || contacts.length === 0) {
+        console.warn("No contacts available to display.");
+        return;
+    }
+
+    contacts.forEach(contact => addNewContactToDOM(contact));
+}
+
+
+/**
+ * Adds a new contact to the contact list in the DOM.
+ * @param {object} contact - Contact object containing name, email, phone, and id.
+ */
+function addNewContactToDOM(contact) {
+    let contactList = document.querySelector('.contact-list');
+    if (!contactList) {
+        console.error("Contact list container not found.");
+        return;
+    }
+
+    let contactHTML = generateContactHTML(contact);
+    contactList.insertAdjacentHTML('beforeend', contactHTML);
+
+    let newContact = contactList.querySelector(`.contact-item[data-id="${contact.id}"]`);
+    if (newContact) {
+        newContact.addEventListener('click', () => {
+            showContactDetails(contact.id);
+        });
+    } else {
+        console.warn(`Failed to attach event listener to contact with ID: ${contact.id}`);
+    }
+}
+
+
+/**
+ * Generates the HTML structure for a contact.
+ * @param {object} contact - Contact object containing name, email, phone, and id.
+ * @returns {string} - HTML string for the contact.
+ */
+function generateContactHTML(contact) {
+    let initials = getInitials(contact.name);
+    let randomColor = getRandomColor();
+    contact.initialsColor = randomColor;
+
+    return `
+        <div class="contact-item" data-id="${contact.id}">
+            <div class="contact-initials" style="background-color: ${randomColor};">${initials}</div>
+            <span class="contact-name">${contact.name}</span>
+            <span class="contact-email">${contact.email}</span>
+            <span class="contact-phone">${contact.phone}</span>
+        </div>
+        <div class="divider"></div>`;
+}
+
+
+/**
+ * Displays contact details and adjusts the UI for smaller screens if needed.
+ * @param {string} contactId - The ID of the contact to display.
+ */
+function showContactDetails(contactId) {
+    let contact = contacts.find(c => c.id === contactId);
+    if (!contact) return;
+
+    currentContactId = contact.id;
+    updateContactDetailsUI(contact);
+    handleSmallScreenAdjustments();
+    attachEditAndDeleteListeners(contactId, contact);
+}
+
+
+/**
+ * Updates the contact details UI with the provided contact data.
+ * @param {object} contact - The contact object to display.
+ */
+function updateContactDetailsUI(contact) {
+    document.getElementById('contact-name').textContent = contact.name;
+    document.getElementById('contact-email').textContent = contact.email;
+    document.getElementById('contact-phone').textContent = contact.phone;
+    document.getElementById('contact-initials').textContent = getInitials(contact.name);
+
+    let initialsColor = getRandomColor();
+    document.getElementById('contact-initials').style.backgroundColor = initialsColor;
+
+    document.getElementById('contact-details').style.display = 'block';
+}
+
+
+/**
+ * Adjusts the UI for smaller screens and attaches relevant listeners.
+ */
+function handleSmallScreenAdjustments() {
+    if (window.innerWidth > 780) return;
+
+    let contactList = document.querySelector('.contact-list');
+    let contactDetails = document.querySelector('.contact');
+    let backArrow = document.getElementById('back-arrow');
+    let addContactIcon = document.getElementById('add-contact-icon');
+    let dotsIcon = document.getElementById('dots-icon');
+    let smallOverlay = document.getElementById('small-overlay');
+
+    toggleSmallScreenUI(contactList, contactDetails, backArrow, addContactIcon, dotsIcon, smallOverlay);
+}
+
+
+/**
+ * Toggles the UI elements for smaller screens.
+ */
+function toggleSmallScreenUI(contactList, contactDetails, backArrow, addContactIcon, dotsIcon, smallOverlay) {
+    contactList.style.display = 'none';
+    contactDetails.style.display = 'flex';
+    backArrow.style.display = 'block';
+    addContactIcon.style.display = 'none';
+    if (dotsIcon) dotsIcon.style.display = 'flex';
+
+    backArrow.onclick = () => resetSmallScreenUI(contactList, contactDetails, backArrow, addContactIcon, dotsIcon, smallOverlay);
+    attachDotsIconListener(dotsIcon, smallOverlay);
+}
+
+
+/**
+ * Resets the UI elements to their default state for small screens.
+ */
+function resetSmallScreenUI(contactList, contactDetails, backArrow, addContactIcon, dotsIcon, smallOverlay) {
+    contactList.style.display = 'block';
+    contactDetails.style.display = 'none';
+    backArrow.style.display = 'none';
+    addContactIcon.style.display = 'block';
+    if (dotsIcon) dotsIcon.style.display = 'none';
+    if (smallOverlay) smallOverlay.style.display = 'none';
+}
+
+
+/**
+ * Attaches the click listener to the dots icon to toggle the small overlay.
+ */
+function attachDotsIconListener(dotsIcon, smallOverlay) {
+    if (!dotsIcon) return;
+
+    dotsIcon.onclick = (event) => {
+        event.stopPropagation();
+        if (smallOverlay) {
+            smallOverlay.style.display = smallOverlay.style.display === 'block' || smallOverlay.style.display === '' 
+                ? 'none' 
+                : 'flex';
+        }
+    };
+}
+
+
+/**
+ * Attaches edit and delete listeners to the respective buttons.
+ * @param {string} contactId - The ID of the contact to edit or delete.
+ * @param {object} contact - The contact object.
+ */
+function attachEditAndDeleteListeners(contactId, contact) {
+    let editLink = document.querySelector('.edit-link');
+    let deleteLink = document.querySelector('.delete-link');
+    let initialsColor = getRandomColor();
+
+    if (editLink) {
+        editLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            openEditOverlay(contact, initialsColor);
+        });
+    }
+
+    if (deleteLink) {
+        deleteLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            deleteContact(contactId);
+        });
+    }
+}
+
+
+// Event listener for back arrow click
+document.getElementById('back-arrow')?.addEventListener('click', handleBackArrowClick);
+
+
+/**
+ * Handles the back arrow click to reset the view for small screens.
+ */
+function handleBackArrowClick() {
+    if (window.innerWidth <= 780) {
+        toggleElementVisibility('.contact-list', true);
+        toggleElementVisibility('.contact', false);
+    }
+    toggleElementVisibility('#dots-icon', false);
+    toggleElementVisibility('#add-contact-icon', true);
+}
+
+
+/**
+ * Clears the contact details section.
+ */
+function clearContactDetails() {
+    updateElementContent('#contact-name', '');
+    updateElementContent('#contact-email', '');
+    updateElementContent('#contact-phone', '');
+    updateElementContent('#contact-initials', '');
+    setElementBackgroundColor('#contact-initials', '');
+    toggleElementVisibility('#contact-details', false);
+}
+
+
+/**
+ * Updates the contact details section with the updated contact information.
+ * @param {object} contact - The updated contact object.
+ */
+function updateContactDetailsSection(contact) {
+    updateElementContent('#contact-name', contact.name);
+    updateElementContent('#contact-email', contact.email);
+    updateElementContent('#contact-phone', contact.phone);
+    updateElementContent('#contact-initials', getInitials(contact.name));
+    setElementBackgroundColor('#contact-initials', getRandomColor());
+}
+
+
+/**
+ * Resets the contact view to show the contact list.
+ */
+function resetContactView() {
+    toggleElementVisibility('.contact', false);
+    toggleElementVisibility('.contact-list', true);
+}
+
+
+/**
+ * Opens the overlay and populates input fields with contact details and initials.
+ * @param {object} contact - Contact object containing the details.
+ * @param {string} initialsColor - Background color for the initials.
+ */
+function openEditOverlay(contact, initialsColor) {
+    toggleElementVisibility('#contact-overlay', true);
+    currentContactId = contact.id;
+
+    updateElementContent('#edit-contact-name', contact.name);
+    updateElementContent('#edit-contact-email', contact.email);
+    updateElementContent('#edit-contact-phone', contact.phone);
+    updateElementContent('#contact-initials-overlay', getInitials(contact.name));
+    setElementBackgroundColor('#contact-initials-overlay', initialsColor);
+}
+
+
+// Close overlay event listener
+document.getElementById('close-contact-overlay')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    toggleElementVisibility('#contact-overlay', false);
+});
+
+
+// Delete contact button event listener
+document.getElementById('delete-contact-button')?.addEventListener('click', () => {
+    if (currentContactId) deleteContact(currentContactId);
+});
+
+
+/**
+ * Helper function to update the text content of an element.
+ * @param {string} selector - The CSS selector of the element.
+ * @param {string} content - The content to set.
+ */
+function updateElementContent(selector, content) {
+    let element = document.querySelector(selector);
+    if (element) {
+        element.textContent = content;
+    } else {
+        console.warn(`Element with selector "${selector}" not found.`);
+    }
+}
+
+
+/**
+ * Helper function to set the background color of an element.
+ * @param {string} selector - The CSS selector of the element.
+ * @param {string} color - The background color to set.
+ */
+function setElementBackgroundColor(selector, color) {
+    let element = document.querySelector(selector);
+    if (element) {
+        element.style.backgroundColor = color;
+    } else {
+        console.warn(`Element with selector "${selector}" not found.`);
+    }
+}
+
+
+// Event listeners for global actions
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('back-arrow')?.addEventListener('click', handleBackArrowClick);
+    attachGlobalEventListeners();
+    displayContacts();
+});
+
+
+/**
+ * Attaches global event listeners for actions like back arrow and overlays.
+ */
+function attachGlobalEventListeners() {
+    document.getElementById('dots-icon')?.addEventListener('click', toggleSmallOverlay);
+    document.getElementById('close-contact-overlay')?.addEventListener('click', closeContactOverlay);
+    document.getElementById('delete-contact-button')?.addEventListener('click', handleDeleteContact);
+}
+
+
+/**
+ * Handles the back arrow click to switch views on smaller screens.
+ */
+function handleBackArrowClick() {
+    if (window.innerWidth <= 780) {
+        toggleElementVisibility('.contact-list', true);
+        toggleElementVisibility('.contact', false);
+    }
+    toggleElementVisibility('#dots-icon', false);
+    toggleElementVisibility('#add-contact-icon', true);
+}
+
+
+/**
+ * Handles the delete contact action.
+ */
+function handleDeleteContact() {
+    if (currentContactId) {
+        deleteContact(currentContactId);
+    } else {
+        console.warn("No current contact selected for deletion.");
+    }
+}
+
+
+/**
+ * Helper function to toggle visibility of an element.
+ * @param {string} selector - The CSS selector of the element.
+ * @param {boolean} isVisible - True to show the element, false to hide it.
+ */
+function toggleElementVisibility(selector, isVisible) {
+    let element = document.querySelector(selector);
+    if (element) {
+        element.style.display = isVisible ? 'block' : 'none';
+    } else {
+        console.warn(`Element with selector "${selector}" not found.`);
+    }
+}
