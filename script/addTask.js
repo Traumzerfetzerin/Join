@@ -1,4 +1,4 @@
-const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
+let CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 let taskCategory = "";
 
 /**
@@ -252,7 +252,7 @@ async function popUpAddTask() {
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
     contacts.forEach(contact => {
-        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
             checkbox.checked = false;
         }

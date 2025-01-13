@@ -27,7 +27,7 @@ async function clearTasks() {
     document.getElementById('categoryDropdown').classList.add('d-none');
     document.getElementById('subtaskSelect').value = "";
     contacts.forEach(contact => {
-        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
             checkbox.checked = false;
         }
@@ -50,7 +50,7 @@ async function resetTaskForm() {
     document.getElementById('assigned-to').value = "";
     
     contacts.forEach(contact => {
-        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
             checkbox.checked = false;
         }

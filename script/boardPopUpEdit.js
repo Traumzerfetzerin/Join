@@ -35,7 +35,7 @@ async function enableEditMode(task, category) {
 function calculateDueDateOverlay() {
     let dueDateOverlay = new Date(); // Korrigierter Variablenname
     let formattedDateOverlay = dueDateOverlay.toISOString().split('T')[0];
-    const dateInput = document.getElementById('editDueDate');
+    let dateInput = document.getElementById('editDueDate');
     if (dateInput) {
         dateInput.setAttribute('min', formattedDateOverlay);
     }
