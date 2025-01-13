@@ -102,26 +102,6 @@ async function saveOrUpdateContactToFirebase(contact) {
     }
 }
 
-/**
- * Extracts initials from the contact name.
- * @param {string} name - Full name of the contact.
- * @returns {string} - Initials of the contact name.
- */
-function getInitials(name) {
-    return name
-        .split(' ')
-        .map(part => part.charAt(0).toUpperCase())
-        .join('');
-}
-
-/**
- * Generates a random color for initials background.
- * @returns {string} - Hexadecimal color code.
- */
-function getRandomColor() {
-    let colors = ['#FFB6C1', '#FFA07A', '#FA8072', '#E9967A', '#F08080'];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
 
 /**
  * Deletes a contact.
@@ -362,12 +342,10 @@ let editLink = document.getElementById('overlay-edit-link');
 if (editLink) {
     editLink.addEventListener('click', handleEditLinkClick);
 } else {
-    console.warn("Edit link element not found.");
 }
 
 let deleteLink = document.getElementById('overlay-delete-link');
 if (deleteLink) {
     deleteLink.addEventListener('click', handleDeleteLinkClick);
 } else {
-    console.warn("Delete link element not found.");
 }

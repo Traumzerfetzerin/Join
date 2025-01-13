@@ -74,7 +74,6 @@ function generateAddButtonSmallHTML() {
  */
 function addContactsToDOM() {
     if (!Array.isArray(contacts) || contacts.length === 0) {
-        console.warn("No contacts available to display.");
         return;
     }
 
@@ -104,27 +103,6 @@ function addNewContactToDOM(contact) {
     } else {
         console.warn(`Failed to attach event listener to contact with ID: ${contact.id}`);
     }
-}
-
-
-/**
- * Generates the HTML structure for a contact.
- * @param {object} contact - Contact object containing name, email, phone, and id.
- * @returns {string} - HTML string for the contact.
- */
-function generateContactHTML(contact) {
-    let initials = getInitials(contact.name);
-    let randomColor = getRandomColor();
-    contact.initialsColor = randomColor;
-
-    return `
-        <div class="contact-item" data-id="${contact.id}">
-            <div class="contact-initials" style="background-color: ${randomColor};">${initials}</div>
-            <span class="contact-name">${contact.name}</span>
-            <span class="contact-email">${contact.email}</span>
-            <span class="contact-phone">${contact.phone}</span>
-        </div>
-        <div class="divider"></div>`;
 }
 
 
@@ -330,36 +308,6 @@ document.getElementById('delete-contact-button')?.addEventListener('click', () =
 });
 
 
-/**
- * Helper function to update the text content of an element.
- * @param {string} selector - The CSS selector of the element.
- * @param {string} content - The content to set.
- */
-function updateElementContent(selector, content) {
-    let element = document.querySelector(selector);
-    if (element) {
-        element.textContent = content;
-    } else {
-        console.warn(`Element with selector "${selector}" not found.`);
-    }
-}
-
-
-/**
- * Helper function to set the background color of an element.
- * @param {string} selector - The CSS selector of the element.
- * @param {string} color - The background color to set.
- */
-function setElementBackgroundColor(selector, color) {
-    let element = document.querySelector(selector);
-    if (element) {
-        element.style.backgroundColor = color;
-    } else {
-        console.warn(`Element with selector "${selector}" not found.`);
-    }
-}
-
-
 // Event listeners for global actions
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('back-arrow')?.addEventListener('click', handleBackArrowClick);
@@ -403,16 +351,3 @@ function handleDeleteContact() {
 }
 
 
-/**
- * Helper function to toggle visibility of an element.
- * @param {string} selector - The CSS selector of the element.
- * @param {boolean} isVisible - True to show the element, false to hide it.
- */
-function toggleElementVisibility(selector, isVisible) {
-    let element = document.querySelector(selector);
-    if (element) {
-        element.style.display = isVisible ? 'block' : 'none';
-    } else {
-        console.warn(`Element with selector "${selector}" not found.`);
-    }
-}
