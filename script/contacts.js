@@ -113,20 +113,6 @@ function validateContactId(contact) {
 
 
 /**
-* Updates the local contacts array with the updated contact.
-* @param {object} contact - The updated contact object.
-*/
-function updateLocalContacts(contact) {
-   let contactIndex = contacts.findIndex(c => c.id === contact.id);
-   if (contactIndex === -1) {
-       console.warn(`Contact with ID ${contact.id} not found locally.`);
-       return;
-   }
-   contacts[contactIndex] = contact;
-}
-
-
-/**
  * Validates the updated contact fields before saving.
  * @param {object} updatedContact - The updated contact object.
  * @returns {boolean} - True if all fields are valid, otherwise false.

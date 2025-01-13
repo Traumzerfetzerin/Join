@@ -49,9 +49,13 @@ function toggleElementVisibility(selector, isVisible) {
  * @returns {string} - HTML string for the contact.
  */
 function generateContactHTML(contact) {
+    if (!contact || !contact.name || !contact.id) {
+        console.error("Invalid contact data:", contact);
+        return '';
+    }
+
     let initials = getInitials(contact.name);
     let randomColor = getRandomColor();
-    contact.initialsColor = randomColor;
 
     return `
         <div class="contact-item" data-id="${contact.id}">
@@ -62,6 +66,7 @@ function generateContactHTML(contact) {
         </div>
         <div class="divider"></div>`;
 }
+
 
 /**
  * Generates a random color for initials background.
@@ -134,7 +139,7 @@ async function fetchFromFirebase(firebaseUrl, method, contact) {
  */
 function updateLocalContacts(contact, data) {
     if (!contact.id) {
-        contact.id = data.name;
+        contact.id = data.name; 
         contacts.push(contact);
     } else {
         let index = contacts.findIndex(c => c.id === contact.id);
