@@ -112,38 +112,80 @@ async function changeToBoard() {
 
 
 /**
- * Collects and returns task data from the form.
- * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
+ * Collects subtasks from the DOM.
+ * 
+ * @returns {Array<Object>} The array of subtasks with text and completion status.
  */
-function collectTaskData() {
-    let subtasks = Array.from(
-        document.querySelectorAll('#editSubtasks li')
-    ).map(li => ({
+function collectSubtasks() {
+    return Array.from(document.querySelectorAll('#editSubtasks li')).map(li => ({
         text: li.textContent.trim(),
         completed: false
     }));
+}
 
-    let contacts = Array.from(
-        document.querySelectorAll('.contacts-section input[type="checkbox"]:checked')
-    ).map(input => input.value.trim());
 
-    console.log("Collected Contacts:", contacts);
+/**
+ * Collects selected contact IDs from checkboxes.
+ * 
+ * @returns {Array<string>} The array of selected contact IDs.
+ */
+function collectContactIDs() {
+    let checkboxes = document.querySelectorAll('.contacts-section input[type="checkbox"]');
+    console.log("Checkboxen gefunden:", checkboxes);
+    return Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(input => input.value.trim());
+}
 
+
+/**
+ * Collects and returns task data from the form.
+ * 
+ * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
+ */
+function collectTaskData() {
     return {
         title: document.getElementById('inputTitle').value.trim(),
         description: document.getElementById('textareaDescription').value.trim(),
         dueDate: document.getElementById('dueDate').value,
         prio: selectedPrio,
         column: "toDo",
-        contacts: contacts,
-        subtasks: subtasks,
+        contacts: collectContactIDs(),
+        subtasks: collectSubtasks(),
         category: document.getElementById('categorySelect').value
     };
 }
 
 
 /**
+ * Populates the contact section with fetched contact data.
+ * 
+ * @param {Array<Object>} allContacts - The list of all contacts to populate.
+ * @param {Array<string>} selectedContacts - List of pre-selected contact IDs.
+ * @returns {void}
+ */
+function populateContactSection(allContacts, selectedContacts) {
+    let contactSection = document.querySelector('.contacts-section');
+
+    if (!contactSection) {
+        console.error("contacts-section not found in DOM");
+        return;
+    }
+
+    contactSection.innerHTML = allContacts.map(contact => `
+        <label>
+            <input type="checkbox" value="${contact.id}" ${selectedContacts.includes(contact.id) ? 'checked' : ''} />
+            ${contact.name}
+        </label>
+    `).join('');
+
+    console.log("Generated HTML for contacts:", contactSection.innerHTML);
+}
+
+
+/**
  * Fetches and dynamically populates the contact list for task creation.
+ * 
  * @async
  * @param {Array<string>} selectedContacts - List of pre-selected contact IDs.
  * @returns {Promise<void>} Resolves when the contact list is populated.
@@ -157,21 +199,7 @@ async function fetchAndPopulateContacts(selectedContacts = []) {
 
         if (contactsData) {
             let allContacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-            let contactSection = document.querySelector('.contacts-section');
-
-            if (!contactSection) {
-                console.error("contacts-section not found in DOM");
-                return;
-            }
-
-            contactSection.innerHTML = allContacts.map(contact => `
-                <label>
-                    <input type="checkbox" value="${contact.id}" ${selectedContacts.includes(contact.id) ? 'checked' : ''} />
-                    ${contact.name}
-                </label>
-            `).join('');
-
-            console.log("Generated HTML for contacts:", contactSection.innerHTML);
+            populateContactSection(allContacts, selectedContacts);
         } else {
             console.warn("No contacts found in Firebase.");
         }
@@ -263,34 +291,70 @@ function prepareTaskDataForFirebase(taskData) {
 }
 
 
+
+/**
+ * Prepares task data for Firebase by mapping contact IDs.
+ * 
+ * @param {Object} taskData - The task data to prepare.
+ * @returns {Object} The prepared task data for Firebase.
+ */
+function prepareTaskDataForFirebase(taskData) {
+    return {
+        ...taskData,
+        contacts: taskData.contacts.map(contactId => ({ id: contactId }))
+    };
+}
+
+
+/**
+ * Prepares task data for Firebase by mapping contact IDs.
+ * 
+ * @param {Object} taskData - The task data to prepare.
+ * @returns {Object} The prepared task data for Firebase.
+ */
+function prepareTaskDataForFirebase(taskData) {
+    return {
+        ...taskData,
+        contacts: taskData.contacts.map(contactId => ({ id: contactId }))
+    };
+}
+
+/**
+ * Sends task data to Firebase.
+ * 
+ * @async
+ * @param {Object} preparedTaskData - The prepared task data to send.
+ * @param {string} category - The category of the task.
+ * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
+ */
+async function sendTaskToFirebase(preparedTaskData, category) {
+    let response = await fetch(`${CREATETASK_URL}/${category}.json`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(preparedTaskData),
+    });
+
+    if (!response.ok) {
+        console.error("Failed to save task to Firebase:", response.statusText);
+        return null;
+    }
+
+    let data = await response.json();
+    return data.name;
+}
+
 /**
  * Saves the task data to Firebase after preparing it.
+ * 
  * @async
  * @param {Object} taskData - The task data to be saved.
  * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
  */
 async function saveTaskToFirebase(taskData) {
     try {
-        let preparedTaskData = {
-            ...taskData,
-            contacts: taskData.contacts.map(contactId => ({ id: contactId })),
-        };
-
-        console.log("Prepared Task Data:", preparedTaskData);
-
-        let response = await fetch(`${CREATETASK_URL}/${taskData.category}.json`, {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(preparedTaskData),
-        });
-
-        if (!response.ok) {
-            console.error("Failed to save task to Firebase:", response.statusText);
-            return null;
-        }
-
-        let data = await response.json();
-        return data.name;
+        let preparedTaskData = prepareTaskDataForFirebase(taskData);
+        console.log("Prepared Task Data for Firebase:", preparedTaskData);
+        return await sendTaskToFirebase(preparedTaskData, taskData.category);
     } catch (error) {
         console.error("Error saving task to Firebase:", error);
         return null;
