@@ -10,140 +10,94 @@
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="../styles/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/responsive/NavbarResponsive.css">
-    
-    <script src="../script/header.js"></script>
-    <script src="../script/contacts.js" defer></script> <!-- Use defer -->
-    
-    
-
+    <script src="../script/header.js" defer></script>
 </head>
 
 <body>
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbar.html"></aside>
 
-    
+    <main id="main-content">
+        <div id="toast" class="toast" aria-live="polite">Message</div>
 
+        <section class="contacts-container">
+            <div class="contact-list"></div>
 
-    <div id="main-content">
-        <div id="toast" class="toast">Message</div>
-
-        <div class="contacts-container">
-            <div class="contact-list">
-                
-                
-            </div>
-            
-            
             <div class="add-contact">
-                <div class="contact">
+                <article class="contact">
                     <h1>Contacts</h1>
                     <div class="separator"></div>
                     <h3>Better with Team</h3>
-                    
-                </div>
+                </article>
+
                 <div class="back-arrow">
                     <img id="back-arrow" src="../Assets/arrowLeft.svg" alt="Back" style="display: none;">
-                </div> 
-                
-                <div id="contact-details" class="contact-details" style="display: none;">
+                </div>
+
+                <section id="contact-details" class="contact-details" style="display: none;">
                     <div class="contact-name-container">
-                        <div class="contact-initials" id="contact-initials"></div>
-                        
-                           <span class="contact-name" id="contact-name"></span>
-                    </div> 
-                    <div class="editSection"> 
-                            <a href="#" class="edit-link">
-                                <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
-                            </a>
-                            <a href="#" class="delete-link">
-                                <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
-                            </a>
-                    </div>  
+                        <div class="contact-initials" id="contact-initials" aria-label="Initials"></div>
+                        <span class="contact-name" id="contact-name"></span>
+                    </div>
+                    <div class="editSection">
+                        <a href="#" class="edit-link">
+                            <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
+                        </a>
+                        <a href="#" class="delete-link">
+                            <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
+                        </a>
+                    </div>
                     <h2>Contact information</h2>
                     <div class="email-section">
                         <strong>Email:</strong>
                         <p id="contact-email"></p>
                     </div>
-                    
-                    <!-- Phone section with label above the phone number -->
                     <div class="phone-section">
                         <strong>Phone:</strong>
                         <p id="contact-phone"></p>
-                    </div> 
-                    <div class="dots-icon">
-                      <div id="dots-icon" class="dots-icon">
-                           <img src="../Assets/3dots.svg" alt="">
-                        </div>
                     </div>
-                    <div id="small-overlay" class="small-overlay" style="display: none;">
-                        <a href="#" class="edit-link" id="overlay-edit-link">
-                            <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
-                        </a>
-                        <a href="#" class="delete-link" id="overlay-delete-link">
-                            <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
-                        </a>
-                    </div>
-                
-                    
-                    
-                </div>
+                </section>
             </div>
-            
-            
-               
-        </div>
-       
-        
-    </div>
-    <!---contact-header-->
-    <!-- New Contact Details Overlay -->
+        </section>
+    </main>
 
-
-
-    <!-- Overlay Element -->
-    <!-- Overlay Element -->
-    <!-- Add Contact Overlay -->
     <div id="overlay" class="overlay">
         <div class="overlay-content">
             <div class="left-section">
-                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="Join Logo">
                 <h2>Add Contact</h2>
                 <p>Tasks are easier with a team!</p>
             </div>
             <div class="right-section">
-                <a href="" id="close-overlay" class="close-button">X</a> 
-                <!-- New Flex Container -->
+                <a href="#" id="close-overlay" class="close-button" aria-label="Close Overlay">X</a>
                 <div class="right-section-flex">
-                    <img src="../Assets/person.svg" class="centered-image" alt="">
-                    <form id="contact-form" class="contact-form">
+                    <img src="../Assets/person.svg" class="centered-image" alt="Person Icon">
+                    <form id="contact-form" class="contact-form" aria-labelledby="Add Contact Form">
                         <input type="text" id="name" placeholder="Name" required />
-                        <input type="email" id="email" placeholder="Email" required/>
-                        <input type="tel" id="phone" placeholder="Phone" required/>
+                        <input type="email" id="email" placeholder="Email" required />
+                        <input type="tel" id="phone" placeholder="Phone" required />
                         <div class="button-container">
-                        <button type="submit" id="create-contact-button" class="form-button">Create Contact</button>
-                        <button id="cancel-button"class="form-button">cancel</button>
+                            <button type="submit" id="create-contact-button" class="form-button">Create Contact</button>
+                            <button id="cancel-button" class="form-button" type="button">Cancel</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
-    
-    
-    <div id="contact-overlay" class="" style="display: none;">
+
+    <div id="contact-overlay" style="display: none;">
         <div class="contact-overlay-content">
-            <div class="contactOverlayLeft ">
-                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="">
+            <div class="contactOverlayLeft">
+                <img class="left-sectionImg" src="../Assets/JoinLogoWhite.svg" alt="Join Logo">
                 <h2>Edit Contact</h2>
             </div>
-            <div class="contactOverlayRight ">
-                <a href="#" id="close-contact-overlay" class="close-button">X</a>
+            <div class="contactOverlayRight">
+                <a href="#" id="close-contact-overlay" class="close-button" aria-label="Close Contact Overlay">X</a>
                 <div class="contact-details-row">
-                    <div class="contact-initials-overlay" id="contact-initials-overlay"></div>
+                    <div class="contact-initials-overlay" id="contact-initials-overlay" aria-label="Initials"></div>
                     <div class="contact-details-inputs">
                         <input type="text" id="edit-contact-name" class="edit-input" placeholder="Enter Name">
                         <input type="email" id="edit-contact-email" class="edit-input" placeholder="Enter Email">
@@ -153,22 +107,18 @@
                 <div class="contact-details-buttons">
                     <button id="delete-contact-button" class="contact-button">Delete</button>
                     <button id="save-contact-button" class="contact-button">Save</button>
-                    
                 </div>
             </div>
-            
         </div>
-
     </div>
-    
-    
-
-
 
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML();
     </script>
+    <script src="../script/contacts.js" defer></script>
+    <script src="../script/contactsOverlay.js"></script>
+    <script src="../script/contactsManipulation.js" defer></script>
 </body>
 
 </html>
