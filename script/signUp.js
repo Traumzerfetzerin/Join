@@ -1,216 +1,236 @@
-// Function to validate sign-up form
+/**
+ * Validates the sign-up form and handles user registration.
+ * @param {Event} event - The form submit event.
+ */
 function validateSignUp(event) {
-    event.preventDefault(); // Prevent the form from submitting
-
-    // Get form data
-    let name = document.getElementById('name').value.trim(); // Get the name input
-    let email = document.getElementById('email').value.trim(); // Trimming input
+    event.preventDefault();
+    let name = document.getElementById('name').value.trim();
+    let email = document.getElementById('email').value.trim();
     let password = document.getElementById('password').value.trim();
     let confirmPassword = document.getElementById('confirm-password').value.trim();
-
-    // Validate email format
-    if (!validateEmail(email)) {
-        showToast('Invalid email format');
-        clearForm();  // Clear form if email format is invalid
-        return;
-    }
-
-    // Check if email already exists in Firebase
-    isEmailExists(email)
-        .then(exists => {
-            if (exists) {
-                showToast('Email already exists');
-                clearForm();  // Clear form if email exists
-                return;
-            }
-
-            // Validate password strength
-            if (!validatePassword(password)) {
-                showToast('must be atleast 6 characters, at least one uppercase letter and number');
-                clearForm();  // Clear form if password doesn't meet the strength requirements
-                return;
-            }
-
-            // Validate password matching
-            if (password !== confirmPassword) {
-                showToast('Passwords do not match');
-                clearForm();  // Clear form if passwords don't match
-                return;
-            }
-
-            // Store user data in Firebase Realtime Database
-            saveUserData(name, email, password)
-                .then(() => {
-                    // Show success toast
-                    showToast('Sign up successful!');
-
-                    // Clear the form after successful sign-up
-                    clearForm();
-
-                    // Redirect to the login page after a short delay
-                    setTimeout(() => {
-                        window.location.href = '/html/login.html'; // Redirect to login page
-                    }, 1500);
-                })
-                .catch(error => {
-                    showToast('Error saving user data: ' + error);
-                });
-        });
+    processSignUp(name, email, password, confirmPassword);
 }
 
-// Function to display the toast
 
-// Validate email format
+/**
+ * Processes the sign-up logic after form data is collected.
+ * @param {string} name - The user's name.
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @param {string} confirmPassword - The user's password confirmation.
+ */
+function processSignUp(name, email, password, confirmPassword) {
+    if (!validateEmail(email)) return handleSignUpError('Invalid email format');
+    isEmailExists(email)
+        .then(exists => {
+            if (exists) return handleSignUpError('Email already exists');
+            if (!validatePassword(password)) return handleSignUpError('Password must be at least 6 characters, contain an uppercase letter and a number');
+            if (password !== confirmPassword) return handleSignUpError('Passwords do not match');
+            storeUserData(name, email, password);
+        })
+        .catch(error => showToast('Error checking email: ' + error));
+}
+
+
+/**
+ * Handles sign-up errors by displaying a toast and clearing the form.
+ * @param {string} message - The error message to display.
+ */
+function handleSignUpError(message) {
+    showToast(message);
+    clearForm();
+}
+
+
+/**
+ * Stores user data in Firebase Realtime Database.
+ * @param {string} name - The user's name.
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ */
+function storeUserData(name, email, password) {
+    saveUserData(name, email, password)
+        .then(() => {
+            showToast('Sign up successful!');
+            clearForm();
+            redirectToLogin();
+        })
+        .catch(error => showToast('Error saving user data: ' + error));
+}
+
+
+/**
+ * Redirects the user to the login page after a delay.
+ */
+function redirectToLogin() {
+    setTimeout(() => {
+        window.location.href = '/html/login.html';
+    }, 1500);
+}
+
+
+/**
+ * Validates the email format.
+ * @param {string} email - The email to validate.
+ * @returns {boolean} True if valid, otherwise false.
+ */
 function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email regex pattern
+    let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
 
-// Validate password strength
+
+/**
+ * Validates the password strength.
+ * @param {string} password - The password to validate.
+ * @returns {boolean} True if valid, otherwise false.
+ */
 function validatePassword(password) {
-    // At least 6 characters long, contains at least one uppercase letter and one number
-    const re = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    let re = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return re.test(password);
 }
 
-// Save user data in Firebase Realtime Database
+
+/**
+ * Saves user data to Firebase Realtime Database.
+ * @param {string} name - The user's name.
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @returns {Promise<void>} Resolves on success.
+ */
 async function saveUserData(name, email, password) {
-    const userData = {
-        name: name,    // Add the name field
-        email: email,
-        password: password, // In a real app, store a hashed password!
-    };
-    
-    return fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//users.json', {
+    let userData = { name: name, email: email, password: password };
+    return fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
         method: 'POST',
         body: JSON.stringify(userData),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        headers: { 'Content-Type': 'application/json' }
     }).then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
     });
 }
 
-// Check if email already exists in Firebase
+
+/**
+ * Checks if an email already exists in Firebase.
+ * @param {string} email - The email to check.
+ * @returns {Promise<boolean>} True if the email exists, otherwise false.
+ */
 async function isEmailExists(email) {
     return fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//users.json')
         .then(response => response.json())
-        .then(data => {
-            // Check if any user has the same email
-            return Object.values(data || {}).some(user => user.email === email);
-        });
+        .then(data => Object.values(data || {}).some(user => user.email === email));
 }
 
-// Clear all input fields in the form
-function clearForm() {
-    const nameField = document.getElementById('name');
-    const emailField = document.getElementById('email');
-    const passwordField = document.getElementById('password');
-    const confirmPasswordField = document.getElementById('confirm-password');
-    const termsCheckbox = document.getElementById('terms-checkbox');
 
+/**
+ * Clears all input fields in the sign-up form.
+ */
+function clearForm() {
+    let nameField = document.getElementById('name');
+    let emailField = document.getElementById('email');
+    let passwordField = document.getElementById('password');
+    let confirmPasswordField = document.getElementById('confirm-password');
+    let termsCheckbox = document.getElementById('terms-checkbox');
     if (nameField && emailField && passwordField && confirmPasswordField) {
         nameField.value = '';
         emailField.value = '';
         passwordField.value = '';
         confirmPasswordField.value = '';
-        termsCheckbox.checked = false; 
-    } 
+        termsCheckbox.checked = false;
+    }
 }
 
-// Ensure form fields are cleared when the page loads
-window.onload = function() {
-    // Retain existing functionality (clear form)
+
+/**
+ * Initializes the sign-up page by clearing the form and disabling the button.
+ */
+window.onload = function () {
     clearForm();
-
-    // Get references to the checkbox and signup button
-    const termsCheckbox = document.getElementById('terms-checkbox');
-    const signupButton = document.getElementById('signup-btn');
-
-    // Initially disable the signup button visually and functionally
-    disableButton(signupButton);
-
-    // Event listener for checkbox to toggle button disable state
-    termsCheckbox.addEventListener('change', function() {
-        if (termsCheckbox.checked) {
-            // Enable the button if the checkbox is checked
-            enableButton(signupButton);
-        } else {
-            // Disable the button if the checkbox is unchecked
-            disableButton(signupButton);
-        }
-    });
+    initializeSignUpButton();
 };
 
-// Function to disable the button
+
+/**
+ * Initializes the sign-up button with checkbox functionality.
+ */
+function initializeSignUpButton() {
+    let termsCheckbox = document.getElementById('terms-checkbox');
+    let signupButton = document.getElementById('signup-btn');
+    disableButton(signupButton);
+    termsCheckbox.addEventListener('change', () => toggleButtonState(termsCheckbox, signupButton));
+}
+
+
+/**
+ * Toggles the state of the sign-up button based on checkbox status.
+ * @param {HTMLElement} checkbox - The terms and conditions checkbox.
+ * @param {HTMLElement} button - The sign-up button.
+ */
+function toggleButtonState(checkbox, button) {
+    checkbox.checked ? enableButton(button) : disableButton(button);
+}
+
+
+/**
+ * Disables the button and updates its style.
+ * @param {HTMLElement} button - The button to disable.
+ */
 function disableButton(button) {
     button.disabled = true;
-
-    button.style.cursor = 'not-allowed';  // Non-clickable cursor
+    button.style.cursor = 'not-allowed';
 }
 
-// Function to enable the button
+
+/**
+ * Enables the button and updates its style.
+ * @param {HTMLElement} button - The button to enable.
+ */
 function enableButton(button) {
     button.disabled = false;
-    
-    button.style.cursor = 'pointer';  // Clickable cursor
+    button.style.cursor = 'pointer';
 }
 
 
-
-// Function to toggle password visibility
+/**
+ * Toggles the visibility of the password input field.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {string} toggleIconId - The ID of the toggle icon container.
+ */
 function togglePasswordVisibility(inputId, toggleIconId) {
-    const passwordInput = document.getElementById(inputId);
-    const toggleIconElement = document.getElementById(toggleIconId);
-
-    // Check if elements are found
-    if (!passwordInput || !toggleIconElement) {
-        console.error('Element not found');
-        return;
-    }
-
-    const toggleIcon = toggleIconElement.getElementsByTagName('img')[0];
-
-    // Check if image element is found
-    if (!toggleIcon) {
-        console.error('Image element not found inside toggleIconId:', toggleIconId);
-        return;
-    }
-
-    // Toggle password visibility
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text'; // Show the password
-        toggleIcon.src = '/Assets/visibility.svg'; // Show visible icon
-        toggleIcon.alt = 'Hide Password'; // Update alt text
-        console.log('Password is now visible.'); // Debugging log
-    } else {
-        passwordInput.type = 'password'; // Hide the password
-        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; // Show hidden icon
-        toggleIcon.alt = 'Show Password'; // Update alt text
-        console.log('Password is now hidden.'); // Debugging log
-    }
+    let passwordInput = document.getElementById(inputId);
+    let toggleIconElement = document.getElementById(toggleIconId);
+    if (!passwordInput || !toggleIconElement) return console.error('Element not found');
+    togglePasswordIcon(passwordInput, toggleIconElement);
 }
-// Ensure the signup button is disabled initially
+
+
+/**
+ * Toggles the password visibility icon and input type.
+ * @param {HTMLElement} passwordInput - The password input field.
+ * @param {HTMLElement} toggleIconElement - The toggle icon container.
+ */
+function togglePasswordIcon(passwordInput, toggleIconElement) {
+    let toggleIcon = toggleIconElement.getElementsByTagName('img')[0];
+    if (!toggleIcon) return console.error('Image element not found');
+    let isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    toggleIcon.src = isPassword ? '/Assets/visibility.svg' : '/Assets/visibility_off - Copy.svg';
+    toggleIcon.alt = isPassword ? 'Hide Password' : 'Show Password';
+}
+
+
+/**
+ * Displays a toast notification with a message.
+ * @param {string} message - The message to display.
+ * @param {string} [type='success'] - The type of toast ('success' or 'error').
+ */
 function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    toast.textContent = message; // Set the message
-    toast.className = `toast show ${type}`; // Add the 'show' class and type ('success' or 'error')
-
-    // After 3 seconds, add the 'hide' class to slide the toast out
-    setTimeout(() => {
-        toast.classList.add('hide');
-    }, 3000);
-
-    // Remove the 'show' and 'hide' classes after the slide-out animation completes
+    let toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => toast.classList.add('hide'), 3000);
     setTimeout(() => {
         toast.className = toast.className.replace('show', '').replace('hide', '');
-    }, 3500); // Wait an additional 0.5 seconds to match the CSS transition
+    }, 3500);
 }
-
-
-
-

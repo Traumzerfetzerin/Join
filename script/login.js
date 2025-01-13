@@ -1,41 +1,43 @@
 // Base URL for Firebase
 let BASE_URL_LOGIN = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
+
 // Store user data globally
 let users = [];
 let tasks = [];
 let contacts = [];
 let loggedUserContact;
 
-// Call this function once DOM content is fully loaded
+
+/**
+ * Initializes the application after DOM content is fully loaded.
+ */
 document.addEventListener("DOMContentLoaded", function () {
-    includeHTML(); // Load external HTML
-    // After including HTML, display the user's initials
+    includeHTML();
     displayUserInitials();
 });
 
+
 /**
- * Function to include external HTML content.
- * It fetches the content from HTML files and inserts them into the current page.
+ * Includes external HTML content into the current page.
+ * It fetches content from HTML files and inserts them into corresponding elements with the `w3-include-html` attribute.
  */
 function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        file = elmnt.getAttribute("w3-include-html");
+    let elements = document.getElementsByTagName("*");
+    for (let i = 0; i < elements.length; i++) {
+        let element = elements[i];
+        let file = element.getAttribute("w3-include-html");
         if (file) {
-            xhttp = new XMLHttpRequest();
+            let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status == 200) {
-                        elmnt.innerHTML = this.responseText;
+                        element.innerHTML = this.responseText;
                     }
                     if (this.status == 404) {
-                        elmnt.innerHTML = "Page not found.";
+                        element.innerHTML = "Page not found.";
                     }
-                    elmnt.removeAttribute("w3-include-html");
-                    // Ensure user initials are displayed after HTML is included
+                    element.removeAttribute("w3-include-html");
                     displayUserInitials();
                 }
             };
@@ -46,50 +48,57 @@ function includeHTML() {
     }
 }
 
+
 /**
- * Display the user's initials in the `name_menu` div after content is loaded.
- * It checks if there are initials stored in localStorage and updates the UI accordingly.
+ * Displays the user's initials in the UI after content is loaded.
+ * Updates the `name_menu` element with initials from localStorage or defaults to 'G'.
  */
 function displayUserInitials() {
     let currentUserInitial = localStorage.getItem('currentUserInitial');
-    const userIcon = document.getElementById('name_menu');
-
-    // Ensure the user icon element is present before trying to update
+    let userIcon = document.getElementById('name_menu');
     if (userIcon) {
-        if (currentUserInitial) {
-            userIcon.textContent = currentUserInitial;
-        } else {
-            userIcon.textContent = 'G'; // Default to 'G' for guest
-        }
-    } else {
-        console.error('Element with ID "name_menu" not found.');
+        userIcon.textContent = currentUserInitial || 'G';
     }
 }
 
-/**
- * Function to log in a user.
- * Handles email validation, password checking, and updating the UI with the user's initials.
- * @param {Event} event - The form submit event
- */
-// Function to show a toast notification
-function showToast(message) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = 'toast show'; // Make the toast visible
 
-    // Hide the toast after 3 seconds
+/**
+ * Shows a toast notification with a provided message.
+ * @param {string} message - The message to display in the toast.
+ */
+function showToast(message) {
+    let toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast show';
     setTimeout(() => {
         toast.className = toast.className.replace('show', '');
     }, 3000);
 }
 
+
+/**
+ * Logs in a user by validating email and password.
+ * Updates the UI and redirects to the summary page if successful.
+ * @param {Event} event - The form submit event.
+ */
 function logIn(event) {
     event.preventDefault();
-
     let email = document.getElementById('name').value.trim();
     let password = document.getElementById('login-password').value.trim();
     let responseMessage = document.getElementById('response-message');
 
+    validateEmailAndPassword(email, password, responseMessage);
+}
+
+
+/**
+ * Validates the email and password input.
+ * Handles error messages if the email does not exist or the password is invalid.
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @param {HTMLElement} responseMessage - The response message element for feedback.
+ */
+function validateEmailAndPassword(email, password, responseMessage) {
     isEmailExists(email)
         .then(exists => {
             if (!exists) {
@@ -99,74 +108,88 @@ function logIn(event) {
             }
             return fetchUserData(email);
         })
-        .then(user => {
-            if (user && user.password === password) {
-                let fullName = user.name || email;
-                localStorage.setItem('loggedInUserName', fullName);
-
-                showToast('Login successful! Redirecting...');
-
-                setTimeout(() => {
-                    window.location.href = 'summary.html';
-                }, 1500);
-            } else {
-                responseMessage.textContent = 'Invalid password';
-                responseMessage.style.color = 'red';
-            }
-        })
-        .catch(error => {
-            console.error('Error during login:', error);
+        .then(user => handleLoginResponse(user, email, password, responseMessage))
+        .catch(() => {
             responseMessage.textContent = 'An error occurred. Please try again.';
             responseMessage.style.color = 'red';
         });
 }
 
 
+/**
+ * Handles the response from the email and password validation.
+ * Updates the UI and redirects if the login is successful.
+ * @param {object|null} user - The user object or null if not found.
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @param {HTMLElement} responseMessage - The response message element for feedback.
+ */
+function handleLoginResponse(user, email, password, responseMessage) {
+    if (user && user.password === password) {
+        let fullName = user.name || email;
+        localStorage.setItem('loggedInUserName', fullName);
+        showToast('Login successful! Redirecting...');
+        redirectToSummary();
+    } else {
+        responseMessage.textContent = 'Invalid password';
+        responseMessage.style.color = 'red';
+    }
+}
+
 
 /**
- * Function to extract initials from a user's name or email.
- * If the name is available, use the initials from the name.
- * Otherwise, use the first letter of the email address.
- * @param {string} nameOrEmail - The user's name or email
- * @returns {string} - The initials to display
+ * Redirects the user to the summary page after a short delay.
+ */
+function redirectToSummary() {
+    setTimeout(() => {
+        window.location.href = 'summary.html';
+    }, 1500);
+}
+
+
+
+/**
+ * Extracts initials from a user's name or email.
+ * If the name is available, initials are derived from the name.
+ * Otherwise, the first letter of the email is used.
+ * @param {string} nameOrEmail - The user's name or email.
+ * @returns {string} - The initials to display.
  */
 function getInitials(nameOrEmail) {
-    if (!nameOrEmail) return 'G'; // Return 'G' for guest
-
-    const nameParts = nameOrEmail.split(' '); // Split full name into parts
+    if (!nameOrEmail) return 'G';
+    let nameParts = nameOrEmail.split(' ');
     if (nameParts.length > 1) {
-        // Return initials from the first two parts of the name
         return nameParts[0].charAt(0).toUpperCase() + nameParts[1].charAt(0).toUpperCase();
     } else {
-        // If only one name or using email, just return the first letter
         return nameOrEmail.charAt(0).toUpperCase();
     }
 }
 
+
 /**
- * Function to log in as a guest.
+ * Logs in as a guest.
  * Sets 'G' as the guest initial and redirects to the board page.
+ * @returns {Promise<void>}
  */
 async function guestLogin() {
-    const guestInitial = 'G';
-
-    const userIcon = document.getElementById('name_menu');
+    let guestInitial = 'G';
+    let userIcon = document.getElementById('name_menu');
     if (userIcon) {
         userIcon.textContent = guestInitial;
     }
-
     localStorage.setItem('currentUserInitial', guestInitial);
-
     if (window.matchMedia("(max-width: 1000px)").matches) {
         greetingTemplate();
     }
-
     setTimeout(() => {
         window.location.href = 'summary.html';
     }, 1000);
 }
 
 
+/**
+ * Displays a greeting template on smaller devices.
+ */
 async function greetingTemplate() {
     document.getElementById('greetingLogin').classList.remove('dnone');
     document.getElementById('forGreeting').classList.add('dnone');
@@ -176,9 +199,9 @@ async function greetingTemplate() {
 
 
 /**
- * Check if email already exists in the Firebase database.
- * @param {string} email - The email to check
- * @returns {Promise<boolean>}
+ * Checks if an email exists in the Firebase database.
+ * @param {string} email - The email to check.
+ * @returns {Promise<boolean>} - True if the email exists, otherwise false.
  */
 async function isEmailExists(email) {
     return fetch(`${BASE_URL_LOGIN}/users.json`)
@@ -188,52 +211,48 @@ async function isEmailExists(email) {
         });
 }
 
+
 /**
- * Fetch user data from Firebase based on the provided email.
- * @param {string} email - The email of the user
- * @returns {Promise<object>}
+ * Fetches user data from Firebase based on the provided email.
+ * @param {string} email - The email of the user.
+ * @returns {Promise<object|null>} - The user object if found, otherwise null.
  */
 async function fetchUserData(email) {
     return fetch(`${BASE_URL_LOGIN}/users.json`)
         .then(response => response.json())
         .then(data => {
-            const user = Object.values(data || {}).find(user => user.email === email);
+            let user = Object.values(data || {}).find(user => user.email === email);
             return user ? user : null;
         });
 }
 
+
 /**
- * Toggle password visibility.
- * @param {string} inputId - The ID of the password input field
- * @param {string} toggleIconId - The ID of the eye icon for toggling
+ * Toggles the visibility of the password input field.
+ * @param {string} inputId - The ID of the password input field.
+ * @param {string} toggleIconId - The ID of the toggle icon element.
  */
 function togglePasswordVisibility(inputId, toggleIconId) {
-    const passwordInput = document.getElementById(inputId);
-    const toggleIcon = document.getElementById(toggleIconId);
-
+    let passwordInput = document.getElementById(inputId);
+    let toggleIcon = document.getElementById(toggleIconId);
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.src = '/Assets/visibility.svg'; // Show password icon
+        toggleIcon.src = '/Assets/visibility.svg';
     } else {
         passwordInput.type = 'password';
-        toggleIcon.src = '/Assets/visibility_off - Copy.svg'; // Hide password icon
+        toggleIcon.src = '/Assets/visibility_off - Copy.svg';
     }
 }
 
+
 /**
- * Function to handle logging out.
- * Clears the user's initials from localStorage and redirects to the login page.
+ * Logs out the user by clearing stored data and redirecting to the login page.
  */
 function logout() {
-    // Clear the stored user data (e.g., initials)
     localStorage.removeItem('currentUserInitial');
-
-    // Reset the user icon to 'G' for guest
-    const userIcon = document.getElementById('name_menu');
+    let userIcon = document.getElementById('name_menu');
     if (userIcon) {
         userIcon.textContent = 'G';
     }
-
-    // Redirect to login page
-    window.location.href = '/html/login.html'; // Update the path if needed
+    window.location.href = '/html/login.html';
 }

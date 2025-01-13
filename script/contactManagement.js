@@ -66,6 +66,7 @@ async function saveOrUpdateContactToFirebase(contact) {
     return updateLocalContacts(contact, data);
 }
 
+
 /**
  * Sends a contact to Firebase and retrieves the response.
  * @param {string} url - The Firebase URL.
@@ -89,6 +90,7 @@ async function saveContactToFirebase(url, method, contact) {
     return await response.json();
 }
 
+
 /**
  * Adds the Firebase-generated ID to the contact if not already present.
  * @param {object} contact - The contact object to check and update.
@@ -101,6 +103,7 @@ function addContactIdIfNeeded(contact, data) {
     }
     return contact;
 }
+
 
 /**
  * Updates the contact in Firebase with its generated ID.
@@ -122,7 +125,6 @@ async function updateContactWithIdInFirebase(contact) {
         throw new Error("Failed to update contact with ID in Firebase");
     }
 }
-
 
 
 /**
