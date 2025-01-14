@@ -1,6 +1,3 @@
-
-
-
 /**
  * Displays the add contact buttons (large and small) on the page.
  */
@@ -14,7 +11,7 @@ function displayAddContactButtons() {
     let addButtonLarge = generateAddButtonLargeHTML();
     let addButtonSmall = generateAddButtonSmallHTML();
 
-    contactList.insertAdjacentHTML('beforeend', addButtonLarge);
+    contactList.insertAdjacentHTML('afterbegin', addButtonLarge);
     document.body.insertAdjacentHTML('beforeend', addButtonSmall);
 
     attachAddContactButtonListeners();
@@ -22,27 +19,27 @@ function displayAddContactButtons() {
 
 
 /**
- * Generates the HTML for the large add contact button.
- * @returns {string} - HTML string for the large add contact button.
- */
+* Generates the HTML for the large add contact button.
+* @returns {string} - HTML string for the large add contact button.
+*/
 function generateAddButtonLargeHTML() {
-    return `
-        <div class="add-contact-button" id="show-overlay">
-            <span>Add New Contact</span>
-            <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
-        </div>`;
+   return `
+       <div class="add-contact-button" id="show-overlay">
+           <span>Add New Contact</span>
+           <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
+       </div>`;
 }
 
 
 /**
- * Generates the HTML for the small add contact button.
- * @returns {string} - HTML string for the small add contact button.
- */
+* Generates the HTML for the small add contact button.
+* @returns {string} - HTML string for the small add contact button.
+*/
 function generateAddButtonSmallHTML() {
-    return `
-        <div class="add-contact-icon" id="add-contact-icon">
-            <img src="../Assets/personAdd.svg" alt="Add Contact">
-        </div>`;
+   return `
+       <div class="add-contact-icon" id="add-contact-icon">
+           <img src="../Assets/personAdd.svg" alt="Add Contact">
+       </div>`;
 }
 
 
@@ -253,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('back-arrow')?.addEventListener('click', handleBackArrowClick);
     attachGlobalEventListeners();
     displayContacts();
+    displayAddContactButtons();
 });
 
 
@@ -279,6 +277,35 @@ function handleBackArrowClick() {
 }
 
 
+/**
+ * Groups contacts by their first letter.
+ * @param {Array} contacts - Array of contact objects.
+ * @returns {Object} - Grouped contacts by first letter.
+ */
+function groupContactsByFirstLetter(contacts) {
+    return contacts.reduce((groups, contact) => {
+        const firstLetter = contact.name.charAt(0).toUpperCase();
+        if (!groups[firstLetter]) {
+            groups[firstLetter] = [];
+        }
+        groups[firstLetter].push(contact);
+        return groups;
+    }, {});
+}
 
 
-
+/**
+ * Attaches click listeners to the contact items.
+ */
+function attachContactClickListeners() {
+    contacts.forEach(contact => {
+        let contactElement = document.querySelector(`.contact-item[data-id="${contact.id}"]`);
+        if (contactElement) {
+            contactElement.addEventListener('click', () => {
+                showContactDetails(contact.id);
+            });
+        } else {
+            console.warn(`Failed to attach event listener to contact with ID: ${contact.id}`);
+        }
+    });
+}

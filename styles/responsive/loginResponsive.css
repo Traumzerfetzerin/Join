@@ -1,0 +1,403 @@
+@media (max-width: 980px) {
+    .login-joinContainer {
+        padding: 100px;
+        /* Reduced bottom padding */
+        padding-top: 20px;
+        width: 95%;
+        max-width: 450px;
+        height: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 150px;
+    }
+
+    .buttons {
+        margin: 0;
+        /* Remove any default margin */
+        padding-bottom: 10px;
+        /* Add padding only if needed for aesthetics */
+    }
+
+    .login-button,
+    .login-button.guest-btn {
+        margin-bottom: 0;
+        /* Ensure no extra margin below buttons */
+    }
+
+    @keyframes move-logo {
+        0% {
+            transform: translate(-50%, -50%) scale(3);
+        }
+
+        100% {
+            transform: translate(-55vw, -20vh) scale(1);
+        }
+    }
+
+
+
+    /* Adjust logo size */
+    #login-logoContainer {
+        width: 60px;
+        /* Reduced size */
+        height: 60px;
+        top: 20%;
+        transform: translate(-50%, -20%);
+
+    }
+
+    .joinLogo img {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Heading, inputs, and buttons */
+    .login-joinContainer h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+
+    .input-group {
+        width: 100%;
+        padding-bottom: 10px;
+    }
+
+    .input-group input {
+        font-size: 15px;
+        padding: 10px 150px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .login-button,
+    .login-button.guest-btn {
+        padding: 10px 18px;
+        font-size: 15px;
+    }
+
+    /* Toast and notice link adjustments */
+    .toast {
+        min-width: 130px;
+        right: 10px;
+        transform: translate(10%, -80%);
+    }
+
+    .notice_link {
+        margin-top: 40px;
+        padding-left: 20px;
+        font-size: 12px;
+    }
+
+    .login-signup-button {
+        order: 1;
+        /* Moves it to the bottom */
+        margin-top: auto;
+        /* Pushes the button to the bottom */
+        margin-bottom: 20px;
+        /* Adds space from the bottom */
+        margin-left: auto;
+        margin-right: auto;
+        /* Centers the button horizontally */
+
+
+    }
+
+    .login-signup-button button {
+        width: 100%;
+    }
+
+    .legalPolicy {
+        margin-top: 10px;
+        display: flex;
+        gap: 30px;
+        margin-bottom: 10px;
+        order: 2;
+    }
+
+    .input-group input {
+        font-size: 16px;
+        /* Adjust font size for better readability */
+        padding: 10px;
+        /* Reduce padding if necessary */
+        width: 100%;
+        /* Ensure input takes up full width */
+        box-sizing: border-box;
+        /* Prevent padding from exceeding width */
+    }
+
+
+
+    .login-button,
+    .login-button.guest-btn {
+        width: 80%;
+        /* Set the width for smaller screens */
+        max-width: 150px;
+        /* Optional: set a maximum width */
+        margin: 0 auto;
+        /* Center the button */
+    }
+}
+
+@media (max-width: 780px) {
+
+
+
+    .login-joinContainer {
+        padding: 40px 20px;
+        width: 85%;
+        max-width: 400px;
+        height: auto;
+        margin-top: 155px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        /* Makes the container a reference point */
+    }
+
+    /* Logo size adjustments */
+    #login-logoContainer {
+        width: 50px;
+        height: 50px;
+        top: 10%;
+        transform: translate(-50%, -10%);
+    }
+
+    .joinLogo img {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Heading size */
+    .login-joinContainer h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    /* Input fields */
+    .input-group {
+        width: 100%;
+        padding-bottom: 10px;
+    }
+
+    .input-group input {
+        font-size: 15px;
+        padding: 10px 130px;
+        padding-left: 10px;
+    }
+
+    /* Buttons layout */
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+        margin: 0;
+        /* Removes any additional margin */
+        padding: 0;
+        /* Ensures no padding under buttons */
+    }
+
+    .login-button,
+    .login-button.guest-btn {
+        width: 90%;
+        max-width: 180px;
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+
+    /* Toast and notice link adjustments */
+    .toast {
+        min-width: 140px;
+        font-size: 14px;
+        right: 10px;
+        transform: translate(10%, -75%);
+    }
+
+    .notice_link {
+        margin-top: 15px;
+        /* Reduced space after buttons */
+        font-size: 12px;
+    }
+
+    /* Login-signup button */
+
+    .login-signup-button {
+        position: relative;
+        /* Keep it in the document flow */
+        align-self: center;
+        margin-top: auto;
+        /* Pushes it to the end of content */
+        margin-bottom: 20px;
+        /* Adds some breathing room at bottom */
+    }
+
+    .legalPolicy {
+        display: flex;
+        gap: 30px;
+        margin-bottom: 20px;
+    }
+
+    .login-signup-button {
+        order: 1;
+        /* Moves it to the bottom */
+        margin-top: 10px;
+        /* Pushes the button to the bottom */
+        margin-bottom: 20px;
+        /* Adds space from the bottom */
+        margin-left: auto;
+        margin-right: auto;
+        /* Centers the button horizontally */
+
+
+    }
+
+    .login-signup-button button {
+        width: 100%;
+    }
+
+}
+
+
+
+
+
+/* Media Query for Smaller Screens */
+@media (max-width: 400px) {
+    .login-joinContainer {
+        padding: 50px, 20px;
+        /* Reduced padding for a compact look */
+        width: 90%;
+        /* Keep width responsive */
+        max-width: 350px;
+        /* Set a maximum width for very small screens */
+        height: auto;
+        /* Adjust height to fit content */
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 110px;
+        /* Slightly reduce margin */
+    }
+
+
+    /* Logo size adjustments */
+
+
+
+    /* Adjust input field size */
+    .input-group {
+        width: 100%;
+        padding-bottom: 5px;
+        /* Reduce bottom padding */
+    }
+
+    .input-group input {
+        font-size: 12px;
+        /* Further reduce font size */
+        padding: 6px;
+        /* Reduce padding for smaller inputs */
+        width: 100%;
+        /* Full width of the container */
+    }
+
+    /* Adjust button size */
+    .login-button,
+    .login-button.guest-btn {
+        width: 90%;
+        /* Full width on very small screens */
+        max-width: 100px;
+        /* Maximum width for buttons */
+        padding: 6px 8px;
+        /* Reduce padding */
+        font-size: 12px;
+        /* Reduce font size */
+        margin: 5px auto;
+        /* Add a little margin for spacing */
+        cursor: pointer;
+    }
+
+    /* Position the login-signup-button at the bottom of the viewport */
+    .login-signup-button {
+        position: fixed;
+        /* Keep it fixed at the bottom */
+        bottom: 15px;
+        /* Adjust distance from the bottom */
+        left: 50%;
+        transform: translateX(-50%);
+        /* Center horizontally */
+        width: 90%;
+        /* Full width to fill small screens */
+        max-width: 350px;
+        /* Optional max width */
+        text-align: center;
+        /* Center the button text */
+        cursor: pointer;
+    }
+
+    /* Adjust logo size */
+    #login-logoContainer {
+        width: 50px;
+        /* Further reduced size for smaller screens */
+        height: 50px;
+        /* Keep aspect ratio */
+        margin: 0 auto;
+        /* Center logo */
+        margin-bottom: 10px;
+        /* Space between logo and container */
+    }
+
+    /* Adjust other styles */
+    .buttons {
+        flex-direction: column;
+        gap: 6px;
+        /* Smaller gap between buttons */
+    }
+
+    .toast {
+        min-width: 100px;
+        /* Reduce minimum width for toast */
+        right: 5px;
+        /* Position adjustment */
+        transform: translate(10%, -80%);
+    }
+
+    .notice_link {
+        margin-top: 20px;
+        /* Reduced margin for notice link */
+        padding-left: 10px;
+        /* Adjust padding */
+        font-size: 10px;
+        /* Smaller font size for very small screens */
+    }
+
+    .login-signup-button {
+        position: relative;
+        align-self: center;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        order: 1;
+        /* Ensures it appears above legalPolicy */
+    }
+
+    .legalPolicy {
+        display: flex;
+        gap: px;
+        margin-bottom: 20px;
+        order: 2;
+        /* Ensures it appears below login-signup-button */
+        margin-top: 0;
+    }
+
+    .login-signup-button button {
+        width: 100%;
+    }
+}

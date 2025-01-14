@@ -51,7 +51,7 @@
     #widget_2,
     #widget_3,
     #widget_4 {
-        flex-direction: row; /* Align items in a row */
+        flex-direction: row;
         font-size: 16px;
         display: flex;
         justify-content: space-between;
@@ -61,10 +61,10 @@
     }
 
     .sidelinks {
-        width: 70%; /* Reduced further */
+        width: 70%;
         padding: 0px 6px;
-        flex-direction: row; /* Ensures widgets are inline */
-        justify-content: space-between; /* Adjust spacing for horizontal layout */
+        flex-direction: row;
+        justify-content: space-between;
         align-items: center;
     }
 
@@ -82,8 +82,8 @@
         bottom: 0;
         flex-direction: row;
         top: unset;
-        justify-content: center; /* Horizontally center the items */
-        align-items: center; /* Vertically center the items */
+        justify-content: center;
+        align-items: center;
     }
 
     .sidebarimg {
@@ -99,70 +99,10 @@
     }
 }
 
-
-@media(max-width:860px){
+@media(max-width:860px) {
     .sidelinks {
-        /* width: 60%;  */
-        /* Reduced further */
+        width: 60%;
         padding: 0px 6px;
-    }
-    
-    #widget_1,
-    #widget_2,
-    #widget_3,
-    #widget_4 {
-        flex-direction: row; /* Align items in a row */
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-left:10;
-        padding: 1px;
-    }
-    .sidelinks a {
-        font-size: 18px; /* Smaller font for links */
-        padding: 4px; /* Reduce padding further */
-        border-radius: 6px; /* Adjust border radius */
-    }
-
-}
-
-    
-@media (max-width: 710px) {
-    /* Reduce font sizes for better responsiveness */
-    .widget {
-        font-size: 12px; /* Smaller font */
-        padding-left: 4px; /* Less padding */
-    }
-
-    .mobile_headerNav {
-        height: 150px; /* Reduce header navigation height */
-    }
-
-    header {
-        height: 100px; /* Smaller header height */
-        padding: 0px 6px; /* Compact padding */
-    }
-
-    .headerImg {
-        max-width: 50px; /* Shrink image size */
-        height: auto; /* Maintain aspect ratio */
-    }
-
-    .sidelinks {
-        /* width: 50%;  */
-        /* Narrower width */
-        padding: 0px 4px;
-        flex-direction: row; /* Keep links in a row */
-        /* justify-content: center;  */
-        /* Center links */
-        align-items: center;
-    }
-
-    .sidelinks a {
-        font-size: 14px; /* Smaller font for links */
-        padding: 4px; /* Reduce padding further */
-        border-radius: 6px; /* Adjust border radius */
     }
 
     #widget_1,
@@ -170,34 +110,82 @@
     #widget_3,
     #widget_4 {
         flex-direction: row;
-        font-size: 11px; /* Smaller font for widgets */
+        font-size: 16px;
         display: flex;
         align-items: center;
-        gap: 4px; /* Reduce gap */
-        padding: 2px; /* Compact padding */
+        gap: 12px;
+        margin-left: 10px;
+        padding: 1px;
+    }
+
+    .sidelinks a {
+        font-size: 18px;
+        padding: 4px;
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 710px) {
+    .widget {
+        font-size: 12px;
+        padding-left: 4px;
+    }
+
+    .mobile_headerNav {
+        height: 150px;
+    }
+
+    header {
+        height: 100px;
+        padding: 0px 6px;
+    }
+
+    .headerImg {
+        max-width: 50px;
+        height: auto;
+    }
+
+    .sidelinks {
+        width: 50%;
+        padding: 0px 4px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sidelinks a {
+        font-size: 14px;
+        padding: 4px;
+        border-radius: 6px;
+    }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        flex-direction: row;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 2px;
     }
 
     .sidebarimg {
-        max-width: 25px; /* Reduce sidebar icon size */
+        max-width: 25px;
         margin-right: 1px;
         height: auto;
     }
 
-    #sidebar {
-        height: 60px; /* Smaller sidebar */
-    }
-
     .sidebar-btn {
-        font-size: 17px; /* Smaller text for buttons */
+        font-size: 17px;
     }
 
-    /* Reduce padding and font size for the header */
     .mobile_headerNav h1 {
-        font-size: 18px; /* Adjust heading font size */
+        font-size: 18px;
         margin: 0;
     }
 
-    /* Adjustments for specific sections */
     .sidebarfooter {
         display: none;
     }
@@ -209,40 +197,34 @@
 }
 
 @media (max-width: 580px) {
-    /* Further adjustments for very small screens */
     .widget {
-        font-size: 10px; /* Smallest font size */
+        font-size: 10px;
     }
 
     header {
-        height: 100px; /* Compact header */
-        padding: 0 4px; /* Minimal padding */
+        height: 100px;
+        padding: 0 4px;
     }
 
     .headerImg {
-        max-width: 40px; /* Even smaller image */
+        max-width: 40px;
     }
 
     .mobile_headerNav {
-        height: 120px;
+        height: 150px;
     }
 
     .sidelinks {
-        /* width: 45%;  */
-        /* Further narrow width */
+        width: 45%;
         padding: 0 2px;
     }
 
     .sidelinks a {
-        font-size: 14px; /* Very small font for links */
-        padding: 2px; /* Minimal padding */
+        font-size: 14px;
+        padding: 2px;
     }
 
     .sidebarimg {
-        max-width: 12px; /* Very small icons */
-    }
-
-    #sidebar {
-        height: 60px; /* Smallest sidebar */
+        max-width: 12px;
     }
 }

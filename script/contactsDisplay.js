@@ -22,8 +22,24 @@ async function loadContacts() {
  */
 function displayContacts() {
     clearContactList();
-    displayAddContactButtons();
-    addContactsToDOM();
+
+    let contactList = document.querySelector('.contact-list');
+    if (contactList) {
+        let contactsHTML = '';
+
+        if (Array.isArray(contacts) && contacts.length > 0) {
+            let groupedContacts = groupContactsByFirstLetter(contacts);
+            contactsHTML = generateGroupedContactsHTML(groupedContacts);
+        } else {
+            contactsHTML = '<p>No contacts available.</p>';
+        }
+
+        contactList.innerHTML = contactsHTML;
+        attachContactClickListeners();
+        displayAddContactButtons(); 
+    } else {
+        console.warn("Contact list container not found.");
+    }
 }
 
 

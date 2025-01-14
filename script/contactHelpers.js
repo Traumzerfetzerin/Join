@@ -58,13 +58,35 @@ function generateContactHTML(contact) {
     let randomColor = getRandomColor();
 
     return `
+        <div class="divider"></div>
         <div class="contact-item" data-id="${contact.id}">
             <div class="contact-initials" style="background-color: ${randomColor};">${initials}</div>
-            <span class="contact-name">${contact.name}</span>
-            <span class="contact-email">${contact.email}</span>
-            <span class="contact-phone">${contact.phone}</span>
-        </div>
-        <div class="divider"></div>`;
+            <div class="contact-name-mail">    
+                <span class="contact-name">${contact.name}</span>
+                <span class="contact-email">${contact.email}</span>
+            </div>
+        </div>`;
+}
+
+
+/**
+ * Generates HTML for grouped contacts.
+ * @param {Object} groupedContacts - Grouped contacts by first letter.
+ * @returns {string} - HTML string for grouped contacts.
+ */
+function generateGroupedContactsHTML(groupedContacts) {
+    let html = '';
+
+    Object.keys(groupedContacts).sort().forEach(letter => {
+        html += `<div class="contact-group">
+                    <h2 class="contact-group-letter">${letter}</h2>`;
+        groupedContacts[letter].forEach(contact => {
+            html += generateContactHTML(contact);
+        });
+        html += '</div>'; 
+    });
+
+    return html;
 }
 
 
