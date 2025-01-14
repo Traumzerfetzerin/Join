@@ -368,8 +368,6 @@ textarea {
     gap: 10px;
     /* Space between elements */
     max-height: calc(40vh-100px);
-
-
 }
 
 /* Name container styling */
@@ -378,7 +376,6 @@ textarea {
     align-items: center;
     gap: 10px;
     /* Space between initials and name */
-
 }
 
 /* Style for the initials */

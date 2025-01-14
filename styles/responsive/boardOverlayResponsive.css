@@ -1,5 +1,4 @@
 @media (max-width: 550px) {
-
     .board-overlay {
         width: 340px;
         padding: 20px 20px;
@@ -19,7 +18,8 @@
         margin-top: -23px;
         margin-bottom: -37px;
     }
-    .subtasks-section{
+
+    .subtasks-section {
         margin-top: 5px;
         margin-bottom: 20px;
     }

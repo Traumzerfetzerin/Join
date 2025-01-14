@@ -1,0 +1,136 @@
+.add-contact-button span {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.add-contact-button:hover {
+    background-color: #3498db;
+    transform: scaleY(1.1);
+    box-shadow: #2A3647;
+    cursor: pointer;
+}
+
+.close-button {
+    margin-top: 10px;
+}
+
+.add-contact-button {
+    position: sticky;
+    top: 0;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #2A3647;
+    color: white;
+    border: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 220px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#add-contact-button {
+    border: 2px solid #2a2a2a;
+    background-color: #2A3647;
+    border-radius: 8px;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 100;
+    box-shadow: none;
+    width: 100%;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+#cancel-button {
+    border: 2px solid #1a2b47;
+    background-color: wHITE;
+    color: #1a2b47;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: medium;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#cancel-button:hover {
+    border: 2px #3498db solid;
+}
+
+#add-contact-button:hover {
+    background-color: #3498db;
+    border: none;
+    cursor: pointer;
+}
+
+#create-contact-button {
+    background-color: #2A3647;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    color: white;
+}
+
+#create-contact-button:hover {
+    background-color: #3498db;
+}
+
+.close-button {
+    position: absolute;
+    top: 0%;
+    right: 3%;
+
+    color: black;
+
+    border-radius: 50%;
+}
+
+.close-button:hover {
+    background-color: lightgray;
+}
+
+#save-contact-button {
+    padding: 10px 15px;
+    background-color: #2A3647;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    border: none;
+}
+
+#delete-contact-button {
+    padding: 10px 15px;
+    color: black;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+    border: 1px solid;
+
+}
+
+#delete-contact-button:hover {
+    border: 2px solid #3498db;
+    color: #3498db;
+    transform: scale(1.1);
+}
+
+#save-contact-button:hover {
+    background-color: #3498db;
+}
+
+.contact-details-buttons {
+    display: flex;
+    gap: 30px;
+    padding-top: auto;
+}

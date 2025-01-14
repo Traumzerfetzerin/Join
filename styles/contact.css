@@ -1,56 +1,55 @@
-*{
-    text-decoration: none;    
+* {
+    text-decoration: none;
 }
 
 #main-content {
-    margin-left: 230px;    
-    margin-top: 95px;    
-    flex-grow: 1;    
+    margin-left: 230px;
+    margin-top: 95px;
+    flex-grow: 1;
     display: flex;
-    
+
 }
 
-.cursorPointer{
-cursor: pointer;
+.cursorPointer {
+    cursor: pointer;
 }
 
 .contacts-container {
     margin-top: 2px;
-    display: flex;    
+    display: flex;
     width: 100%;
     background-color: rgb(255, 255, 255);
 }
 
 .contact-list {
-    flex: 0 0 38%;    
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);    
-    border-radius: 8px;    
-    background-color: white;   
-     display: flex;
+    flex: 0 0 38%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-x:hidden;
+    overflow-x: hidden;
     overflow-y: auto;
     height: calc(100vh - 100px);
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .divider {
-    width: 100%;  
+    width: 100%;
     height: 1px;
     border-top: 1px solid lightgrey;
     background-color: #ddd;
-    margin: 20px 0; 
+    margin: 20px 0;
 }
 
-
-.contact-list .contact-item:last-of-type + .divider {
+.contact-list .contact-item:last-of-type+.divider {
     display: none;
 }
 
 .contact-item {
     width: 100%;
-    padding: 10px 0;  
+    padding: 10px 0;
     display: flex;
     align-items: center;
 }
@@ -72,8 +71,8 @@ cursor: pointer;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: #4a90e2; 
-    color: #fff; 
+    background-color: #4a90e2;
+    color: #fff;
     margin-right: 15px;
 }
 
@@ -93,20 +92,19 @@ cursor: pointer;
 }
 
 .contact-email {
-    color:#3498db;
+    color: #3498db;
 }
 
 .contact {
-    display: flex;    
+    display: flex;
     align-items: center;
-    padding-top: 20px;       
+    padding-top: 20px;
 }
 
 .contact h1 {
     margin: 0;
     font-size: 54px;
 }
-
 
 .contact h3 {
     margin: 0;
@@ -115,19 +113,19 @@ cursor: pointer;
 
 .back-arrow {
     display: flex;
-    justify-content:flex-end;
+    justify-content: flex-end;
     margin-top: 10px;
     margin-right: 10px;
     cursor: pointer;
 }
 
-#dots-icon{
+#dots-icon {
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    background-color: #2A3647;    
+    background-color: #2A3647;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
 }
 
@@ -155,69 +153,23 @@ cursor: pointer;
     align-items: center;
 }
 
-.add-contact-button {
-    position: sticky;
-    top: 0;
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #2A3647;
-    color: white;
-    border: 1px;
-    border-radius: 10px;
-    cursor: pointer;
-    width: 220px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
- 
+
+
 .add-icon {
     width: 34px;
     height: 34px;
     margin-right: 8px;
 }
 
-.add-contact-button span {
-    margin-right: 10px;
-    font-size: 18px;
-}
-
-.add-contact-button:hover {
-    background-color: #3498db;
-    transform: scaleY(1.1);
-    box-shadow: #2A3647;
-    cursor: pointer;
-
-}
-
-.overlay, #contact-overlay {
-    display: none; position: fixed; top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 900px; height: 500px; max-height: 100vh;
-    background-color: #fff; z-index: 1001; border-radius: 20px;
-    box-sizing: border-box; border:none;
-}
-
-.overlay-content {
-    display: flex;
-    height: 100%;
-    position: relative;
-}
-
-.close-button {
-    margin-top: 10px;
-}
-
 .left-section {
     background-color: #2A3647;
-        
     padding: 20px;
-    flex-direction: column;    
-    justify-content: flex-start;    
-    align-items: center;  
-    border-top-left-radius: 20px; 
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
-    width:300px;
+    width: 300px;
 }
 
 .left-section img {
@@ -248,32 +200,32 @@ cursor: pointer;
 
 .right-section {
     flex: 1;
-    padding: 20px;    
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;    
-    align-items: center;    
-    background-color: #f9f9f9;     
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
-    border-top-right-radius:20px;
-    border-bottom-right-radius: 20px;  
-    width:100% ;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width: 100%;
 }
 
 .right-section-flex {
-    display: flex; 
-    gap: 40px; 
+    display: flex;
+    gap: 40px;
     position: relative;
 }
 
 .contact-details .contact-name {
-    font-size: 38px;     
+    font-size: 38px;
 }
 
 .contact-name-container {
     display: flex;
     gap: 30px;
-    padding-left: 30px;         
+    padding-left: 30px;
 }
 
 .editSection {
@@ -287,14 +239,14 @@ cursor: pointer;
     display: flex;
     flex-direction: row;
     font-size: 18px;
-    color:black;
+    color: black;
     text-decoration: none;
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 
-
-.edit-link:hover, .delete-link:hover {
-    color:#007bff;
+.edit-link:hover,
+.delete-link:hover {
+    color: #007bff;
 }
 
 .email-section,
@@ -315,173 +267,56 @@ cursor: pointer;
     margin-right: 8px;
 }
 
-.contact-details{
-    margin-top:10px ;
-
-    
+.contact-details {
+    margin-top: 10px;
 }
 
 .right-section img {
-    width: 110px; 
+    width: 110px;
     height: 110px;
     border-radius: 100%;
-    padding: 15px; 
+    padding: 15px;
     border: 3px solid white;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     background-color: lightgrey;
     display: block;
-    
-    
 }
 
 #contact-form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%; 
-    border: none; 
+    width: 100%;
+    border: none;
     background-color: transparent;
     padding: 0;
 }
 
 #contact-form input {
     width: 300px;
-    padding: 10px; 
-    margin-bottom: 15px; 
-    box-sizing: border-box; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
-}
-
-#add-contact-button {
-    border: 2px solid #2a2a2a;
-    background-color: #2A3647;
-    border-radius: 8px;
-    color: white;
     padding: 10px;
-    font-size: 14px;
-    font-weight: 100;
-    box-shadow: none;
-    width: 100%;
-}
-
-.button-container {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-#cancel-button{
-    border: 2px solid #1a2b47;
-    background-color:wHITE;
-    color: #1a2b47; 
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: medium;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.25s ease, color 0.25s ease;
-}  
-
-#cancel-button:hover{
-    border:2px #3498db solid;
-}
-
-
-
-#add-contact-button:hover{
-    background-color: #3498db;
-    border: none;
-    cursor: pointer;
-}
-
-#create-contact-button{
-    background-color: #2A3647;
-    border-radius: 10px;
-    border:none;
-    padding: 10px;
-    color: white;
-}
-
-#create-contact-button:hover{
-  background-color: #3498db;
-}
-
-.close-button {
-    position: absolute;
-    top: 0%;
-    right: 3%;
-    
-    color:black;
-    
-    border-radius: 50%;
-}
-
-.close-button:hover {
-    background-color: lightgray;
-}
-
-#save-contact-button {
-    padding: 10px 15px;
-    background-color: #2A3647;
-    color: #fff;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    cursor: pointer;
-    border: none;
-}
-
-#delete-contact-button{
-    padding: 10px 15px;
-    color: black; 
-    border-radius: 5px;    
-    font-size: 16px;
-    transition: background-color 0.3s;    
-    cursor: pointer;
-    border: 1px solid;
-
-}
-
-
-#delete-contact-button:hover {
-    border:2px solid #3498db;
-    color: #3498db;
-    transform: scale(1.1);
-}
-
-#save-contact-button:hover{
-    background-color: #3498db;
-}
-
-
-.contact-details-buttons {
-    display: flex;
-    gap: 30px;
-    padding-top: auto;
 }
 
 .toast {
     visibility: hidden;
-    
     min-width: 150px;
     min-height: 40px;
-
     color: white;
-    
     text-align: center;
     border-radius: 15px;
     padding: 15px;
     position: fixed;
     z-index: 2000;
-    right: 0;  
-    top: 50%; 
+    right: 0;
+    top: 50%;
     transform: translate(100%, -80%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
-
 
 .toast.show {
     visibility: visible;
@@ -500,68 +335,6 @@ cursor: pointer;
 
 .toast.error {
     background-color: #1a2b47;
-}
-
-#contact-overlay {
-    display: none;    
-    position: fixed;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
-    width: 700px;
-    height: 500px; 
-    background-color: rgba(255, 255, 255, 1); 
-    z-index: 1001;     
-    box-sizing: border-box;
-      
-    border-radius: 20px;
-    
-}
-
-.contact-overlay-content{
-    display: flex;
-    width: 700px;
-    height: 500px;
-    border-radius: 20px;
-}
-
-.contactOverlayLeft{
-    background-color: #2A3647;
-    width: 40%;    
-    padding: 20px;
-    flex-direction: column;    
-    justify-content: flex-start;    
-    align-items: center;   
-    border-top-left-radius: 20px; 
-    border-bottom-left-radius: 20px;
-}
-
-.contactOverlayLeft h2 {
-    font-size: 54px;    
-    color: #fff;    
-    position: relative;
-}
-
-.contactOverlayLeft h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 30%; 
-}
-
-.contactOverlayRight{
-    flex: 1;
-    padding: 20px;    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;    
-    align-items: center;    
-    background-color: #f9f9f9;     
-    box-shadow: 0 2px 5px rgba(73, 25, 25, 0.1);   
-    gap: 40px; 
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px; 
 }
 
 .edit-input {
@@ -585,19 +358,6 @@ cursor: pointer;
     gap: 40px;
 }
 
-.contact-initials-overlay {
-    width: 180px;
-    height: 80px;
-    border-radius: 50%;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin-right: 15px;
-    overflow: hidden; 
-}
-
 .add-contact-icon {
     display: none;
     position: fixed;
@@ -618,27 +378,4 @@ cursor: pointer;
     width: 38px;
     height: 38px;
     object-fit: contain;
-}
-
-.small-overlay {
-    position: absolute;
-    bottom: 70px;
-    right: 10px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 100;
-}
-.small-overlay a {
-    display: flex;
-    align-items: center;
-    padding: 5px 0;
-    color: #333;
-    text-decoration: none;
-}
-
-.small-overlay a:hover {
-    background-color: #f0f0f0;
-    border-radius: 3px;
 }
