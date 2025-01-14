@@ -1,0 +1,110 @@
+.overlay, #contact-overlay {
+    display: none; position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px; height: 500px; max-height: 100vh;
+    background-color: #fff; z-index: 1001; border-radius: 20px;
+    box-sizing: border-box; border:none;
+}
+
+.overlay-content {
+    display: flex;
+    height: 100%;
+    position: relative;
+}
+
+#contact-overlay {
+    display: none;    
+    position: fixed;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 500px; 
+    background-color: rgba(255, 255, 255, 1); 
+    z-index: 1001;     
+    box-sizing: border-box;
+    border-radius: 20px;   
+}
+
+.contact-overlay-content{
+    display: flex;
+    width: 700px;
+    height: 500px;
+    border-radius: 20px;
+}
+
+.contactOverlayLeft{
+    background-color: #2A3647;
+    width: 40%;    
+    padding: 20px;
+    flex-direction: column;    
+    justify-content: flex-start;    
+    align-items: center;   
+    border-top-left-radius: 20px; 
+    border-bottom-left-radius: 20px;
+}
+
+.contactOverlayLeft h2 {
+    font-size: 54px;    
+    color: #fff;    
+    position: relative;
+}
+
+.contactOverlayLeft h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 30%; 
+}
+
+.contactOverlayRight{
+    flex: 1;
+    padding: 20px;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    align-items: center;    
+    background-color: #f9f9f9;     
+    box-shadow: 0 2px 5px rgba(73, 25, 25, 0.1);   
+    gap: 40px; 
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; 
+}
+
+.contact-initials-overlay {
+    width: 180px;
+    height: 80px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-right: 15px;
+    overflow: hidden; 
+}
+
+.small-overlay {
+    position: absolute;
+    bottom: 70px;
+    right: 10px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.small-overlay a {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    color: #333;
+    text-decoration: none;
+}
+
+.small-overlay a:hover {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+}
