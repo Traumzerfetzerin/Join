@@ -13,7 +13,6 @@ body, html {
     height: 100%;
     overflow: hidden;
   }
-  
 
   .main-content {
     margin-left: 240px;
@@ -31,7 +30,6 @@ body, html {
     flex: 1; /* Expand to fill available space */
     padding: 20px;
     overflow-y: auto; /* Allow scrolling */
-    
   }
   
   .back-arrow {
@@ -56,7 +54,7 @@ body, html {
   .back-arrow:hover img {
     transform: scale(1.1);
   }
-  
+
   /* Optional styling to highlight hover */
   .back-arrow:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -85,25 +83,5 @@ body, html {
   
   .back-arrow {
     margin-bottom: 20px;
-  }
-  
-  /* Responsive Design for Mobile (max-width: 980px) */
-  @media (max-width: 980px) {
-   
-  
-    .main-content {
-      flex-direction: column; /* Stack content vertically */
-      padding: 0 20px; /* Add padding */
-      margin-left: 20px;
-      margin-right: 20;
-      margin-top: 40px;
-    }
-  
-    .legalNotice {
-      margin-top: 90px; /* Leave space for header */
-      margin-bottom: 80px; /* Leave space for footer */
-      padding: 20px;
-      overflow-y: auto;
-    }
   }
   

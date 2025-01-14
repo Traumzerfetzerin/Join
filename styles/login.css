@@ -61,8 +61,6 @@ body {
     padding-right: 30px;
 }
 
-
-
 /* Main container styling */
 .login-joinContainer {
     background-color: white;
@@ -71,7 +69,6 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
     width: 500px;
-
     height: 450px;
 }
 
@@ -84,8 +81,6 @@ body {
     text-underline-offset: 18px;
     text-decoration-color: #3498db;
     text-decoration-thickness: 2px;
-
-
 }
 
 .login-joinContainer .signUp {
@@ -116,7 +111,6 @@ body {
     /* Prevents the text from wrapping */
 }
 
-
 .input-group {
     padding-bottom: 20px;
     display: flex;
@@ -133,7 +127,6 @@ body {
     font-size: 16px;
 }
 
-
 .input-group input:focus {
     border-color: #3498db;
     outline: none;
@@ -143,7 +136,6 @@ body {
     cursor: pointer;
     ;
 }
-
 
 .checkbox {
     padding-bottom: 1em;
@@ -193,12 +185,6 @@ body {
     transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-
-
-
-
-
-
 .input-group {
     position: relative;
     margin-bottom: 1rem;
@@ -217,8 +203,6 @@ body {
     height: 20px;
 }
 
-
-
 .login-button.guest-btn:hover {
     background-color: transparent;
     border: 2px solid #3498db;
@@ -230,7 +214,6 @@ body {
 .joinLogo {
     position: absolute;
     padding: 4.5em;
-
 }
 
 #login-logoContainer {
@@ -258,7 +241,6 @@ body {
     min-height: 80px;
     background-color: #2A3647;
     color: #f4f4f4;
-
     /* White text */
     text-align: center;
     /* Center text */
@@ -306,14 +288,11 @@ body {
 }
 
 .legalPolicy a {
-
     color: lightgray !important;
-
 }
 
 .legalPolicy a:hover {
     color: #3498db !important;
-
 }
 
 /* Toast types: success and error */
@@ -326,5 +305,3 @@ body {
     background-color: #dc3545;
     /* Red for error */
 }
-
-
