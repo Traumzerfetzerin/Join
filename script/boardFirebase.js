@@ -104,18 +104,25 @@ function validateResponse(response) {
 async function fetchTasks(category, taskId) {
     try {
         let allContacts = await fetchAllContacts();
+        console.log("All Contacts:", allContacts);
+
         let nameToIdMap = createNameToIdMap(allContacts);
+        console.log("Name to ID Map:", nameToIdMap);
 
         if (category && taskId) {
+            console.log("Fetching single task with:", { category, taskId, nameToIdMap });
             return await fetchSingleTask(category, taskId, nameToIdMap);
         } else {
+            console.log("Fetching all tasks with:", { nameToIdMap });
             return await fetchAllTasks(nameToIdMap);
         }
     } catch (error) {
-        console.error("Error fetching tasks:", error);
+        console.error("Error fetching tasks:", error.message, error.stack);
         return null;
     }
 }
+
+
 
 /**
  * Fetches a single task from Firebase by category and task ID.
@@ -139,6 +146,7 @@ async function fetchSingleTask(category, taskId, nameToIdMap) {
 
     return task;
 }
+
 
 /**
  * Fetches all tasks from Firebase and processes their contacts.
@@ -169,6 +177,7 @@ async function fetchAllTasks(nameToIdMap) {
         return null;
     }
 }
+
 
 /**
  * Fetches contact details for an array of contact identifiers.

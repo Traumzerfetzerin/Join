@@ -156,6 +156,36 @@ async function fetchContactFromFirebase(contactId) {
 }
 
 
+// async function fetchContactFromFirebase(contactId) {
+//     try {
+//         if (!contactId || typeof contactId !== "string" || contactId.trim() === "") {
+//             console.error("Invalid contactId:", contactId);
+//             return { name: "Unknown", error: "Invalid contactId" };
+//         }
+
+//         let encodedContactId = encodeURIComponent(contactId.trim());
+//         let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${encodedContactId}.json`;
+
+//         console.log("Generated URL:", url);
+
+//         let response = await fetch(url);
+
+//         if (response.ok) {
+//             let contact = await response.json();
+//             console.log("Fetched contact:", contact);
+//             return contact || { name: "Unknown" };
+//         } else {
+//             let errorText = await response.text();
+//             console.error(`HTTP Error ${response.status}: ${errorText}`);
+//             return { name: "Unknown", error: `HTTP ${response.status} - ${errorText}` };
+//         }
+//     } catch (error) {
+//         console.error("Error fetching contact:", error.message, error.stack);
+//         return { name: "Unknown", error: error.message };
+//     }
+// }
+
+
 /**
  * Populates tasks with full contact details.
  * @param {Array<object>} tasks - List of tasks to process.
