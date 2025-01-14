@@ -1,5 +1,4 @@
 @media (max-width: 1290px) {
-
     .titeljoin,
     .details {
         left: 250px;
@@ -43,7 +42,6 @@
 }
 
 @media (max-width: 880px) {
-
     .titeljoin,
     .details {
         left: 140px;
@@ -51,7 +49,6 @@
 }
 
 @media (max-width: 760px) {
-
     .titeljoin,
     .details {
         left: 75px;
@@ -82,14 +79,12 @@
 }
 
 @media (max-width: 690px) {
-
     .titeljoin {
         left: 15px;
     }
 }
 
 @media (max-width: 490px) {
-
     .urgent,
     .tasks {
         left: -70px;

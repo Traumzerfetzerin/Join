@@ -87,9 +87,7 @@
     position: absolute;
     top: 0%;
     right: 3%;
-
     color: black;
-
     border-radius: 50%;
 }
 
@@ -116,7 +114,6 @@
     transition: background-color 0.3s;
     cursor: pointer;
     border: 1px solid;
-
 }
 
 #delete-contact-button:hover {

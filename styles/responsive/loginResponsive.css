@@ -37,8 +37,6 @@
         }
     }
 
-
-
     /* Adjust logo size */
     #login-logoContainer {
         width: 60px;
@@ -46,7 +44,6 @@
         height: 60px;
         top: 20%;
         transform: translate(-50%, -20%);
-
     }
 
     .joinLogo img {
@@ -59,7 +56,6 @@
         font-size: 36px;
         margin-bottom: 20px;
     }
-
 
     .input-group {
         width: 100%;
@@ -105,8 +101,6 @@
         margin-left: auto;
         margin-right: auto;
         /* Centers the button horizontally */
-
-
     }
 
     .login-signup-button button {
@@ -132,8 +126,6 @@
         /* Prevent padding from exceeding width */
     }
 
-
-
     .login-button,
     .login-button.guest-btn {
         width: 80%;
@@ -146,9 +138,6 @@
 }
 
 @media (max-width: 780px) {
-
-
-
     .login-joinContainer {
         padding: 40px 20px;
         width: 85%;
@@ -227,7 +216,6 @@
     }
 
     /* Login-signup button */
-
     .login-signup-button {
         position: relative;
         /* Keep it in the document flow */
@@ -254,19 +242,12 @@
         margin-left: auto;
         margin-right: auto;
         /* Centers the button horizontally */
-
-
     }
 
     .login-signup-button button {
         width: 100%;
     }
-
 }
-
-
-
-
 
 /* Media Query for Smaller Screens */
 @media (max-width: 400px) {
@@ -287,11 +268,8 @@
         margin-top: 110px;
         /* Slightly reduce margin */
     }
-
-
+    
     /* Logo size adjustments */
-
-
 
     /* Adjust input field size */
     .input-group {

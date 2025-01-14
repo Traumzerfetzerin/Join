@@ -1,0 +1,173 @@
+@media(max-width:990px) {
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 700px;
+        height: 500px;
+        background-color: rgba(255, 255, 255, 1);
+        z-index: 1001;
+        box-sizing: border-box;
+        border: 2px solid gray;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 780px) {
+    .overlay {
+        width: 70%;
+        height: 550px;
+        padding: 0;
+        border-radius: 10px;
+        margin: 0 auto;
+        top: 3%;
+        left: 15%;
+        transform: none;
+        overflow: hidden;
+        border: none;
+        flex-direction: column;
+    }
+
+    .overlay-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .overlay-content::before {
+        content: '';
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: url('../Assets/person.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        z-index: 2;
+        display: block;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        padding: 15px;
+        border: 3px solid white;
+        box-sizing: border-box;
+        background-color: lightgrey;
+    }
+}
+
+@media (max-width: 710px) {
+    #contact-overlay {
+        width: 70%;
+        height: 550px;
+        padding: 0;
+        border-radius: 10px;
+        margin: 0 auto;
+        top: 3%;
+        left: 15%;
+        transform: none;
+        overflow: hidden;
+        border: none;
+        flex-direction: column;
+    }
+
+    .contact-overlay-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: relative;
+        justify-content: center;
+    }
+
+    .contactOverlayLeft img {
+        display: none;
+    }
+
+    .contactOverlayLeft {
+        width: 100%;
+        height: 40%;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .contactOverlayRight {
+        width: 100%;
+        height: 60%;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+    .contactOverlayRight input[type="text"],
+    .contactOverlayRight input[type="email"],
+    .contactOverlayRight input[type="tel"] {
+        width: 100%;
+        max-width: 300px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        display: block;
+        margin-top: 5px;
+    }
+
+    .contactOverlayRight .contact-details-buttons {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .contactOverlayLeft h2 {
+        font-size: 34px;
+    }
+
+    .contactOverlayLeft p {
+        font-size: 14px;
+    }
+
+    .contact-initials-overlay {
+        position: absolute;
+        top: calc(100% - 330px);
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+    }
+}
+
+@media(max-width:400px) {
+    .contactOverlayRight input[type="text"],
+    .contactOverlayRight input[type="email"],
+    .contactOverlayRight input[type="tel"] {
+        width: 100%;
+        max-width: 200px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        display: block;
+        margin-top: 5px;
+    } 
+}
