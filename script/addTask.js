@@ -1,15 +1,5 @@
-const CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
-
-
-/**
- * Sets the minimum allowed due date to today's date in the due date input field.
- */
-function calculateDueDate() {
-    let duoDate = new Date();
-    let formattedDate = duoDate.toISOString().split('T')[0];
-    document.getElementById('dueDate').setAttribute('min', formattedDate);
-}
-
+let CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
+let taskCategory = "";
 
 /**
  * Sets the category to "Technical Task" and toggles the category dropdown.
@@ -68,61 +58,6 @@ document.addEventListener('click', function (event) {
 
 
 /**
- * Resets all task-related fields to their default state.
- * Clears inputs, dropdowns, checkboxes, and hides the category dropdown.
- * 
- * @async
- * @returns {Promise<void>} Resolves when all fields are cleared.
- */
-async function clearTasks() {
-    document.getElementById('inputTitle').value = "";
-    document.getElementById('textareaDescription').value = "";
-    document.getElementById('dueDate').value = "";
-    document.getElementById('categorySelect').value = "";
-    document.getElementById('editSubtasks').value = "";
-    document.getElementById('assigned-to').value = "";
-    document.getElementById('assignTaskDropdown').value = "";
-    document.getElementById('categorySelect').selectedIndex = 0;
-    document.getElementById('categoryDropdown').classList.add('d-none');
-    document.getElementById('subtaskSelect').value = "";
-    contacts.forEach(contact => {
-        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
-        if (checkbox) {
-            checkbox.checked = false;
-        }
-    });
-    clearPrioButtons();
-}
-
-
-let taskCategory = "";
-
-
-/**
- * Handles task creation, validates data, and saves it to Firebase.
- * Clears subtasks, finalizes task creation, and navigates to the board.
- * 
- * @async
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>} Resolves when the task is created and board is updated.
- */
-async function createTasks(event) {
-    event.preventDefault();
-
-    let taskData = collectTaskData();
-
-    let isValid = await validateTaskData(taskData);
-    if (!isValid) return;
-
-    document.getElementById('editSubtasks').innerHTML = "";
-
-    await saveTaskToFirebase(taskData);
-    await finalizeTaskCreation();
-    await changeToBoard();
-}
-
-
-/**
  * Redirects to the board page after a brief delay.
  * 
  * @async
@@ -136,27 +71,103 @@ async function changeToBoard() {
 
 
 /**
+ * Collects subtasks from the DOM.
+ * 
+ * @returns {Array<Object>} The array of subtasks with text and completion status.
+ */
+function collectSubtasks() {
+    return Array.from(document.querySelectorAll('#editSubtasks li')).map(li => ({
+        text: li.textContent.trim(),
+        completed: false
+    }));
+}
+
+/**
+ * Collects selected contact IDs from checkboxes.
+ * 
+ * @returns {Array<string>} The array of selected contact IDs.
+ */
+function collectContactIDs() {
+    let checkboxes = document.querySelectorAll('.contacts-section input[type="checkbox"]');
+    let selectedIDs = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(input => input.dataset.id);
+
+    console.log("Gesammelte Kontakt-IDs:", selectedIDs);
+    return selectedIDs;
+}
+
+/**
  * Collects and returns task data from the form.
  * 
  * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
  */
 function collectTaskData() {
-    let subtasks = Array.from(
-        document.querySelectorAll('#editSubtasks li')
-    ).map(li => ({
-        text: li.textContent.trim(),
-        completed: false
-    }));
-    return {
+    let data = {
         title: document.getElementById('inputTitle').value.trim(),
         description: document.getElementById('textareaDescription').value.trim(),
         dueDate: document.getElementById('dueDate').value,
         prio: selectedPrio,
         column: "toDo",
-        contacts: selectedContacts,
-        subtasks: subtasks,
+        contacts: collectContactIDs(),
+        subtasks: collectSubtasks(),
         category: document.getElementById('categorySelect').value
     };
+
+    console.log("Gesammelte Task-Daten:", data);
+    return data;
+}
+
+
+/**
+ * Populates the contact section with fetched contact data.
+ * 
+ * @param {Array<Object>} allContacts - The list of all contacts to populate.
+ * @param {Array<string>} selectedContacts - List of pre-selected contact IDs.
+ * @returns {void}
+ */
+function populateContactSection(allContacts, selectedContacts) {
+    let contactSection = document.querySelector('.contacts-section');
+
+    if (!contactSection) {
+        console.error("contacts-section not found in DOM");
+        return;
+    }
+
+    let contactHTML = allContacts.map(contact => `
+        <label>
+            <input type="checkbox" data-id="${contact.id}" ${selectedContacts.includes(contact.id) ? 'checked' : ''} />
+            ${contact.name}
+        </label>
+    `).join('');
+
+    contactSection.innerHTML = contactHTML;
+    console.log("Generated HTML for contacts:", contactSection.innerHTML);
+}
+
+/**
+ * Fetches contact data from Firebase.
+ * 
+ * @async
+ * @returns {Promise<Array<Object>>} The list of all contacts fetched from Firebase.
+ */
+async function fetchContactsFromFirebase() {
+    try {
+        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+        let contactsData = await response.json();
+
+        console.log("Fetched Contacts Data:", contactsData);
+
+        if (contactsData) {
+            return Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+        } else {
+            console.warn("No contacts found in Firebase.");
+            return [];
+        }
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+        return [];
+    }
 }
 
 
@@ -169,7 +180,6 @@ function collectTaskData() {
  */
 async function validateTaskData(data) {
     if (!data.title || !data.dueDate || !data.contacts || !data.category || !data.prio) {
-        console.error("Task validation failed. Missing required fields:", data);
         await popUpRequired();
         await redBorder();
         return false;
@@ -198,56 +208,19 @@ function processSubtasks(subtasks) {
 
 
 /**
- * Prepares task data by ensuring all required fields are properly formatted for saving.
+ * Prepares task data for Firebase by mapping contact IDs.
  * 
- * @param {Object} taskData - The task data to be prepared.
- * @param {string} taskData.prio - The priority of the task.
- * @param {Array} [taskData.subtasks] - The subtasks associated with the task.
- * @returns {Object|null} The prepared task data, or `null` if priority is missing.
+ * @param {Object} taskData - The task data to prepare.
+ * @returns {Object} The prepared task data for Firebase.
  */
 function prepareTaskDataForFirebase(taskData) {
-    if (!taskData.prio) {
-        console.error("Priority is missing. Cannot save task.");
-        return null;
-    }
+    let preparedData = {
+        ...taskData,
+        contacts: taskData.contacts.map(contactId => ({ id: contactId }))
+    };
 
-    if (taskData.subtasks) {
-        taskData.subtasks = processSubtasks(taskData.subtasks);
-    }
-
-    return taskData;
-}
-
-
-/**
- * Saves the task data to Firebase after preparing it.
- * 
- * @async
- * @param {Object} taskData - The task data to be saved.
- * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
- */
-async function saveTaskToFirebase(taskData) {
-    try {
-        let preparedTaskData = prepareTaskDataForFirebase(taskData);
-        if (!preparedTaskData) return null;
-
-        let response = await fetch(`${CREATETASK_URL}/${preparedTaskData.category}.json`, {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(preparedTaskData),
-        });
-
-        if (!response.ok) {
-            console.error("Failed to save task to Firebase:", response.statusText);
-            return null;
-        }
-
-        let data = await response.json();
-        return data.name; // The generated ID
-    } catch (error) {
-        console.error("Error saving task to Firebase:", error);
-        return null;
-    }
+    console.log("Vorbereitete Daten für Firebase:", preparedData);
+    return preparedData;
 }
 
 
@@ -279,7 +252,7 @@ async function popUpAddTask() {
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
     contacts.forEach(contact => {
-        const checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
+        let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
             checkbox.checked = false;
         }
@@ -287,55 +260,6 @@ async function popUpAddTask() {
     setTimeout(() => {
         document.getElementById("popUpAddTask").style.display = "none";
     }, 1000);
-}
-
-
-/**
- * Highlights invalid or missing required fields and resets borders after a delay.
- * 
- * @async
- * @returns {Promise<void>}
- */
-async function redBorder() {
-    let inputs = document.querySelectorAll('input:required:invalid');
-    let assignedTo = document.getElementById('assigned-to');
-    let categorySelect = document.getElementById('categorySelect');
-
-    highlightInvalid(inputs);
-    if (!assignedTo.value) highlightElement(assignedTo);
-    if (!categorySelect.value) highlightElement(categorySelect);
-
-    setTimeout(() => resetBorders([...inputs, assignedTo, categorySelect]), 2000);
-}
-
-
-/**
- * Highlights invalid form elements by setting a red border.
- * 
- * @param {HTMLElement[]} elements - The elements to highlight.
- */
-function highlightInvalid(elements) {
-    elements.forEach(el => el.style.border = '2px solid #FF3D00');
-}
-
-
-/**
- * Highlights a single element by setting a red border.
- * 
- * @param {HTMLElement} element - The element to highlight.
- */
-function highlightElement(element) {
-    element.style.border = '2px solid #FF3D00';
-}
-
-
-/**
- * Resets the border style of the given elements.
- * 
- * @param {HTMLElement[]} elements - The elements whose borders will be reset.
- */
-function resetBorders(elements) {
-    elements.forEach(el => (el.style.border = ''));
 }
 
 
@@ -370,6 +294,7 @@ async function showPopUpAddTask() {
 }
 
 
+<<<<<<< HEAD
 /**
  * Resets the task form fields and hides the "Add Task" popup.
  * 
@@ -394,3 +319,5 @@ async function resetTaskForm() {
         document.getElementById("popUpAddTask").style.display = "none";
     }, 1000);
 }
+=======
+>>>>>>> dc3cf689fd56ded904f4dacef5f358ed32cd4b4f

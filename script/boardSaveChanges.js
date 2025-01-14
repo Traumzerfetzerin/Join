@@ -28,7 +28,7 @@ function collectPriority() {
  * Collects subtasks from the overlay.
  * @returns {Array<Object>} - List of subtasks with text and completion status.
  */
-function collectSubtasks() {
+function collectBoardSubtasks() {
     return Array.from(document.querySelectorAll('.subtasks-section .subtask-item')).map(subtask => ({
         text: subtask.querySelector('.editSubtaskText')?.textContent.trim() || "",
         completed: subtask.querySelector('.subtask-checkbox')?.checked || false
@@ -69,7 +69,7 @@ function collectOverlayData() {
     let data = {
         ...basicInfo,
         prio: collectPriority(),
-        subtasks: collectSubtasks(),
+        subtasks: collectBoardSubtasks(),
         contacts: collectContacts(),
     };
     console.log("Collected Data:", data);

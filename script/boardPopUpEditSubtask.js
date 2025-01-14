@@ -152,9 +152,11 @@ function renderSubtasksInEditMode(task, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
 
-    subtaskContainer.innerHTML = `
+    subtaskContainer.innerHTML = `<div class="editSubtaskInput">
         <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
+        <div class="seperatorSubtaskEditInput"></div>
         <img id="addSubtaskButton" class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask('${task.id}', '${category}')">
+        </div>
     `;
 
     if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {

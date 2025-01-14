@@ -1,61 +1,41 @@
-
-#sidebar, 
-#sidebar * {
-    box-sizing: content-box;
-}
 #sidebar {
     background-color: #2A3647;
-    
+    display: flex;
     align-items: center;
     flex-direction: column;
     height: 100vh;
     width: 232px;
     position: fixed;
     z-index: 1000;
-    
+    box-sizing: content-box;
     top: 0;
-    
-    
+    justify-content: space-between;
 }
 
 .sidebarlogo {
-    height: 121px;
+    height: 205px;
     width: 130px;
     padding-top: 64px;
     padding-bottom: 20px;
 }
 
-#sidebarimg {
-    padding: 64px;
-}
-
-.sidebarimg {
-    height: 20px;
-    width: 30px;
-    margin-right: 8px;
-}
 
 #widget_1, #widget_2, #widget_3, #widget_4 {
-    /* width: 100%;  */
-    /* Make widgets span full sidebar width */
-    box-sizing: border-box; /* Reset box-sizing to include padding/border */
-    padding: 8px 12px; /* Adjust padding for more spacing control */
+    box-sizing: border-box;
+    padding: 8px 12px;
     display: flex;
-    justify-self: center; /* Center content within the sidebar */
+    justify-self: center;
     align-items: center;
     gap: 12px;
     font-size: 16px;
     cursor: pointer;
 }
 
-
 .sidebartext {
     text-decoration: none;
     color: #CDCDCD;
-    font-family: 'PT Sans';
     font-weight: 400;
     font-size: 20px;
-    
 }
 
 .sidelinks {
@@ -63,70 +43,47 @@
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    gap: 5px;
-    /* height: 229px; */
+    gap: 15px;
 }
-
-
 
 .widget:hover {
-    background: #2A3D59;  /* Hover background color */
-    /* width: 100%;         */
-     /* Ensure the hover width spans the sidebar */
-    box-sizing: border-box; /* Include padding in width calculation */
+    background: #2A3D59;
+    box-sizing: border-box;
 }
 
-
-/* Hover and active state for the widget */
- 
-.widget.active{
-    background: #2A3D59;  /* Retain hover background color */
+.widget.active, .widget:target {
+    background: #2A3D59;
 }
 
-/* Active state using :target */
-.widget:target {
-    background: #2A3D59;  /* Active background color */
-}
-
-/* Other styles remain unchanged */
-
-
-
-/* To ensure active text color also changes */
-
-
-/* Footer structure */
 #sidefoot {
     display: flex;
     flex-direction: column;
-    gap: 0px; /* Reduce gap between the footer links */
+    gap: 0px;
     width: 100%;
+    margin-bottom: 75px;
 }
 
 #sidefoot a {
     text-decoration: none;
     color: #CDCDCD;
-    font-family: 'PT Sans';
     font-size: 16px;
-    margin: 2px 0;  /* Reduce margin to bring items closer */
-    padding: 6px 8px;  /* Adjust padding to reduce overall space */
+    margin: 2px 0;
+    padding: 6px 8px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width:100% ;
-    
+    width: 100%;
 }
 
 #sidefoot a:hover {
     background: #2A3D59;
     color: white;
     font-weight: 700;
-    width:205px;
+    width: 205px;
 }
-.sidefoot a :focus{
-    background: #2A3D59;
-    
 
+.sidefoot a:focus {
+    background: #2A3D59;
 }
 
 .menuIcons p {

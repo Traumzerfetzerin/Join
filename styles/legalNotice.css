@@ -62,12 +62,8 @@ body, html {
     background-color: rgba(0, 0, 0, 0.05);
   }
   
-  
-  
-  
   /* Impressum text styling */
   .impressum {
-    font-family: Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5;
     color: #333;

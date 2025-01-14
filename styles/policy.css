@@ -1,19 +1,17 @@
 
 
 body {
-  overflow: auto; /* Allow body to scroll if content exceeds the viewport */
-  
-  
+  overflow: auto;  
 }
 
 .policy-content {
   margin-left: 270px;
   margin-top: 120px;
   margin-right: 20px;
-  overflow: auto; /* Enable scrolling within this container */
-  max-height: calc(100vh - 120px); /* Ensure .policy-content doesn't overflow the screen */
-  
+  overflow: auto; 
+  max-height: calc(100vh - 120px); 
 }
+
 .legalNotice{
   margin-top: 120px;
   margin-left: 270px;
@@ -21,9 +19,6 @@ body {
   overflow:auto;
   margin-bottom: 140px;
   margin-right: 20px;
-  
-
-  
 }
 
 

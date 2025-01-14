@@ -79,15 +79,15 @@ function updateSubtaskUI(taskId, category) {
     } else {
         task.subtasks.forEach((subtask, index) => {
             let subtaskHTML = `
-                <div id="subtaskDiv_${index}" class="subtask-item">
-                    <span class="editSubtaskText">${subtask.text}</span>
+            <div id="subtaskDiv_${index}" class="subtask-item">
+                <span class="editSubtaskText">${subtask.text}</span>
                     <div class="subtask-icons">
-                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                            <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
                              alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
-                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                            <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
                              alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})"
                     </div>
-                </div>
+            </div>
             `;
             subtaskContainer.innerHTML += subtaskHTML;
         });
