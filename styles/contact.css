@@ -47,19 +47,26 @@
 }
 
 .contact-item {
-    width: 100%;
-    padding: 10px 0;
     display: flex;
     align-items: center;
+    padding: 10px 20px;
+}
+
+.contact-group {
+    width: 100%;
+}
+
+.contact-group-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 20px;
 }
 
 .contact-group-letter {
-    width: 100%;
-    margin-left: 35px;
     font-size: 1.5em;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin: 0;
 }
 
 .contact-initials {
@@ -70,9 +77,9 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: #4a90e2;
     color: #fff;
     margin-right: 15px;
+    flex-shrink: 0;
 }
 
 .contact-name-mail {
@@ -82,16 +89,25 @@
     align-items: flex-start;
     box-sizing: border-box;
     flex-grow: 1;
+    min-width: 0;
 }
 
 .contact-name {
     font-size: 18px;
     color: black;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .contact-email {
     color: #3498db;
+    word-wrap: break-word;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .contact {
@@ -107,7 +123,7 @@
 
 .contact h3 {
     margin: 0;
-    font-size: 24;
+    font-size: 24px;
 }
 
 .back-arrow {
@@ -151,8 +167,6 @@
     display: flex;
     align-items: center;
 }
-
-
 
 .add-icon {
     width: 34px;

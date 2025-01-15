@@ -1,9 +1,12 @@
-/**
+/** 
  * Handles the creation or updating of the contact.
  * @param {object} contact - The contact object.
  */
 async function handleContactCreation(contact) {
     try {
+        if (!contact.color) {
+            contact.color = getRandomColor();
+        }
         let savedContact = await saveOrUpdateContactToFirebase(contact);
         showToast("Contact created successfully.", "success");
         addNewContactToDOM(savedContact);
@@ -49,7 +52,7 @@ async function deleteContact(contactId) {
 }
 
 
-/**
+/** 
  * Saves or updates a contact in Firebase.
  * @param {object} contact - The contact object to save or update.
  * @returns {Promise<object>} - The saved or updated contact object.
@@ -58,11 +61,9 @@ async function saveOrUpdateContactToFirebase(contact) {
     let { firebaseUrl, method } = getFirebaseUrlAndMethod(contact);
     let data = await saveContactToFirebase(firebaseUrl, method, contact);
     contact = addContactIdIfNeeded(contact, data);
-
     if (!firebaseUrl.includes(contact.id)) {
         await updateContactWithIdInFirebase(contact);
     }
-
     return updateLocalContacts(contact, data);
 }
 

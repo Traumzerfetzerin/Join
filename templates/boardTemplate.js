@@ -113,7 +113,7 @@ function generateContactList(contacts) {
     return contacts.map(function (contact) {
         let name = contact && contact.name ? contact.name : "Unknown";
         let initials = getInitials(name);
-        let bgColor = getRandomColor();
+        let bgColor = contact.color || getRandomColor();
         return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
     }).join('');
 }
