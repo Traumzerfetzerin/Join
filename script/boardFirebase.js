@@ -96,7 +96,7 @@ function validateResponse(response) {
 
 
 /**
- * Fetches tasks from Firebase.
+ * Fetches all tasks from Firebase.
  * @param {string} [category] - Optional. Task category.
  * @param {string} [taskId] - Optional. Task ID.
  * @returns {Object|null} - The task object or all tasks, or null if not found.
@@ -123,7 +123,6 @@ async function fetchTasks(category, taskId) {
 }
 
 
-
 /**
  * Fetches a single task from Firebase by category and task ID.
  * @param {string} category - Task category.
@@ -146,7 +145,6 @@ async function fetchSingleTask(category, taskId, nameToIdMap) {
 
     return task;
 }
-
 
 /**
  * Fetches all tasks from Firebase and processes their contacts.
@@ -192,8 +190,8 @@ async function fetchTaskContacts(contacts, nameToIdMap) {
             return await fetchContactFromFirebase(contactId);
         })
     );
-}
 
+}
 
 /**
  * Deletes a task from Firebase.

@@ -173,21 +173,6 @@ function showDropdown(dropdown) {
 
 
 /**
- * Generates a random hex color code.
- * @returns {string} A random hex color code (e.g., '#A3F4D2').
- */
-function getRandomColor() {
-    let letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-
-
-/**
  * Updates the 'assigned-to' input field with a comma-separated list of selected contact names.
  *
  * @returns {void}

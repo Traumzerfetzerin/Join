@@ -294,7 +294,6 @@ async function showPopUpAddTask() {
 }
 
 
-<<<<<<< HEAD
 /**
  * Resets the task form fields and hides the "Add Task" popup.
  * 
@@ -319,5 +318,3 @@ async function resetTaskForm() {
         document.getElementById("popUpAddTask").style.display = "none";
     }, 1000);
 }
-=======
->>>>>>> dc3cf689fd56ded904f4dacef5f358ed32cd4b4f

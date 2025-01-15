@@ -43,9 +43,9 @@ function toggleElementVisibility(selector, isVisible) {
 }
 
 
-/**
+/** 
  * Generates the HTML structure for a contact.
- * @param {object} contact - Contact object containing name, email, phone, and id.
+ * @param {object} contact - Contact object containing name, email, phone, id, and color.
  * @returns {string} - HTML string for the contact.
  */
 function generateContactHTML(contact) {
@@ -54,17 +54,17 @@ function generateContactHTML(contact) {
         return '';
     }
 
+    let color = contact.color || getRandomColor();
+    contactsWithColors[contact.id] = { ...contact, color: color };
     let initials = getInitials(contact.name);
-    let randomColor = getRandomColor();
-
-    return `
-        <div class="divider"></div>
-        <div class="contact-item" data-id="${contact.id}">
-            <div class="contact-initials" style="background-color: ${randomColor};">${initials}</div>
-            <div class="contact-name-mail">    
-                <span class="contact-name">${contact.name}</span>
-                <span class="contact-email">${contact.email}</span>
-            </div>
+    return ` 
+        <div class="divider"></div> 
+        <div class="contact-item" data-id="${contact.id}"> 
+            <div class="contact-initials" style="background-color: ${color};">${initials}</div> 
+            <div class="contact-name-mail"> 
+                <span class="contact-name">${contact.name}</span> 
+                <span class="contact-email">${contact.email}</span> 
+            </div> 
         </div>`;
 }
 
@@ -79,7 +79,9 @@ function generateGroupedContactsHTML(groupedContacts) {
 
     Object.keys(groupedContacts).sort().forEach(letter => {
         html += `<div class="contact-group">
-                    <h2 class="contact-group-letter">${letter}</h2>`;
+                    <div class="contact-group-header">
+                        <h2 class="contact-group-letter">${letter}</h2>
+                    </div>`;
         groupedContacts[letter].forEach(contact => {
             html += generateContactHTML(contact);
         });
@@ -87,16 +89,6 @@ function generateGroupedContactsHTML(groupedContacts) {
     });
 
     return html;
-}
-
-
-/**
- * Generates a random color for initials background.
- * @returns {string} - Hexadecimal color code.
- */
-function getRandomColor() {
-    let colors = ['#FFB6C1', '#FFA07A', '#FA8072', '#E9967A', '#F08080'];
-    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 

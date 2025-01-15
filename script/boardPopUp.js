@@ -204,18 +204,6 @@ async function populateTasksWithContacts(tasks) {
 
 
 /**
- * Generates a random RGB color.
- * @returns {string} - RGB color string.
- */
-function getRandomColor() {
-    let r = Math.floor(Math.random() * 256);
-    let g = Math.floor(Math.random() * 256);
-    let b = Math.floor(Math.random() * 256);
-    return `rgb(${r}, ${g}, ${b})`;
-}
-
-
-/**
  * Syncs subtasks with Firebase.
  * @param {string} taskId - The ID of the task.
  * @param {Array} subtasks - The updated subtasks array.
