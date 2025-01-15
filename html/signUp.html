@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Program</title>
     <link rel="shortcut icon" href="../Assets/joinLogo.svg" type="image/x-icon">
-    
+    <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/signUp.css">
     <link rel="stylesheet" href="../styles/responsive/signUpResponsive.css">
     <link rel="stylesheet" href="../styles/login.css">
@@ -30,7 +30,7 @@
             <h1>Sign up</h1>
             <form id="join-form" onsubmit="validateSignUp(event);">
                 <div class="input-group">
-                    <input type="name" id="name" name="name" placeholder="name" required autocomplete="on">
+                    <input type="name" id="name" name="name" placeholder="Name" required autocomplete="on">
                     <span class="icon">
                         <img id="passwordImg" src="../Assets/person.svg" alt="">
                     </span>
@@ -50,7 +50,7 @@
                 </div>
                 
                 <div class="input-group">                
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm password" required autocomplete="new-password">
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required autocomplete="new-password">
                     <span class="icon" id="toggleConfirmPasswordIcon" onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
                         <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
                     </span>

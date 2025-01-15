@@ -280,12 +280,12 @@ body {
     /* Fade out */
 }
 
-.legalPolicy {
+/* .legalPolicy {
     margin-top: 10px;
     display: flex;
     gap: 30px;
     margin-bottom: 10px;
-}
+} */
 
 .legalPolicy a {
     color: lightgray !important;
@@ -304,4 +304,9 @@ body {
 .toast.error {
     background-color: #dc3545;
     /* Red for error */
+}
+
+.User-Guest{
+    display: flex;
+    justify-content: center;
 }

@@ -55,7 +55,7 @@
     text-decoration-thickness: 2px;
 }
 
-.go-to-login {
+/* .go-to-login {
     position: absolute;
     top: 70px;
     left: 20px;
@@ -64,7 +64,25 @@
 .go-to-login img {
     width: 24px;
     height: auto;
-}
+} */
+
+.go-to-login {
+    margin-left: auto;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .go-to-login:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .go-to-login:hover img {
+    transform: scale(1.1);
+  }
 
 .input-group {
     display: flex;
@@ -174,90 +192,4 @@
 .toast.hide {
     transform: translate(100%, -50%);
     opacity: 0;
-}
-
-@media (max-width: 980px) {
-    #signup-logoContainer {
-        top: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .join {
-        overflow: hidden;
-    }
-
-    .signup-joinContainer {
-        padding: 30px;
-        max-width: 400px;
-        margin-top: 70px;
-    }
-
-    .signup-joinContainer h1 {
-        font-size: 40px;
-    }
-
-    .input-group input {
-        font-size: 14px;
-        padding: 10px 35px 10px 8px;
-    }
-}
-
-@media (max-width: 480px) {
-    #signup-logoContainer {
-        top: 70px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .signup-joinContainer {
-        padding: 20px;
-        width: 70%;
-        max-width: 100%;
-        margin-top: 50px;
-        border-radius: 10px;
-        margin-bottom: 0;
-    }
-
-    .signup-joinContainer h1 {
-        font-size: 28px;
-        margin-bottom: 0;
-    }
-
-    .input-group input {
-        font-size: 14px;
-        padding: 8px 15px;
-    }
-
-    #signup-logoContainer img {
-        width: 70px;
-        height: 70px;
-    }
-
-    .go-to-login {
-        top: 10px;
-        left: 10px;
-    }
-
-    .signup-button button {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    .legalPolicy {
-        gap: 8px;
-        margin-top: 0;
-        font-size: 12px;
-    }
-
-    .checkbox-group {
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .checkbox-group span {
-        font-size: 12px;
-    }
 }

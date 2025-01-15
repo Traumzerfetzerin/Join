@@ -201,13 +201,15 @@ main {
 }
 
 .task-category.user-story {
-    background-color: #0038FF;
-    color: white;
+    /* background-color: #0038FF;
+    color: white; */
+    display: none;
 }
 
 .task-category.technical-task {
-    background-color: #1FD7C1;
-    color: white;
+    /* background-color: #1FD7C1;
+    color: white; */
+    display: none;
 }
 
 .contact-initial {
@@ -224,14 +226,14 @@ main {
     z-index: 1;
 }
 
-.action-links {
+/* .action-links {
     position: absolute;
     right: 10px;
     bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-}
+} */
 
 .action-link {
     display: flex;

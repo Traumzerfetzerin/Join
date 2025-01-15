@@ -18,7 +18,6 @@ body {
     src: url('../fonts/static/Inter_24pt-Regular.ttf') format('woff2');
 }
 
-
 html {
     font-family: "Inter" !important;
 }
@@ -45,7 +44,6 @@ main {
 .d-none {
     display: none;
 }
-
 
 .colorRed {
     color: red;

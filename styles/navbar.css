@@ -46,12 +46,37 @@
 }
 
 .widget:hover {
-    background: #2A3D59;
+    /* background: #2A3D59; */
     box-sizing: border-box;
 }
 
 .widget.active, .widget:target {
     background: #2A3D59;
+}
+
+#sidefootLoginSignUp{
+    display: flex;
+    gap: 0px;
+    width: 100%;
+    margin-bottom: 75px;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+#sidefootLoginSignUp a{
+    text-decoration: none;
+    color: #CDCDCD;
+    font-size: 16px;
+    margin: 2px 0;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sidefootLoginSignUp a:hover {
+    color: #3498db;
+    font-weight: 700;
 }
 
 #sidefoot {
@@ -60,6 +85,8 @@
     gap: 0px;
     width: 100%;
     margin-bottom: 75px;
+    justify-content: center;
+    margin-top: 100px;
 }
 
 #sidefoot a {
@@ -75,14 +102,14 @@
 }
 
 #sidefoot a:hover {
-    background: #2A3D59;
+    color: #3498db;
     color: white;
     font-weight: 700;
     width: 205px;
 }
 
 .sidefoot a:focus {
-    background: #2A3D59;
+    background: #3498db;
 }
 
 .menuIcons p {
