@@ -193,3 +193,7 @@
     transform: translate(100%, -50%);
     opacity: 0;
 }
+
+.signUpLink {
+    white-space: nowrap;
+}

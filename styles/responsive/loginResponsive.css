@@ -292,7 +292,7 @@
     .login-button.guest-btn {
         width: 90%;
         /* Full width on very small screens */
-        max-width: 100px;
+        /* max-width: 100px; */
         /* Maximum width for buttons */
         padding: 6px 8px;
         /* Reduce padding */
@@ -362,7 +362,8 @@
         align-self: center;
         margin-top: 10px;
         margin-bottom: 0px;
-        order: 1;
+        order: 0;
+        justify-content: center;
         /* Ensures it appears above legalPolicy */
     }
 
