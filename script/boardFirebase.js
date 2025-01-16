@@ -18,26 +18,23 @@ async function saveTaskToCategory(taskId, category, taskData) {
     }
 }
 
+
 /**
- * Prepares the task data for saving by ensuring subtasks and contacts are valid.
+ * Prepares the task data for saving by ensuring only contact IDs are stored.
  * @param {string} taskId - The ID of the task.
  * @param {object} taskData - The task data to prepare.
  */
 function prepareTaskData(taskId, taskData) {
     if (!taskData.subtasks || !Array.isArray(taskData.subtasks)) {
-        console.warn(`Task ${taskId} has no subtasks or invalid subtasks.`);
         taskData.subtasks = [];
     }
 
     if (Array.isArray(taskData.contacts)) {
-        taskData.contacts = taskData.contacts.map(contact => {
-            if (typeof contact === 'string') {
-                return getContactById(contact) || { id: contact, name: "Unknown" };
-            }
-            return contact;
-        });
+        taskData.contacts = taskData.contacts.map(contact =>
+            typeof contact === 'string' ? contact : contact.id
+        );
     } else {
-        taskData.contacts = [];
+        taskData.contacts = []; 
     }
 }
 

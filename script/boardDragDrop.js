@@ -38,9 +38,13 @@ function enableDragAndDrop(columns) {
  */
 async function handleTaskDrop(task, taskId, category, newColumn, columns) {
     task.column = newColumn;
-    await saveTaskToCategory(taskId, category, task);
-    let updatedTask = await fetchTaskById(category, taskId);
+    task.contacts = task.contacts.map(contact =>
+        typeof contact === 'string' ? contact : contact.id
+    );
 
+    await saveTaskToCategory(taskId, category, task);
+
+    let updatedTask = await fetchTaskById(category, taskId);
     if (updatedTask) {
         updateTaskUI(updatedTask, taskId, newColumn, columns);
 
