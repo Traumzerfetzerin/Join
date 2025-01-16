@@ -249,6 +249,27 @@
     }
 }
 
+@media (max-width: 500px) {
+    .login-signup-button {
+        order: 0 !important;
+        margin: 0 !important;
+    }
+
+    #login-logoContainer{
+        top: 300px !important;
+    }
+
+    .joinLogo {
+        top: 3390px;
+    }
+
+    #sidefootLoginSignUp {
+        margin: 0 !important;
+ 
+    }
+}
+
+
 /* Media Query for Smaller Screens */
 @media (max-width: 400px) {
     .login-joinContainer {
@@ -268,7 +289,7 @@
         margin-top: 110px;
         /* Slightly reduce margin */
     }
-    
+
     /* Logo size adjustments */
 
     /* Adjust input field size */
@@ -362,7 +383,7 @@
         align-self: center;
         margin-top: 10px;
         margin-bottom: 0px;
-        order: 0;
+        order: 0 !important;
         justify-content: center;
         /* Ensures it appears above legalPolicy */
     }

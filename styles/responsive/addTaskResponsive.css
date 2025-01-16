@@ -38,6 +38,12 @@
     }
 }
 
+@media (max-width: 500px){
+    .taskSide {
+        height: calc(100vh - 400px);
+    }
+}
+
 @media (max-width: 440px) {
     .h1Task {
         font-size: 40px;
