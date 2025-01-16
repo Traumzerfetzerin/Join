@@ -72,7 +72,7 @@ function collectOverlayData() {
         subtasks: collectBoardSubtasks(),
         contacts: collectContacts(),
     };
-    console.log("Collected Data:", data);
+
     return data;
 }
 
@@ -98,12 +98,8 @@ async function saveChanges(taskId, category) {
     updatedTask.category = category;
     updatedTask.prio = collectPriority();
     updatedTask.contacts = collectContacts();
-
-    console.log("Saving task with updated data:", updatedTask);
-
     try {
         await updateTaskInDatabase(category, taskId, updatedTask);
-        console.log("Task successfully updated.");
         closeTaskOverlay();
         location.reload();
     } catch (error) {

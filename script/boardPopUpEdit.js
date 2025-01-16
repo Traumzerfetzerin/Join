@@ -90,9 +90,6 @@ function loadTaskToOverlay(taskId, category) {
         return;
     }
 
-    console.log("Task contacts (names):", task.contacts);
-    console.log("All contacts:", allContacts);
-
     let contactDropdownHTML = generateContactDropdownHTML(allContacts, task.contacts || []);
     document.querySelector('#editAssignTaskDropdown').innerHTML = contactDropdownHTML;
 }

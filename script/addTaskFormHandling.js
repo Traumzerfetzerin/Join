@@ -32,7 +32,6 @@ async function clearTasks() {
             checkbox.checked = false;
         }
     });
-    clearPrioButtons();
 }
 
 
@@ -63,26 +62,20 @@ async function resetTaskForm() {
 
 
 /**
- * Handles task creation, validates data, and saves it to Firebase.
- * @async
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>} Resolves when the task is created and the board is updated.
- */
+* Handles the task creation process.
+* @param {Event} event - The event object from the form submission.
+*/
 async function createTasks(event) {
     event.preventDefault();
-
+ 
     let taskData = collectTaskData();
-    console.log("Task Data before saving:", taskData);
-
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
-
-    document.getElementById('editSubtasks').innerHTML = "";
-
-    await saveTaskToFirebase(taskData);
+    await sendTaskToFirebase(taskData, taskData.category);
+    await clearTasks();
     await finalizeTaskCreation();
     await changeToBoard();
-}
+ }
 
 
 /**

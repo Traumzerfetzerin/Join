@@ -8,9 +8,6 @@ async function fetchContactsFromFirebase() {
     try {
         let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
         let contactsData = await response.json();
-
-        console.log("Fetched Contacts Data:", contactsData);
-
         if (contactsData) {
             return Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
         } else {
@@ -39,28 +36,28 @@ async function fetchAndPopulateContacts(selectedContacts = []) {
 
 /**
  * Sends task data to Firebase.
- * 
- * @async
  * @param {Object} preparedTaskData - The prepared task data to send.
  * @param {string} category - The category of the task.
  * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
  */
 async function sendTaskToFirebase(preparedTaskData, category) {
-    console.log("Daten, die an Firebase gesendet werden:", preparedTaskData);
-    let response = await fetch(`${CREATETASK_URL}/${category}.json`, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(preparedTaskData),
-    });
+    try {
+        let response = await fetch(`${CREATETASK_URL}/${category}.json`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(preparedTaskData),
+        });
 
-    if (!response.ok) {
-        console.error("Failed to save task to Firebase:", response.statusText);
+        if (!response.ok) {
+            console.error("Failed to save task to Firebase:", response.statusText);
+            return null;
+        }
+        let data = await response.json();
+        return data.name;
+    } catch (error) {
+        console.error("Error saving task to Firebase:", error);
         return null;
     }
-
-    let data = await response.json();
-    console.log("Firebase Antwort:", data);
-    return data.name;
 }
 
 

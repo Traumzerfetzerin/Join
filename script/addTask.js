@@ -82,24 +82,19 @@ function collectSubtasks() {
     }));
 }
 
+
 /**
- * Collects selected contact IDs from checkboxes.
- * 
+ * Collects selected contact IDs from the dropdown.
  * @returns {Array<string>} The array of selected contact IDs.
  */
 function collectContactIDs() {
-    let checkboxes = document.querySelectorAll('.contacts-section input[type="checkbox"]');
-    let selectedIDs = Array.from(checkboxes)
-        .filter(checkbox => checkbox.checked)
-        .map(input => input.dataset.id);
-
-    console.log("Gesammelte Kontakt-IDs:", selectedIDs);
+    let checkboxes = document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked');
+    let selectedIDs = Array.from(checkboxes).map(input => input.dataset.id); 
     return selectedIDs;
 }
 
 /**
- * Collects and returns task data from the form.
- * 
+ * Collects task data from the form.
  * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
  */
 function collectTaskData() {
@@ -113,37 +108,30 @@ function collectTaskData() {
         subtasks: collectSubtasks(),
         category: document.getElementById('categorySelect').value
     };
-
-    console.log("Gesammelte Task-Daten:", data);
     return data;
 }
 
 
 /**
- * Populates the contact section with fetched contact data.
- * 
+ * Populates the contact dropdown with fetched contact data.
  * @param {Array<Object>} allContacts - The list of all contacts to populate.
  * @param {Array<string>} selectedContacts - List of pre-selected contact IDs.
- * @returns {void}
  */
 function populateContactSection(allContacts, selectedContacts) {
-    let contactSection = document.querySelector('.contacts-section');
-
+    let contactSection = document.querySelector('#assignTaskDropdown');
     if (!contactSection) {
-        console.error("contacts-section not found in DOM");
+        console.error("assignTaskDropdown not found in DOM");
         return;
     }
 
-    let contactHTML = allContacts.map(contact => `
+    contactSection.innerHTML = allContacts.map(contact => `
         <label>
             <input type="checkbox" data-id="${contact.id}" ${selectedContacts.includes(contact.id) ? 'checked' : ''} />
             ${contact.name}
         </label>
     `).join('');
-
-    contactSection.innerHTML = contactHTML;
-    console.log("Generated HTML for contacts:", contactSection.innerHTML);
 }
+
 
 /**
  * Fetches contact data from Firebase.
@@ -155,8 +143,6 @@ async function fetchContactsFromFirebase() {
     try {
         let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
         let contactsData = await response.json();
-
-        console.log("Fetched Contacts Data:", contactsData);
 
         if (contactsData) {
             return Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
@@ -173,15 +159,12 @@ async function fetchContactsFromFirebase() {
 
 /**
  * Validates the task data to ensure all required fields are present.
- * 
- * @async
- * @param {Object} data - The task data to be validated.
- * @returns {Promise<boolean>} `true` if the data is valid, `false` otherwise.
+ * @param {Object} data - The task data to validate.
+ * @returns {boolean} True if validation passes, false otherwise.
  */
 async function validateTaskData(data) {
-    if (!data.title || !data.dueDate || !data.contacts || !data.category || !data.prio) {
-        await popUpRequired();
-        await redBorder();
+    if (!data.title || !data.contacts.length || !data.dueDate || !data.category || !data.prio) {
+        alert("Please fill in all required fields, including selecting at least one contact.");
         return false;
     }
     return true;
@@ -218,8 +201,6 @@ function prepareTaskDataForFirebase(taskData) {
         ...taskData,
         contacts: taskData.contacts.map(contactId => ({ id: contactId }))
     };
-
-    console.log("Vorbereitete Daten für Firebase:", preparedData);
     return preparedData;
 }
 

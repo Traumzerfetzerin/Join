@@ -104,16 +104,10 @@ function validateResponse(response) {
 async function fetchTasks(category, taskId) {
     try {
         let allContacts = await fetchAllContacts();
-        console.log("All Contacts:", allContacts);
-
         let nameToIdMap = createNameToIdMap(allContacts);
-        console.log("Name to ID Map:", nameToIdMap);
-
         if (category && taskId) {
-            console.log("Fetching single task with:", { category, taskId, nameToIdMap });
             return await fetchSingleTask(category, taskId, nameToIdMap);
         } else {
-            console.log("Fetching all tasks with:", { nameToIdMap });
             return await fetchAllTasks(nameToIdMap);
         }
     } catch (error) {
@@ -212,8 +206,6 @@ async function deleteTaskFromCategory(taskId, category) {
         if (!response.ok) {
             throw new Error(`Failed to delete task with ID ${taskId}: ${response.statusText}`);
         }
-
-        console.log(`Task with ID ${taskId} deleted successfully.`);
     } catch (error) {
         console.error("Error while deleting task:", error);
     }
@@ -239,7 +231,6 @@ async function fetchAllContacts() {
             ...contactsData[key]
         }));
 
-        console.log("All contacts loaded:", allContacts);
     } catch (error) {
         console.error("Error fetching contacts:", error);
     }
@@ -320,8 +311,7 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
         if (!task) return;
 
         if (task.subtasks && task.subtasks[subtaskIndex]) {
-            task.subtasks.splice(subtaskIndex, 1); // Entfernt den Subtask aus der Liste
-
+            task.subtasks.splice(subtaskIndex, 1); 
             await saveTaskToCategory(taskId, category, task);
             console.log(`Subtask ${subtaskIndex} erfolgreich gelöscht.`);
         } else {

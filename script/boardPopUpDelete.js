@@ -118,6 +118,5 @@ async function updateSubtasksInFirebase(taskId, category, subtasks) {
  */
 function handleSubtaskDeletion(taskId, category) {
     refreshPageOrUpdateUI();
-    console.log(`Subtask deleted for Task ID: ${taskId} in Category: ${category}`);
 }
 

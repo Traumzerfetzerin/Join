@@ -201,15 +201,13 @@ main {
 }
 
 .task-category.user-story {
-    /* background-color: #0038FF;
-    color: white; */
-    display: none;
+    background-color: #0038FF;
+    color: white;
 }
 
 .task-category.technical-task {
-    /* background-color: #1FD7C1;
-    color: white; */
-    display: none;
+    background-color: #1FD7C1;
+    color: white;
 }
 
 .contact-initial {
