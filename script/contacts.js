@@ -2,9 +2,6 @@ let contacts = [];
 let currentContactId = null;
 let contactsWithColors = {};
 
-window.addEventListener('load', loadContacts);
-
-
 /**
  * Validates email format.
  * @param {string} email - Email address to validate.

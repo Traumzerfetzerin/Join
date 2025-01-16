@@ -169,37 +169,41 @@ function generateSubtaskList(task) {
 }
 
 /**
- * Generates the HTML content for the contact dropdown and icons.
+ * Generates the HTML content for the contact dropdown and selected user icons.
  *
  * @function generateContactDropdownHTML
  * @param {Array} allContacts - Array of all contact objects.
- * @param {Array} assignedContacts - Array of assigned contact objects.
- * @param {Array} assignedContactIds - Array of assigned contact IDs.
- * @returns {string} The generated HTML content for the dropdown and icons.
+ * @param {Array} assignedContacts - Array of currently assigned contact objects.
+ * @param {Array} assignedContactIds - Array of IDs of currently assigned contacts.
+ * @returns {string} The generated HTML content for the dropdown and selected icons.
  */
 function generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds) {
     return `
-        <strong>Assigned To:</strong>
-        <div class="dropdown-header" onclick="toggleEditDropdown()">
-            <input type="text" id="editAssignedTo" placeholder="Selected contacts to assign" readonly>
-            <span class="dropdown-arrow">▼</span>
-        </div>
-        <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-            ${allContacts.map(contact => `
-                <div class="dropdown-entry">
-                    <label>
-                        <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''}>
-                        ${contact.name}
-                    </label>
-                </div>
-            `).join('')}
-        </div>
-        <div id="contact-icons-container" class="contact-icons">
-            ${assignedContacts.map(contact => `
-                <div class="contact-icon" style="background-color: ${getRandomColor()};">
-                    ${contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('')}
-                </div>
-            `).join('')}
+        <div class="dropdown-wrapper">
+            <div class="dropdown-header" onclick="toggleEditDropdown()">
+                <input type="text" id="editAssignedTo" placeholder="Select contacts to assign" readonly>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+            <div id="editAssignTaskDropdown" class="dropdown-container dNone">
+                ${allContacts.map(contact => `
+                    <div class="dropdown-entry">
+                        <div class="entry-wrapper">
+                            <div class="user-icon" style="background-color: ${contact.color || '#ccc'};">
+                                ${contact.icon ? `<img src="${contact.icon}" alt="${contact.name}" class="user-image">` : contact.initials}
+                            </div>
+                            <span class="user-name">${contact.name}</span>
+                            <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''} onclick="assignContact('${contact.id}')">
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <div id="contact-icons-container" class="contact-icons">
+                ${assignedContacts.map(contact => `
+                    <div class="contact-icon" style="background-color: ${contact.color || '#ccc'};">
+                        ${contact.initials}
+                    </div>
+                `).join('')}
+            </div>
         </div>
     `;
 }
