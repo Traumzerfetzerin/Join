@@ -16,6 +16,12 @@ async function editTask(taskId, category) {
     } else {
         console.error("No contacts found for the task.");
     }
+
+    let subtaskItems = document.querySelectorAll('.subtasks-section li');
+    subtaskItems.forEach(item => {
+        item.style.setProperty('list-style-type', 'disc', 'important');
+    });
+
     adjustOverlayElements();
 }
 

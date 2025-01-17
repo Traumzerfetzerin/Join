@@ -93,22 +93,46 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
     }
 
     let newText = inputField.value.trim();
+    if (!newText) {
+        console.error("Subtask text is empty.");
+        return;
+    }
+
     let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
+    if (!subtaskElement) {
+        console.error("Subtask element not found.");
+        return;
+    }
+
     let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
+    if (!subtaskTextElement) {
+        console.error("Subtask text element not found.");
+        return;
+    }
+
+    let deleteSubtask = subtaskElement.querySelector('.deleteSubtask');
+    if (!deleteSubtask) {
+        console.error("Delete button not found.");
+        return;
+    }
 
     subtaskTextElement.innerText = newText;
     subtaskTextElement.style.display = 'block';
     subtaskElement.querySelector('.subtask-icons').style.display = 'flex';
 
     inputField.style.display = 'none';
-    inputField.nextElementSibling.style.display = 'none';
+    let saveButton = inputField.nextElementSibling;
+    if (saveButton) saveButton.style.display = 'none';
+
     subtaskElement.classList.remove('editing');
+    deleteSubtask.style.display = 'none';
 
     let task = await fetchTaskById(category, taskId);
     if (!task || !Array.isArray(task.subtasks)) {
         console.error("Task or subtasks not found.");
         return;
     }
+
     task.subtasks[subtaskIndex].text = newText;
 
     try {
@@ -132,16 +156,18 @@ function addNewSubtask(taskId, category) {
 
     let subtaskContainer = document.querySelector('.subtasks-list');
     let subtaskIndex = subtaskContainer.querySelectorAll('.subtask-item').length;
-    let subtaskHTML = `
-        <div id="subtaskDiv_${subtaskIndex}" class="subtask-item">
-            <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
-            <div class="subtask-icons">
-                <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                     alt="Edit" onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
-                <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                     alt="Delete" onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
+    let subtaskHTML = /*HTML*/`
+        <li id="subtaskDiv_${subtaskIndex}" class="subtask-item">
+            <div class="testForLi">
+                <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
+                <div class="subtask-icons">
+                    <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
+                        onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+                    <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+                        onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
+                </div>
             </div>
-        </div>
+        </li>
     `;
     subtaskContainer.insertAdjacentHTML('beforeend', subtaskHTML);
     newSubtaskInput.value = "";
@@ -157,29 +183,31 @@ function renderSubtasksInEditMode(task, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
 
-    subtaskContainer.innerHTML = `<div class="editSubtaskInput">
-        <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
-        <div class="seperatorSubtaskEditInput"></div>
-        <img id="addSubtaskButton" class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg" alt="Add" onclick="addNewSubtask('${task.id}', '${category}')">
+    subtaskContainer.innerHTML = /*HTML*/`
+        <div class="editSubtaskInput">
+            <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
+            <div class="seperatorSubtaskEditInput"></div>
+            <img id="addSubtaskButton" class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg"
+                alt="Add" onclick="addNewSubtask('${task.id}', '${category}')">
         </div>
     `;
 
     if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
         subtaskContainer.innerHTML += "<div>No subtasks available</div>";
     } else {
-        task.subtasks.forEach((subtask, index) => {
-            let subtaskHTML = `
-                <div id="subtaskDiv_${index}" class="subtask-item">
+        let subtasksHTML = task.subtasks.map((subtask, index) => /*HTML*/`
+            <li id="subtaskDiv_${index}" class="subtask-item">
+                <div class="testForLi">
                     <span class="editSubtaskText" contenteditable="true">${subtask.text}</span>
                     <div class="subtask-icons">
-                        <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                             alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
-                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                             alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})">
+                        <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
+                            onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+                            onclick="deleteSubtask('${task.id}', '${category}', ${index})">
                     </div>
                 </div>
-            `;
-            subtaskContainer.innerHTML += subtaskHTML;
-        });
+            </li>
+        `).join('');
+        subtaskContainer.innerHTML += `<ul>${subtasksHTML}</ul>`;
     }
 }

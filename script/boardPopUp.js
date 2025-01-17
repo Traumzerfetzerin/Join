@@ -6,6 +6,12 @@
 async function showTaskOverlay(category, taskId) {
     let task = findTaskInData(taskId);
     if (!task) return Promise.resolve(null);
+
+    let subtaskItems = document.querySelectorAll('.subtasks-section li');
+    subtaskItems.forEach(item => {
+        item.style.setProperty('list-style-type', 'none', 'important');
+    });
+
     updateOverlayContent(category, task);
     showOverlay();
 

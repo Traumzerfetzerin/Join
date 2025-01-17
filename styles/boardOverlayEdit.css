@@ -2,7 +2,7 @@
     display: none;
 }
 
-.SubtaskTest{
+.SubtaskTest {
     display: flex;
     justify-content: space-around;
 }
@@ -33,7 +33,7 @@
     padding: 5px 0;
 }
 
-.overlay-content-edit{
+.overlay-content-edit {
     position: relative;
     top: -35px;
 }
@@ -91,7 +91,7 @@ input[type="checkbox"] {
 }
 
 .dropdown-entry span {
-    line-height: 1; 
+    line-height: 1;
 }
 
 button[onclick="toggleEditDropdown()"] {
@@ -168,7 +168,7 @@ button[onclick="toggleEditDropdown()"]:hover {
     transform: translateY(-50%);
     width: 1px;
     height: 70%;
-    background: #000; 
+    background: #000;
 }
 
 .subtask-item {
@@ -192,7 +192,7 @@ button[onclick="toggleEditDropdown()"]:hover {
 }
 
 #newSubtaskInput {
-    padding-right: 40px; 
+    padding-right: 40px;
     padding-left: 20px;
 }
 
@@ -215,4 +215,14 @@ button[onclick="toggleEditDropdown()"]:hover {
 
 .save-subtask-button:hover {
     transform: scale(1.1);
+}
+
+.subtasks-section li {
+    padding-left: 20px;
+    display: list-item !important;
+    list-style-type: disc !important;
+}
+
+.testForLi {
+    display: flex;
 }
