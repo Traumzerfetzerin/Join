@@ -53,11 +53,16 @@ function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
  * @param {string} currentText - The current text of the subtask.
  */
 function createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText) {
-    let inputHtml = `
-        <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}" 
-               onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-        <button class="save-subtask-button" onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">Save</button>
-    `;
+    let inputHtml = /*HTML*/`
+    <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}"
+        onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+    <img class="save-subtask-button cursorPointer"
+        onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})"
+        src="/Assets/addTask/Property 1=check.svg" alt="">
+    <img class="deleteSubtask cursorPointer" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+        onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex})">
+`;
+
     subtaskElement.innerHTML += inputHtml;
 }
 

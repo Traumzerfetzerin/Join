@@ -212,3 +212,7 @@ button[onclick="toggleEditDropdown()"]:hover {
     right: 10px;
     cursor: pointer;
 }
+
+.save-subtask-button:hover {
+    transform: scale(1.1);
+}
