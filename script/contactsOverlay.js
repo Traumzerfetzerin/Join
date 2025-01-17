@@ -5,23 +5,32 @@ function attachAddContactButtonListeners() {
     let showOverlayButton = document.getElementById('show-overlay');
     let addContactIconButton = document.getElementById('add-contact-icon');
 
-    if (showOverlayButton) {
+    if (showOverlayButton && !showOverlayButton.hasAttribute('data-event-added')) {
         showOverlayButton.addEventListener('click', () => {
-            document.getElementById('overlay').style.display = 'block';
+            toggleOverlay('overlay');
         });
+        showOverlayButton.setAttribute('data-event-added', 'true');
     } else {
-        console.warn("Add contact button (large) not found.");
     }
 
-    if (addContactIconButton) {
+    if (addContactIconButton && !addContactIconButton.hasAttribute('data-event-added')) {
         addContactIconButton.addEventListener('click', () => {
-            document.getElementById('overlay').style.display = 'block';
+            toggleOverlay('overlay');
         });
+        addContactIconButton.setAttribute('data-event-added', 'true');
     } else {
-        console.warn("Add contact button (small) not found.");
     }
 }
 
+
+function toggleOverlay(overlayId) {
+    let overlay = document.getElementById(overlayId);
+    if (overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+    } else {
+        overlay.style.display = 'block';
+    }
+}
 
 /**
  * Closes the contact overlay.
@@ -72,7 +81,6 @@ window.addEventListener('click', (event) => {
     }
 });
 
-
 /**
  * Toggles the small overlay visibility.
  * @param {Event} event - The click event.
@@ -94,3 +102,13 @@ function toggleSmallOverlay(event) {
 function closeSmallOverlay() {
     toggleElementVisibility('#small-overlay', false);
 }
+
+document.getElementById('show-overlay')?.addEventListener('click', () => {
+    console.log('Show overlay button clicked');
+    document.getElementById('overlay').style.display = 'block';
+});
+
+document.getElementById('add-contact-icon')?.addEventListener('click', () => {
+    console.log('Add contact icon clicked');
+    document.getElementById('overlay').style.display = 'block';
+});

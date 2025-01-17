@@ -1,24 +1,29 @@
 .board-overlay {
     position: fixed;
-    top: 32%; 
+    top: 40%; 
     left: 50%;
     transform: translate(-50%, -50%); 
     background: #ffffff;
     border-radius: 20px;
     width: 525px;
-    padding: 48px 40px;
+    padding: 25px 25px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
     overflow-y: scroll;
-    height: 500px;
+    height: 650px;
 }
 
 .overlay-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     border-radius: 20px 20px 0 0;
+}
+
+.flex-end{
+    display: flex;
+    justify-content: flex-end;
 }
 
 .task-category {
@@ -41,7 +46,7 @@
 .overlay-content {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 6px;
     border-radius: 0 0 20px 20px;
     z-index: 1002;
 }
@@ -51,9 +56,9 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 }
 
 .task-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 45px;
+    margin-bottom: -5px;
+    font-weight: 700;
 }
 
 .task-description {

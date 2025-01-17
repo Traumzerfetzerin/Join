@@ -43,7 +43,7 @@ function toggleElementVisibility(selector, isVisible) {
 }
 
 
-/** 
+/**
  * Generates the HTML structure for a contact.
  * @param {object} contact - Contact object containing name, email, phone, id, and color.
  * @returns {string} - HTML string for the contact.

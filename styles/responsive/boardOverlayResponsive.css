@@ -6,6 +6,10 @@
         margin-top: -20px;
     }
 
+    .overlay-content{
+        gap: 20px;
+    }
+
     .overlay-header {
         margin-bottom: -5px;
     }

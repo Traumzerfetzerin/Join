@@ -16,7 +16,43 @@ async function editTask(taskId, category) {
     } else {
         console.error("No contacts found for the task.");
     }
+    adjustOverlayElements();
 }
+
+
+/**
+ * Adjusts the overlay elements by hiding the category and aligning the close button to the right.
+ */
+function adjustOverlayElements() {
+    let closeButtonContainer = document.querySelector('.overlay-header');
+    if (closeButtonContainer) {
+        closeButtonContainer.classList.add('flex-end');
+    }
+
+    let categoryElement = document.querySelector('#task-category');
+    if (categoryElement) {
+        categoryElement.classList.add('d-none');
+    }
+
+    let elementsPositins = document.querySelector('.overlay-content');
+    if (elementsPositins) {
+        elementsPositins.classList.add('overlay-content-edit');
+    }
+}
+
+
+// Ensure the category is visible and overlay content is in the original position when the page reloads
+document.addEventListener('DOMContentLoaded', () => {
+    let categoryElement = document.querySelector('.task-category');
+    if (categoryElement) {
+        categoryElement.classList.remove('d-none');
+    }
+
+    let overlayContent = document.querySelector('.overlay-content');
+    if (overlayContent) {
+        overlayContent.classList.remove('overlay-content-edit');
+    }
+});
 
 
 /**

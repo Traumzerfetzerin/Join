@@ -12,6 +12,10 @@
         top: 100px;
     }
 
+    .seperatorSearchbar {
+        height: 40px;
+    }
+
     #findAddTask {
         position: absolute;
         top: 84px;

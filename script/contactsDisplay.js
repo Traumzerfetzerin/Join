@@ -7,7 +7,6 @@ async function loadContacts() {
     try {
         let response = await fetch(databaseUrl);
         if (!response.ok) throw new Error("Failed to fetch contacts.");
-
         let data = await response.json();
         contacts = data ? Object.keys(data).map(id => ({ id, ...data[id] })) : [];
         displayContacts();
@@ -32,7 +31,6 @@ function displayContacts() {
         } else {
             contactsHTML = '<p>No contacts available.</p>';
         }
-
         contactList.innerHTML = contactsHTML;
         attachContactClickListeners();
         displayAddContactButtons(); 

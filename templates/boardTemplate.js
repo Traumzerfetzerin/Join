@@ -56,11 +56,11 @@ function getPrioritySymbol(priority) {
 
 
 /**
-* Generates the HTML template for the task overlay popup.
-* @param {string} category - Task category.
-* @param {object} task - Task object containing all task details.
-* @returns {string} - HTML template for the task overlay.
-*/
+ * Generates the HTML template for the task overlay popup.
+ * @param {string} category - Task category.
+ * @param {object} task - Task object containing all task details.
+ * @returns {string} - HTML template for the task overlay.
+ */
 function getBoardOverlayTemplate(category, task) {
     let priorityIcon = getPrioIcon(task.prio);
     let categoryClass = category.toLowerCase().replace(" ", "-");
@@ -70,7 +70,7 @@ function getBoardOverlayTemplate(category, task) {
     return `
        <div class="board-overlay" data-task-id="${task.id}">
            <div class="overlay-header">
-               <h2 class="task-category ${categoryClass}">${category}</h2>
+               <h2 id="task-category" class="task-category ${categoryClass}">${category}</h2>
                <button class="close-button" onclick="closeTaskOverlay(event)">×</button>
            </div>
            <div class="overlay-content">

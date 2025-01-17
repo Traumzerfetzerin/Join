@@ -33,6 +33,11 @@
     padding: 5px 0;
 }
 
+.overlay-content-edit{
+    position: relative;
+    top: -35px;
+}
+
 .user-icon {
     width: 32px;
     height: 32px;

@@ -2,6 +2,10 @@
  * Displays the add contact buttons (large and small) on the page.
  */
 function displayAddContactButtons() {
+    if (document.getElementById('show-overlay') || document.getElementById('add-contact-icon')) {
+        return;
+    }
+
     let contactList = document.querySelector('.contact-list');
     if (!contactList) {
         console.error("Contact list container not found.");
@@ -23,24 +27,24 @@ function displayAddContactButtons() {
 * @returns {string} - HTML string for the large add contact button.
 */
 function generateAddButtonLargeHTML() {
-   return `
-       <div class="add-contact-button" id="show-overlay">
-           <span>Add New Contact</span>
-           <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
-       </div>`;
-}
-
-
-/**
-* Generates the HTML for the small add contact button.
-* @returns {string} - HTML string for the small add contact button.
-*/
-function generateAddButtonSmallHTML() {
-   return `
-       <div class="add-contact-icon" id="add-contact-icon">
-           <img src="../Assets/personAdd.svg" alt="Add Contact">
-       </div>`;
-}
+    return `
+        <div class="add-contact-button" id="show-overlay">
+            <span>Add New Contact</span>
+            <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
+        </div>`;
+ }
+ 
+ 
+ /**
+ * Generates the HTML for the small add contact button.
+ * @returns {string} - HTML string for the small add contact button.
+ */
+ function generateAddButtonSmallHTML() {
+    return `
+        <div class="add-contact-icon" id="add-contact-icon">
+            <img src="../Assets/personAdd.svg" alt="Add Contact">
+        </div>`;
+ }
 
 
 /**
@@ -248,6 +252,7 @@ document.getElementById('delete-contact-button')?.addEventListener('click', () =
 // Event listeners for global actions
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('back-arrow')?.addEventListener('click', handleBackArrowClick);
+    loadContacts();
     attachGlobalEventListeners();
     displayContacts();
     displayAddContactButtons();

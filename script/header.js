@@ -1,27 +1,24 @@
-// Base URL for Firebase
-let BASE_URL = "https://join382-19b27-default-rtdb.europe-west1.firebasedatabase.app/";
+let BASE_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
-
-/**
- * Initializes the application on page load.
- */
 document.addEventListener("DOMContentLoaded", async function () {
     await showFirstLetter();
 });
-
 
 /**
  * Displays the first letter of the currently logged-in user's name.
  * @returns {Promise<void>}
  */
 async function showFirstLetter() {
-    let userIcon = document.getElementById('user-initial');
-    if (!userIcon) return;
+    let userIcon = document.getElementById('name_menu');
+    if (!userIcon) {
+        console.error('User icon element not found');
+        return;
+    }
 
     let username = await getUsernameFromFirebase();
+    console.log('Username fetched from Firebase:', username);
     userIcon.textContent = username ? generateNameInitials(username) : 'G';
 }
-
 
 /**
  * Fetches the username from Firebase.
@@ -29,21 +26,23 @@ async function showFirstLetter() {
  */
 async function getUsernameFromFirebase() {
     let userId = getCurrentUserId();
+    console.log('User ID from localStorage:', userId);
     if (!userId) return null;
 
     try {
         let response = await fetch(`${BASE_URL}/users.json`);
         if (!response.ok) throw new Error('Network response was not ok');
-        
+
         let data = await response.json();
+        console.log('User data fetched from Firebase:', data);
         let user = Object.entries(data).find(([key]) => key === userId);
+        console.log('Logged in user data:', user);
         return user ? user[1].name : null;
     } catch (error) {
         console.error('Error fetching user data from Firebase:', error);
         return null;
     }
 }
-
 
 /**
  * Retrieves a value from localStorage and parses it from JSON.
@@ -55,16 +54,13 @@ function getFromLocalStorage(key) {
     return value ? JSON.parse(value) : null;
 }
 
-
 /**
  * Gets the current user ID from localStorage.
  * @returns {string|null} The current user ID or null if not found.
  */
 function getCurrentUserId() {
-    let userId = getFromLocalStorage('userId');
-    return userId || null;
+    return localStorage.getItem('userId');
 }
-
 
 /**
  * Generates initials from a given name.
@@ -80,13 +76,12 @@ function generateNameInitials(name) {
         .slice(0, 2);
 }
 
-
 /**
  * Toggles the visibility of the mobile navigation menu.
  */
 function showHeaderNav() {
     let menu = document.getElementById('mobile_headerNav');
-    let userIcon = document.getElementById('user-initial');
+    let userIcon = document.getElementById('name_menu');
     menu.classList.toggle('active');
 
     document.addEventListener('click', function closeClickOutside(event) {
@@ -97,15 +92,14 @@ function showHeaderNav() {
     });
 }
 
-
 /**
  * Logs out the current user and redirects to the login page.
  */
 function logout() {
     localStorage.removeItem('userId');
+    localStorage.removeItem('loggedInUserName'); // Clear the stored user name
     window.location.href = '/html/login.html';
 }
-
 
 /**
  * Navigates back to the previous page.

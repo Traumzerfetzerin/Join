@@ -82,6 +82,11 @@
     flex-shrink: 0;
 }
 
+#contact-initials {
+    width: 80px;
+    height: 80px;
+}
+
 .contact-name-mail {
     display: flex;
     flex-direction: column;
@@ -250,10 +255,13 @@
 
 .editSection a {
     display: flex;
-    flex-direction: row;
     font-size: 18px;
-    color: black;
+    flex-direction: row;
     text-decoration: none;
+    color: black;
+    top: 20px;
+    left: -215px;
+    position: relative;
     margin-right: 15px;
 }
 

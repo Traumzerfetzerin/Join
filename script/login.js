@@ -1,26 +1,18 @@
 // Base URL for Firebase
 let BASE_URL_LOGIN = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
-
-// Store user data globally
 let users = [];
 let tasks = [];
 let contacts = [];
 let loggedUserContact;
 
-
-/**
- * Initializes the application after DOM content is fully loaded.
- */
 document.addEventListener("DOMContentLoaded", function () {
     includeHTML();
     displayUserInitials();
 });
 
-
 /**
  * Includes external HTML content into the current page.
- * It fetches content from HTML files and inserts them into corresponding elements with the `w3-include-html` attribute.
  */
 function includeHTML() {
     let elements = document.getElementsByTagName("*");
@@ -48,10 +40,8 @@ function includeHTML() {
     }
 }
 
-
 /**
  * Displays the user's initials in the UI after content is loaded.
- * Updates the `name_menu` element with initials from localStorage or defaults to 'G'.
  */
 function displayUserInitials() {
     let currentUserInitial = localStorage.getItem('currentUserInitial');
@@ -60,7 +50,6 @@ function displayUserInitials() {
         userIcon.textContent = currentUserInitial || 'G';
     }
 }
-
 
 /**
  * Shows a toast notification with a provided message.
@@ -75,10 +64,8 @@ function showToast(message) {
     }, 3000);
 }
 
-
 /**
  * Logs in a user by validating email and password.
- * Updates the UI and redirects to the summary page if successful.
  * @param {Event} event - The form submit event.
  */
 function logIn(event) {
@@ -90,10 +77,8 @@ function logIn(event) {
     validateEmailAndPassword(email, password, responseMessage);
 }
 
-
 /**
  * Validates the email and password input.
- * Handles error messages if the email does not exist or the password is invalid.
  * @param {string} email - The user's email.
  * @param {string} password - The user's password.
  * @param {HTMLElement} responseMessage - The response message element for feedback.
@@ -115,10 +100,8 @@ function validateEmailAndPassword(email, password, responseMessage) {
         });
 }
 
-
 /**
  * Handles the response from the email and password validation.
- * Updates the UI and redirects if the login is successful.
  * @param {object|null} user - The user object or null if not found.
  * @param {string} email - The user's email.
  * @param {string} password - The user's password.
@@ -128,6 +111,7 @@ function handleLoginResponse(user, email, password, responseMessage) {
     if (user && user.password === password) {
         let fullName = user.name || email;
         localStorage.setItem('loggedInUserName', fullName);
+        localStorage.setItem('userId', Object.keys(user)[0]); 
         showToast('Login successful! Redirecting...');
         redirectToSummary();
     } else {
@@ -135,7 +119,6 @@ function handleLoginResponse(user, email, password, responseMessage) {
         responseMessage.style.color = 'red';
     }
 }
-
 
 /**
  * Redirects the user to the summary page after a short delay.
@@ -146,12 +129,8 @@ function redirectToSummary() {
     }, 1500);
 }
 
-
-
 /**
  * Extracts initials from a user's name or email.
- * If the name is available, initials are derived from the name.
- * Otherwise, the first letter of the email is used.
  * @param {string} nameOrEmail - The user's name or email.
  * @returns {string} - The initials to display.
  */
@@ -165,10 +144,8 @@ function getInitials(nameOrEmail) {
     }
 }
 
-
 /**
  * Logs in as a guest.
- * Sets 'G' as the guest initial and redirects to the board page.
  * @returns {Promise<void>}
  */
 async function guestLogin() {
@@ -186,7 +163,6 @@ async function guestLogin() {
     }, 1000);
 }
 
-
 /**
  * Displays a greeting template on smaller devices.
  */
@@ -196,7 +172,6 @@ async function greetingTemplate() {
     document.getElementById('sidefoot').classList.add('dnone');
     document.getElementById('buttonLoginForGreeting').classList.add('d-none');
 }
-
 
 /**
  * Checks if an email exists in the Firebase database.
@@ -211,7 +186,6 @@ async function isEmailExists(email) {
         });
 }
 
-
 /**
  * Fetches user data from Firebase based on the provided email.
  * @param {string} email - The email of the user.
@@ -221,11 +195,10 @@ async function fetchUserData(email) {
     return fetch(`${BASE_URL_LOGIN}/users.json`)
         .then(response => response.json())
         .then(data => {
-            let user = Object.values(data || {}).find(user => user.email === email);
-            return user ? user : null;
+            let user = Object.entries(data || {}).find(([key, value]) => value.email === email);
+            return user ? { ...user[1], id: user[0] } : null;
         });
 }
-
 
 /**
  * Toggles the visibility of the password input field.
@@ -244,12 +217,12 @@ function togglePasswordVisibility(inputId, toggleIconId) {
     }
 }
 
-
 /**
  * Logs out the user by clearing stored data and redirecting to the login page.
  */
 function logout() {
     localStorage.removeItem('currentUserInitial');
+    localStorage.removeItem('userId');
     let userIcon = document.getElementById('name_menu');
     if (userIcon) {
         userIcon.textContent = 'G';
