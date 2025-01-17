@@ -1,4 +1,5 @@
 @media (max-width: 1290px) {
+
     .titeljoin,
     .details {
         left: 250px;
@@ -16,7 +17,8 @@
 }
 
 @media (max-width: 990px) {
-    .summaryimg, 
+
+    .summaryimg,
     .urgentimg {
         width: 50px;
         height: 50px;
@@ -42,6 +44,7 @@
 }
 
 @media (max-width: 880px) {
+
     .titeljoin,
     .details {
         left: 140px;
@@ -49,6 +52,7 @@
 }
 
 @media (max-width: 760px) {
+
     .titeljoin,
     .details {
         left: 75px;
@@ -79,18 +83,24 @@
 }
 
 @media (max-width: 690px) {
-    .titeljoin {
-        left: 15px;
+    .titleHeader {
+        font-size: revert !important;
     }
-}
 
-@media (max-width: 490px) {
+    .titeljoin {
+        left: 10%
+    }
+
+    .details {
+        left: 30%;
+    }
+
     .urgent,
     .tasks {
         left: -70px;
     }
 
-    .summaryimg, 
+    .summaryimg,
     .urgentimg {
         width: 40px;
         height: 40px;
@@ -132,7 +142,7 @@
         line-height: 1;
         height: 30px;
     }
-    
+
     .tasktext {
         line-height: 1;
         height: 46px;
@@ -141,5 +151,15 @@
     .undertask {
         height: 95px;
         padding-bottom: 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .details {
+        left: 22%;
+    }
+
+    .titeljoin {
+        left: 5%;
     }
 }
