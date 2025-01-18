@@ -68,10 +68,27 @@ async function updateOverlayContent(category, task) {
 
     let contactIconsContainer = document.getElementById('contact-icons-container');
     if (contactIconsContainer && task.contacts) {
-        await syncContactIcons(task.contacts);
+        if (!contacts || contacts.length === 0) {
+            await loadContacts();
+        }
+        let relevantContacts = task.contacts
+            .map(contactId => contacts.find(contact => contact.id === contactId))
+            .filter(contact => contact);
+
+        contactIconsContainer.innerHTML = relevantContacts
+            .map(contact => `
+                <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
+                    ${contact.name || "Unknown"}
+                </div>
+            `)
+            .join('');
     }
 }
 
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadContacts(); // Kontakte aus Firebase laden
+});
 
 /**
  * Hides the task overlay if the event matches the conditions.

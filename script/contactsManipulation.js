@@ -71,10 +71,7 @@ function updateContactDetailsUI(contact) {
     document.getElementById('contact-email').textContent = contact.email;
     document.getElementById('contact-phone').textContent = contact.phone;
     document.getElementById('contact-initials').textContent = getInitials(contact.name);
-
-    let initialsColor = getRandomColor();
-    document.getElementById('contact-initials').style.backgroundColor = initialsColor;
-
+    document.getElementById('contact-initials').style.backgroundColor = contact.color;
     document.getElementById('contact-details').style.display = 'block';
 }
 
@@ -222,9 +219,8 @@ function resetContactView() {
 /**
  * Opens the overlay and populates input fields with contact details and initials.
  * @param {object} contact - Contact object containing the details.
- * @param {string} initialsColor - Background color for the initials.
  */
-function openEditOverlay(contact, initialsColor) {
+function openEditOverlay(contact) {
     toggleElementVisibility('#contact-overlay', true);
     currentContactId = contact.id;
 
@@ -232,7 +228,7 @@ function openEditOverlay(contact, initialsColor) {
     updateElementContent('#edit-contact-email', contact.email);
     updateElementContent('#edit-contact-phone', contact.phone);
     updateElementContent('#contact-initials-overlay', getInitials(contact.name));
-    setElementBackgroundColor('#contact-initials-overlay', initialsColor);
+    setElementBackgroundColor('#contact-initials-overlay', contact.color);
 }
 
 

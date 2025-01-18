@@ -35,7 +35,6 @@ function displayContacts() {
         attachContactClickListeners();
         displayAddContactButtons(); 
     } else {
-        console.warn("Contact list container not found.");
     }
 }
 
@@ -48,7 +47,6 @@ function clearContactList() {
     if (contactList) {
         contactList.innerHTML = '';
     } else {
-        console.warn("Contact list container not found.");
     }
 }
 

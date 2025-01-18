@@ -72,13 +72,16 @@ function getCategoryFromTaskId(taskId) {
 
 
 /**
- * Updates the task UI by rendering the task with its category instead of the column.
- * @param {object} task - The task object.
+ * Updates the task UI by re-rendering the task in the specified column
+ * and updating the overlay content if it is currently visible.
+ * 
+ * @param {Object} task - The task object containing all relevant details.
  * @param {string} taskId - The unique ID of the task.
- * @param {string} column - The column where the task is located.
- * @param {object} columns - Mapping of column names to DOM element IDs.
+ * @param {string} column - The column where the task should be displayed.
+ * @param {Object} columns - An object mapping column names to DOM element IDs.
+ * @returns {Promise<void>} - Resolves when the task UI and overlay are updated.
  */
-function updateTaskUI(task, taskId, column, columns) {
+async function updateTaskUI(task, taskId, column, columns) {
     let taskElement = document.getElementById(`task-${taskId}`);
     if (taskElement) taskElement.remove();
 
@@ -102,6 +105,6 @@ function updateTaskUI(task, taskId, column, columns) {
 
     let overlay = document.getElementById("board-overlay-container");
     if (overlay && overlay.style.display === "block") {
-        updateOverlayContent(task.category, task);
+        await updateOverlayContent(task.category, task);
     }
 }
