@@ -157,6 +157,7 @@
         font-size: 14px;
         padding: 4px;
         border-radius: 6px;
+        width: 100px;
     }
 
     #widget_1,
@@ -222,6 +223,7 @@
     .sidelinks a {
         font-size: 14px;
         padding: 2px;
+        width: 65px;
     }
 
     .sidebarimg {

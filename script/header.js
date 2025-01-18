@@ -1,8 +1,52 @@
 let BASE_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
-document.addEventListener("DOMContentLoaded", async function () {
-    await showFirstLetter();
+
+function displayFullName() {
+    let fullName = localStorage.getItem('loggedInUserName');
+    let nameElement = document.querySelector(".name");
+
+    if (nameElement) {
+        if (fullName) {
+            let nameParts = fullName.split(' ');
+            let firstLetter = nameParts[0].charAt(0).toUpperCase();
+            let lastLetter = nameParts.length > 1 ? nameParts[1].charAt(0).toUpperCase() : '';
+
+            nameElement.textContent = firstLetter + (lastLetter ? lastLetter : "");
+        } else {
+            nameElement.textContent = "G";
+        }
+    }
+}
+
+
+window.addEventListener("load", async function () {
+    await testIcon();
 });
+
+
+async function testIcon() {
+    try {
+        let userIcon = localStorage.getItem('loggedInUserName');
+        let nameMenu = document.getElementById('name_menu');
+
+        if (nameMenu) {
+            if (userIcon) {
+                let nameParts = userIcon.split(' ');
+                let firstLetter = nameParts[0].charAt(0).toUpperCase();
+                let lastLetter = nameParts.length > 1 ? nameParts[1].charAt(0).toUpperCase() : '';
+
+                nameMenu.innerHTML = firstLetter + (lastLetter ? lastLetter : "");
+            } else {
+                nameMenu.innerHTML = "G";
+            }
+        } else {
+            console.warn("Element mit der ID 'name_menu' wurde nicht gefunden.");
+        }
+    } catch (error) {
+        console.error("Fehler beim Abrufen des Benutzernamens:", error);
+    }
+}
+
 
 /**
  * Displays the first letter of the currently logged-in user's name.
@@ -10,6 +54,7 @@ document.addEventListener("DOMContentLoaded", async function () {
  */
 async function showFirstLetter() {
     let userIcon = document.getElementById('name_menu');
+
     if (!userIcon) {
         console.error('User icon element not found');
         return;
@@ -19,6 +64,7 @@ async function showFirstLetter() {
     console.log('Username fetched from Firebase:', username);
     userIcon.textContent = username ? generateNameInitials(username) : 'G';
 }
+
 
 /**
  * Fetches the username from Firebase.
@@ -44,6 +90,7 @@ async function getUsernameFromFirebase() {
     }
 }
 
+
 /**
  * Retrieves a value from localStorage and parses it from JSON.
  * @param {string} key - The key to retrieve from localStorage.
@@ -54,6 +101,7 @@ function getFromLocalStorage(key) {
     return value ? JSON.parse(value) : null;
 }
 
+
 /**
  * Gets the current user ID from localStorage.
  * @returns {string|null} The current user ID or null if not found.
@@ -61,6 +109,7 @@ function getFromLocalStorage(key) {
 function getCurrentUserId() {
     return localStorage.getItem('userId');
 }
+
 
 /**
  * Generates initials from a given name.
@@ -75,6 +124,7 @@ function generateNameInitials(name) {
         .toUpperCase()
         .slice(0, 2);
 }
+
 
 /**
  * Toggles the visibility of the mobile navigation menu.
@@ -92,6 +142,7 @@ function showHeaderNav() {
     });
 }
 
+
 /**
  * Logs out the current user and redirects to the login page.
  */
@@ -100,6 +151,7 @@ function logout() {
     localStorage.removeItem('loggedInUserName'); // Clear the stored user name
     window.location.href = '/html/login.html';
 }
+
 
 /**
  * Navigates back to the previous page.
