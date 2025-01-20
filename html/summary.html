@@ -43,14 +43,14 @@
 
             <div class="checkpencil">
                 <div class="pencil cursorPointer" onclick="summaryToBoard()">
-                    <div><img class="summaryimg" src="../Assets/pencil.svg" alt="To Do"></div>
+                    <div id="summaryimgTodo"></div>
                     <div class="summaryp">
                         <div class="summarynmb todo"></div>
                         <div class="summarymission">To-do</div>
                     </div>
                 </div>
                 <div class="pencil cursorPointer" onclick="summaryToBoard()">
-                    <div><img class="summaryimg" src="../Assets/Ckeck.svg" alt="Done"></div>
+                    <div id="summaryimgDone"></div>
                     <div class="summaryp">
                         <div class="summarynmb done"></div>
                         <div class="summarymission">Done</div>
@@ -60,14 +60,14 @@
             <div class="urgent cursorPointer" onclick="summaryToBoard()">
                 <div class="numimg">
                     <img class="urgentimg" src="../Assets/Urgent.svg" alt="Urgent">
-                        <div class="nmbtext">
-                            <p class="urgentnmb"></p>
-                            <p class="urgenttext">Urgent</p>
-                        </div>
-                        <div class="seperatorUrgent"></div>
-                        <div id="upcomingDeadline">
-                            <p>Upcoming Deadline</p>
-                        </div>
+                    <div class="nmbtext">
+                        <p class="urgentnmb"></p>
+                        <p class="urgenttext">Urgent</p>
+                    </div>
+                    <div class="seperatorUrgent"></div>
+                    <div id="upcomingDeadline">
+                        <p>Upcoming Deadline</p>
+                    </div>
                 </div>
             </div>
             <div class="tasks">

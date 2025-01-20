@@ -306,7 +306,26 @@ body {
     /* Red for error */
 }
 
-.User-Guest{
+.User-Guest {
     display: flex;
     justify-content: center;
+}
+
+.toast {
+    background-color: #2a3647;
+    border-radius: 20px;
+    width: 326px;
+    height: 74px;
+    position: absolute;
+    top: calc(50vh - 50px);
+    left: calc(50vw - 50px);
+}
+
+.toast p {
+    width: 235px;
+    height: 24px;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFF;
 }

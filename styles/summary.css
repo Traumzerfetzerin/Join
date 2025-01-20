@@ -187,7 +187,7 @@
     border: 1px solid grey;
 }
 
-#upcomingDeadline{
+#upcomingDeadline {
     width: 20px;
 }
 
@@ -288,4 +288,61 @@
     line-height: 25.2px;
     text-align: center;
     color: #2A3647;
+}
+
+.pencil {
+    position: relative;
+}
+
+.pencil:hover,
+.urgent:hover,
+.undertask:hover {
+    background-color: #2A3647;
+    color: white;
+}
+
+.pencil:hover #summaryimgTodo {
+    background: url(../Assets/summary/Frame\ 59.svg) no-repeat;
+    background-size: cover;
+    background-position: 0px 0px;
+}
+
+.pencil:hover .summarymission {
+    color: white;
+}
+
+#summaryimgTodo {
+    background: url(../Assets/pencil.svg) no-repeat;
+    background-size: cover;
+    height: 69px;
+    width: 69px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.summarymission {
+    transition: color 0.3s ease;
+}
+
+#summaryimgDone {
+    background: url(../Assets/Ckeck.svg) no-repeat;
+    background-size: cover;
+    height: 69px;
+    width: 69px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.pencil:hover #summaryimgDone {
+    background: url(../Assets/summary/Frame_Check.svg) no-repeat;
+    background-size: cover;
+    background-position: 0px 0px;
+}
+
+.urgent:hover .urgenttext {
+    color: white;
+}
+
+.undertask:hover .tasktext {
+    color: white;
 }
