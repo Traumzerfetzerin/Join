@@ -1,5 +1,5 @@
 // SUBTASK
-function createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
+function createSubtaskElementHTML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
     return /*HTML*/ `
         <div id="${subtaskDivId}" class="space-between createdSubtask">
             <div>
@@ -23,6 +23,29 @@ function createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subta
         </div>`;
 }
 
+function createSubtaskElementBoardHTML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
+    return /*HTML*/ `
+        <div id="${subtaskDivId}" class="space-between createdSubtask">
+            <div>
+                <ul id="${subtaskUlId}">
+                    <li id="${subtaskLiId}" class="subtaskText">${subtaskText}</li>
+                </ul>
+            </div>
+            <div class="flex">
+                <div>
+                    <img class="editSubtask subtaskImg cursorPointer" 
+                         src="../Assets/addTask/Property 1=edit.svg" 
+                         alt="Edit" onclick="editSubtask('${subtaskDivId}')">
+                </div>
+                <div class="seperatorSubtasks"></div>
+                <div>
+                    <img class="deleteSubtask subtaskImg cursorPointer"
+                         src="../Assets/addTask/Property 1=delete.svg" 
+                         alt="Delete" onclick="deleteSubtask('${subtaskDivId}')">
+                </div>
+            </div>
+        </div>`;
+}
 
 function editSubtaskHTML(subtaskDivId, editSubtask) {
     return /*HTML*/ `

@@ -242,6 +242,11 @@ textarea {
     overflow-y: scroll;
 }
 
+.deleteSubtask,
+.editSubtask {
+    display: none;
+}
+
 .editSubtask:hover,
 .deleteSubtask:hover {
     transform: scale(1.1);

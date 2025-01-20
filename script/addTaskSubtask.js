@@ -25,7 +25,7 @@ let subtaskCounter = 0;
  * @param {string} subtaskLiId - The unique ID for the subtask list item (li) element.
  */
 function createSubtaskElement(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId) {
-    let subtaskHTML = createSubtaskElementHTMML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId);
+    let subtaskHTML = createSubtaskElementHTML(subtaskText, subtaskDivId, subtaskUlId, subtaskLiId);
     document.getElementById('editSubtasks').innerHTML += subtaskHTML;
 }
 

@@ -141,7 +141,7 @@ function fillSubtasks(subtasks) {
     subtaskContainer.innerHTML = '';
 
     subtasks.forEach((subtask, index) => {
-        let subtaskHTML = createSubtaskElementHTMML(subtask.text, `subtaskDiv_${index}`, `subtaskUl_${index}`, `subtaskLi_${index}`);
+        let subtaskHTML = createSubtaskElementBoardHTML(subtask.text, `subtaskDiv_${index}`, `subtaskUl_${index}`, `subtaskLi_${index}`);
         subtaskContainer.innerHTML += subtaskHTML;
     });
 }
