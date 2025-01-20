@@ -86,55 +86,99 @@ function updateSubtaskDisplay(subtaskElement, show) {
  * @param {number} subtaskIndex - The index of the subtask to save.
  */
 async function saveSubtaskEdit(taskId, category, subtaskIndex) {
+    let inputField = getInputField(subtaskIndex);
+    if (!inputField) return;
+
+    let newText = getTrimmedText(inputField);
+    if (!newText) return;
+
+    let subtaskElement = getSubtaskElement(subtaskIndex);
+    if (!subtaskElement) return;
+
+    updateSubtaskElements(subtaskElement, inputField, newText);
+    await saveSubtaskToDatabase(taskId, category, subtaskIndex, newText);
+}
+
+/**
+ * Retrieves and validates the subtask input field.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @returns {HTMLElement|null}
+ */
+function getInputField(subtaskIndex) {
     let inputField = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
     if (!inputField) {
         console.error("Input field not found.");
-        return;
+        return null;
     }
+    return inputField;
+}
 
+/**
+ * Retrieves trimmed value from input field.
+ * @param {HTMLElement} inputField - The input field element.
+ * @returns {string}
+ */
+function getTrimmedText(inputField) {
     let newText = inputField.value.trim();
     if (!newText) {
         console.error("Subtask text is empty.");
-        return;
+        return "";
     }
+    return newText;
+}
 
+/**
+ * Retrieves and validates the subtask element.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @returns {HTMLElement|null}
+ */
+function getSubtaskElement(subtaskIndex) {
     let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
     if (!subtaskElement) {
         console.error("Subtask element not found.");
-        return;
+        return null;
     }
+    return subtaskElement;
+}
 
+/**
+ * Updates the subtask elements after edit.
+ * @param {HTMLElement} subtaskElement - The subtask element.
+ * @param {HTMLElement} inputField - The input field element.
+ * @param {string} newText - The new subtask text.
+ */
+function updateSubtaskElements(subtaskElement, inputField, newText) {
     let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
     if (!subtaskTextElement) {
         console.error("Subtask text element not found.");
         return;
     }
-
-    let deleteSubtask = subtaskElement.querySelector('.deleteSubtask');
-    if (!deleteSubtask) {
-        console.error("Delete button not found.");
-        return;
-    }
-
     subtaskTextElement.innerText = newText;
     subtaskTextElement.style.display = 'block';
     subtaskElement.querySelector('.subtask-icons').style.display = 'flex';
-
     inputField.style.display = 'none';
+
     let saveButton = inputField.nextElementSibling;
     if (saveButton) saveButton.style.display = 'none';
-
     subtaskElement.classList.remove('editing');
-    deleteSubtask.style.display = 'none';
+    let deleteSubtask = subtaskElement.querySelector('.deleteSubtask');
+    if (deleteSubtask) deleteSubtask.style.display = 'none';
+}
 
+/**
+ * Saves the subtask data to the database.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} newText - The new subtask text.
+ */
+async function saveSubtaskToDatabase(taskId, category, subtaskIndex, newText) {
     let task = await fetchTaskById(category, taskId);
     if (!task || !Array.isArray(task.subtasks)) {
         console.error("Task or subtasks not found.");
         return;
     }
-
     task.subtasks[subtaskIndex].text = newText;
-
     try {
         await updateTaskInDatabase(category, taskId, task);
         console.log(`Subtask ${subtaskIndex} updated successfully.`);
@@ -211,3 +255,12 @@ function renderSubtasksInEditMode(task, category) {
         subtaskContainer.innerHTML += `<ul>${subtasksHTML}</ul>`;
     }
 }
+
+document.querySelectorAll('.subtask-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        item.querySelector('.subtask-icons').style.display = 'flex';
+    });
+    item.addEventListener('mouseleave', () => {
+        item.querySelector('.subtask-icons').style.display = 'none';
+    });
+});

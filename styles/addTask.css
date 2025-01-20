@@ -280,7 +280,6 @@ textarea {
     align-self: stretch;
 }
 
-/* Button Container */
 .buttons {
     display: flex;
     gap: 16px;
@@ -288,7 +287,6 @@ textarea {
     height: 56px;
 }
 
-/* Clear and Create Button Styles */
 #clearButton,
 .createButton {
     height: 56px;

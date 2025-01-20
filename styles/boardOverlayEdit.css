@@ -7,7 +7,7 @@
     justify-content: space-around;
 }
 
-.subtask-item:hover .subtask-icons {
+.subtask-item:hover .subtask-icons:hover {
     display: flex;
 }
 
@@ -41,10 +41,6 @@
     justify-content: flex-start; 
     gap: 15px;
     width: 100%;
-}
-
-.overlay-content-edit {
-    top: -10px;
 }
 
 .user-icon-edit {
@@ -277,4 +273,15 @@ button[onclick="toggleEditDropdown()"]:hover {
 
 .testForLi {
     display: flex;
+}
+
+.okButton {
+    width: 85px;
+    position: sticky;
+    bottom: 0;
+    background-color: #333;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    text-align: center;
 }
