@@ -6,6 +6,10 @@
     background-color: #2A3647;
 }
 
+#widget_2:hover {
+    background-color: #2A3D59 !important;
+}
+
 .titeljoin {
     display: flex;
     /* justify-content: space-between; */

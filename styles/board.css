@@ -2,6 +2,10 @@
     background-color: #2A3647 !important;
 }
 
+#widget_2:hover {
+    background-color: #2A3D59 !important;
+}
+
 #widget_3 {
     background-color: #091931;
 }

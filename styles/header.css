@@ -47,6 +47,11 @@ header p {
     border: 1px;
 }
 
+#name_menu:hover {
+    background-color: #D1D8E0;
+}
+
+
 .join_logo_mobile {
     display: none;
 }
@@ -54,6 +59,10 @@ header p {
 .helpme-icon {
     position: absolute;
     right: 55px;
+}
+
+.helpme-icon:hover {
+    transform: scale(1.1);
 }
 
 .header_overlay {
@@ -101,13 +110,15 @@ header p {
     text-align: left;
     cursor: pointer;
 }
-.headerImg{
+
+.headerImg {
     display: none;
 
 }
-.headerImg img{
-  height: 60px;
-  width: 70px;
+
+.headerImg img {
+    height: 60px;
+    width: 70px;
 }
 
 .mobile_headerNav a:hover {

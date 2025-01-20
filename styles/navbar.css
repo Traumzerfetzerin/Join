@@ -51,10 +51,6 @@
 
 .widget:hover {
     background-color: #2A3D59;
-}
-
-.widget:hover {
-    /* background: #2A3D59; */
     box-sizing: border-box;
 }
 
