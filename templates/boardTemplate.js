@@ -180,6 +180,7 @@ function generateSubtaskList(task) {
  */
 function generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds) {
     return `
+        <h3 class="overlay-heading">Assigned to</h3>
         <div class="dropdown-wrapper">
             <div class="dropdown-header" onclick="toggleEditDropdown()">
                 <input type="text" id="editAssignedTo" placeholder="Select contacts to assign" readonly>
