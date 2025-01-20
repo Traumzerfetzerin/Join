@@ -1,3 +1,11 @@
+#widget_2 {
+    background-color: #2A3647 !important;
+}
+
+#widget_3 {
+    background-color: #091931;
+}
+
 main {
     margin: 0 !important;
 }

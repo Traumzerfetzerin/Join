@@ -1,3 +1,12 @@
+#widget_4 {
+    background-color: #091931;
+}
+
+.sidebarlogo {
+    width: 130px;
+    height: 121px;
+}
+
 * {
     text-decoration: none;
 }

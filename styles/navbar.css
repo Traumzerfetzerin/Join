@@ -46,6 +46,11 @@
     text-align: center;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+}
+
+.widget:hover {
+    background-color: #2A3D59;
 }
 
 .widget:hover {

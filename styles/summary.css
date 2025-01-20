@@ -1,3 +1,11 @@
+#widget_1 {
+    background-color: #091931;
+}
+
+#widget_2 {
+    background-color: #2A3647;
+}
+
 .titeljoin {
     display: flex;
     /* justify-content: space-between; */
