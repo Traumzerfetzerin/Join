@@ -193,7 +193,7 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
                     return `
                         <div class="dropdown-entry">
                             <div class="entry-wrapper">
-                                <div class="user-icon" style="background-color: ${contact.color || '#ccc'};">
+                                <div class="user-icon-edit" style="background-color: ${contact.color || '#ccc'};">
                                     ${initials}
                                 </div>
                                 <div class="user-name">${contact.name}</div>
@@ -231,7 +231,6 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
 function generatePrioButtonsHTML(selectedPrio, context) {
     let suffix = context === "overlay" ? "Overlay" : "";
     return `
-        <div class="fonts font_2A3647">Prio</div>
         <div class="flex space-between">
             ${prioOptions.map(option => `
                 <button 

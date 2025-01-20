@@ -21,6 +21,12 @@
     max-width: 300px;
 }
 
+.overlay-heading {
+    margin-top: -25px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
 .dropdown-entry {
     display: flex;
     align-items: center;
@@ -34,15 +40,13 @@
     justify-content: flex-start; 
     gap: 15px;
     width: 100%;
-    flex-direction: row !important;
 }
 
 .overlay-content-edit {
-    position: relative;
-    top: -35px;
+    top: -10px;
 }
 
-.user-icon {
+.user-icon-edit {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -72,13 +76,6 @@
     font-size: 14px;
 }
 
-.entry-wrapper > .user-icon {
-    order: -2;  
-}
-
-.entry-wrapper > .user-name {
-    order: -1;
-}
 
 .user-name {
     flex-grow: 1;
@@ -128,6 +125,20 @@ button[onclick="toggleEditDropdown()"]:hover {
     padding: 5px 10px;
     cursor: pointer;
     width: 100%;
+}
+
+
+#edit-task-due-date {
+    margin-bottom: 30px;
+}
+
+#prioOverlay{
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+#contact-icons-container {
+    margin-top: 3px;
 }
 
 #editAssignedTo {

@@ -8,8 +8,9 @@
 
 .overlay-content {
     display: flex;
-    height: 100%;
-    position: relative;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px 20px;
 }
 
 #contact-overlay {
