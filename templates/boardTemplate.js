@@ -197,7 +197,7 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
                                     ${initials}
                                 </div>
                                 <div class="user-name">${contact.name}</div>
-                                <input type="checkbox" value="${contact.id}" 
+                                <input class="checkbox-overlay-edit" type="checkbox" value="${contact.id}" 
                                     ${assignedContactIds.includes(contact.id) ? 'checked' : ''} 
                                     onclick="assignContact('${contact.id}')">
                             </div>

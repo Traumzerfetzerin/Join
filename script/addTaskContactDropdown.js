@@ -111,12 +111,14 @@ function createContactEntry(contact) {
 function createCheckbox(contact) {
     let checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
+    checkbox.className = 'addTaskCheckbox';
     checkbox.id = `checkbox_${contact.name.replace(/\s+/g, '_')}`;
     checkbox.dataset.id = contact.id;
     checkbox.value = contact.name;
     checkbox.addEventListener('change', updateAssignedContacts);
     return checkbox;
 }
+
 
 
 /**
