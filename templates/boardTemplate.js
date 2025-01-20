@@ -168,6 +168,7 @@ function generateSubtaskList(task) {
         : "<li>No subtasks available</li>";
 }
 
+
 /**
  * Generates the HTML content for the contact dropdown and selected user icons.
  *
@@ -185,24 +186,34 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
                 <span class="dropdown-arrow">▼</span>
             </div>
             <div id="editAssignTaskDropdown" class="dropdown-container dNone">
-                ${allContacts.map(contact => `
-                    <div class="dropdown-entry">
-                        <div class="entry-wrapper">
-                            <div class="user-icon" style="background-color: ${contact.color || '#ccc'};">
-                                ${contact.icon ? `<img src="${contact.icon}" alt="${contact.name}" class="user-image">` : contact.initials}
+                ${allContacts.map(contact => {
+                    let initials = contact.initials || 
+                        contact.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                    return `
+                        <div class="dropdown-entry">
+                            <div class="entry-wrapper">
+                                <div class="user-icon" style="background-color: ${contact.color || '#ccc'};">
+                                    ${initials}
+                                </div>
+                                <div class="user-name">${contact.name}</div>
+                                <input type="checkbox" value="${contact.id}" 
+                                    ${assignedContactIds.includes(contact.id) ? 'checked' : ''} 
+                                    onclick="assignContact('${contact.id}')">
                             </div>
-                            <span class="user-name">${contact.name}</span>
-                            <input type="checkbox" value="${contact.id}" ${assignedContactIds.includes(contact.id) ? 'checked' : ''} onclick="assignContact('${contact.id}')">
                         </div>
-                    </div>
-                `).join('')}
+                    `;
+                }).join('')}
             </div>
             <div id="contact-icons-container" class="contact-icons">
-                ${assignedContacts.map(contact => `
-                    <div class="contact-icon" style="background-color: ${contact.color || '#ccc'};">
-                        ${contact.initials}
-                    </div>
-                `).join('')}
+                ${assignedContacts.map(contact => {
+                    let initials = contact.initials || 
+                        contact.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                    return `
+                        <div class="contact-icon" style="background-color: ${contact.color || '#ccc'};">
+                            ${initials}
+                        </div>
+                    `;
+                }).join('')}
             </div>
         </div>
     `;
