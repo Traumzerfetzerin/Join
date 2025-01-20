@@ -264,17 +264,6 @@ button[onclick="toggleEditDropdown()"]:hover {
     margin-left: 10px;
 }
 
-.subtaskImg {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-}
-
-.subtaskImg {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-}
 
 .save-subtask-button:hover {
     transform: scale(1.1);
