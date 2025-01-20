@@ -142,14 +142,42 @@ function showHeaderNav() {
     });
 }
 
-
 /**
- * Logs out the current user and redirects to the login page.
+ * Logs out the user by clearing stored data and redirecting to the login page.
  */
 function logout() {
+    localStorage.removeItem('currentUserInitial');
     localStorage.removeItem('userId');
-    localStorage.removeItem('loggedInUserName'); // Clear the stored user name
+    let userIcon = document.getElementById('name_menu');
+    if (userIcon) {
+        userIcon.textContent = 'G';
+    }
     window.location.href = '/html/login.html';
+    resetUserInfo();
+}
+
+/**
+ * Resets the user icon and name after logout.
+ */
+function resetUserInfo() {
+    localStorage.removeItem('loggedInUserName');
+
+    let nameElement = document.querySelector(".name");
+    let nameMenu = document.getElementById("name_menu");
+
+    if (nameElement) {
+        nameElement.textContent = "G";
+    }
+
+    if (nameMenu) {
+        nameMenu.innerHTML = "G";
+    }
+
+    let nameText = document.querySelector('.greeting-text');
+    if (nameText) {
+        nameText.textContent = 'Guest';
+        nameText.style.color = 'black';
+    }
 }
 
 

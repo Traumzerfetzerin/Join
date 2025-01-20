@@ -216,16 +216,3 @@ function togglePasswordVisibility(inputId, toggleIconId) {
         toggleIcon.src = '/Assets/visibility_off - Copy.svg';
     }
 }
-
-/**
- * Logs out the user by clearing stored data and redirecting to the login page.
- */
-function logout() {
-    localStorage.removeItem('currentUserInitial');
-    localStorage.removeItem('userId');
-    let userIcon = document.getElementById('name_menu');
-    if (userIcon) {
-        userIcon.textContent = 'G';
-    }
-    window.location.href = '/html/login.html';
-}
