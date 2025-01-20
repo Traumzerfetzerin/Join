@@ -261,7 +261,7 @@ button[onclick="toggleEditDropdown()"]:hover {
 
 #addSubtaskButton {
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: -45px;
 }
 
 
