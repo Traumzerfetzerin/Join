@@ -73,7 +73,6 @@ async function loadSummaryData() {
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         let tasks = await response.json();
 
-        setTimeout(() => {
             if (document.querySelector(".summarynmb.todo")) {
                 updateSummaryMetrics(tasks);
             }
@@ -81,7 +80,6 @@ async function loadSummaryData() {
             if (document.querySelector(".urgent-date")) {
                 updateUrgentTaskDate(tasks);
             }
-        }, 500);
 
     } catch (error) {
         console.error("Error fetching summary data:", error);
@@ -196,7 +194,6 @@ function setSummaryCounts(counts) {
         awaitFeedback: ".tasknmb.awaitFeedback"
     };
 
-    setTimeout(() => {
         for (let key in selectors) {
             let element = document.querySelector(selectors[key]);
             if (element) {
@@ -205,7 +202,6 @@ function setSummaryCounts(counts) {
                 console.warn(`Element ${selectors[key]} not found`);
             }
         }
-    }, 500);
 }
 
 
