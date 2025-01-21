@@ -1,3 +1,18 @@
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+  border: none;
+}
+
+.forPoliceLegal,
+.helpme-icon,
+#name_menu {
+  display: none;
+}
+
 .sidebarLegalNotice {
   background-color: #091931;
 }
