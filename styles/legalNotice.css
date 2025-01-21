@@ -1,87 +1,116 @@
-/* Reset */
-body, html {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    height: 100%;
-  }
-  
-  /* Layout Containers */
-  body {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-  }
+.sidebarLegalNotice {
+  background-color: #091931;
+}
 
-  .main-content {
-    margin-left: 240px;
-    margin-top: 90px;
-    display: flex;
-    flex: 1; /* Fills the remaining height */
-    overflow: hidden;
-  }
-  
-  /* Legal Notice Content */
-  .legalNotice {
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
-    position: relative; /* Ensure relative positioning for the back-arrow */
-    flex: 1; /* Expand to fill available space */
-    padding: 20px;
-    overflow-y: auto; /* Allow scrolling */
-  }
-  
-  .back-arrow {
-    align-self: flex-end; /* Push the back arrow to the right */
-    margin-bottom: 10px; /* Space between arrow and content */
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: -20px;
-  }
-  
-  .back-arrow img {
-    height: 100%; /* Adjust size of the icon */
-    width: 100%;
-    transition: transform 0.2s ease;
-  }
-  
-  .back-arrow:hover img {
-    transform: scale(1.1);
-  }
+.sidebarLegalNotice:hover {
+  color: white !important;
+  transform: scale(1.0) !important;
+}
 
-  /* Optional styling to highlight hover */
-  .back-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  /* Impressum text styling */
-  .impressum {
-    font-size: 16px;
-    line-height: 1.5;
-    color: #333;
-  }
-  
-  .impressum h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .impressum a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .impressum a:hover {
-    text-decoration: underline;
-  }
-  
-  .back-arrow {
-    margin-bottom: 20px;
-  }
-  
+body,
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.main-content {
+  margin-left: 240px;
+  margin-top: 90px;
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.legalNotice {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.back-arrow {
+  align-self: flex-end;
+  margin-bottom: 10px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: -20px;
+}
+
+.back-arrow img {
+  height: 100%;
+  width: 100%;
+  transition: transform 0.2s ease;
+}
+
+.back-arrow:hover img {
+  transform: scale(1.1);
+}
+
+.back-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.impressum {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+.impressum h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.impressum a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.impressum a:hover {
+  text-decoration: underline;
+}
+
+.back-arrow {
+  margin-bottom: 20px;
+}
+
+#sidelinks {
+  display: none;
+}
+
+.backToLogIn a {
+  text-decoration: none;
+  display: flex !important;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  margin: 2px 0;
+  padding: 6px 8px;
+}
+
+.backToLogIn {
+  width: 100%;
+}
+
+.backToLogIn:hover {
+  background-color: #2A3D59;
+  width: 100%;
+}

@@ -1,5 +1,25 @@
-body {
-  overflow: auto;
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+  border: none;
+}
+
+.sidebarPolicy {
+  background-color: #091931;
+}
+
+.sidebarPolicy:hover {
+  color: white !important;
+  transform: scale(1.0) !important;
+}
+
+.forPoliceLegal,
+.helpme-icon,
+.user-icon {
+  display: none;
 }
 
 .policy-content {
@@ -21,4 +41,29 @@ body {
 
 .back-arrow {
   cursor: pointer;
+}
+
+.sidelinks {
+  display: none;
+}
+
+.backToLogIn a {
+  text-decoration: none;
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  margin: 2px 0;
+  padding: 6px 8px;
+}
+
+.backToLogIn {
+  width: 100%;
+}
+
+.backToLogIn:hover {
+  background-color: #2A3D59;
+  width: 100%;
 }

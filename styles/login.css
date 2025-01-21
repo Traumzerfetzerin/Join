@@ -96,7 +96,6 @@ body {
     justify-content: space-around;
     padding: 10px 20px;
     gap: 5px;
-    width: 22%;
 }
 
 /* Prevent the button content from distorting */
@@ -106,7 +105,7 @@ body {
 }
 
 .login-signup-button button {
-    width: 100%;
+    width: 105px;
 }
 
 .input-group {

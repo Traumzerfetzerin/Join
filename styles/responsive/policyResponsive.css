@@ -13,15 +13,38 @@
         margin-right: 20px;
         margin-bottom: 120px;
     }
-}
 
-#policy {
-    display: flex;
-    flex-direction: column;
-}
+    #sidefoot {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0;
+    }
 
-.back-arrow:hover img {
-    transform: scale(1.1);
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 32px
+    .sidebarPolicyLegal {
+        display: flex;
+        width: max-content;
+    }
+
+    .navbarResponse {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .backToLogIn:hover,
+    .sidebarPolicy:hover {
+        text-decoration: none;
+        color: inherit;
+        background: none;
+    }
+
+    .sidebarPolicy {
+        background-color: transparent;
+    }
+
+    .sidebarLegalNotice:hover {
+        color: white !important;
+        transform: scale(1.0) !important;
+    }
 }

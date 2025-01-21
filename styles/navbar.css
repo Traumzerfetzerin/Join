@@ -54,6 +54,7 @@
     box-sizing: border-box;
 }
 
+
 .widget.active,
 .widget:target {
     background: #2A3D59;
@@ -103,7 +104,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
 }
 
 #sidefoot a:hover {
@@ -124,4 +124,13 @@
     display: flex;
     align-items: center;
     padding-left: 50px;
+    gap: 12px;
+}
+
+.backToLogIn a {
+    display: none;
+}
+
+.navbarResponse {
+    width: 100%;
 }

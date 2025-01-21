@@ -27,6 +27,7 @@
     0% {
         transform: translate(-50%, -50%) scale(3);
     }
+
     100% {
         transform: translate(-45vw, -40vh) scale(1);
     }
@@ -74,15 +75,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .go-to-login:hover {
+}
+
+.go-to-login:hover {
     background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .go-to-login:hover img {
+}
+
+.go-to-login:hover img {
     transform: scale(1.1);
-  }
+}
 
 .input-group {
     display: flex;
