@@ -9,7 +9,7 @@
     z-index: 999;
     overflow-y: scroll;
     height: 900px;
-    top: calc(32vh - 20px);
+    top: calc(35vh - 20px);
     left: calc(50vw - 10px);
     max-height: 90vh;
     display: flex;
@@ -49,7 +49,7 @@
 .overlay-content {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 20px;
     border-radius: 0 0 20px 20px;
     z-index: 1002;
     flex-grow: 1;
@@ -82,7 +82,7 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 
 .contact-list-overlay {
     display: flex;
-    height: 125px;
+    height: 135px;
     overflow: scroll;
 }
 
@@ -172,14 +172,17 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 }
 
 .action-links {
+    position: sticky;
     display: flex;
     justify-content: flex-end;
     gap: 20px;
-    margin-top: 20px;
     border-radius: 10px;
-    bottom: 100px;
+    bottom: -27px;
     right: 100px;
-    z-index: 1000px;
+    z-index: 1000;
+    background-color: #ffffff;
+    height: 10%;
+    width: 100%;
 }
 
 .action-link {
