@@ -72,8 +72,15 @@ async function loadSummaryData() {
         let response = await fetch(`${TASK_URL}.json`);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         let tasks = await response.json();
-        updateSummaryMetrics(tasks);
-        updateUrgentTaskDate(tasks);
+        
+        if (document.querySelector(".summarynmb.todo")) {
+            updateSummaryMetrics(tasks);
+        }
+
+        if (document.querySelector(".urgent-date")) {
+            updateUrgentTaskDate(tasks);
+        }
+
     } catch (error) {
         console.error("Error fetching summary data:", error);
     }
@@ -171,17 +178,27 @@ function updateUrgentCount(task, counts) {
 
 
 /**
- * Updates the summary elements in the UI with the calculated task counts.
- * @param {object} counts - The counts of tasks by category.
+ * Updates the summary counts in the UI if elements are available.
+ * @param {object} counts - Object containing counts for different task categories.
  */
 function setSummaryCounts(counts) {
-    document.querySelector(".summarynmb.todo").textContent = counts.toDo;
-    document.querySelector(".summarynmb.done").textContent = counts.done;
-    document.querySelector(".urgentnmb").textContent = counts.urgent;
-    document.querySelector(".tasknmb.board").textContent = counts.total;
-    document.querySelector(".tasknmb.progress").textContent = counts.inProgress;
-    document.querySelector(".tasknmb.awaitFeedback").textContent = counts.awaitFeedback;
+    let selectors = {
+        todo: ".summarynmb.todo",
+        done: ".summarynmb.done",
+        urgent: ".urgentnmb",
+        total: ".tasknmb.board",
+        inProgress: ".tasknmb.progress",
+        awaitFeedback: ".tasknmb.awaitFeedback"
+    };
+
+    for (let key in selectors) {
+        let element = document.querySelector(selectors[key]);
+        if (element) {
+            element.textContent = counts[key];
+        }
+    }
 }
+
 
 
 /**
@@ -213,7 +230,7 @@ function updateNextDeadline(closestDate) {
 
 
 /**
- * Updates the urgent task count and next deadline in the UI.
+ * Updates the urgent task count and next deadline in the UI if elements are available.
  * @param {object} tasks - The tasks retrieved from Firebase.
  */
 function updateUrgentTaskDate(tasks) {
@@ -221,8 +238,13 @@ function updateUrgentTaskDate(tasks) {
     updateUrgentTaskCount(urgentTasks);
 
     let closestDate = findClosestDate(urgentTasks);
-    updateNextDeadline(closestDate);
+
+    let deadlineElement = document.querySelector(".urgent-date");
+    if (deadlineElement) {
+        updateNextDeadline(closestDate);
+    }
 }
+
 
 
 /**

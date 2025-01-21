@@ -3,7 +3,6 @@ let BASE_URL_LOGIN = "https://join-382-default-rtdb.europe-west1.firebasedatabas
 
 let users = [];
 let tasks = [];
-let contacts = [];
 let loggedUserContact;
 
 document.addEventListener("DOMContentLoaded", function () {
