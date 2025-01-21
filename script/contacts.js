@@ -267,23 +267,26 @@ function handleOutsideClick(event) {
  */
 function handleEditLinkClick(event) {
     event.preventDefault();
-
     if (!currentContactId) {
-        console.error("Error: No contact selected for editing.");
         showToast("Error: No contact selected for editing.", "error");
         return;
     }
 
     let contact = contacts.find(c => c.id === currentContactId);
-    if (!contact) {
+    if (contact) {
+        openEditOverlay(contact);
+    } else {
         console.warn(`Contact with ID ${currentContactId} not found.`);
-        return;
     }
 
     let initialsColor = getRandomColor();
     openEditOverlay(contact, initialsColor);
     closeSmallOverlay();
 }
+
+document.querySelectorAll('.edit-link').forEach(link => {
+    link.addEventListener('click', handleEditLinkClick);
+});
 
 
 /**

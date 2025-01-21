@@ -222,15 +222,13 @@ function resetContactView() {
  * @param {object} contact - Contact object containing the details.
  */
 function openEditOverlay(contact) {
-    toggleElementVisibility('#contact-overlay', true);
-    currentContactId = contact.id;
-
-    updateElementContent('#edit-contact-name', contact.name);
-    updateElementContent('#edit-contact-email', contact.email);
-    updateElementContent('#edit-contact-phone', contact.phone);
-    updateElementContent('#contact-initials-overlay', getInitials(contact.name));
-    setElementBackgroundColor('#contact-initials-overlay', contact.color);
-}
+        toggleElementVisibility('#contact-overlay', true);
+        document.getElementById('edit-contact-name').value = contact.name || '';
+        document.getElementById('edit-contact-email').value = contact.email || '';
+        document.getElementById('edit-contact-phone').value = contact.phone || '';
+        document.getElementById('contact-initials-overlay').textContent = getInitials(contact.name);
+        document.getElementById('contact-initials-overlay').style.backgroundColor = contact.color || getRandomColor();
+}    
 
 
 // Close overlay event listener
