@@ -72,19 +72,23 @@ async function loadSummaryData() {
         let response = await fetch(`${TASK_URL}.json`);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
         let tasks = await response.json();
-        
-        if (document.querySelector(".summarynmb.todo")) {
-            updateSummaryMetrics(tasks);
-        }
 
-        if (document.querySelector(".urgent-date")) {
-            updateUrgentTaskDate(tasks);
-        }
+        setTimeout(() => {
+            if (document.querySelector(".summarynmb.todo")) {
+                updateSummaryMetrics(tasks);
+            }
+
+            if (document.querySelector(".urgent-date")) {
+                updateUrgentTaskDate(tasks);
+            }
+        }, 500);
 
     } catch (error) {
         console.error("Error fetching summary data:", error);
     }
 }
+
+
 
 
 /**
@@ -95,6 +99,7 @@ function updateSummaryMetrics(tasks) {
     let counts = countTasksByColumn(tasks);
     setSummaryCounts(counts);
 }
+
 
 
 /**
@@ -117,7 +122,7 @@ function countTasksByColumn(tasks) {
  */
 function initializeCounts() {
     return {
-        toDo: 0,
+        todo: 0,
         done: 0,
         inProgress: 0,
         awaitFeedback: 0,
@@ -150,7 +155,7 @@ function processCategoryTasks(categoryTasks, counts) {
 function updateColumnCounts(task, counts) {
     switch (task.column?.toLowerCase()) {
         case "todo":
-            counts.toDo++;
+            counts.todo++;
             break;
         case "done":
             counts.done++;
@@ -191,12 +196,16 @@ function setSummaryCounts(counts) {
         awaitFeedback: ".tasknmb.awaitFeedback"
     };
 
-    for (let key in selectors) {
-        let element = document.querySelector(selectors[key]);
-        if (element) {
-            element.textContent = counts[key];
+    setTimeout(() => {
+        for (let key in selectors) {
+            let element = document.querySelector(selectors[key]);
+            if (element) {
+                element.textContent = counts[key];
+            } else {
+                console.warn(`Element ${selectors[key]} not found`);
+            }
         }
-    }
+    }, 500);
 }
 
 
