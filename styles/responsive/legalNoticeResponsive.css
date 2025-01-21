@@ -1,55 +1,44 @@
-  /* Responsive Design for Mobile (max-width: 980px) */
-  @media (max-width: 980px) {
-    .main-content {
-      flex-direction: column;
-      /* Stack content vertically */
-      padding: 0 20px;
-      /* Add padding */
-      margin-left: 20px;
-      margin-right: 20;
-      margin-top: 40px;
-    }
-
-    .legalNotice {
-      margin-top: 90px;
-      /* Leave space for header */
-      margin-bottom: 80px;
-      /* Leave space for footer */
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    #sidefoot {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin: 0;
-    }
-
-    .sidebarPolicyLegal {
-      display: flex;
-      width: max-content;
-    }
-
-    .navbarResponse {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .backToLogIn:hover,
-    .sidebarLegalNotice:hover {
-      text-decoration: none;
-      color: inherit;
-      background: none;
-    }
-
-    .sidebarLegalNotice {
-      background-color: transparent;
-    }
-
-    .sidebarPolicy:hover {
-      color: white !important;
-      transform: scale(1.0) !important;
-    }
+@media (max-width: 980px) {
+  .main-content {
+    flex-direction: column;
+    padding: 0 20px;
+    margin-left: 20px;
+    margin-right: 20;
+    margin-top: 40px;
   }
+
+  .legalNotice {
+    margin-top: 90px;
+    margin-bottom: 80px;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  #sidefoot {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0;
+  }
+
+  .sidebarPolicyLegal {
+    display: flex;
+    width: max-content;
+  }
+
+  .backToLogIn:hover,
+  .sidebarLegalNotice:hover {
+    text-decoration: none;
+    color: inherit;
+    background: none;
+  }
+
+  .sidebarLegalNotice {
+    background-color: transparent;
+  }
+
+  .sidebarPolicy:hover {
+    color: white !important;
+    transform: scale(1.0) !important;
+  }
+}

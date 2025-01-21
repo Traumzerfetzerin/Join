@@ -1,64 +1,73 @@
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+  border: none;
+}
+
 .help-content {
-    max-height: calc(100vh - 120px);
-    margin-left: 270px;
-    margin-right: 20px;
-    margin-top:110px ;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    overflow: auto;
-    flex: 1;
-  }
-  
-  h4 {
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 24px;
-  }
-  
-  mark {
-    background: none;
-    color: var(--clr-light-blue);
-  }
-  
-  .headline-nav {
-    display: flex;
-    align-items: center;
-  }
-  
-  .back-arrow {
-    margin-left: auto;
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .back-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-  
-  .back-arrow:hover img {
-    transform: scale(1.1);
-  }
-  
-  .text-container {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.2px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  .step-content {
-    display: flex;
-    gap: 35px;
-  }
-  
-  .email-link {
-    color: var(--clr-light-blue);
-    text-decoration: none;
-  }
+  max-height: calc(100vh - 120px);
+  margin-left: 270px;
+  margin-right: 20px;
+  margin-top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: auto;
+  flex: 1;
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+mark {
+  background: none;
+  color: var(--clr-light-blue);
+}
+
+.headline-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-arrow {
+  margin-left: auto;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.back-arrow:hover img {
+  transform: scale(1.1);
+}
+
+.text-container {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.step-content {
+  display: flex;
+  gap: 35px;
+}
+
+.email-link {
+  color: var(--clr-light-blue);
+  text-decoration: none;
+}

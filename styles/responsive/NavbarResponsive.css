@@ -60,14 +60,6 @@
         padding: 8px;
     }
 
-    .sidelinks {
-        width: 70%;
-        padding: 0px 6px;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-
     .sidelinks a {
         display: flex;
         flex-direction: column;

@@ -52,6 +52,7 @@ body {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  height: 80vh;
 }
 
 .back-arrow {
