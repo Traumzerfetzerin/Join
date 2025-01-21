@@ -274,14 +274,3 @@ button[onclick="toggleEditDropdown()"]:hover {
 .testForLi {
     display: flex;
 }
-
-.okButton {
-    width: 85px;
-    position: sticky;
-    bottom: 0;
-    background-color: #333;
-    padding: 10px 20px;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    text-align: center;
-}

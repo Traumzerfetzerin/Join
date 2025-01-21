@@ -10,8 +10,8 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
     overflow-y: scroll;
-    height: 650px;
-    top: calc(50vh - 20px);
+    height: 800px;
+    top: calc(32vh - 20px);
     left: calc(50vw - 10px);
 }
 
@@ -76,8 +76,10 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     margin-top: 20px;
 }
 
-.contact-list {
+.contact-list-overlay {
     display: flex;
+    height: 125px;
+    overflow: scroll;
 }
 
 .contact-initials {

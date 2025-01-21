@@ -82,7 +82,7 @@ function getBoardOverlayTemplate(category, task) {
                </div>
                <div class="contacts-section">
                    <strong>Assigned To:</strong>
-                   <div id="cardOverlayContacts" class="contact-list">${contactList}</div>
+                   <div id="cardOverlayContacts" class="contact-list-overlay">${contactList}</div>
                </div>
                <div class="subtasks-section">
                    <strong>Subtasks:</strong>
@@ -98,6 +98,7 @@ function getBoardOverlayTemplate(category, task) {
                        Edit
                    </a>
                </div>
+               <div class="okButtonOverlay"></div>
            </div>
        </div>
    `;

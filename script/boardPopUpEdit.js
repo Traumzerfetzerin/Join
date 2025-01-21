@@ -22,9 +22,10 @@ async function enableEditMode(task, category) {
 
     renderSubtasksInEditMode(task, category);
 
-    document.querySelector('.action-links').innerHTML = `
-        <button class="okButton createButton cursorPointer" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
-    `;
+    document.querySelector('.action-links').style.display = 'none';
+    document.querySelector('.okButtonOverlay').innerHTML = `
+    <button class="okButton createButton cursorPointer" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
+`;
 }
 
 /**

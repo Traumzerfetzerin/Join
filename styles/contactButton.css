@@ -132,3 +132,16 @@
     gap: 30px;
     padding-top: auto;
 }
+
+.okButtonOverlay {
+    display: flex;
+    justify-content: end;
+    bottom: 0;
+    padding: 10px 0;
+    z-index: 100;
+    text-align: center;
+    width: 100%;
+    position: sticky;
+    margin-top: 5%;
+    background-color: #fff;
+    }

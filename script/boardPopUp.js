@@ -36,7 +36,7 @@ function showOverlay() {
 
 
 /**
- * Closes the task overlay when triggered.
+ * Closes the task overlay when triggered and resets the UI.
  * @param {Event} [event] - The event that triggers the overlay close.
  */
 function closeTaskOverlay(event) {
@@ -49,6 +49,9 @@ function closeTaskOverlay(event) {
         taskOverlay.style.display = "none";
         backgroundOverlay.classList.remove("active");
         document.body.classList.remove("no-scroll");
+
+        document.querySelector('.action-links').style.display = 'flex';
+        document.querySelector('.okButtonOverlay').innerHTML = '';
     }
 }
 
