@@ -2,18 +2,25 @@
  * Displays the add contact buttons (large and small) on the page.
  */
 function displayAddContactButtons() {
-    if (document.getElementById('show-overlay') || document.getElementById('add-contact-icon')) {
-        return;
-    }
     let contactList = document.querySelector('.contact-list');
     if (!contactList) {
         console.error("Contact list container not found.");
         return;
     }
 
-    let addButtonLarge = generateAddButtonLargeHTML();
-    contactList.insertAdjacentHTML('afterbegin', addButtonLarge);
+    if (!document.getElementById('show-overlay')) {
+        let addButtonLarge = generateAddButtonLargeHTML();
+        contactList.insertAdjacentHTML('afterbegin', addButtonLarge);
+    }
+
+    if (!document.getElementById('add-contact-icon')) {
+        let addButtonSmall = generateAddButtonSmallHTML();
+        document.body.insertAdjacentHTML('beforeend', addButtonSmall);
+    }
+
+    attachAddContactButtonListeners();
 }
+
 
 
 /**
