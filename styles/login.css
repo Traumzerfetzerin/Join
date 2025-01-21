@@ -298,7 +298,6 @@ body {
 /* Toast types: success and error */
 .toast.success {
     background-color: #2A3647;
-    /* Green for success */
 }
 
 .toast.error {
@@ -318,7 +317,7 @@ body {
     height: 74px;
     position: absolute;
     top: calc(50vh - 50px);
-    left: calc(50vw - 50px);
+    left: calc(50vw - -140px);
 }
 
 .toast p {
