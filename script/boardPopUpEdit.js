@@ -56,7 +56,7 @@ function setTaskDescription(description) {
  */
 function setTaskDueDate(dueDate) {
     document.querySelector('.task-info p:nth-child(1)').innerHTML = `
-        <h3 class="overlay-heading">Due date</h3>
+        <h3 class="overlay-heading" id="overlay-due">Due date</h3>
         <input type="date" id="edit-task-due-date" value="${dueDate || ''}" class="input-field" />
     `;
 }
@@ -191,5 +191,29 @@ function closeEditOverlay() {
     let editOverlay = document.getElementById("edit-overlay");
     if (editOverlay) {
         editOverlay.remove();
+    }
+}
+
+
+/**
+ * Resets the priority buttons by removing selected state.
+ */
+function resetPriorityButtons() {
+    prioOptions.forEach(option => {
+        document.getElementById(option.class).classList.remove('active');
+    });
+    selectedPrio = null;
+}
+
+/**
+ * Selects a priority option.
+ * @param {string} prio - Selected priority level.
+ */
+function selectPriority(prio) {
+    resetPriorityButtons();
+    let selectedOption = prioOptions.find(option => option.class === prio);
+    if (selectedOption) {
+        document.getElementById(prio).classList.add('active');
+        selectedPrio = prio;
     }
 }

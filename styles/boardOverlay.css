@@ -9,7 +9,7 @@
     z-index: 999;
     overflow-y: scroll;
     height: 900px;
-    top: calc(35vh - 20px);
+    top: calc(50vh - 20px);
     left: calc(50vw - 10px);
     max-height: 90vh;
     display: flex;
@@ -72,8 +72,15 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     color: #555;
 }
 
+.task-info {
+    display: contents;
+}
+
 .task-info p {
     margin: 3px 0;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .contacts-section {
@@ -82,8 +89,19 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 
 .contact-list-overlay {
     display: flex;
-    height: 135px;
+    height: 140px;
     overflow: scroll;
+}
+
+#cardOverlayContacts{
+    margin-left: 5%;
+}
+
+#overlay-initials {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-top: 2%;
 }
 
 .contact-initials {

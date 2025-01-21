@@ -14,7 +14,7 @@ async function showTaskOverlay(category, taskId) {
 
     updateOverlayContent(category, task);
     showOverlay();
-
+    setPriorityText();
     return Promise.resolve("Overlay displayed successfully");
 }
 
@@ -235,11 +235,24 @@ async function updateSubtasksInFirebase(taskId, subtasks, category) {
             body: JSON.stringify(subtasks)
         });
         if (response.ok) {
-            // Optional: Additional actions upon successful update
         } else {
             console.error(`Failed to update subtasks for Task ID ${taskId}:`, response.statusText);
         }
     } catch (error) {
         console.error(`Error updating subtasks for Task ID ${taskId}:`, error);
     }
+}
+
+/**
+ * Returns the priority text based on the priority level.
+ * @param {string} prio - The priority level (e.g., 'low', 'medium', 'urgent').
+ * @returns {string} - The corresponding priority text.
+ */
+function getPriorityText(prio) {
+    let priorityMap = {
+        'low': 'Low',
+        'medium': 'Medium',
+        'urgent': 'Urgent'
+    };
+    return priorityMap[prio] || 'Unknown';
 }
