@@ -5,7 +5,6 @@ function displayAddContactButtons() {
     if (document.getElementById('show-overlay') || document.getElementById('add-contact-icon')) {
         return;
     }
-
     let contactList = document.querySelector('.contact-list');
     if (!contactList) {
         console.error("Contact list container not found.");
@@ -13,12 +12,7 @@ function displayAddContactButtons() {
     }
 
     let addButtonLarge = generateAddButtonLargeHTML();
-    let addButtonSmall = generateAddButtonSmallHTML();
-
     contactList.insertAdjacentHTML('afterbegin', addButtonLarge);
-    document.body.insertAdjacentHTML('beforeend', addButtonSmall);
-
-    attachAddContactButtonListeners();
 }
 
 
