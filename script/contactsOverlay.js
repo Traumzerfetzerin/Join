@@ -112,3 +112,14 @@ document.getElementById('add-contact-icon')?.addEventListener('click', () => {
     console.log('Add contact icon clicked');
     document.getElementById('overlay').style.display = 'block';
 });
+
+/**
+ * Toggles the visibility of the options menu and the add contact icon.
+ */
+function toggleOptions() {
+    let menu = document.getElementById('options-menu');
+    menu.classList.toggle('dNone');
+
+    let addContactIcon = document.getElementById('add-contact-icon');
+    addContactIcon.classList.toggle('dNone');
+}

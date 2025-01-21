@@ -351,5 +351,3 @@ if (deleteLink) {
     deleteLink.addEventListener('click', handleDeleteLinkClick);
 } else {
 }
-
-
