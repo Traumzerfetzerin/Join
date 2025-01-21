@@ -88,26 +88,25 @@ body {
 
 .login-signup-button {
     order: -1;
-    /* Moves it to the top for desktop */
     margin-top: 20px;
     margin-left: auto;
-    margin-right: 7%;
-    /* Align to the right */
+    margin-right: 3%;
     display: flex;
-    /* Ensures the span and button text stay in a row */
     align-items: center;
-    /* Vertically center align the content inside */
-    justify-content: center;
-    /* Horizontally center the content */
+    justify-content: space-around;
     padding: 10px 20px;
-    /* Adjust padding */
     gap: 5px;
+    width: 22%;
 }
 
 /* Prevent the button content from distorting */
 .login-signup-button span {
     white-space: nowrap;
     /* Prevents the text from wrapping */
+}
+
+.login-signup-button button {
+    width: 100%;
 }
 
 .input-group {

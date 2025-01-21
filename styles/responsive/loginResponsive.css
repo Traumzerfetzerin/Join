@@ -103,22 +103,6 @@
         font-size: 12px;
     }
 
-    .login-signup-button {
-        order: 1;
-        /* Moves it to the bottom */
-        margin-top: auto;
-        /* Pushes the button to the bottom */
-        margin-bottom: 20px;
-        /* Adds space from the bottom */
-        margin-left: auto;
-        margin-right: auto;
-        /* Centers the button horizontally */
-    }
-
-    .login-signup-button button {
-        width: 100%;
-    }
-
     .legalPolicy {
         margin-top: 10px;
         display: flex;
@@ -227,17 +211,6 @@
         font-size: 12px;
     }
 
-    /* Login-signup button */
-    .login-signup-button {
-        position: relative;
-        /* Keep it in the document flow */
-        align-self: center;
-        margin-top: auto;
-        /* Pushes it to the end of content */
-        margin-bottom: 20px;
-        /* Adds some breathing room at bottom */
-    }
-
     .legalPolicy {
         display: flex;
         gap: 30px;
@@ -245,29 +218,19 @@
     }
 
     .login-signup-button {
-        order: 1;
-        /* Moves it to the bottom */
+        position: relative;
+        align-self: center;
         margin-top: 10px;
-        /* Pushes the button to the bottom */
-        margin-bottom: 20px;
-        /* Adds space from the bottom */
-        margin-left: auto;
-        margin-right: auto;
-        /* Centers the button horizontally */
-    }
-
-    .login-signup-button button {
-        width: 100%;
+        margin-bottom: 0px;
+        margin-right: 60% !important;
+        order: 0 !important;
+        width: 100% !important;
     }
 }
 
 @media (max-width: 500px) {
     .login-joinContainer {
         width: 90% !important;
-    }
-
-    .login-signup-button {
-        order: 0 !important;
     }
 
     .joinLogo {
@@ -347,24 +310,6 @@
         cursor: pointer;
     }
 
-    /* Position the login-signup-button at the bottom of the viewport */
-    .login-signup-button {
-        position: fixed;
-        /* Keep it fixed at the bottom */
-        bottom: 15px;
-        /* Adjust distance from the bottom */
-        left: 50%;
-        transform: translateX(-50%);
-        /* Center horizontally */
-        width: 90%;
-        /* Full width to fill small screens */
-        max-width: 350px;
-        /* Optional max width */
-        text-align: center;
-        /* Center the button text */
-        cursor: pointer;
-    }
-
     /* Adjust logo size */
     #login-logoContainer {
         width: 50px;
@@ -401,26 +346,11 @@
         /* Smaller font size for very small screens */
     }
 
-    .login-signup-button {
-        position: relative;
-        align-self: center;
-        margin-top: 10px;
-        margin-bottom: 0px;
-        order: 0 !important;
-        justify-content: center;
-        /* Ensures it appears above legalPolicy */
-    }
-
     .legalPolicy {
         display: flex;
         gap: px;
         margin-bottom: 20px;
         order: 2;
-        /* Ensures it appears below login-signup-button */
         margin-top: 0;
-    }
-
-    .login-signup-button button {
-        width: 100%;
     }
 }

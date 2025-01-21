@@ -160,6 +160,7 @@ async function guestLogin() {
     setTimeout(() => {
         window.location.href = 'summary.html';
     }, 1000);
+    showToast('Login successful! Redirecting...');
 }
 
 /**
