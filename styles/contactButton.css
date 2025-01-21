@@ -10,6 +10,20 @@
     cursor: pointer;
 }
 
+.close-button-area {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    text-align: center;
+    width: 100%;
+    background-color: #fff;
+    height: 60px;
+    padding: 10px;
+}
+
 .close-button {
     margin-top: 10px;
 }
@@ -135,13 +149,12 @@
 
 .okButtonOverlay {
     display: flex;
-    justify-content: end;
-    bottom: 0;
-    padding: 10px 0;
+    justify-content: flex-end; 
+    align-items: center; 
+    position: sticky;
+    bottom: -25px;
     z-index: 100;
     text-align: center;
     width: 100%;
-    position: sticky;
-    margin-top: 5%;
-    background-color: #fff;
-    }
+    background-color: #fff; 
+}

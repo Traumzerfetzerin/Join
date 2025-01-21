@@ -71,7 +71,7 @@ function getBoardOverlayTemplate(category, task) {
        <div class="board-overlay" data-task-id="${task.id}">
            <div class="overlay-header">
                <h2 id="task-category" class="task-category ${categoryClass}">${category}</h2>
-               <button class="close-button" onclick="closeTaskOverlay(event)">×</button>
+               <div class="close-button-area"><button class="close-button" onclick="closeTaskOverlay(event)">×</button></div>
            </div>
            <div class="overlay-content">
                <h1 class="task-title">${task.title || "No title"}</h1>
