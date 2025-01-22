@@ -30,6 +30,9 @@
         font-size: 40px;
     }
 
+    .summarynmb {
+        line-height: 98.8px;
+    }
     .pencil {
         height: 110px;
     }
@@ -123,6 +126,7 @@
         top: -50px;
         position: relative;
         left: -78px;
+        gap: 0;
     }
 
     .urgent {

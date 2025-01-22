@@ -326,8 +326,8 @@
 #summaryimgTodo {
     background: url(../Assets/pencil.svg) no-repeat;
     background-size: cover;
-    height: 69px;
-    width: 69px;
+    height: 41px;
+    width: 40px;
     border-radius: 10px;
     transition: background 0.3s ease;
 }
@@ -339,8 +339,8 @@
 #summaryimgDone {
     background: url(../Assets/Ckeck.svg) no-repeat;
     background-size: cover;
-    height: 69px;
-    width: 69px;
+    height: 40px;
+    width: 40px;
     border-radius: 10px;
     transition: background 0.3s ease;
 }
