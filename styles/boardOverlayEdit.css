@@ -167,14 +167,21 @@ button[onclick="toggleEditDropdown()"]:hover {
     width: 100%;
 }
 
+#overlay-due-input-edit{
+    width: 320%;
+}
 
 #edit-task-due-date {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 #prioOverlay{
     margin-top: 10px;
     margin-bottom: 6px;
+}
+ 
+#prioOverlayEdit {
+    width: 170% !important;
 }
 
 #contact-icons-container {

@@ -126,7 +126,7 @@ function countTasksByColumn(tasks) {
  */
 function initializeCounts() {
     return {
-        todo: 0,
+        toDo: 0,
         done: 0,
         inProgress: 0,
         awaitFeedback: 0,
@@ -192,7 +192,7 @@ function updateUrgentCount(task, counts) {
  */
 function setSummaryCounts(counts) {
     let selectors = {
-        todo: ".summarynmb.todo",
+        toDo: ".summarynmb.todo",
         done: ".summarynmb.done",
         urgent: ".urgentnmb",
         total: ".tasknmb.board",

@@ -32,4 +32,18 @@
         overflow: scroll;
         height: 85px;
     }
+
+    #prioOverlayEdit {
+        width: 122% !important;
+        height: 100 !important;
+    }
+
+    #button-overlay-edit {
+        height: 50% !important;
+        width: 50% !important;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }

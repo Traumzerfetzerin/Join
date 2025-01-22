@@ -236,7 +236,7 @@ function generatePrioButtonsHTML(selectedPrio, context) {
             ${prioOptions.map(option => `
                 <button 
                     type="button" 
-                    class="prio-button cursorPointer fonts ${option.class}${suffix} ${selectedPrio === option.class ? `${option.class}White` : ""}" 
+                    class="prio-button cursorPointer fonts ${option.class}${suffix} ${selectedPrio === option.class ? `${option.class}White` : ""}" id="button-overlay-edit" 
                     data-prio="${option.class}" 
                     onclick="setPrio('${option.class}', '${context}', event)">
                     ${option.label}

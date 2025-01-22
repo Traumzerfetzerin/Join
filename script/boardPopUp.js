@@ -14,7 +14,6 @@ async function showTaskOverlay(category, taskId) {
 
     updateOverlayContent(category, task);
     showOverlay();
-    setPriorityText();
     return Promise.resolve("Overlay displayed successfully");
 }
 

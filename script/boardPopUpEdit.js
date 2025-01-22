@@ -56,8 +56,9 @@ function setTaskDescription(description) {
  */
 function setTaskDueDate(dueDate) {
     document.querySelector('.task-info p:nth-child(1)').innerHTML = `
-        <h3 class="overlay-heading" id="overlay-due">Due date</h3>
-        <input type="date" id="edit-task-due-date" value="${dueDate || ''}" class="input-field" />
+        <div id="overlay-due-edit>"<h3 class="overlay-heading" id="overlay-due">Due date</h3>
+        <div id="overlay-due-input-edit"><input type="date" id="edit-task-due-date" value="${dueDate || ''}" class="input-field" /></div>
+        </div>
     `;
 }
 
@@ -67,9 +68,10 @@ function setTaskDueDate(dueDate) {
  */
 function setTaskPriority(prio) {
     document.querySelector('.task-info p:nth-child(2)').innerHTML = `
-        <h3 class="overlay-heading">Priority</h3>
-        <div id="prioOverlay" class="prio-buttons">
+        <div id="prio-overlay-edit"<h3 class="overlay-heading">Priority</h3>
+        <div id="prioOverlayEdit" class="prio-buttons">
             ${generatePrioButtonsHTML(prio, "setPrio", "Overlay")}
+        </div>
         </div>
     `;
 }
