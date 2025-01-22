@@ -1,3 +1,14 @@
+function initializeBoard() {
+    fetchAllTasks();
+    let prioContainer = document.querySelector('.prio-container #prioOverlayEdit');
+    if (prioContainer) {
+        renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
+    } else {
+        console.error("Priority container not found at page load.");
+    }
+}
+
+
 /**
  * Loads tasks into their respective columns on the board.
  * @param {object} tasks - Tasks retrieved from Firebase.
@@ -20,7 +31,8 @@ function loadTasks(tasks) {
     }
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
-    renderPrioButtons("#prioOverlay", "overlay");
+    renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
+;
 
     calculateDueDate();
     resetFormFields();

@@ -15,7 +15,7 @@ async function enableEditMode(task, category) {
     setTaskDescription(task.description);
     setTaskDueDate(task.dueDate);
     setTaskPriority(task.prio);
-    setTimeout(() => setPrio(task.prio, "overlay"), 100);
+    setTimeout(() => setPrio(task.prio, "overlay"), 200);
 
     let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
     let contactsData = await response.json();
@@ -70,17 +70,19 @@ function setTaskDueDate(dueDate) {
 }
 
 
-
 function setTaskPriority(prio) {
-    let prioContainer = document.querySelector('.prio-container');
-    if (prioContainer) {
-        prioContainer.innerHTML = `
-            <h3 class="overlay-heading">Priority</h3>
-            <div id="prioOverlayEdit" class="prio-buttons"></div>
-        `;
+    let editPrioContainer = document.querySelector('#prioOverlayEdit');
+    let normalPrioContainer = document.querySelector('#prioOverlay');
+
+    if (editPrioContainer) {
         renderPrioButtons("#prioOverlayEdit", "overlay");
-    } else {
-        console.error("Priority container not found!");
+    }
+
+    if (normalPrioContainer) {
+        normalPrioContainer.innerHTML = `
+            <h3 class="overlay-heading">Priority</h3>
+            <img src="${getPrioIcon(prio)}" class="priority-icon" alt="Priority">
+        `;
     }
 }
 

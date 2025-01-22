@@ -42,7 +42,7 @@
     <script src="../script/boardPopUpEditContacts.js"></script>
     <script src="../script/contactsDisplay.js"></script>
 
-<body onload="fetchAllTasks(), renderPrioButtons()">
+    <body onload="initializeBoard()">
     <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbarLoggedIn.html"></aside>
 
@@ -119,7 +119,7 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML(() => {
-            renderPrioButtons("#prioOverlay", "overlay");
+            renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
         });
     </script>
     <script src="../script/board.js"></script>

@@ -9,7 +9,8 @@ async function editTask(taskId, category) {
 
     enableEditMode(task, category);
     renderSubtasksInEditMode(task, category);
-    renderPrioButtons("#prioOverlay", "overlay");
+    renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
+
 
 
     if (task.contacts && task.contacts.length > 0) {
