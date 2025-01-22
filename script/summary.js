@@ -71,10 +71,7 @@ async function loadSummaryData() {
     try {
         let response = await fetch(`${TASK_URL}.json`);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
-        
         let tasks = await response.json();
-        console.log("Fetched tasks:", tasks);
-
         if (Object.keys(tasks).length === 0) {
             console.warn("No tasks found in Firebase.");
             document.getElementById('upcomingDeadline').textContent = "No upcoming deadlines.";
@@ -299,15 +296,12 @@ function findClosestDate(tasks) {
         return null;
     }
 
-    console.log("Tasks received in findClosestDate:", tasks);
-
     for (let category in tasks) {
         let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
 
             if (task.dueDate) {
-                console.log("Processing dueDate:", task.dueDate);
                 let dueDate = new Date(task.dueDate.replace(/-/g, '/'));
                 
                 if (!isNaN(dueDate.getTime())) {
@@ -320,8 +314,6 @@ function findClosestDate(tasks) {
             }
         }
     }
-
-    console.log("Final closestDate:", closestDate);
     return closestDate;
 }
 
