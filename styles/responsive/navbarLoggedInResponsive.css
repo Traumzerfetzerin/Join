@@ -1,0 +1,12 @@
+@media (max-width: 990px) {
+    .navbarResponse {
+        display: none;
+    }
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        height: 82px;
+    }
+}
