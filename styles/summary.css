@@ -328,7 +328,7 @@
     background-size: cover;
     height: 41px;
     width: 40px;
-    border-radius: 10px;
+    border-radius: 20px;
     transition: background 0.3s ease;
 }
 
