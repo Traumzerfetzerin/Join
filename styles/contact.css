@@ -18,10 +18,11 @@
 }
 
 .contacts-container {
-    margin-top: 2px;
+    margin-top: 5px;
     display: flex;
     width: 100%;
     background-color: rgb(255, 255, 255);
+    height: 100vh;
 }
 
 .contact-list {
@@ -406,4 +407,8 @@
     width: 38px;
     height: 38px;
     object-fit: contain;
+}
+
+#dots-icon {
+    display: none;
 }

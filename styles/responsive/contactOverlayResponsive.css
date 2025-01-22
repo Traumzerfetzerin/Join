@@ -58,6 +58,25 @@
         box-sizing: border-box;
         background-color: lightgrey;
     }
+
+    #dots-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: #2A3647;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        bottom: 100px;
+        }
+
+    .contacts-container{
+        height: 100vh;
+    }
+
+    .editSection{
+        display: none;
+    }
 }
 
 @media (max-width: 710px) {
@@ -91,7 +110,7 @@
 
     .contactOverlayLeft {
         width: 100%;
-        height: 40%;
+        height: auto;
         padding: 20px;
         box-sizing: border-box;
         overflow: hidden;
@@ -140,7 +159,7 @@
 
     .contact-initials-overlay {
         position: absolute;
-        top: calc(100% - 330px);
+        top: calc(100% - 365px);
         left: 50%;
         transform: translate(-50%, -50%);
         width: 90px;

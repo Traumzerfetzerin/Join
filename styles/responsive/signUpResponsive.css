@@ -25,6 +25,12 @@
     }
 }
 
+@media (max-width: 500px) {
+    #signup-logoContainer {
+        top: 120px;
+    }
+}
+
 @media (max-width: 480px) {
     #signup-logoContainer {
         top: 70px;
