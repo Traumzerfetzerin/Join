@@ -10,4 +10,8 @@
     #sidelinks {
         flex-direction: row;
     }
+
+    .user-icon {
+        display: flex;
+    }
 }

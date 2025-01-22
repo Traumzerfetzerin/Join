@@ -10,4 +10,9 @@
         height: 82px;
         margin: 0;
     }
+
+    .forMobile {
+        display: flex;
+        flex-direction: row-reverse;
+    }
 }
