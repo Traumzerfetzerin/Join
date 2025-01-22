@@ -1,5 +1,5 @@
 let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
-
+let closestDate = null;
 
 /**
  * Navigates to the "To-Do" section.
@@ -71,21 +71,30 @@ async function loadSummaryData() {
     try {
         let response = await fetch(`${TASK_URL}.json`);
         if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+        
         let tasks = await response.json();
+        console.log("Fetched tasks:", tasks);
 
-            if (document.querySelector(".summarynmb.todo")) {
-                updateSummaryMetrics(tasks);
-            }
+        if (Object.keys(tasks).length === 0) {
+            console.warn("No tasks found in Firebase.");
+            document.getElementById('upcomingDeadline').textContent = "No upcoming deadlines.";
+            return;
+        }
 
-            if (document.querySelector(".urgent-date")) {
-                updateUrgentTaskDate(tasks);
-            }
+        if (document.querySelector(".summarynmb.todo")) {
+            updateSummaryMetrics(tasks);
+        }
+
+        if (document.querySelector(".urgent-date")) {
+            updateUrgentTaskDate(tasks);
+        }
+
+        updateUpcomingDeadline(tasks);
 
     } catch (error) {
         console.error("Error fetching summary data:", error);
     }
 }
-
 
 
 
@@ -205,7 +214,6 @@ function setSummaryCounts(counts) {
 }
 
 
-
 /**
  * Updates the urgent task count in the UI.
  * @param {Array} urgentTasks - The urgent tasks.
@@ -222,14 +230,17 @@ function updateUrgentTaskCount(urgentTasks) {
  */
 function updateNextDeadline(closestDate) {
     let dateElement = document.getElementById('upcomingDeadline');
+    console.log("Closest date to display:", closestDate);
 
     if (dateElement) {
         if (closestDate) {
             let options = { year: 'numeric', month: 'long', day: 'numeric' };
-            dateElement.innerHTML = `<strong>${closestDate.toLocaleDateString('en-GB', options)}</strong> - Upcoming Deadline`;
+            dateElement.innerHTML = `<p>${closestDate.toLocaleDateString('en-GB', options)} - Upcoming Deadline</p>`;
         } else {
-            dateElement.textContent = "";
+            dateElement.innerHTML = "<p>No upcoming deadlines.</p>";
         }
+    } else {
+        console.warn("Element #upcomingDeadline not found.");
     }
 }
 
@@ -259,32 +270,82 @@ function updateUrgentTaskDate(tasks) {
  */
 function findUrgentTasks(tasks) {
     let urgentTasks = [];
+    console.log("Tasks received in findUrgentTasks:", tasks);
     for (let category in tasks) {
         let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
-            if (task.prio === "urgent") urgentTasks.push(task);
+            if (task.prio === "urgent") {
+                console.log("Urgent task found:", task);
+                urgentTasks.push(task);
+            }
         }
     }
+    console.log("Urgent tasks extracted:", urgentTasks);
     return urgentTasks;
 }
 
 
 /**
  * Finds the closest due date from an array of tasks.
- * @param {Array} tasks - An array of tasks.
+ * @param {object} tasks - The tasks retrieved from Firebase.
  * @returns {Date|null} - The closest due date or null if none exists.
  */
 function findClosestDate(tasks) {
     let closestDate = null;
-    tasks.forEach(task => {
-        let dueDate = new Date(task.dueDate);
-        if (!closestDate || dueDate < closestDate) {
-            closestDate = dueDate;
+
+    if (!tasks || Object.keys(tasks).length === 0) {
+        console.warn("No tasks available to process.");
+        return null;
+    }
+
+    console.log("Tasks received in findClosestDate:", tasks);
+
+    for (let category in tasks) {
+        let categoryTasks = tasks[category];
+        for (let taskId in categoryTasks) {
+            let task = categoryTasks[taskId];
+
+            if (task.dueDate) {
+                console.log("Processing dueDate:", task.dueDate);
+                let dueDate = new Date(task.dueDate.replace(/-/g, '/'));
+                
+                if (!isNaN(dueDate.getTime())) {
+                    if (!closestDate || dueDate < closestDate) {
+                        closestDate = dueDate;
+                    }
+                } else {
+                    console.warn("Invalid date format:", task.dueDate);
+                }
+            }
         }
-    });
+    }
+
+    console.log("Final closestDate:", closestDate);
     return closestDate;
 }
+
+
+/**
+ * Updates the upcoming deadline in the UI.
+ * @param {object} tasks - The tasks retrieved from Firebase.
+ */
+function updateUpcomingDeadline(tasks) {
+    let closestDate = findClosestDate(tasks);
+
+    let dateElement = document.getElementById('upcomingDeadline');
+    if (dateElement) {
+        if (closestDate) {
+            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            dateElement.innerHTML = `<p>${closestDate.toLocaleDateString('en-GB', options)} - Upcoming Deadline</p>`;
+        } else {
+            dateElement.innerHTML = "<p>No upcoming deadlines.</p>";
+        }
+    } else {
+        console.warn("Element #upcomingDeadline not found.");
+    }
+}
+
 
 
 /**
