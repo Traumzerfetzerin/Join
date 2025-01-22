@@ -181,7 +181,7 @@ button[onclick="toggleEditDropdown()"]:hover {
 }
  
 #prioOverlayEdit {
-    width: 170% !important;
+    width: 100% !important;
 }
 
 #contact-icons-container {

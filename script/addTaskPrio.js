@@ -55,7 +55,7 @@ function activatePrioButton(priority, containerSelector) {
 function setPrio(priority, context = "normal", event = null) {
     if (event) event.preventDefault();
 
-    let containerSelector = context === "overlay" ? "#prioOverlay, #prio-overlay-edit" : ".prioButtonsContainer";
+    let containerSelector = context === "overlay" ? "#prioOverlay" : ".prioButtonsContainer";
     
     resetPrioButtons(containerSelector);
     activatePrioButton(priority, containerSelector);
@@ -86,7 +86,7 @@ function renderPrioButtons(containerSelectors, context = "normal") {
  */
 document.addEventListener("DOMContentLoaded", function () {
     renderPrioButtons(".prioButtonsContainer", "normal");
-    renderPrioButtons("#prioOverlay, #prio-overlay-edit", "overlay");
+    renderPrioButtons("#prioOverlay", "overlay");
 
 });
 

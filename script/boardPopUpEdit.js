@@ -63,18 +63,38 @@ function setTaskDueDate(dueDate) {
 }
 
 /**
- * Sets the task priority in the overlay with proper styling.
+ * Initializes the priority layout in the overlay.
+ */
+function initializePriorityLayout() {
+    let prioContainer = document.querySelector('.prio-container') || document.querySelector('.task-info');
+        if (prioContainer) {
+            setTimeout(() => {
+                prioContainer.innerHTML = `
+                    <div id="prioOverlay">
+                        <h3 class="overlay-heading">Priority</h3>
+                        <div id="prioOverlayEdit" class="prio-buttons"></div>
+                    </div>
+                `;
+            }, 0);
+}}
+
+/**
+ * Sets and renders the task priority buttons.
  * @param {string} prio - The priority of the task.
  */
 function setTaskPriority(prio) {
-    document.querySelector('.task-info p:nth-child(2)').innerHTML = `
-        <div id="prio-overlay-edit"<h3 class="overlay-heading">Priority</h3>
-        <div id="prioOverlayEdit" class="prio-buttons">
-            ${generatePrioButtonsHTML(prio, "setPrio", "Overlay")}
-        </div>
-        </div>
-    `;
-}
+    initializePriorityLayout();
+    renderPrioButtons("#prioOverlayEdit", "overlay");
+        setTimeout(() => {
+            let prioElement = document.querySelector("#prioOverlayEdit");
+            if (prioElement) {
+                renderPrioButtons("#prioOverlayEdit", "overlay");
+            } else {
+                console.error("Prio overlay element not found!");
+            }
+        }, 100);
+    }
+    
 
 /**
  * Sets the subtasks section in the overlay.

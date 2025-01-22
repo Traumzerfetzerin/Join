@@ -20,7 +20,7 @@ function loadTasks(tasks) {
     }
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
-    renderPrioButtons("#prioOverlay, #prio-overlay-edit", "overlay");
+    renderPrioButtons("#prioOverlay", "overlay");
 
     calculateDueDate();
     resetFormFields();
