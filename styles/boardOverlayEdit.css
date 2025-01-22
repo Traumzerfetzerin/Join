@@ -167,6 +167,16 @@ button[onclick="toggleEditDropdown()"]:hover {
     width: 100%;
 }
 
+#overlay-due-edit {
+    display: block !important;
+    visibility: visible !important;
+}
+
+.task-due-container {
+    display: block !important;
+    visibility: visible !important;
+}
+
 #overlay-due-input-edit{
     width: 320%;
 }

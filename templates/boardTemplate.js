@@ -69,17 +69,22 @@ function getBoardOverlayTemplate(category, task) {
 
     return `
        <div class="board-overlay" data-task-id="${task.id}">
-           <div class="overlay-header">
-               <h2 id="task-category" class="task-category ${categoryClass}">${category}</h2>
-               <div class="close-button-area"><button class="close-button" onclick="closeTaskOverlay(event)">×</button></div>
-           </div>
-           <div class="overlay-content">
-               <h1 class="task-title">${task.title || "No title"}</h1>
-               <p class="task-description">${task.description || "No description"}</p>
-               <div class="task-info">
-                   <p><strong>Due Date:</strong> ${task.dueDate || "No due date"}</p>
-                   <p><strong>Priority:</strong> <img src="${priorityIcon}" class="priority-icon"></p> <!-- Display priority icon -->
-               </div>
+        <div class="overlay-header">
+            <h2 id="task-category" class="task-category ${categoryClass}">${category}</h2>
+            <button class="close-button" onclick="closeTaskOverlay(event)">×</button>
+        </div>
+        <div class="overlay-content">
+            <h1 class="task-title">${task.title || "No title"}</h1>
+            <p class="task-description">${task.description || "No description"}</p>
+            <div class="task-info">
+                    <div class="due-date-container">
+                        <h3 class="overlay-heading">Due date</h3>
+                        <input type="date" id="edit-task-due-date" value="${task.dueDate || ''}" class="input-field" />
+                    </div>
+                    <div class="prio-container">
+                        <h3 class="overlay-heading">Priority</h3>
+                        <div id="prioOverlayEdit" class="prio-buttons"></div>
+                    </div>
                <div class="contacts-section">
                    <strong>Assigned To:</strong>
                    <div id="cardOverlayContacts" class="contact-list-overlay">${contactList}</div>

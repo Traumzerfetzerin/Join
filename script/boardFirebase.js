@@ -93,25 +93,32 @@ function validateResponse(response) {
 
 
 /**
- * Fetches all tasks from Firebase.
- * @param {string} [category] - Optional. Task category.
- * @param {string} [taskId] - Optional. Task ID.
- * @returns {Object|null} - The task object or all tasks, or null if not found.
+ * Fetches all tasks or a specific task from Firebase.
+ * @param {string} [category] - Optional. Task category to fetch a specific task.
+ * @param {string} [taskId] - Optional. Task ID to fetch a specific task.
+ * @returns {Promise<Object|null>} - The task object or all tasks, or null if not found.
  */
 async function fetchTasks(category, taskId) {
     try {
         let allContacts = await fetchAllContacts();
         let nameToIdMap = createNameToIdMap(allContacts);
+
+        let tasks;
         if (category && taskId) {
-            return await fetchSingleTask(category, taskId, nameToIdMap);
+            tasks = await fetchSingleTask(category, taskId, nameToIdMap);
+            console.log(`Fetched single task:`, tasks);
         } else {
-            return await fetchAllTasks(nameToIdMap);
+            tasks = await fetchAllTasks(nameToIdMap);
+            console.log(`Fetched all tasks:`, tasks);
         }
+
+        return tasks || null;
     } catch (error) {
         console.error("Error fetching tasks:", error.message, error.stack);
         return null;
     }
 }
+
 
 
 /**

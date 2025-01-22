@@ -4,12 +4,18 @@
  * @param {string} category - The category of the task.
  */
 async function enableEditMode(task, category) {
+    if (!task || !task.dueDate) {
+        console.error("Task data is missing or dueDate not found:", task);
+        return;
+    }
+
+    console.log("Loaded task dueDate:", task.dueDate);
+
     setTaskTitle(task.title);
     setTaskDescription(task.description);
     setTaskDueDate(task.dueDate);
     setTaskPriority(task.prio);
-
-    setTimeout(() => setPrio(task.prio, "overlay"), 0);
+    setTimeout(() => setPrio(task.prio, "overlay"), 100);
 
     let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
     let contactsData = await response.json();
@@ -50,51 +56,34 @@ function setTaskDescription(description) {
     `;
 }
 
-/**
- * Sets the task due date in the overlay with proper styling.
- * @param {string} dueDate - The due date of the task.
- */
 function setTaskDueDate(dueDate) {
-    document.querySelector('.task-info p:nth-child(1)').innerHTML = `
-        <div id="overlay-due-edit>"<h3 class="overlay-heading" id="overlay-due">Due date</h3>
-        <div id="overlay-due-input-edit"><input type="date" id="edit-task-due-date" value="${dueDate || ''}" class="input-field" /></div>
-        </div>
-    `;
+    let dueContainer = document.querySelector('.due-date-container');
+    if (dueContainer) {
+        dueContainer.innerHTML = `
+            <h3 class="overlay-heading">Due date</h3>
+            <input type="date" id="edit-task-due-date" value="${dueDate || ''}" class="input-field" />
+        `;
+        console.log("Due date successfully updated:", dueDate);
+    } else {
+        console.error("Due date container not found!");
+    }
 }
 
-/**
- * Initializes the priority layout in the overlay.
- */
-function initializePriorityLayout() {
-    let prioContainer = document.querySelector('.prio-container') || document.querySelector('.task-info');
-        if (prioContainer) {
-            setTimeout(() => {
-                prioContainer.innerHTML = `
-                    <div id="prioOverlay">
-                        <h3 class="overlay-heading">Priority</h3>
-                        <div id="prioOverlayEdit" class="prio-buttons"></div>
-                    </div>
-                `;
-            }, 0);
-}}
 
-/**
- * Sets and renders the task priority buttons.
- * @param {string} prio - The priority of the task.
- */
+
 function setTaskPriority(prio) {
-    initializePriorityLayout();
-    renderPrioButtons("#prioOverlayEdit", "overlay");
-        setTimeout(() => {
-            let prioElement = document.querySelector("#prioOverlayEdit");
-            if (prioElement) {
-                renderPrioButtons("#prioOverlayEdit", "overlay");
-            } else {
-                console.error("Prio overlay element not found!");
-            }
-        }, 100);
+    let prioContainer = document.querySelector('.prio-container');
+    if (prioContainer) {
+        prioContainer.innerHTML = `
+            <h3 class="overlay-heading">Priority</h3>
+            <div id="prioOverlayEdit" class="prio-buttons"></div>
+        `;
+        renderPrioButtons("#prioOverlayEdit", "overlay");
+    } else {
+        console.error("Priority container not found!");
     }
-    
+}
+
 
 /**
  * Sets the subtasks section in the overlay.
