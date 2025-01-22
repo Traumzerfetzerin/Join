@@ -5,4 +5,8 @@
         max-height: calc(80vh - 96px);
         margin-top: 120px;
     }
+
+    .user-icon {
+        display: flex;
+    }
 }

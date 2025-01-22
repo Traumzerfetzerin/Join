@@ -29,6 +29,10 @@
     .mainSectionAddTask {
         margin-left: 0px;
     }
+
+    .sidelinks {
+        flex-direction: row;
+    }
 }
 
 @media (max-width: 710px) {
