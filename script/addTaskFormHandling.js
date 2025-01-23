@@ -90,8 +90,6 @@ async function createTasks(event) {
 }
 
 
-
-
 /**
  * Highlights invalid or missing required fields and resets borders after a delay.
  * 

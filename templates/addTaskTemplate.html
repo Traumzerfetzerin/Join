@@ -30,12 +30,12 @@
                             <img src="../Assets/addTask/Property 1=Variant4.svg" id="dropdown1"
                                 class="cursorPointer margin-right dropdownimg d-none" onclick="toggleDropdown()">
                         </div>
-                        <!-- Custom Dropdown with checkboxes -->
                         <div id="assignTaskDropdown" class="dNone">
-                            <!-- Options will be dynamically generated with checkboxes -->
                         </div>
                     </div>
+                    <div class="flex" id="selectedContactsContainer"></div>
                 </div>
+
             </div>
 
             <div class="seperator"></div>
@@ -50,7 +50,8 @@
                         id="dueDate" required>
                 </section>
 
-                <section> <div class="prioButtonsContainer"></div>
+                <section>
+                    <div class="prioButtonsContainer"></div>
                 </section>
 
                 <div class="input-group">
@@ -107,7 +108,8 @@
         <button id="clearButton" class="clearButton cursorPointer" onclick="clearTasks()">Clear
             <img src="../Assets/addTask/Vector.svg" alt="">
         </button>
-        <button type="button" class="createButton cursorPointer" id="createTask" onclick="createTasks(event), fetchAndPopulateContacts()">Create
+        <button type="button" class="createButton cursorPointer" id="createTask"
+            onclick="createTasks(event), fetchAndPopulateContacts()">Create
             Task
             <img src="../Assets/addTask/check.svg" alt="">
         </button>

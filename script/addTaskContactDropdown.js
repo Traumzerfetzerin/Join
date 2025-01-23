@@ -2,10 +2,12 @@ let selectedContacts = [];
 
 
 /**
- * Loads contacts from the Firebase database and populates the checkbox dropdown.
+ * Fetches contacts from Firebase and populates the dropdown with checkboxes.
  * 
  * @async
- * @returns {Promise<void>} Resolves when contacts are loaded and the dropdown is populated.
+ * @function loadContactsForDropdown
+ * @returns {Promise<void>} Resolves when contacts are loaded and dropdown is populated.
+ * @throws {Error} If fetching contacts fails.
  */
 async function loadContactsForDropdown() {
     try {
@@ -13,21 +15,26 @@ async function loadContactsForDropdown() {
         let contactsData = await response.json();
         if (contactsData) {
             contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-            populateCheckboxDropdown(); 
+            populateCheckboxDropdown();
         } else {
             console.log('No contacts found');
         }
     } catch (error) {
         console.error('Error fetching contacts:', error);
     }
+
+    document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updateAssignedContacts);
+    });
+
 }
 
 
 /**
- * Generates initials from the contact name and creates a span element to display them.
+ * Creates a span element displaying the initials of a contact.
  * 
- * @param {Object} contact - The contact object containing the name and color.
- * @returns {HTMLElement} The span element displaying the contact's initials.
+ * @param {Object} contact - The contact object containing the name.
+ * @returns {HTMLElement} The span element with the contact's initials.
  */
 function createInitialsSpan(contact) {
     let initials = generateInitials(contact.name);
@@ -45,7 +52,7 @@ function createInitialsSpan(contact) {
 /**
  * Generates initials from a contact's name.
  * 
- * @param {string} name - The name of the contact.
+ * @param {string} name - The full name of the contact.
  * @returns {string} The initials derived from the name.
  */
 function generateInitials(name) {
@@ -57,7 +64,7 @@ function generateInitials(name) {
 
 
 /**
- * Sets the background color for the initials span element.
+ * Sets the background color of the initials span based on the contact's color or a random color.
  * 
  * @param {HTMLElement} initialsSpan - The span element displaying the initials.
  * @param {Object} contact - The contact object containing the color property.
@@ -75,8 +82,9 @@ function setInitialsBackgroundColor(initialsSpan, contact) {
 
 /**
  * Creates a container with the contact's initials and name.
- * @param {Object} contact - The contact object.
- * @returns {HTMLElement} The name container.
+ * 
+ * @param {Object} contact - The contact object containing name and other details.
+ * @returns {HTMLElement} The container with initials and contact name.
  */
 function createNameContainer(contact) {
     let initialsSpan = createInitialsSpan(contact);
@@ -90,9 +98,10 @@ function createNameContainer(contact) {
 
 
 /**
- * Creates a contact entry with a name container and checkbox.
- * @param {Object} contact - The contact object containing name and other details.
- * @returns {HTMLElement} The entry container with name and checkbox elements.
+ * Creates a contact entry with name and checkbox elements.
+ * 
+ * @param {Object} contact - The contact object containing details.
+ * @returns {HTMLElement} The container with name and checkbox for the contact.
  */
 function createContactEntry(contact) {
     let entryContainer = generateDiv('entry-container');
@@ -105,8 +114,9 @@ function createContactEntry(contact) {
 
 /**
  * Creates a checkbox for a contact entry.
- * @param {Object} contact - The contact object containing name and other details.
- * @returns {HTMLElement} The checkbox element.
+ * 
+ * @param {Object} contact - The contact object containing details.
+ * @returns {HTMLElement} The checkbox element for the contact.
  */
 function createCheckbox(contact) {
     let checkbox = document.createElement('input');
@@ -120,9 +130,9 @@ function createCheckbox(contact) {
 }
 
 
-
 /**
  * Generates a div element with the specified class.
+ * 
  * @param {string} className - The class name to assign to the div.
  * @returns {HTMLElement} The created div element.
  */
@@ -134,9 +144,7 @@ function generateDiv(className) {
 
 
 /**
- * Populates the task assignment dropdown with contact entries.
- * Clears existing options, adds new contact entries, and makes the dropdown visible.
- * @returns {void}
+ * Populates the task assignment dropdown with contact entries and makes it visible.
  */
 function populateCheckboxDropdown() {
     let dropdown = document.getElementById("assignTaskDropdown");
@@ -148,8 +156,9 @@ function populateCheckboxDropdown() {
 
 
 /**
- * Clears all existing options in the dropdown.
- * @param {HTMLElement} dropdown - The dropdown element.
+ * Clears all options in the dropdown.
+ * 
+ * @param {HTMLElement} dropdown - The dropdown element to clear.
  */
 function clearDropdown(dropdown) {
     dropdown.innerHTML = '';
@@ -158,7 +167,8 @@ function clearDropdown(dropdown) {
 
 /**
  * Adds contact entries to the dropdown.
- * @param {HTMLElement} dropdown - The dropdown element.
+ * 
+ * @param {HTMLElement} dropdown - The dropdown element to populate with contacts.
  */
 function addContactsToDropdown(dropdown) {
     let entries = contacts.map(contact => createContactEntry(contact).outerHTML);
@@ -168,7 +178,8 @@ function addContactsToDropdown(dropdown) {
 
 /**
  * Makes the dropdown visible by removing the 'd-none' class.
- * @param {HTMLElement} dropdown - The dropdown element.
+ * 
+ * @param {HTMLElement} dropdown - The dropdown element to show.
  */
 function showDropdown(dropdown) {
     dropdown.classList.remove('d-none');
@@ -176,15 +187,43 @@ function showDropdown(dropdown) {
 
 
 /**
- * Updates the 'assigned-to' input field with a comma-separated list of selected contact names.
- *
+ * Updates the list of selected contacts and displays them in the 'assigned-to' input field.
+ * 
  * @returns {void}
  */
 function updateAssignedContacts() {
     selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
         .map(checkbox => checkbox.value);
 
+    console.log('Ausgewählte Kontakte:', selectedContacts);
     document.getElementById('assigned-to').value = selectedContacts.join(', ');
+
+    displaySelectedContacts();
+}
+
+
+/**
+ * Displays the selected contacts with their initials in the 'selectedContactsContainer'.
+ * 
+ * @returns {void}
+ */
+function displaySelectedContacts() {
+    let selectedContainer = document.getElementById('selectedContactsContainer');
+    selectedContainer.innerHTML = '';
+
+    console.log('Zeige ausgewählte Kontakte an:', selectedContacts);
+
+    selectedContacts.forEach(contactName => {
+        let contact = contacts.find(c => c.name === contactName);
+
+        if (contact) {
+            let initialsSpan = createInitialsSpan(contact);
+            let contactDiv = document.createElement('div');
+            contactDiv.classList.add('selected-contact');
+            contactDiv.appendChild(initialsSpan);
+            selectedContainer.appendChild(contactDiv);
+        }
+    });
 }
 
 
