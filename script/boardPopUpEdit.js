@@ -14,8 +14,6 @@ async function enableEditMode(task, category) {
         return;
     }
 
-    console.log("Loaded task dueDate:", task.dueDate);
-
     setTaskTitle(task.title);
     setTaskDescription(task.description);
     setTaskDueDate(task.dueDate);
@@ -68,7 +66,6 @@ function setTaskDueDate(dueDate) {
             <h3 class="overlay-heading">Due date</h3>
             <input type="date" id="edit-task-due-date" value="${dueDate || ''}" class="input-field" />
         `;
-        console.log("Due date successfully updated:", dueDate);
     } else {
         console.error("Due date container not found!");
     }

@@ -109,7 +109,6 @@ async function fetchTasks(category, taskId) {
             console.log(`Fetched single task:`, tasks);
         } else {
             tasks = await fetchAllTasks(nameToIdMap);
-            console.log(`Fetched all tasks:`, tasks);
         }
 
         return tasks || null;

@@ -53,10 +53,8 @@ function activatePrioButton(priority, containerSelector) {
  * @param {Event|null} [event=null] - The event that triggered the function, used to prevent default behavior.
  */
 function setPrio(priority, context = "normal", event = null) {
-    console.log("Setting priority:", priority, "Context:", context);
     if (event) event.preventDefault();
     let containerSelector = context === "overlay" ? "#prioOverlayEdit" : ".prioButtonsContainer";
-    console.log("Using container:", containerSelector);
     resetPrioButtons(containerSelector);
     activatePrioButton(priority, containerSelector);
 }

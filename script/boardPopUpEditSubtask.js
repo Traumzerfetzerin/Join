@@ -76,6 +76,7 @@ function updateSubtaskDisplay(subtaskElement, show) {
     subtaskElement.querySelector('.editSubtaskText').style.display = show ? 'block' : 'none';
     subtaskElement.querySelector('.subtask-icons').style.display = show ? 'flex' : 'none';
     subtaskElement.classList.toggle('editing', !show);
+    createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText)
 }
 
 
