@@ -4,38 +4,67 @@
  * @param {string} category - The category of the task.
  */
 async function enableEditMode(task, category) {
-    let overlayTitle = document.querySelector('.priority-title');
-    if (overlayTitle) {
-        overlayTitle.style.display = 'none';
-    }
+    hideElement('.priority-title');
+    if (!task || !task.dueDate) return console.error("Task data is missing or dueDate not found:", task);
+    setEditTaskDetails(task);
+    let contacts = await fetchEditContacts();
+    if (contacts) updateContacts(contacts, task.contacts || []);
+    renderSubtasksInEditMode(task, category);
+    updateOverlayActions(task.id, category);
+}
 
-    if (!task || !task.dueDate) {
-        console.error("Task data is missing or dueDate not found:", task);
-        return;
-    }
+/**
+ * Hides an HTML element by setting its display to 'none'.
+ * @param {string} selector - The CSS selector of the element to hide.
+ */
+function hideElement(selector) {
+    let element = document.querySelector(selector);
+    if (element) element.style.display = 'none';
+}
 
+/**
+ * Sets task details in the overlay.
+ * @param {Object} task - Task object containing details.
+ */
+function setEditTaskDetails(task) {
     setTaskTitle(task.title);
     setTaskDescription(task.description);
     setTaskDueDate(task.dueDate);
     setTaskPriority(task.prio);
     setTimeout(() => setPrio(task.prio, "overlay"), 200);
+}
 
+/**
+ * Fetches contact data from the database.
+ * @returns {Promise<Object>} The contact data.
+ */
+async function fetchEditContacts() {
     let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-    let contactsData = await response.json();
+    return await response.json();
+}
 
-    if (contactsData) {
-        let allContacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
-        updateContactDropdown(allContacts, task.contacts || []);
-        syncContactIcons(task.contacts || []);
-    }
+/**
+ * Updates the contact dropdown and synchronizes contact icons.
+ * @param {Object} allContacts - All available contacts.
+ * @param {Array} taskContacts - Contacts associated with the task.
+ */
+function updateContacts(allContacts, taskContacts) {
+    let contactsList = Object.keys(allContacts).map(key => ({ id: key, ...allContacts[key] }));
+    updateContactDropdown(contactsList, taskContacts);
+    syncContactIcons(taskContacts);
+}
 
-    renderSubtasksInEditMode(task, category);
-
+/**
+ * Updates the overlay action buttons.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ */
+function updateOverlayActions(taskId, category) {
     document.querySelector('.action-links').style.display = 'none';
     document.querySelector('.okButtonOverlay').innerHTML = `
-    <button class="okButton createButton cursorPointer" onclick="saveChanges('${task.id}', '${category}')">Ok ✓</button>
-`;
+        <button class="okButton createButton cursorPointer" onclick="saveChanges('${taskId}', '${category}')">Ok ✓</button>`;
 }
+
 
 /**
  * Sets the task title in the overlay with proper styling.
