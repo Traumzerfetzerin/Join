@@ -26,6 +26,7 @@ async function clearTasks() {
     document.getElementById('categorySelect').selectedIndex = 0;
     document.getElementById('categoryDropdown').classList.add('d-none');
     document.getElementById('subtaskSelect').value = "";
+    document.getElementById('selectedContactsContainer').innerHTML = "";
     contacts.forEach(contact => {
         let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
