@@ -47,7 +47,7 @@ async function resetTaskForm() {
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
-    
+
     contacts.forEach(contact => {
         let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
@@ -63,7 +63,8 @@ async function resetTaskForm() {
 
 /**
  * Handles task creation by collecting, validating, and submitting task data.
- * Highlights invalid fields and shows a popup if required fields are incomplete.
+ * Highlights invalid fields and shows a popup for missing required fields, 
+ * or proceeds to show the task creation popup if all fields are valid.
  * 
  * @async
  * @param {Event} event - The form submission event.
@@ -84,11 +85,10 @@ async function createTasks(event) {
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
 
-    await sendTaskToFirebase(taskData, taskData.category);
-    await clearTasks();
-    await finalizeTaskCreation();
+    await popUpAddTask();
     await changeToBoard();
 }
+
 
 
 
