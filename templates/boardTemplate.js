@@ -82,7 +82,7 @@ function getBoardOverlayTemplate(category, task) {
                         <input type="date" id="edit-task-due-date" value="${task.dueDate || ''}" class="input-field" />
                     </div>
                     <div class="prio-container">
-                        <h3 class="overlay-heading">Priority</h3>
+                        <h3 class="overlay-heading1">Priority</h3>
                         <div id="prioOverlayEdit" class="prio-buttons"></div>
                     </div>
                <div class="contacts-section">
@@ -227,6 +227,7 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
 }
 
 
+
 /**
  * Generates the HTML for priority buttons and binds click events.
  * Ensures the priority buttons are correctly generated with appropriate classes and event handlers.
@@ -237,6 +238,7 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
 function generatePrioButtonsHTML(selectedPrio, context) {
     let suffix = context === "overlay" ? "Overlay" : "";
     return `
+    ${context !== "overlay" ? `<div class="priority-title">Priority</div>` : ''}
         <div class="flex space-between">
             ${prioOptions.map(option => `
                 <button 

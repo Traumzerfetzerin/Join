@@ -4,6 +4,11 @@
  * @param {string} category - The category of the task.
  */
 async function enableEditMode(task, category) {
+    let overlayTitle = document.querySelector('.priority-title');
+    if (overlayTitle) {
+        overlayTitle.style.display = 'none';
+    }
+
     if (!task || !task.dueDate) {
         console.error("Task data is missing or dueDate not found:", task);
         return;
@@ -80,7 +85,6 @@ function setTaskPriority(prio) {
 
     if (normalPrioContainer) {
         normalPrioContainer.innerHTML = `
-            <h3 class="overlay-heading">Priority</h3>
             <img src="${getPrioIcon(prio)}" class="priority-icon" alt="Priority">
         `;
     }
