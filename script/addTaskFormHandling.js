@@ -62,20 +62,34 @@ async function resetTaskForm() {
 
 
 /**
-* Handles the task creation process.
-* @param {Event} event - The event object from the form submission.
-*/
+ * Handles task creation by collecting, validating, and submitting task data.
+ * Highlights invalid fields and shows a popup if required fields are incomplete.
+ * 
+ * @async
+ * @param {Event} event - The form submission event.
+ * @returns {Promise<void>} - Executes asynchronous operations without returning a value.
+ */
 async function createTasks(event) {
     event.preventDefault();
- 
+
     let taskData = collectTaskData();
+
+    let form = document.querySelector('form');
+    if (!form.checkValidity()) {
+        await redBorder();
+        await popUpRequired();
+        return;
+    }
+
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
+
     await sendTaskToFirebase(taskData, taskData.category);
     await clearTasks();
     await finalizeTaskCreation();
     await changeToBoard();
- }
+}
+
 
 
 /**
