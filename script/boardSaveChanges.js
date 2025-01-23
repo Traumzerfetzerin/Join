@@ -66,13 +66,14 @@ async function handleEditOverlaySave(taskId, category) {
  */
 function collectOverlayData() {
     let basicInfo = collectBasicInfo();
+    let currentColumn = document.querySelector('.column .task-item.selected')?.closest('.column').id || 'toDoColumn';
     let data = {
         ...basicInfo,
         prio: collectPriority(),
         subtasks: collectBoardSubtasks(),
         contacts: collectContacts(),
+        column: currentColumn.replace('Column', '') 
     };
-
     return data;
 }
 
@@ -98,6 +99,7 @@ async function saveChanges(taskId, category) {
     updatedTask.category = category;
     updatedTask.prio = collectPriority();
     updatedTask.contacts = collectContacts();
+    updatedTask.column = updatedTask.column || 'toDo';
     try {
         await updateTaskInDatabase(category, taskId, updatedTask);
         closeTaskOverlay();
