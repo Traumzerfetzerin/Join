@@ -1,22 +1,30 @@
+@media (max-width:990px) {
+    .board-overlay {
+        height: 75%;
+        top: calc(50vh - 10px);
+    }
+}
+
 @media (max-width: 550px) {
     .board-overlay {
-        width: 340px;
+        width: 320px;
         padding: 20px 20px;
         max-height: 600px;
         margin-top: -20px;
     }
 
-    .overlay-content{
+    .overlay-content {
         gap: 20px;
+        padding: inherit;
     }
 
     .overlay-header {
         margin-bottom: -5px;
     }
 
-    .task-title {
+    /* .task-title {
         margin-bottom: -20px;
-    }
+    } */
 
     .task-info {
         margin-top: -23px;

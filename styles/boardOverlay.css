@@ -8,7 +8,8 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
     overflow-y: scroll;
-    height: 900px;
+    /* height: 900px; */
+    height: 70%;
     top: calc(50vh - 20px);
     left: calc(50vw - 10px);
     max-height: 90vh;
@@ -50,11 +51,11 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border-radius: 0 0 20px 20px;
+    /* border-radius: 0 0 20px 20px; */
     z-index: 1002;
     flex-grow: 1;
     overflow-y: auto;
-    padding-bottom: 25px; 
+    padding-bottom: 25px;
 }
 
 body.no-interaction *:not(.overlay):not(.overlay *) {
@@ -93,7 +94,7 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     overflow: scroll;
 }
 
-#cardOverlayContacts{
+#cardOverlayContacts {
     margin-left: 5%;
 }
 
