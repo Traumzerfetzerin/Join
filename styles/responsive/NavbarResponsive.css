@@ -67,6 +67,12 @@
         border-radius: 10px;
     }
 
+    .forMobile {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    }
+
     #sidebar {
         display: flex;
         width: 100%;

@@ -113,6 +113,7 @@ document.getElementById('add-contact-icon')?.addEventListener('click', () => {
     document.getElementById('overlay').style.display = 'block';
 });
 
+
 /**
  * Toggles the visibility of the options menu and the add contact icon.
  */

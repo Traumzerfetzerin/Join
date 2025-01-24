@@ -68,13 +68,13 @@
         justify-content: center;
         align-items: center;
         bottom: 100px;
-        }
+    }
 
-    .contacts-container{
+    .contacts-container {
         height: 100vh;
     }
 
-    .editSection{
+    #editSectionForToggle {
         display: none;
     }
 }
@@ -128,6 +128,7 @@
         align-items: center;
         gap: 15px;
     }
+
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="tel"] {
@@ -176,6 +177,7 @@
 }
 
 @media(max-width:400px) {
+
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="tel"] {
@@ -188,5 +190,5 @@
         box-sizing: border-box;
         display: block;
         margin-top: 5px;
-    } 
+    }
 }

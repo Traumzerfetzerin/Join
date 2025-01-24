@@ -45,8 +45,13 @@
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    gap: 15px;
     width: 100%;
+}
+
+.forMobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .widget:hover {

@@ -309,3 +309,66 @@ function attachContactClickListeners() {
         }
     });
 }
+
+
+/**
+* Generates the HTML for the edit section with a specific ID.
+* @returns {string} - HTML string for the edit section.
+*/
+function generateEditSectionHTML() {
+   return `
+       <div class="editSection dNone" id="edit-section-small-contact">
+           <a href="#" class="edit-link">
+               <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
+           </a>
+           <a href="#" class="delete-link">
+               <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
+           </a>
+       </div>`;
+}
+
+
+/**
+ * Toggles the visibility of the editSection and the dots-icon.
+ * @param {Event} event - The event object.
+ */
+function toggleEditSection(event) {
+    event.stopPropagation();
+    let editSectionHTML = generateEditSectionHTML();
+    let dotsIcon = event.target.closest('.dots-icon');
+    if (dotsIcon) {
+        let existingEditSection = document.getElementById('edit-section-small-contact');
+        if (existingEditSection) {
+            existingEditSection.classList.toggle('dNone');
+        } else {
+            dotsIcon.insertAdjacentHTML('afterend', editSectionHTML);
+            let editSection = document.getElementById('edit-section-small-contact');
+            if (editSection) {
+                editSection.classList.remove('dNone');
+            }
+        }
+        dotsIcon.classList.toggle('dNone');
+    }
+}
+
+
+/**
+ * Closes the editSection if clicked outside.
+ * @param {Event} event - The event object.
+ */
+function handleOutsideClick(event) {
+    let editSection = document.getElementById('edit-section-small-contact');
+    let dotsIcon = document.getElementById('dots-icon');
+
+    if (editSection && event.target !== editSection && event.target !== dotsIcon && !editSection.contains(event.target)) {
+        editSection.classList.add('dNone');
+        if (dotsIcon) {
+            dotsIcon.classList.remove('dNone');
+        }
+    }
+}
+
+
+// Attach the toggleEditSection function to the dots-icon click event
+document.getElementById('dots-icon')?.addEventListener('click', toggleEditSection);
+document.addEventListener('click', handleOutsideClick);

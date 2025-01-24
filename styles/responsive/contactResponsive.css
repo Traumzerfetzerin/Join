@@ -29,7 +29,7 @@
         font-size: 24px;
     }
 
-    .editSection {
+    #editSectionForToggle {
         display: none;
     }
 
@@ -194,7 +194,12 @@
     #back-arrow {
         display: block;
     }
+}
 
+@media (max-width: 730px) {
+    #edit-section-small-contact {
+        left: 75%;
+    }
 }
 
 @media (max-width: 710px) {
@@ -250,7 +255,17 @@
     }
 }
 
+@media (max-width: 600px) {
+    #edit-section-small-contact {
+        left: 65%;
+    }
+}
+
 @media(max-width:400px) {
+    #edit-section-small-contact {
+        left: 50%;
+    }
+
     input[type="text"],
     input[type="email"],
     input[type="tel"] {
