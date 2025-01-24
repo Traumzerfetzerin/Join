@@ -63,13 +63,12 @@ async function resetTaskForm() {
 
 
 /**
- * Handles task creation by collecting, validating, and submitting task data.
- * Highlights invalid fields and shows a popup for missing required fields, 
- * or proceeds to show the task creation popup if all fields are valid.
+ * Handles the creation of a new task, including validation, saving to Firebase, 
+ * and populating contacts if required.
  * 
  * @async
- * @param {Event} event - The form submission event.
- * @returns {Promise<void>} - Executes asynchronous operations without returning a value.
+ * @param {Event} event - The event object from the form submission.
+ * @returns {Promise<void>} Resolves when the task creation process is complete.
  */
 async function createTasks(event) {
     event.preventDefault();
@@ -83,8 +82,23 @@ async function createTasks(event) {
         return;
     }
 
+    try {
+        let selectedContacts = taskData.contacts || [];
+        await fetchAndPopulateContacts(selectedContacts);
+    } catch (error) {
+        console.error("Error fetching and populating contacts:", error);
+        alert("Failed to load contacts. Please try again.");
+        return;
+    }
+
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
+
+    let taskId = await saveTaskToFirebase(taskData);
+    if (!taskId) {
+        alert("Failed to save the task. Please try again.");
+        return;
+    }
 
     await popUpAddTask();
     await changeToBoard();
