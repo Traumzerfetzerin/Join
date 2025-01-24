@@ -119,4 +119,3 @@ async function updateSubtasksInFirebase(taskId, category, subtasks) {
 function handleSubtaskDeletion(taskId, category) {
     refreshPageOrUpdateUI();
 }
-

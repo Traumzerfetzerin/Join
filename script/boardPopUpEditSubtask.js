@@ -1,36 +1,63 @@
 /**
- * Enables editing of a subtask in edit mode.
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask to edit.
+ * Enables the edit mode for a subtask and displays the input field.
+ * Hides the subtask text and shows the editing input field.
+ * 
+ * @param {number} taskId - The ID of the task to which the subtask belongs.
+ * @param {string} category - The category of the subtask.
+ * @param {number} subtaskIndex - The index of the subtask in the list.
  */
 function editSubtaskEdit(taskId, category, subtaskIndex) {
     let subtaskElement = getSubtaskElement(subtaskIndex);
     if (!subtaskElement) return;
 
     let currentText = subtaskElement.querySelector('.editSubtaskText').innerText;
-    if (!toggleExistingInput(subtaskElement, subtaskIndex, currentText)) {
-        createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText);
+    subtaskElement.classList.add('editing');
+
+    let textElement = subtaskElement.querySelector('.editSubtaskText');
+    textElement.style.display = 'none';
+
+    createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText);
+}
+
+
+/**
+ * Toggles the visibility of the subtask text and icons.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element that contains the text and icons.
+ * @param {boolean} show - Determines whether to show or hide the subtask text and icons.
+ */
+function toggleSubtaskDisplay(subtaskElement, show) {
+    let textElement = subtaskElement.querySelector('.editSubtaskText');
+    let subtaskIcons = subtaskElement.querySelector('.subtask-icons');
+
+    if (show) {
+        textElement.style.display = 'block';
+        subtaskIcons.style.display = 'flex';
+    } else {
+        textElement.style.display = 'none';
+        subtaskIcons.style.display = 'none';
     }
-    updateSubtaskDisplay(subtaskElement, false);
 }
 
 
 /**
  * Retrieves the subtask element by its index.
- * @param {number} subtaskIndex - The index of the subtask.
+ * 
+ * @param {number} subtaskIndex - The index of the subtask to retrieve.
  * @returns {HTMLElement|null} The subtask element or null if not found.
  */
 function getSubtaskElement(subtaskIndex) {
     return document.getElementById(`subtaskDiv_${subtaskIndex}`);
 }
 
+
 /**
- * Toggles the display of an existing input field.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {number} subtaskIndex - The index of the subtask.
- * @param {string} currentText - The current text of the subtask.
- * @returns {boolean} True if the input field exists, false otherwise.
+ * Toggles the display of an existing input field for editing a subtask.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element that contains the input field.
+ * @param {number} subtaskIndex - The index of the subtask being edited.
+ * @param {string} currentText - The current text of the subtask to be displayed in the input field.
+ * @returns {boolean} Returns true if an existing input field is found and displayed, otherwise false.
  */
 function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
     let existingInput = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
@@ -45,46 +72,63 @@ function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
 
 
 /**
- * Creates an input field for editing the subtask.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {number} subtaskIndex - The index of the subtask.
- * @param {string} taskId - The ID of the task.
+ * Creates and inserts an input field for editing a subtask within the given subtask element.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element where the input field will be inserted.
+ * @param {number} subtaskIndex - The index of the subtask being edited.
+ * @param {string} taskId - The ID of the task to which the subtask belongs.
  * @param {string} category - The category of the task.
- * @param {string} currentText - The current text of the subtask.
+ * @param {string} currentText - The current text of the subtask to be displayed in the input field.
  */
 function createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText) {
     let inputHtml = /*HTML*/`
-    <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}"
-        onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
-    <img class="save-subtask-button cursorPointer"
-        onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})"
-        src="/Assets/addTask/Property 1=check.svg" alt="">
-    <img class="deleteSubtask cursorPointer" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-        onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex})">
-`;
-
-    subtaskElement.innerHTML += inputHtml;
+    <div class="edit-subtask-container">
+        <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}"
+            onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+        <img class="save-subtask-button"
+            onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})"
+            src="/Assets/addTask/Property 1=check.svg" alt="Save">
+        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+            onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex})">
+    </div>
+    `;
+    subtaskElement.innerHTML = inputHtml;
 }
 
 
 /**
- * Updates the display of a subtask element.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {boolean} show - Whether to show or hide the text and icons.
+ * Updates the subtask elements after editing, displaying the new text and hiding the input field and related buttons.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element to be updated.
+ * @param {HTMLElement} inputField - The input field containing the edited text.
+ * @param {string} newText - The new text to be displayed in the subtask element.
  */
-function updateSubtaskDisplay(subtaskElement, show) {
-    subtaskElement.querySelector('.editSubtaskText').style.display = show ? 'block' : 'none';
-    subtaskElement.querySelector('.subtask-icons').style.display = show ? 'flex' : 'none';
-    subtaskElement.classList.toggle('editing', !show);
-    createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText)
+function updateSubtaskElements(subtaskElement, inputField, newText) {
+    let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
+    if (!subtaskTextElement) {
+        console.error("Subtask text element not found.");
+        return;
+    }
+    subtaskTextElement.innerText = newText;
+    subtaskTextElement.style.display = 'block';
+
+    inputField.style.display = 'none';
+    let saveButton = inputField.nextElementSibling;
+    if (saveButton) saveButton.style.display = 'none';
+    subtaskElement.classList.remove('editing');
+
+    let deleteSubtask = subtaskElement.querySelector('.deleteSubtask');
+    if (deleteSubtask) deleteSubtask.style.display = 'none';
 }
 
 
 /**
- * Saves the changes to a subtask in edit mode.
- * @param {string} taskId - The ID of the task.
+ * Saves the edited subtask text, updates the UI, and saves the changes to the database.
+ * 
+ * @param {string} taskId - The ID of the task to which the subtask belongs.
  * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask to save.
+ * @param {number} subtaskIndex - The index of the subtask being edited.
+ * @returns {Promise<void>} - A promise that resolves when the subtask is saved to the database.
  */
 async function saveSubtaskEdit(taskId, category, subtaskIndex) {
     let inputField = getInputField(subtaskIndex);
@@ -97,13 +141,16 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
     if (!subtaskElement) return;
 
     updateSubtaskElements(subtaskElement, inputField, newText);
+    subtaskElement.classList.remove('editing');
     await saveSubtaskToDatabase(taskId, category, subtaskIndex, newText);
 }
 
+
 /**
- * Retrieves and validates the subtask input field.
- * @param {number} subtaskIndex - The index of the subtask.
- * @returns {HTMLElement|null}
+ * Retrieves the input field element for a specific subtask by its index.
+ * 
+ * @param {number} subtaskIndex - The index of the subtask whose input field is to be retrieved.
+ * @returns {HTMLInputElement|null} - The input field element if found, otherwise null.
  */
 function getInputField(subtaskIndex) {
     let inputField = document.getElementById(`editSubtaskInput_${subtaskIndex}`);
@@ -114,10 +161,12 @@ function getInputField(subtaskIndex) {
     return inputField;
 }
 
+
 /**
- * Retrieves trimmed value from input field.
- * @param {HTMLElement} inputField - The input field element.
- * @returns {string}
+ * Retrieves and trims the text from the input field.
+ * 
+ * @param {HTMLInputElement} inputField - The input field element from which to retrieve the text.
+ * @returns {string} - The trimmed text from the input field. Returns an empty string if the text is empty.
  */
 function getTrimmedText(inputField) {
     let newText = inputField.value.trim();
@@ -128,10 +177,12 @@ function getTrimmedText(inputField) {
     return newText;
 }
 
+
 /**
- * Retrieves and validates the subtask element.
- * @param {number} subtaskIndex - The index of the subtask.
- * @returns {HTMLElement|null}
+ * Retrieves the subtask element by its index.
+ * 
+ * @param {number} subtaskIndex - The index of the subtask element to retrieve.
+ * @returns {HTMLElement|null} - The subtask element if found, otherwise null.
  */
 function getSubtaskElement(subtaskIndex) {
     let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
@@ -142,11 +193,13 @@ function getSubtaskElement(subtaskIndex) {
     return subtaskElement;
 }
 
+
 /**
- * Updates the subtask elements after edit.
- * @param {HTMLElement} subtaskElement - The subtask element.
- * @param {HTMLElement} inputField - The input field element.
- * @param {string} newText - The new subtask text.
+ * Updates the subtask elements by displaying the new text, hiding the input field, and updating icons.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element that contains the text and icons.
+ * @param {HTMLElement} inputField - The input field where the new text is entered.
+ * @param {string} newText - The new text to display for the subtask.
  */
 function updateSubtaskElements(subtaskElement, inputField, newText) {
     let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
@@ -166,12 +219,15 @@ function updateSubtaskElements(subtaskElement, inputField, newText) {
     if (deleteSubtask) deleteSubtask.style.display = 'none';
 }
 
+
 /**
- * Saves the subtask data to the database.
- * @param {string} taskId - The ID of the task.
+ * Saves the updated subtask text to the database.
+ * 
+ * @param {string} taskId - The ID of the task containing the subtask.
  * @param {string} category - The category of the task.
- * @param {number} subtaskIndex - The index of the subtask.
- * @param {string} newText - The new subtask text.
+ * @param {number} subtaskIndex - The index of the subtask to be updated.
+ * @param {string} newText - The new text to be saved for the subtask.
+ * @returns {Promise<void>} - A promise that resolves when the subtask is saved successfully or rejects if an error occurs.
  */
 async function saveSubtaskToDatabase(taskId, category, subtaskIndex, newText) {
     let task = await fetchTaskById(category, taskId);
@@ -190,9 +246,11 @@ async function saveSubtaskToDatabase(taskId, category, subtaskIndex, newText) {
 
 
 /**
- * Adds a new subtask to the list in edit mode.
- * @param {string} taskId - The ID of the task.
+ * Adds a new subtask to the task by creating a new subtask element and appending it to the subtask list.
+ * 
+ * @param {string} taskId - The ID of the task to which the subtask belongs.
  * @param {string} category - The category of the task.
+ * @returns {void} - No return value.
  */
 function addNewSubtask(taskId, category) {
     let newSubtaskInput = document.getElementById('newSubtaskInput');
@@ -220,9 +278,11 @@ function addNewSubtask(taskId, category) {
 
 
 /**
- * Renders the subtasks in edit mode.
- * @param {Object} task - The task containing the subtasks.
+ * Renders the subtasks in the edit mode for a given task, allowing the user to add, edit, and delete subtasks.
+ * 
+ * @param {Object} task - The task object containing subtasks to be rendered.
  * @param {string} category - The category of the task.
+ * @returns {void} - No return value. The function modifies the DOM to display the subtasks.
  */
 function renderSubtasksInEditMode(task, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
@@ -257,6 +317,12 @@ function renderSubtasksInEditMode(task, category) {
     }
 }
 
+
+/**
+ * Adds event listeners to each subtask item to show and hide the subtask icons on mouse enter and leave.
+ * 
+ * @returns {void} - No return value. This function modifies the display of subtask icons based on mouse events.
+ */
 document.querySelectorAll('.subtask-item').forEach(item => {
     item.addEventListener('mouseenter', () => {
         item.querySelector('.subtask-icons').style.display = 'flex';

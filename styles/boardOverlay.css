@@ -132,7 +132,9 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     margin-bottom: 8px;
     border-radius: 5px;
     padding: 5px;
+    list-style-position: inside;
 }
+
 
 .subtasks-section ul {
     list-style-type: none;

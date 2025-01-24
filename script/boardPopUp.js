@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadContacts(); // Kontakte aus Firebase laden
 });
 
+
 /**
  * Hides the task overlay if the event matches the conditions.
  * @param {Event} event - Event that triggered the function.
@@ -241,6 +242,7 @@ async function updateSubtasksInFirebase(taskId, subtasks, category) {
         console.error(`Error updating subtasks for Task ID ${taskId}:`, error);
     }
 }
+
 
 /**
  * Returns the priority text based on the priority level.
