@@ -25,15 +25,12 @@ function attachAddContactButtonListeners() {
 
 function toggleOverlay(overlayId) {
     let overlay = document.getElementById(overlayId);
-    if (overlay.classList.contains('active')) {
+    if (overlay.style.display === 'block') {
         overlay.style.display = 'none';
-        overlay.classList.remove('active');
     } else {
-        overlay.style.display = 'flex';
-        overlay.classList.add('active');
+        overlay.style.display = 'block';
     }
 }
-
 
 
 document.getElementById('overlay').addEventListener('click', function(event) {
@@ -41,7 +38,6 @@ document.getElementById('overlay').addEventListener('click', function(event) {
         toggleOverlay('overlay');
     }
 });
-
 
 
 /**
@@ -117,16 +113,6 @@ function toggleSmallOverlay(event) {
 function closeSmallOverlay() {
     toggleElementVisibility('#small-overlay', false);
 }
-
-// document.getElementById('show-overlay')?.addEventListener('click', () => {
-//     console.log('Show overlay button clicked');
-//     document.getElementById('overlay').style.display = 'block';
-// });
-
-// document.getElementById('add-contact-icon')?.addEventListener('click', () => {
-//     console.log('Add contact icon clicked');
-//     document.getElementById('overlay').style.display = 'block';
-// });
 
 
 /**
