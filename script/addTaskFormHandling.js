@@ -26,7 +26,6 @@ async function clearTasks() {
     document.getElementById('categorySelect').selectedIndex = 0;
     document.getElementById('categoryDropdown').classList.add('d-none');
     document.getElementById('subtaskSelect').value = "";
-    document.getElementById('selectedContactsContainer').innerHTML = "";
     contacts.forEach(contact => {
         let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
@@ -48,7 +47,7 @@ async function resetTaskForm() {
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
-
+    
     contacts.forEach(contact => {
         let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
@@ -63,46 +62,20 @@ async function resetTaskForm() {
 
 
 /**
- * Handles the creation of a new task, including validation, saving to Firebase, 
- * and populating contacts if required.
- * 
- * @async
- * @param {Event} event - The event object from the form submission.
- * @returns {Promise<void>} Resolves when the task creation process is complete.
- */
+* Handles the task creation process.
+* @param {Event} event - The event object from the form submission.
+*/
 async function createTasks(event) {
     event.preventDefault();
-
+ 
     let taskData = collectTaskData();
-
-    let form = document.querySelector('form');
-    if (!form.checkValidity()) {
-        await redBorder();
-        await popUpRequired();
-        return;
-    }
-
-    try {
-        let selectedContacts = taskData.contacts || [];
-        await fetchAndPopulateContacts(selectedContacts);
-    } catch (error) {
-        console.error("Error fetching and populating contacts:", error);
-        alert("Failed to load contacts. Please try again.");
-        return;
-    }
-
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
-
-    let taskId = await saveTaskToFirebase(taskData);
-    if (!taskId) {
-        alert("Failed to save the task. Please try again.");
-        return;
-    }
-
-    await popUpAddTask();
+    await sendTaskToFirebase(taskData, taskData.category);
+    await clearTasks();
+    await finalizeTaskCreation();
     await changeToBoard();
-}
+ }
 
 
 /**
