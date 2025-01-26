@@ -144,17 +144,6 @@
     cursor: pointer;
 }
 
-#dots-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: #2A3647;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    bottom: 100px;
-}
-
 .dots-icon {
     position: absolute;
     right: 5%;

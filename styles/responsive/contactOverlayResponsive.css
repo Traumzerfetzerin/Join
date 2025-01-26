@@ -16,6 +16,10 @@
 }
 
 @media (max-width: 780px) {
+    .dots-icon.active {
+        display: block;
+    }
+
     .overlay {
         width: 70%;
         height: 550px;

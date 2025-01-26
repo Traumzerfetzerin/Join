@@ -25,12 +25,24 @@ function attachAddContactButtonListeners() {
 
 function toggleOverlay(overlayId) {
     let overlay = document.getElementById(overlayId);
-    if (overlay.style.display === 'block') {
+    if (overlay.classList.contains('active')) {
         overlay.style.display = 'none';
+        overlay.classList.remove('active');
     } else {
-        overlay.style.display = 'block';
+        overlay.style.display = 'flex';
+        overlay.classList.add('active');
     }
 }
+
+
+
+document.getElementById('overlay').addEventListener('click', function(event) {
+    if (event.target.id === 'overlay') {
+        toggleOverlay('overlay');
+    }
+});
+
+
 
 /**
  * Closes the contact overlay.
@@ -75,6 +87,9 @@ document.getElementById('cancel-button')?.addEventListener('click', (event) => {
 // Event listener to close the add contact overlay by clicking outside of it
 window.addEventListener('click', (event) => {
     let overlay = document.getElementById('overlay');
+    if (overlay && !overlay.contains(event.target) && overlay.classList.contains('active')) {
+        toggleOverlay('overlay');
+    }
     let overlayContent = document.querySelector('.overlay-content');
     if (overlay && overlayContent && event.target === overlay) {
         closeAddContactOverlay();
@@ -103,15 +118,15 @@ function closeSmallOverlay() {
     toggleElementVisibility('#small-overlay', false);
 }
 
-document.getElementById('show-overlay')?.addEventListener('click', () => {
-    console.log('Show overlay button clicked');
-    document.getElementById('overlay').style.display = 'block';
-});
+// document.getElementById('show-overlay')?.addEventListener('click', () => {
+//     console.log('Show overlay button clicked');
+//     document.getElementById('overlay').style.display = 'block';
+// });
 
-document.getElementById('add-contact-icon')?.addEventListener('click', () => {
-    console.log('Add contact icon clicked');
-    document.getElementById('overlay').style.display = 'block';
-});
+// document.getElementById('add-contact-icon')?.addEventListener('click', () => {
+//     console.log('Add contact icon clicked');
+//     document.getElementById('overlay').style.display = 'block';
+// });
 
 
 /**
