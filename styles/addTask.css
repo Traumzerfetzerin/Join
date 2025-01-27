@@ -185,7 +185,6 @@ textarea {
     z-index: 1;
 }
 
-/* Separator Styling */
 .seperator {
     background-color: #D1D1D1;
     width: 2px;
@@ -194,7 +193,7 @@ textarea {
     align-self: stretch;
 }
 
-/* Priority Button Styles */
+
 .prio-button {
     display: inline-block;
     padding: 10px 16px;
@@ -203,13 +202,13 @@ textarea {
     border: 1px solid #D1D1D1;
     font-weight: bold;
     transition: box-shadow 0.3s ease;
+    margin-left: 10px;
 }
 
 .prioButton:hover {
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
 }
 
-/* Priority Button Colors */
 .lowWhite {
     border-color: #7AE229;
     background-color: #7AE229;

@@ -204,6 +204,7 @@ button[onclick="toggleEditDropdown()"]:hover {
 
 #edit-task-due-date {
     margin-bottom: 20px;
+    margin-left: -28px;
 }
 
 #prioOverlay {
