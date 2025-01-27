@@ -260,21 +260,22 @@ function addNewSubtask(taskId, category) {
     let subtaskContainer = document.querySelector('.subtasks-list');
     let subtaskIndex = subtaskContainer.querySelectorAll('.subtask-item').length;
     let subtaskHTML = /*HTML*/`
-        <li id="subtaskDiv_${subtaskIndex}" class="subtask-item">
+        <li id="subtaskDiv_${subtaskIndex}" class="subtask-item" id="subtaskTextEdit">
             <div class="testForLi">
-                <span contenteditable="true" class="editSubtaskText">${subtaskText}</span>
+                <ul>•<span class="editSubtaskText" contenteditable="true">${subtaskText}</span></ul>
                 <div class="subtask-icons">
                     <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                        onclick="editSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+                        onclick="showSubtaskMarker(${subtaskIndex})">
                     <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-                        onclick="deleteSubtaskEdit('${taskId}', '${category}', ${subtaskIndex}')">
-                </div>
+                        onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex}')">
+                </div>    
             </div>
         </li>
     `;
     subtaskContainer.insertAdjacentHTML('beforeend', subtaskHTML);
     newSubtaskInput.value = "";
 }
+
 
 
 /**
@@ -301,15 +302,15 @@ function renderSubtasksInEditMode(task, category) {
         subtaskContainer.innerHTML += "<div>No subtasks available</div>";
     } else {
         let subtasksHTML = task.subtasks.map((subtask, index) => /*HTML*/`
-            <li id="subtaskDiv_${index}" class="subtask-item">
+            <li id="subtaskDiv_${index}" class="subtask-item" id="subtaskTextEdit">
                 <div class="testForLi">
-                    <span class="editSubtaskText" contenteditable="true">${subtask.text}</span>
+                    <ul>•<span class="editSubtaskText" contenteditable="true">${subtask.text}</span></ul>
                     <div class="subtask-icons">
                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                            onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                            onclick="showSubtaskMarker(${index})">
                         <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
                             onclick="deleteSubtask('${task.id}', '${category}', ${index})">
-                    </div>
+                    </div>    
                 </div>
             </li>
         `).join('');
@@ -318,16 +319,37 @@ function renderSubtasksInEditMode(task, category) {
 }
 
 
-/**
- * Adds event listeners to each subtask item to show and hide the subtask icons on mouse enter and leave.
- * 
- * @returns {void} - No return value. This function modifies the display of subtask icons based on mouse events.
- */
-document.querySelectorAll('.subtask-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        item.querySelector('.subtask-icons').style.display = 'flex';
+function showSubtaskMarker(index) {
+    let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
+    let markerElement = document.getElementById(`subtaskMarker_${index}`);
+    
+    if (subtaskElement && markerElement) {
+        subtaskElement.classList.add('editing');
+        markerElement.style.display = 'inline';
+        console.log(`Marker für Subtask ${index} sichtbar gemacht.`);
+    } else {
+        console.error(`Subtask mit ID subtaskDiv_${index} nicht gefunden.`);
+    }
+}
+
+function hideSubtaskMarker(index) {
+    let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
+    let markerElement = document.getElementById(`subtaskMarker_${index}`);
+    
+    if (subtaskElement && markerElement) {
+        subtaskElement.classList.remove('editing');
+        markerElement.style.display = 'none';
+        console.log(`Marker für Subtask ${index} versteckt.`);
+    }
+}
+
+// Event Listener hinzufügen für Edit- und Save-Buttons
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.editSubtask').forEach((editBtn, index) => {
+        editBtn.addEventListener('click', () => showSubtaskMarker(index));
     });
-    item.addEventListener('mouseleave', () => {
-        item.querySelector('.subtask-icons').style.display = 'none';
+
+    document.querySelectorAll('.save-subtask-button').forEach((saveBtn, index) => {
+        saveBtn.addEventListener('click', () => hideSubtaskMarker(index));
     });
 });
