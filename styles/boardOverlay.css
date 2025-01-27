@@ -88,6 +88,27 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     margin-top: 20px;
 }
 
+.prio-display {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+    padding-right: 66%;
+}
+
+.prio-text {
+    font-weight: normal;
+}
+
+.priority-icon {
+    width: 16px; 
+    height: auto;
+}
+
+#prio-container-overlay {
+    display: flex;
+    justify-content: flex-start;
+}
+
 .contact-list-overlay {
     display: flex;
     height: 140px;

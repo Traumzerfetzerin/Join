@@ -138,6 +138,27 @@ function resetPriority() {
     document.getElementById('low').classList.remove('active');
 }
 
+/**
+ * Toggles the priority edit mode.
+ * @param {boolean} isEdit - Determines whether to show edit mode.
+ */
+function togglePrioEdit(isEdit) {
+    let displayOverlay = document.getElementById('prio-display-overlay');
+    let editOverlay = document.getElementById('prioOverlayEdit');
+
+    if (displayOverlay && editOverlay) {
+        if (isEdit) {
+            displayOverlay.style.display = 'none';
+            editOverlay.style.display = 'block';
+        } else {
+            displayOverlay.style.display = 'block';
+            editOverlay.style.display = 'none';
+        }
+    } else {
+        console.error('Priority overlay elements not found.');
+    }
+}
+
 
 /**
  * Closes the task overlay and resets its content.
