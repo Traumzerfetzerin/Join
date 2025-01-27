@@ -180,11 +180,19 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     list-style-position: inside;
 }
 
+.seperatorSubtaskIcons {
+    background-color: #D1D1D1;
+    width: 2px;
+    height: 24px;
+    margin: 0 0px;
+    align-self: stretch;
+}
 
 .subtasks-section ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
 .subtasks-section li {

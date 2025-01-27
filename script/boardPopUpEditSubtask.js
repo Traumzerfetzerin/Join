@@ -266,6 +266,7 @@ function addNewSubtask(taskId, category) {
                 <div class="subtask-icons">
                     <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
                         onclick="showSubtaskMarker(${subtaskIndex})">
+                        <div class="seperatorSubtaskIcons"></div>
                     <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
                         onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex}')">
                 </div>    
@@ -308,6 +309,7 @@ function renderSubtasksInEditMode(task, category) {
                     <div class="subtask-icons">
                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
                             onclick="showSubtaskMarker(${index})">
+                            <div class="seperatorSubtaskIcons"></div>
                         <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
                             onclick="deleteSubtask('${task.id}', '${category}', ${index})">
                     </div>    

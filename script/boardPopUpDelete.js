@@ -84,6 +84,7 @@ function updateSubtaskUI(taskId, category) {
                     <div class="subtask-icons">
                             <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
                              alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                             <div class="seperatorSubtaskIcons"></div>
                             <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
                              alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})"
                     </div>

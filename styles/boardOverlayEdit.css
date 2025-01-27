@@ -17,7 +17,8 @@
 }
 
 .subtask-item  .subtask-icons{
-    display: inline;
+    width: 15%;
+    display: flex
 }
 
 .deleteSubtask,
@@ -30,9 +31,6 @@
     justify-content: space-around;
 }
 
-.subtask-item:hover .subtask-icons:hover {
-    display: inline;
-}
 
 #edit-task-description {
     height: 150px;
@@ -301,7 +299,7 @@ button[onclick="toggleEditDropdown()"]:hover {
 
 #addSubtaskButton {
     cursor: pointer;
-    margin-left: -45px;
+    margin-left: -40px;
 }
 
 
