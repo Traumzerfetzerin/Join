@@ -8,9 +8,8 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     z-index: 999;
     overflow-y: scroll;
-    /* height: 900px; */
-    height: 70%;
-    top: calc(50vh - 20px);
+    height: 50%;
+    top: calc(32vh - 20px);
     left: calc(50vw - 10px);
     max-height: 90vh;
     display: flex;
@@ -21,7 +20,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     border-radius: 20px 20px 0 0;
 }
 
@@ -88,11 +87,36 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     margin-top: 20px;
 }
 
+.due-date-container {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.overlay-heading {
+    font-weight: bold;
+    margin-right: 10px;
+    min-width: 80px;
+}
+
+#due-date-display{
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.priority-icon {
+    width: 16px;
+    height: auto;
+}
+
 .prio-display {
     display: flex;
     align-items: center;
     gap: 5px; 
     padding-right: 66%;
+    padding-left: 37px;
 }
 
 .prio-text {

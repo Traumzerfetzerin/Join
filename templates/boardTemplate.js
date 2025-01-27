@@ -79,12 +79,13 @@ function getBoardOverlayTemplate(category, task) {
             <div class="task-info">
                     <div class="due-date-container">
                         <h3 class="overlay-heading">Due date</h3>
-                        <input type="date" id="edit-task-due-date" value="${task.dueDate || ''}" class="input-field" />
+                        <span id="due-date-display">${task.dueDate || 'No date set'}</span>
+                        <input type="date" id="edit-task-due-date" value="${task.dueDate || ''}" class="input-field" style="display: none;" />
                     </div>
                     <div class="prio-container" id="prio-container-overlay">
                         <h3 class="overlay-heading1">Priority</h3>
                         <div id="prio-display-overlay" class="prio-display">
-                            <span class="prio-text">${task.prio.charAt(0).toUpperCase() + task.prio.slice(1)}</span>
+                            <span>${task.prio.charAt(0).toUpperCase() + task.prio.slice(1)}</span>
                             <img src="${priorityIcon}" alt="${task.prio}" class="priority-icon">
                         </div>
                         <div id="prioOverlayEdit" class="prio-buttons" style="display: none;">
@@ -104,7 +105,7 @@ function getBoardOverlayTemplate(category, task) {
                        <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete" class="link-icon">
                        Delete
                    </a>
-                   <a href="javascript:void(0);" onclick="editTask('${task.id}', '${category}'); togglePrioEdit(true)" class="action-link edit-link">
+                   <a href="javascript:void(0);" onclick="editTask('${task.id}', '${category}'); toggleEditMode(true)" class="action-link edit-link">
                        <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit" class="link-icon">
                        Edit
                    </a>

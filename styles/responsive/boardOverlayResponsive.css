@@ -22,9 +22,15 @@
         margin-bottom: -5px;
     }
 
-    /* .task-title {
-        margin-bottom: -20px;
-    } */
+    .due-date-container {
+        align-items: start;
+        flex-direction: column;
+    }
+
+    #prio-container-overlay {
+        flex-direction: column;
+        align-items: start;
+    }
 
     .task-info {
         margin-top: -23px;

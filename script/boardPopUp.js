@@ -142,7 +142,7 @@ function resetPriority() {
  * Toggles the priority edit mode.
  * @param {boolean} isEdit - Determines whether to show edit mode.
  */
-function togglePrioEdit(isEdit) {
+function toggleEditMode(isEdit) {
     let displayOverlay = document.getElementById('prio-display-overlay');
     let editOverlay = document.getElementById('prioOverlayEdit');
 
