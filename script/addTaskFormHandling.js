@@ -71,9 +71,10 @@ async function createTasks(event) {
     let taskData = collectTaskData();
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
+    
+    await saveTaskToFirebase(taskData);
     await sendTaskToFirebase(taskData, taskData.category);
     await clearTasks();
-    await finalizeTaskCreation();
     await changeToBoard();
  }
 

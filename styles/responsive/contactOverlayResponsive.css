@@ -26,7 +26,7 @@
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
-        top: 3%;
+        top: calc(20vh - 20px);
         left: 15%;
         transform: none;
         overflow: hidden;

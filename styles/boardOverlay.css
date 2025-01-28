@@ -9,7 +9,7 @@
     z-index: 999;
     overflow-y: scroll;
     height: 50%;
-    top: calc(32vh - 20px);
+    top: calc(50vh - 20px);
     left: calc(50vw - 10px);
     max-height: 90vh;
     display: flex;

@@ -251,11 +251,11 @@
     align-items: flex-start;
     justify-content: center;
     position: relative;
-    top: -5px;
+    top: 220px;
     width: max-content;
     padding: 12px;
     background-color: #F5F5F5;
-    left: 63%;
+    left: 80%;
     border-radius: 12px;
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
 }

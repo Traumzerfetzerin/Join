@@ -188,12 +188,19 @@ window.onload = function () {
  */
 async function fetchContactFromFirebase(contactId) {
     try {
+        if (!contactId || typeof contactId !== "string" || contactId.trim() === "") {
+            console.warn("Invalid contactId provided:", contactId);
+            return { name: "Unknown" };
+        }
+
         let encodedContactId = encodeURIComponent(contactId);
         let response = await fetch(`https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${encodedContactId}.json`);
+
         if (response.ok) {
             let contact = await response.json();
             return contact || { name: "Unknown" };
         } else {
+            console.warn("Failed to fetch contact:", response.status, response.statusText);
             return { name: "Unknown" };
         }
     } catch (error) {

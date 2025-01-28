@@ -54,6 +54,7 @@ async function sendTaskToFirebase(preparedTaskData, category) {
         }
         let data = await response.json();
         return data.name;
+        
     } catch (error) {
         console.error("Error saving task to Firebase:", error);
         return null;

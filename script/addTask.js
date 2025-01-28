@@ -1,6 +1,7 @@
 let CREATETASK_URL = 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks';
 let taskCategory = "";
 
+
 /**
  * Sets the category to "Technical Task" and toggles the category dropdown.
  */
@@ -93,6 +94,7 @@ function collectContactIDs() {
     return selectedIDs;
 }
 
+
 /**
  * Collects task data from the form.
  * @returns {Object} The task data object containing title, description, due date, priority, contacts, subtasks, and category.
@@ -164,7 +166,7 @@ async function fetchContactsFromFirebase() {
  */
 async function validateTaskData(data) {
     if (!data.title || !data.contacts.length || !data.dueDate || !data.category || !data.prio) {
-        alert("Please fill in all required fields, including selecting at least one contact.");
+        finalizeTaskCreation();
         return false;
     }
     return true;
@@ -197,9 +199,12 @@ function processSubtasks(subtasks) {
  * @returns {Object} The prepared task data for Firebase.
  */
 function prepareTaskDataForFirebase(taskData) {
+    console.log("taskData:", taskData);
     let preparedData = {
         ...taskData,
-        contacts: taskData.contacts.map(contactId => ({ id: contactId }))
+        contacts: Array.isArray(taskData.contacts)
+            ? taskData.contacts.map(contactId => ({ id: contactId }))
+            : []
     };
     return preparedData;
 }
@@ -213,7 +218,7 @@ function prepareTaskDataForFirebase(taskData) {
  */
 async function finalizeTaskCreation() {
     await redBorder();
-    await popUpAddTask();
+    await popUpRequired();
 }
 
 
