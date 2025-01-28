@@ -29,7 +29,7 @@ function setElementBackgroundColor(selector, color) {
 
 
 /**
- * Helper function to toggle visibility of an element.
+ * Toggles the visibility of an element.
  * @param {string} selector - The CSS selector of the element.
  * @param {boolean} isVisible - True to show the element, false to hide it.
  */

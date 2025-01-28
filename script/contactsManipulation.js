@@ -49,17 +49,23 @@ function generateAddButtonLargeHTML() {
 
 
 /**
- * Displays contact details and adjusts the UI for smaller screens if needed.
+ * Displays contact details and toggles visibility if the same contact is clicked again.
  * @param {string} contactId - The ID of the contact to display.
  */
 function showContactDetails(contactId) {
-    let contact = contacts.find(c => c.id === contactId);
-    if (!contact) return;
+    if (currentContactId === contactId) {
+        toggleElementVisibility('#contact-details', false);
+        currentContactId = null;
+        resetSmallScreenUI();
+    } else {
+        let contact = contacts.find(c => c.id === contactId);
+        if (!contact) return;
 
-    currentContactId = contact.id;
-    updateContactDetailsUI(contact);
-    handleSmallScreenAdjustments();
-    attachEditAndDeleteListeners(contactId, contact);
+        currentContactId = contact.id;
+        updateContactDetailsUI(contact);
+        handleSmallScreenAdjustments();
+        attachEditAndDeleteListeners(contactId, contact);
+    }
 }
 
 
@@ -112,15 +118,17 @@ function toggleSmallScreenUI(contactList, contactDetails, backArrow, addContactI
 /**
  * Resets the UI elements to their default state for small screens.
  */
-function resetSmallScreenUI(contactList, contactDetails, backArrow, addContactIcon, dotsIcon, smallOverlay) {
+function resetSmallScreenUI() {
+    let contactList = document.querySelector('.contact-list');
+    let backArrow = document.getElementById('back-arrow');
+    let dotsIcon = document.getElementById('dots-icon');
+    let smallOverlay = document.getElementById('small-overlay');
     contactList.style.display = 'block';
-    contactDetails.style.display = 'none';
+    document.querySelector('.contact-details').style.display = 'none';
     backArrow.style.display = 'none';
-    addContactIcon.style.display = 'block';
     if (dotsIcon) dotsIcon.style.display = 'none';
     if (smallOverlay) smallOverlay.style.display = 'none';
 }
-
 
 /**
  * Attaches the click listener to the dots icon to toggle the small overlay.
@@ -295,7 +303,7 @@ function groupContactsByFirstLetter(contacts) {
 
 
 /**
- * Attaches click listeners to the contact items.
+ * Attaches the click event listeners to the contact items.
  */
 function attachContactClickListeners() {
     contacts.forEach(contact => {
