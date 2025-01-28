@@ -47,7 +47,7 @@ async function resetTaskForm() {
     document.getElementById('dueDate').value = "";
     document.getElementById('categorySelect').value = "";
     document.getElementById('assigned-to').value = "";
-    
+
     contacts.forEach(contact => {
         let checkbox = document.getElementById(`checkbox_${contact.name.replace(/\s+/g, '_')}`);
         if (checkbox) {
@@ -67,16 +67,17 @@ async function resetTaskForm() {
 */
 async function createTasks(event) {
     event.preventDefault();
- 
+
     let taskData = collectTaskData();
     let isValid = await validateTaskData(taskData);
     if (!isValid) return;
     
+    await popUpAddTask();
     await saveTaskToFirebase(taskData);
     await sendTaskToFirebase(taskData, taskData.category);
     await clearTasks();
     await changeToBoard();
- }
+}
 
 
 /**
