@@ -8,9 +8,7 @@ async function syncContactIcons(contactIds) {
         console.log("Keine Kontakt-IDs vorhanden:", contactIds);
         return;
     }
-
     let allContacts = await fetchContactsFromFirebase();
-    console.log("Geladene Kontakte:", allContacts);
 
     let contactIconsContainer = document.getElementById('contact-icons-container');
     if (!contactIconsContainer) {
@@ -21,8 +19,6 @@ async function syncContactIcons(contactIds) {
     let relevantContacts = contactIds.map(id => 
         allContacts.find(contact => contact.id === id) || { id, name: "Unknown" }
     );
-
-    console.log("Relevante Kontakte für Anzeige:", relevantContacts);
 
     contactIconsContainer.innerHTML = relevantContacts.map(contact => `
         <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">

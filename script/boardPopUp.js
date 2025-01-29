@@ -95,10 +95,6 @@ async function getRelevantContacts(contactIds) {
         .map(id => contactMap[id])
         .filter(contact => contact);
 
-    console.log("Fetched Contacts for Overlay:", allContacts);
-    console.log("Assigned Contact IDs:", contactIds);
-    console.log("Relevant Contacts for Display:", relevantContacts);
-
     return relevantContacts;
 }
 

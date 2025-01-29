@@ -10,7 +10,6 @@ async function enableEditMode(task, category) {
     setEditTaskDetails(task);
     
     let contacts = await fetchEditContacts();
-    console.log("Fetched Contacts:", contacts); 
 
     if (Array.isArray(contacts)) { 
         updateContacts(contacts, task.contacts || []);
@@ -188,8 +187,6 @@ function toggleEditDropdown() {
 
 
 function displayAssignedContacts(assignedContacts) {
-    console.log("displayAssignedContacts wurde aufgerufen mit:", assignedContacts);
-
     let container = document.getElementById("contact-icons-container");
     if (!container) {
         console.error("Error: contact-icons-container not found!");
