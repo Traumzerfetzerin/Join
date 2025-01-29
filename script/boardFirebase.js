@@ -120,7 +120,6 @@ async function fetchTasks(category, taskId) {
         let tasks;
         if (category && taskId) {
             tasks = await fetchSingleTask(category, taskId, nameToIdMap);
-            console.log(`Fetched single task:`, tasks);
         } else {
             tasks = await fetchAllTasks(nameToIdMap);
         }
@@ -306,7 +305,6 @@ async function updateSubtaskInFirebase(taskId, category, subtaskIndex, newText) 
             task.subtasks[subtaskIndex].text = newText;
 
             await saveTaskToCategory(taskId, category, task);
-            console.log(`Subtask ${subtaskIndex} erfolgreich aktualisiert.`);
         } else {
             console.error("Subtask nicht gefunden.");
         }
@@ -330,7 +328,6 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
         if (task.subtasks && task.subtasks[subtaskIndex]) {
             task.subtasks.splice(subtaskIndex, 1); 
             await saveTaskToCategory(taskId, category, task);
-            console.log(`Subtask ${subtaskIndex} erfolgreich gelöscht.`);
         } else {
             console.error("Subtask nicht gefunden.");
         }

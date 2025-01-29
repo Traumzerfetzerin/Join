@@ -194,8 +194,6 @@ function showDropdown(dropdown) {
 function updateAssignedContacts() {
     selectedContacts = Array.from(document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]:checked'))
         .map(checkbox => checkbox.value);
-
-    console.log('Ausgewählte Kontakte:', selectedContacts);
     document.getElementById('assigned-to').value = selectedContacts.join(', ');
 
     displaySelectedContacts();
@@ -210,9 +208,6 @@ function updateAssignedContacts() {
 function displaySelectedContacts() {
     let selectedContainer = document.getElementById('selectedContactsContainer');
     selectedContainer.innerHTML = '';
-
-    console.log('Zeige ausgewählte Kontakte an:', selectedContacts);
-
     selectedContacts.forEach(contactName => {
         let contact = contacts.find(c => c.name === contactName);
 

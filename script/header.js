@@ -59,9 +59,7 @@ async function showFirstLetter() {
         console.error('User icon element not found');
         return;
     }
-
     let username = await getUsernameFromFirebase();
-    console.log('Username fetched from Firebase:', username);
     userIcon.textContent = username ? generateNameInitials(username) : 'G';
 }
 
@@ -72,17 +70,13 @@ async function showFirstLetter() {
  */
 async function getUsernameFromFirebase() {
     let userId = getCurrentUserId();
-    console.log('User ID from localStorage:', userId);
     if (!userId) return null;
 
     try {
         let response = await fetch(`${BASE_URL}/users.json`);
         if (!response.ok) throw new Error('Network response was not ok');
-
         let data = await response.json();
-        console.log('User data fetched from Firebase:', data);
         let user = Object.entries(data).find(([key]) => key === userId);
-        console.log('Logged in user data:', user);
         return user ? user[1].name : null;
     } catch (error) {
         console.error('Error fetching user data from Firebase:', error);

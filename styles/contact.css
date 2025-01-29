@@ -355,7 +355,7 @@
     padding: 15px;
     position: fixed;
     z-index: 2000;
-    right: 0;
+    right: -30%;
     top: 50%;
     transform: translate(100%, -80%);
     opacity: 0;

@@ -92,8 +92,6 @@ function assignContact(contactId) {
     } else {
         taskData.contacts = taskData.contacts.filter(id => id !== contactId);
     }
-    
-    console.log("Updated contacts:", taskData.contacts);
 }
 
 

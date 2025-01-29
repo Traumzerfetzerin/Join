@@ -8,11 +8,8 @@
  */
 function editSubtaskEdit(taskId, category, subtaskIndex) {
     let subtaskElement = getSubtaskElement(subtaskIndex);
-    console.log("Checking Subtask Element:", `subtaskDiv_${subtaskIndex}`, subtaskElement);
     if (!subtaskElement) return;
-
     let textElement = subtaskElement.querySelector('.editSubtaskText') || subtaskElement.querySelector('.subtask-text');
-    console.log("Checking Subtask Text Element:", textElement);
     if (!textElement) {
         console.error("Subtask text element not found for:", subtaskElement);
         return;
@@ -180,8 +177,6 @@ function getTrimmedText(inputField) {
  */
 function getSubtaskElement(subtaskIndex) {
     let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
-    console.log("Searching for:", `subtaskDiv_${subtaskIndex}`, "Found:", subtaskElement);
-
     if (!subtaskElement) {
         console.error("Subtask element not found for index:", subtaskIndex);
         return null;
@@ -233,8 +228,7 @@ async function saveSubtaskToDatabase(taskId, category, subtaskIndex, newText) {
     }
     task.subtasks[subtaskIndex].text = newText;
     try {
-        await updateTaskInDatabase(category, taskId, task);
-        console.log(`Subtask ${subtaskIndex} updated successfully.`);
+        await updateTaskInDatabase(category, taskId, task);;
     } catch (error) {
         console.error("Error saving subtask to Firebase:", error);
     }
@@ -324,7 +318,6 @@ function showSubtaskMarker(index) {
     if (subtaskElement && markerElement) {
         subtaskElement.classList.add('editing');
         markerElement.style.display = 'inline';
-        console.log(`Marker für Subtask ${index} sichtbar gemacht.`);
     } else {
         console.error(`Subtask mit ID subtaskDiv_${index} nicht gefunden.`);
     }
@@ -337,7 +330,6 @@ function hideSubtaskMarker(index) {
     if (subtaskElement && markerElement) {
         subtaskElement.classList.remove('editing');
         markerElement.style.display = 'none';
-        console.log(`Marker für Subtask ${index} versteckt.`);
     }
 }
 

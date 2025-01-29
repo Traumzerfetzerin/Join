@@ -324,7 +324,6 @@ function attachContactClickListeners() {
 * @returns {string} - HTML string for the edit section.
 */
 function generateEditSectionHTML(currentContactId) {
-    console.log("Received contactId:", currentContactId || 'No ID provided');
     return `
         <div class="editSection dNone" id="edit-section-small-contact">
             <a href="#" class="edit-link" onclick="handleEditLinkClick()">

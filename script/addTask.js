@@ -199,7 +199,6 @@ function processSubtasks(subtasks) {
  * @returns {Object} The prepared task data for Firebase.
  */
 function prepareTaskDataForFirebase(taskData) {
-    console.log("taskData:", taskData);
     let preparedData = {
         ...taskData,
         contacts: Array.isArray(taskData.contacts)

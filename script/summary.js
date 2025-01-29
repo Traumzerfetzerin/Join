@@ -212,7 +212,6 @@ function updateUrgentTaskCount(urgentTasks) {
  */
 function updateNextDeadline(closestDate) {
     let dateElement = document.getElementById('upcomingDeadline');
-    console.log("Closest date to display:", closestDate);
 
     if (dateElement) {
         if (closestDate) {
@@ -249,18 +248,15 @@ function updateUrgentTaskDate(tasks) {
  */
 function findUrgentTasks(tasks) {
     let urgentTasks = [];
-    console.log("Tasks received in findUrgentTasks:", tasks);
     for (let category in tasks) {
         let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
             if (task.prio === "urgent") {
-                console.log("Urgent task found:", task);
                 urgentTasks.push(task);
             }
         }
     }
-    console.log("Urgent tasks extracted:", urgentTasks);
     return urgentTasks;
 }
 

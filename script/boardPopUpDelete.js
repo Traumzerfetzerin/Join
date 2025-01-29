@@ -54,8 +54,6 @@ async function deleteSubtask(taskId, category, subtaskIndex) {
                 if (subtaskElement) {
                     subtaskElement.remove();
                 }
-
-                console.log(`Subtask ${subtaskIndex} deleted for Task ID: ${taskId} in Category: ${category}`);
             }
         }
     } catch (error) {
