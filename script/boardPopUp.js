@@ -67,8 +67,6 @@ async function updateOverlayContent(category, task) {
     if (overlayDetails) {
         overlayDetails.innerHTML = overlayHtml;
     }
-
-    await updateOverlayContacts(task.contacts); 
 }
 
 
@@ -97,30 +95,6 @@ async function getRelevantContacts(contactIds) {
         .filter(contact => contact);
 
     return relevantContacts;
-}
-
-
-/**
- * Updates the contact display in the overlay after drag & drop.
- * Ensures that all contacts are correctly fetched and displayed.
- * @param {Array} contactIds - List of contact IDs assigned to the task.
- */
-async function updateOverlayContacts(contactIds) {
-    let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (!contactIconsContainer) {
-        console.error("Error: contact-icons-container not found!");
-        return;
-    }
-
-    let relevantContacts = await getRelevantContacts(contactIds);
-    
-    contactIconsContainer.innerHTML = relevantContacts.map(contact => `
-        <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
-            ${getInitials(contact.name)}
-        </div>
-    `).join('');
-
-    console.log("Updated contact-icons-container:", contactIconsContainer.innerHTML);
 }
 
 
@@ -263,6 +237,16 @@ async function populateTasksWithContacts(tasks) {
     return tasks;
 }
 
+function waitForElement(selector, callback) {
+    let element = document.getElementById(selector);
+    if (element) {
+        callback(element);
+    } else {
+        setTimeout(() => waitForElement(selector, callback), 100);
+    }
+}
+waitForElement('contact-icons-container', (element) => {
+});
 
 /**
  * Syncs subtasks with Firebase.

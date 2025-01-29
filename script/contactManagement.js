@@ -119,7 +119,7 @@ async function updateContactWithIdInFirebase(contact) {
     let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contact.id}.json`;
 
     let response = await fetch(url, {
-        method: "PATCH",
+        method: "PUT",
         body: JSON.stringify(contact),
         headers: {
             "Content-Type": "application/json"

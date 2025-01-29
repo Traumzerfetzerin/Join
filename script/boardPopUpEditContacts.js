@@ -12,6 +12,7 @@ async function fetchNormalizedContacts() {
     return allContactsArray;
 }
 
+
 /**
  * Syncs contact icons in the overlay with task details.
  * @param {Array} contactIds - Array of contact IDs.

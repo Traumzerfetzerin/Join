@@ -17,8 +17,6 @@ async function enableEditMode(task, category) {
         let assignedContacts = (task.contacts || [])
             .map(id => contacts.find(contact => contact.id === id)) 
             .filter(c => c);
-
-        console.log("Assigned Contacts:", assignedContacts); 
         displayAssignedContacts(assignedContacts);
     } else {
         console.error("fetchEditContacts did not return an array:", contacts);
