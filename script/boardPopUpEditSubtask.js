@@ -83,8 +83,7 @@ function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
 function createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText) {
     let inputHtml = /*HTML*/`
     <div class="edit-subtask-container">
-        <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}"
-            onblur="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})">
+        <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}">
         <img class="save-subtask-button"
             onclick="saveSubtaskEdit('${taskId}', '${category}', ${subtaskIndex})"
             src="/Assets/addTask/Property 1=check.svg" alt="Save">
@@ -93,33 +92,15 @@ function createEditInput(subtaskElement, subtaskIndex, taskId, category, current
     </div>
     `;
     subtaskElement.innerHTML = inputHtml;
-}
-
-
-/**
- * Updates the subtask elements after editing, displaying the new text and hiding the input field and related buttons.
- * 
- * @param {HTMLElement} subtaskElement - The subtask element to be updated.
- * @param {HTMLElement} inputField - The input field containing the edited text.
- * @param {string} newText - The new text to be displayed in the subtask element.
- */
-function updateSubtaskElements(subtaskElement, inputField, newText) {
-    let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
-    if (!subtaskTextElement) {
-        console.error("Subtask text element not found.");
-        return;
+    let saveButton = subtaskElement.querySelector('.save-subtask-button');
+    let inputField = subtaskElement.querySelector(`#editSubtaskInput_${subtaskIndex}`);
+    if (saveButton && inputField) {
+        saveButton.addEventListener('click', () => {
+            saveSubtaskEdit(taskId, category, subtaskIndex, inputField.value);
+        });
     }
-    subtaskTextElement.innerText = newText;
-    subtaskTextElement.style.display = 'block';
-
-    inputField.style.display = 'none';
-    let saveButton = inputField.nextElementSibling;
-    if (saveButton) saveButton.style.display = 'none';
-    subtaskElement.classList.remove('editing');
-
-    let deleteSubtask = subtaskElement.querySelector('.deleteSubtask');
-    if (deleteSubtask) deleteSubtask.style.display = 'none';
 }
+
 
 
 /**
@@ -303,13 +284,13 @@ function renderSubtasksInEditMode(task, category) {
         subtaskContainer.innerHTML += "<div>No subtasks available</div>";
     } else {
         let subtasksHTML = task.subtasks.map((subtask, index) => /*HTML*/`
-            <li id="subtaskDiv_${index}" class="subtask-item" id="subtaskTextEdit">
+            <li id="subtaskDiv_${index}" class="subtask-item">
                 <div class="testForLi">
                     <ul>•<span class="editSubtaskText" contenteditable="true">${subtask.text}</span></ul>
                     <div class="subtask-icons">
                         <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                            onclick="showSubtaskMarker(${index})">
-                            <div class="seperatorSubtaskIcons"></div>
+                            onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                        <div class="seperatorSubtaskIcons"></div>
                         <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
                             onclick="deleteSubtask('${task.id}', '${category}', ${index})">
                     </div>    

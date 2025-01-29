@@ -29,14 +29,27 @@ function prepareTaskData(taskId, taskData) {
         taskData.subtasks = [];
     }
 
-    if (Array.isArray(taskData.contacts)) {
-        taskData.contacts = taskData.contacts.map(contact =>
-            typeof contact === 'string' ? contact : contact.id
-        );
-    } else {
-        taskData.contacts = []; 
+    if (!taskData.contacts || !Array.isArray(taskData.contacts)) {
+        taskData.contacts = [];
+        return;
     }
+
+    taskData.contacts = taskData.contacts.map(contact => 
+        typeof contact === "object" ? contact.id : contact
+    );
 }
+
+
+/**
+ * Converts contact IDs back to full contact objects.
+ * @param {Array} contactIds - Array of contact IDs.
+ * @param {Array} allContacts - Array of all available contacts.
+ * @returns {Array} - Array of full contact objects.
+ */
+function getFullContacts(contactIds, allContacts) {
+    return contactIds.map(id => allContacts.find(contact => contact.id === id) || { id, name: "Unknown" });
+}
+
 
 /**
  * Retrieves a contact by ID from the Firebase database.
