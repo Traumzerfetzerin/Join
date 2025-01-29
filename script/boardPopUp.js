@@ -4,7 +4,7 @@
  * @param {string} taskId - Task ID.
  */
 async function showTaskOverlay(category, taskId) {
-    let task = findTaskInData(taskId);
+    let task = await fetchTaskById(category, taskId);
     if (!task) return Promise.resolve(null);
 
     let subtaskItems = document.querySelectorAll('.subtasks-section li');
@@ -56,10 +56,10 @@ function closeTaskOverlay(event) {
 
 
 /**
- * Updates the overlay content with the latest task data.
+ * Updates the overlay content after a task update (e.g., drag and drop).
+ * Ensures contacts are fully loaded and displayed correctly.
  * @param {string} category - The category of the task.
  * @param {Object} task - The updated task data.
- * @returns {Promise<void>}
  */
 async function updateOverlayContent(category, task) {
     let overlayHtml = getBoardOverlayTemplate(category, task);
@@ -68,28 +68,37 @@ async function updateOverlayContent(category, task) {
         overlayDetails.innerHTML = overlayHtml;
     }
 
-    let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (contactIconsContainer && task.contacts) {
-        if (!contacts || contacts.length === 0) {
-            await loadContacts();
-        }
-        let relevantContacts = task.contacts
-            .map(contactId => contacts.find(contact => contact.id === contactId))
-            .filter(contact => contact);
+    await updateOverlayContacts(task.contacts); // Kontakte sofort aktualisieren
+}
 
-        contactIconsContainer.innerHTML = relevantContacts
-            .map(contact => `
-                <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
-                    ${contact.name || "Unknown"}
-                </div>
-            `)
-            .join('');
+/**
+ * Updates the contact display in the overlay after drag & drop.
+ * Ensures that all contacts are correctly fetched and displayed.
+ * @param {Array} contactIds - List of contact IDs assigned to the task.
+ */
+async function updateOverlayContacts(contactIds) {
+    if (!contactIds || contactIds.length === 0) return;
+
+    let allContacts = await fetchContactsFromFirebase(); // Kontakte aus Firebase laden
+    let relevantContacts = contactIds.map(id => 
+        allContacts.find(contact => contact.id === id) || { id, name: "Unknown" }
+    );
+
+    let contactIconsContainer = document.getElementById('contact-icons-container');
+    if (contactIconsContainer) {
+        contactIconsContainer.innerHTML = relevantContacts.map(contact => `
+            <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
+                ${contact.name || "Unknown"}
+            </div>
+        `).join('');
     }
 }
 
 
+
+
 document.addEventListener("DOMContentLoaded", async () => {
-    await loadContacts(); // Kontakte aus Firebase laden
+    await loadContacts();
 });
 
 

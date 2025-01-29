@@ -1,15 +1,27 @@
 /**
  * Syncs contact icons in the overlay with the task details.
+ * Fetches the latest contact data from Firebase.
  * @param {Array} contactIds - An array of contact IDs.
- * @returns {Promise<void>}
  */
 async function syncContactIcons(contactIds) {
     if (!contactIds || contactIds.length === 0) return;
-    contactIds = normalizeContactIds(contactIds);
-    let contacts = await fetchContacts();
+
+    let allContacts = await fetchContactsFromFirebase(); 
     let contactIconsContainer = document.getElementById('contact-icons-container');
-    updateContactIcons(contactIds, contacts);
+
+    let relevantContacts = contactIds.map(id => 
+        allContacts.find(contact => contact.id === id) || { id, name: "Unknown" }
+    );
+
+    if (contactIconsContainer) {
+        contactIconsContainer.innerHTML = relevantContacts.map(contact => `
+            <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
+                ${contact.name || "Unknown"}
+            </div>
+        `).join('');
+    }
 }
+
 
 /**
  * Normalizes contact IDs by ensuring they are stored as strings.
