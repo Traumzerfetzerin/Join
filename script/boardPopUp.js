@@ -4,7 +4,7 @@
  * @param {string} taskId - Task ID.
  */
 async function showTaskOverlay(category, taskId) {
-    let task = findTaskInData(taskId);
+    let task = await fetchTaskById(category, taskId);
     if (!task) return Promise.resolve(null);
 
     let subtaskItems = document.querySelectorAll('.subtasks-section li');
@@ -56,10 +56,10 @@ function closeTaskOverlay(event) {
 
 
 /**
- * Updates the overlay content with the latest task data.
+ * Updates the overlay content after a task update (e.g., drag and drop).
+ * Ensures contacts are fully loaded and displayed correctly.
  * @param {string} category - The category of the task.
  * @param {Object} task - The updated task data.
- * @returns {Promise<void>}
  */
 async function updateOverlayContent(category, task) {
     let overlayHtml = getBoardOverlayTemplate(category, task);
@@ -67,29 +67,39 @@ async function updateOverlayContent(category, task) {
     if (overlayDetails) {
         overlayDetails.innerHTML = overlayHtml;
     }
+}
 
-    let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (contactIconsContainer && task.contacts) {
-        if (!contacts || contacts.length === 0) {
-            await loadContacts();
-        }
-        let relevantContacts = task.contacts
-            .map(contactId => contacts.find(contact => contact.id === contactId))
-            .filter(contact => contact);
 
-        contactIconsContainer.innerHTML = relevantContacts
-            .map(contact => `
-                <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
-                    ${contact.name || "Unknown"}
-                </div>
-            `)
-            .join('');
+/**
+ * Retrieves relevant contacts based on the provided contact IDs.
+ * @param {Array} contactIds - List of contact IDs assigned to the task.
+ * @returns {Promise<Array>} - Array of relevant contact objects.
+ */
+async function getRelevantContacts(contactIds) {
+    if (!contactIds || contactIds.length === 0) return [];
+
+    let allContacts = await fetchContactsFromFirebase();
+    
+    if (!allContacts || typeof allContacts !== "object") {
+        console.error("fetchContactsFromFirebase did not return a valid object:", allContacts);
+        return [];
     }
+
+    let contactMap = {};
+    for (let contact of Object.values(allContacts)) { 
+        contactMap[contact.id] = contact;
+    }
+
+    let relevantContacts = contactIds
+        .map(id => contactMap[id])
+        .filter(contact => contact);
+
+    return relevantContacts;
 }
 
 
 document.addEventListener("DOMContentLoaded", async () => {
-    await loadContacts(); // Kontakte aus Firebase laden
+    await loadContacts();
 });
 
 
@@ -137,6 +147,7 @@ function resetPriority() {
     document.getElementById('medium').classList.remove('active');
     document.getElementById('low').classList.remove('active');
 }
+
 
 /**
  * Toggles the priority edit mode.
@@ -226,6 +237,16 @@ async function populateTasksWithContacts(tasks) {
     return tasks;
 }
 
+function waitForElement(selector, callback) {
+    let element = document.getElementById(selector);
+    if (element) {
+        callback(element);
+    } else {
+        setTimeout(() => waitForElement(selector, callback), 100);
+    }
+}
+waitForElement('contact-icons-container', (element) => {
+});
 
 /**
  * Syncs subtasks with Firebase.
@@ -236,7 +257,7 @@ async function populateTasksWithContacts(tasks) {
 async function syncSubtasksWithFirebase(taskId, subtasks, category) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(subtasks)
         });
@@ -258,7 +279,7 @@ async function syncSubtasksWithFirebase(taskId, subtasks, category) {
 async function updateSubtasksInFirebase(taskId, subtasks, category) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(subtasks)
         });

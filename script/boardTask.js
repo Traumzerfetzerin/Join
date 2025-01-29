@@ -12,6 +12,7 @@ function findTaskInData(taskId) {
     return null;
 }
 
+
 /**
  * Calculates the progress of subtasks.
  * @param {Array} subtasks - The list of subtasks.
@@ -26,6 +27,7 @@ function calculateSubtaskProgress(subtasks) {
     return { completed, total };
 }
 
+
 /**
  * Gets CSS class based on task title.
  * @param {string} title - The title of the task.
@@ -36,6 +38,7 @@ function getTaskClass(title) {
     if (title === "Technical Task") return "technical-task";
     return "";
 }
+
 
 /**
  * Creates a mapping from contact names to IDs.
@@ -52,6 +55,7 @@ function createNameToIdMap(contacts) {
     }
     return nameToIdMap;
 }
+
 
 /**
  * Extracts the initials from a contact name.

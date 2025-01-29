@@ -92,6 +92,7 @@ window.addEventListener('click', (event) => {
     }
 });
 
+
 /**
  * Toggles the small overlay visibility.
  * @param {Event} event - The click event.

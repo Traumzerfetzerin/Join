@@ -232,6 +232,8 @@
         font-style: normal;
         color: black;
         font-weight: bold;
+        margin-left: -35px;
+        margin-top: 19px;
     }
 
     .contact-initials {

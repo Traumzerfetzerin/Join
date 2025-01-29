@@ -13,6 +13,14 @@
         margin-top: -20px;
     }
 
+    .testForLi{
+        width: 85%;
+    }
+
+    #subtask-edit-entry {
+        width: 148px;
+    }
+
     .overlay-content {
         gap: 20px;
         padding: inherit;

@@ -34,7 +34,7 @@ function handleTaskDeletion(category, taskId) {
 
 
 /**
- * Deletes a subtask from Firebase and updates the local task data.
+ * Deletes a subtask from Firebase and updates the UI without removing the input field.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The category of the task.
  * @param {number} subtaskIndex - The index of the subtask.
@@ -50,8 +50,10 @@ async function deleteSubtask(taskId, category, subtaskIndex) {
             if (!response.ok) {
                 console.error(`Failed to delete subtask: ${response.statusText}`);
             } else {
-                updateSubtaskUI(taskId, category); 
-                console.log(`Subtask deleted for Task ID: ${taskId} in Category: ${category}`);
+                let subtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
+                if (subtaskElement) {
+                    subtaskElement.remove();
+                }
             }
         }
     } catch (error) {

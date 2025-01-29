@@ -60,6 +60,7 @@ async function handleEditOverlaySave(taskId, category) {
     closeTaskOverlay();
 }
 
+
 /**
  * Combines all collected data into a single task object.
  * @returns {Object} - Task data including all properties.
@@ -119,7 +120,7 @@ async function saveChanges(taskId, category) {
 async function updateTaskInFirebase(taskId, category, taskData) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskData),
         });

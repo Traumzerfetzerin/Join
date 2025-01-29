@@ -7,6 +7,7 @@
 .edit-subtask-input {
     flex: 1;
     padding: 5px;
+    width: 100%;
 }
 
 .save-subtask-button,
@@ -29,6 +30,10 @@
 .SubtaskTest {
     display: flex;
     justify-content: space-around;
+}
+
+#subtask-edit-entry {
+    width: 428px;
 }
 
 
@@ -316,5 +321,4 @@ button[onclick="toggleEditDropdown()"]:hover {
 #subtaskTextEdit {
     display: flex;
     justify-content: center;
-    width: 100%;
 }

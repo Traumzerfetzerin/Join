@@ -29,7 +29,8 @@ function enableDragAndDrop(columns) {
 
 
 /**
- * Handles the logic after a task is dropped into a new column.
+ * Handles task movement between columns and updates the overlay if necessary.
+ * Ensures that only contact IDs are stored and full contacts are reloaded.
  * @param {object} task - The task object.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The original category of the task.
@@ -38,10 +39,7 @@ function enableDragAndDrop(columns) {
  */
 async function handleTaskDrop(task, taskId, category, newColumn, columns) {
     task.column = newColumn;
-    task.contacts = task.contacts.map(contact =>
-        typeof contact === 'string' ? contact : contact.id
-    );
-
+    task.contacts = task.contacts.map(contact => contact.id || contact);
     await saveTaskToCategory(taskId, category, task);
 
     let updatedTask = await fetchTaskById(category, taskId);
@@ -51,9 +49,12 @@ async function handleTaskDrop(task, taskId, category, newColumn, columns) {
         let overlay = document.getElementById("board-overlay-container");
         if (overlay && overlay.style.display === "block") {
             await updateOverlayContent(updatedTask.category, updatedTask);
+            await syncContactIcons(updatedTask.contacts); 
         }
     }
 }
+
+
 
 
 /**
@@ -106,5 +107,26 @@ async function updateTaskUI(task, taskId, column, columns) {
     let overlay = document.getElementById("board-overlay-container");
     if (overlay && overlay.style.display === "block") {
         await updateOverlayContent(task.category, task);
+    }
+}
+
+
+/**
+ * Moves a task to a new column and ensures contacts are preserved.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} newCategory - The new category of the task.
+ */
+async function moveTaskToColumn(taskId, newCategory) {
+    let task = findTaskInData(taskId);
+    if (!task) return;
+
+    let oldCategory = task.column;
+    task.column = newCategory;
+
+    await updateTaskInDatabase(newCategory, taskId, task);
+    loadTasks(await fetchTasks()); 
+
+    if (document.getElementById("taskOverlay").style.display === "block") {
+        updateOverlayContent(newCategory, task); 
     }
 }

@@ -22,7 +22,6 @@ function displayAddContactButtons() {
 }
 
 
-
 /**
 * Generates the HTML for the large add contact button.
 * @returns {string} - HTML string for the large add contact button.
@@ -33,7 +32,7 @@ function generateAddButtonLargeHTML() {
             <span>Add New Contact</span>
             <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
         </div>`;
- }
+}
  
  
  /**
@@ -45,7 +44,7 @@ function generateAddButtonLargeHTML() {
         <div class="add-contact-icon" id="add-contact-icon">
             <img src="../Assets/personAdd.svg" alt="Add Contact">
         </div>`;
- }
+}
 
 
 /**
@@ -323,14 +322,13 @@ function attachContactClickListeners() {
 * Generates the HTML for the edit section with a specific ID.
 * @returns {string} - HTML string for the edit section.
 */
-function generateEditSectionHTML(contactId) {
-    console.log("Received contactId:", contactId || 'No ID provided');
+function generateEditSectionHTML(currentContactId) {
     return `
         <div class="editSection dNone" id="edit-section-small-contact">
-            <a href="#" class="edit-link" onclick="loadContactDetails('${contactId}')">
+            <a href="#" class="edit-link" onclick="handleEditLinkClick()">
                 <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit
             </a>
-            <a href="#" class="delete-link" onclick="deleteContact('${contactId}')">
+            <a href="#" class="delete-link" onclick="handleDeleteContact()">
                 <img src="../Assets/delete_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg" alt="Delete Icon" class="icon"> Delete
             </a>
         </div>`;

@@ -1,6 +1,7 @@
 let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 let allContacts = [];
 
+
 /**
  * Saves a task to a specified category in the database.
  * @param {string} taskId - The ID of the task to save.
@@ -9,13 +10,8 @@ let allContacts = [];
  * @returns {Promise<void>}
  */
 async function saveTaskToCategory(taskId, category, taskData) {
-    try {
-        prepareTaskData(taskId, taskData);
-        let response = await sendTaskToDatabase(taskId, category, taskData);
-        validateResponse(response);
-    } catch (error) {
-        console.error("Error saving task to category:", error);
-    }
+    prepareTaskData(taskId, taskData);
+    await sendTaskToDatabase(taskId, category, taskData);
 }
 
 
@@ -29,14 +25,33 @@ function prepareTaskData(taskId, taskData) {
         taskData.subtasks = [];
     }
 
-    if (Array.isArray(taskData.contacts)) {
-        taskData.contacts = taskData.contacts.map(contact =>
-            typeof contact === 'string' ? contact : contact.id
-        );
-    } else {
-        taskData.contacts = []; 
+    if (!taskData.contacts || !Array.isArray(taskData.contacts)) {
+        taskData.contacts = [];
+        return;
     }
+
+    taskData.contacts = taskData.contacts.map(contact => contact.id || contact);
 }
+
+
+/**
+ * Converts contact IDs back to full contact objects.
+ * @param {Array} contactIds - Array of contact IDs or objects.
+ * @param {Array} allContacts - Array of all available contacts.
+ * @returns {Array} - Array of full contact objects.
+ */
+function getFullContacts(contactIds, allContacts) {
+    if (!contactIds || !Array.isArray(contactIds)) return [];
+    
+    return contactIds.map(contact => {
+        if (typeof contact === "string") {
+            let fullContact = allContacts.find(c => c.id === contact);
+            return fullContact ? fullContact : { id: contact, name: "Unknown" };
+        }
+        return contact;
+    });
+}
+
 
 /**
  * Retrieves a contact by ID from the Firebase database.
@@ -80,6 +95,7 @@ async function sendTaskToDatabase(taskId, category, taskData) {
     );
 }
 
+
 /**
  * Validates the response from the database.
  * @param {Response} response - The response from the database.
@@ -106,7 +122,6 @@ async function fetchTasks(category, taskId) {
         let tasks;
         if (category && taskId) {
             tasks = await fetchSingleTask(category, taskId, nameToIdMap);
-            console.log(`Fetched single task:`, tasks);
         } else {
             tasks = await fetchAllTasks(nameToIdMap);
         }
@@ -117,7 +132,6 @@ async function fetchTasks(category, taskId) {
         return null;
     }
 }
-
 
 
 /**
@@ -142,6 +156,7 @@ async function fetchSingleTask(category, taskId, nameToIdMap) {
 
     return task;
 }
+
 
 /**
  * Fetches all tasks from Firebase and processes their contacts.
@@ -189,6 +204,7 @@ async function fetchTaskContacts(contacts, nameToIdMap) {
     );
 
 }
+
 
 /**
  * Deletes a task from Firebase.
@@ -292,7 +308,6 @@ async function updateSubtaskInFirebase(taskId, category, subtaskIndex, newText) 
             task.subtasks[subtaskIndex].text = newText;
 
             await saveTaskToCategory(taskId, category, task);
-            console.log(`Subtask ${subtaskIndex} erfolgreich aktualisiert.`);
         } else {
             console.error("Subtask nicht gefunden.");
         }
@@ -316,7 +331,6 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
         if (task.subtasks && task.subtasks[subtaskIndex]) {
             task.subtasks.splice(subtaskIndex, 1); 
             await saveTaskToCategory(taskId, category, task);
-            console.log(`Subtask ${subtaskIndex} erfolgreich gelöscht.`);
         } else {
             console.error("Subtask nicht gefunden.");
         }

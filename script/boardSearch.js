@@ -17,6 +17,7 @@ function filterTasks() {
     });
 }
 
+
 /**
  * Resets the visibility of all tasks.
  * @param {NodeList} allTasks - List of task elements.
@@ -24,6 +25,7 @@ function filterTasks() {
 function resetTaskVisibility(allTasks) {
     allTasks.forEach(task => task.style.display = "block");
 }
+
 
 /**
  * Extracts relevant data from a task element.
@@ -43,6 +45,7 @@ function getTaskData(task) {
     return { title, description, contacts, category, subtasks };
 }
 
+
 /**
  * Checks if the search term is present in the task data.
  * @param {Object} taskData - Task data.
@@ -58,6 +61,7 @@ function isSearchTermInTask(taskData, searchTerm) {
         taskData.subtasks.includes(searchTerm)
     );
 }
+
 
 /**
  * Toggles the visibility of a task based on a condition.

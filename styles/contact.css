@@ -141,7 +141,7 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-right: 10%;
     cursor: pointer;
 }
 
@@ -251,11 +251,11 @@
     align-items: flex-start;
     justify-content: center;
     position: relative;
-    top: 220px;
+    top: -10px;
     width: max-content;
     padding: 12px;
     background-color: #F5F5F5;
-    left: 80%;
+    left: 60%;
     border-radius: 12px;
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
 }
@@ -355,7 +355,7 @@
     padding: 15px;
     position: fixed;
     z-index: 2000;
-    right: 0;
+    right: -30%;
     top: 50%;
     transform: translate(100%, -80%);
     opacity: 0;
