@@ -1,4 +1,4 @@
-/** 
+/**
  * Handles the creation or updating of the contact.
  * @param {object} contact - The contact object.
  */
@@ -12,6 +12,9 @@ async function handleContactCreation(contact) {
         addNewContactToDOM(savedContact);
         clearInputFields();
         hideOverlay();
+        setTimeout(() => {
+            window.location.href = 'contacts.html'; 
+        }, 500);
     } catch (error) {
         console.error("Error saving contact:", error);
         showError("Error saving contact. Please try again.");
@@ -43,14 +46,15 @@ async function deleteContact(contactId) {
         });
         if (!response.ok) throw new Error('Network response was not ok');
         showToast('Contact deleted successfully');
-        loadContacts();
         closeContactOverlay();
         clearContactDetails();
+        setTimeout(() => {
+            window.location.href = 'contacts.html'; 
+        }, 500);
     } catch (error) {
         showToast('Error deleting contact: ' + error);
     }
 }
-
 
 /** 
  * Saves or updates a contact in Firebase.
