@@ -266,7 +266,6 @@ function handleOutsideClick(event) {
  * @param {Event} event - The click event.
  */
 function handleEditLinkClick(event) {
-    event.preventDefault();
     if (!currentContactId) {
         showToast("Error: No contact selected for editing.", "error");
         return;
@@ -284,7 +283,7 @@ function handleEditLinkClick(event) {
     closeSmallOverlay();
 }
 
-document.querySelectorAll('.edit-link').forEach(link => {
+    document.querySelectorAll('.edit-link').forEach(link => {
     link.addEventListener('click', handleEditLinkClick);
 });
 
@@ -334,20 +333,4 @@ function processSuccessfulDeletion() {
 function handleDeletionError(error) {
     console.error("Error deleting contact:", error);
     showToast("Error deleting contact. Please try again.", "error");
-}
-
-
-// Event listeners
-document.addEventListener('click', handleOutsideClick);
-
-let editLink = document.getElementById('overlay-edit-link');
-if (editLink) {
-    editLink.addEventListener('click', handleEditLinkClick);
-} else {
-}
-
-let deleteLink = document.getElementById('overlay-delete-link');
-if (deleteLink) {
-    deleteLink.addEventListener('click', handleDeleteLinkClick);
-} else {
 }
