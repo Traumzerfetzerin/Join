@@ -9,18 +9,13 @@ let allContacts = [];
  * @returns {Promise<void>}
  */
 async function saveTaskToCategory(taskId, category, taskData) {
-    try {
-        prepareTaskData(taskId, taskData);
-        let response = await sendTaskToDatabase(taskId, category, taskData);
-        validateResponse(response);
-    } catch (error) {
-        console.error("Error saving task to category:", error);
-    }
+    prepareTaskData(taskId, taskData);
+    await sendTaskToDatabase(taskId, category, taskData);
 }
 
 
 /**
- * Prepares the task data for saving by ensuring full contact objects are stored.
+ * Prepares the task data for saving by ensuring only contact IDs are stored.
  * @param {string} taskId - The ID of the task.
  * @param {object} taskData - The task data to prepare.
  */
@@ -34,15 +29,8 @@ function prepareTaskData(taskId, taskData) {
         return;
     }
 
-    taskData.contacts = taskData.contacts.map(contact => {
-        if (typeof contact === "string") {
-            let fullContact = allContacts.find(c => c.id === contact);
-            return fullContact ? fullContact : { id: contact, name: "Unknown" };
-        }
-        return contact;
-    });
+    taskData.contacts = taskData.contacts.map(contact => contact.id || contact);
 }
-
 
 
 /**

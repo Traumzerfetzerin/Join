@@ -30,6 +30,8 @@ function enableDragAndDrop(columns) {
 
 /**
  * Handles the logic after a task is dropped into a new column.
+ * Ensures that only contact IDs are stored instead of full objects.
+ * 
  * @param {object} task - The task object.
  * @param {string} taskId - The ID of the task.
  * @param {string} category - The original category of the task.
@@ -38,9 +40,8 @@ function enableDragAndDrop(columns) {
  */
 async function handleTaskDrop(task, taskId, category, newColumn, columns) {
     task.column = newColumn;
-    task.contacts = task.contacts.map(contact =>
-        typeof contact === 'string' ? contact : contact.id
-    );
+
+    task.contacts = task.contacts.map(contact => contact.id || contact);
 
     await saveTaskToCategory(taskId, category, task);
 
@@ -54,6 +55,7 @@ async function handleTaskDrop(task, taskId, category, newColumn, columns) {
         }
     }
 }
+
 
 
 /**
