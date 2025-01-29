@@ -20,7 +20,7 @@ async function saveTaskToCategory(taskId, category, taskData) {
 
 
 /**
- * Prepares the task data for saving by ensuring only contact IDs are stored.
+ * Prepares the task data for saving by ensuring full contact objects are stored.
  * @param {string} taskId - The ID of the task.
  * @param {object} taskData - The task data to prepare.
  */
@@ -34,20 +34,33 @@ function prepareTaskData(taskId, taskData) {
         return;
     }
 
-    taskData.contacts = taskData.contacts.map(contact => 
-        typeof contact === "object" ? contact.id : contact
-    );
+    taskData.contacts = taskData.contacts.map(contact => {
+        if (typeof contact === "string") {
+            let fullContact = allContacts.find(c => c.id === contact);
+            return fullContact ? fullContact : { id: contact, name: "Unknown" };
+        }
+        return contact;
+    });
 }
+
 
 
 /**
  * Converts contact IDs back to full contact objects.
- * @param {Array} contactIds - Array of contact IDs.
+ * @param {Array} contactIds - Array of contact IDs or objects.
  * @param {Array} allContacts - Array of all available contacts.
  * @returns {Array} - Array of full contact objects.
  */
 function getFullContacts(contactIds, allContacts) {
-    return contactIds.map(id => allContacts.find(contact => contact.id === id) || { id, name: "Unknown" });
+    if (!contactIds || !Array.isArray(contactIds)) return [];
+    
+    return contactIds.map(contact => {
+        if (typeof contact === "string") {
+            let fullContact = allContacts.find(c => c.id === contact);
+            return fullContact ? fullContact : { id: contact, name: "Unknown" };
+        }
+        return contact;
+    });
 }
 
 

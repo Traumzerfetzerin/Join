@@ -21,18 +21,20 @@ function loadTasks(tasks) {
         awaitFeedback: "awaitFeedbackColumn",
         done: "doneColumn",
     };
+
     for (let category in tasks) {
         let categoryTasks = tasks[category];
         for (let taskId in categoryTasks) {
             let task = categoryTasks[taskId];
             task.id = taskId;
+            task.contacts = getFullContacts(task.contacts, allContacts);
             addTaskToColumn(task, category, taskId, columns);
         }
     }
+
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
     renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
-;
 
     calculateDueDate();
     resetFormFields();
