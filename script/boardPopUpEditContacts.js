@@ -1,32 +1,36 @@
 /**
- * Syncs contact icons in the overlay with the task details.
- * Fetches the latest contact data from Firebase.
- * @param {Array} contactIds - An array of contact IDs.
+ * Fetches and normalizes contact data from Firebase.
+ * @returns {Promise<Array>} Normalized contacts array.
  */
-async function syncContactIcons(contactIds) {
-    if (!contactIds || contactIds.length === 0) {
-        console.log("Keine Kontakt-IDs vorhanden:", contactIds);
-        return;
-    }
+async function fetchNormalizedContacts() {
     let allContacts = await fetchContactsFromFirebase();
-
-    let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (!contactIconsContainer) {
-        console.log("Fehler: contact-icons-container nicht gefunden!");
-        return;
-    }
-
-    let relevantContacts = contactIds.map(id => 
-        allContacts.find(contact => contact.id === id) || { id, name: "Unknown" }
-    );
-
-    contactIconsContainer.innerHTML = relevantContacts.map(contact => `
-        <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
-            ${contact.name || "Unknown"}
-        </div>
-    `).join('');
+    let allContactsArray = Object.values(allContacts || {}).map(contact => ({
+        ...contact,
+        id: String(contact.id),
+        color: contact.color || "#ccc"
+    }));
+    return allContactsArray;
 }
 
+/**
+ * Syncs contact icons in the overlay with task details.
+ * @param {Array} contactIds - Array of contact IDs.
+ */
+async function syncContactIcons(contactIds) {
+    if (!contactIds || contactIds.length === 0) return;
+    let allContactsArray = await fetchNormalizedContacts();
+    let contactIconsContainer = document.getElementById('contact-icons-container');
+    if (!contactIconsContainer) return;
+
+    let normalizedIds = contactIds.map(id => typeof id === 'object' ? String(id.id) : String(id));
+    let relevantContacts = normalizedIds.map(id => 
+        allContactsArray.find(contact => contact.id === id) || { name: "Unknown", color: "#ccc" }
+    );
+
+    contactIconsContainer.innerHTML = relevantContacts.map(contact => 
+        `<div class="contact-icon" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>`
+    ).join('');
+}
 
 
 /**

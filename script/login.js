@@ -5,10 +5,12 @@ let users = [];
 let tasks = [];
 let loggedUserContact;
 
+
 document.addEventListener("DOMContentLoaded", function () {
     includeHTML();
     displayUserInitials();
 });
+
 
 /**
  * Includes external HTML content into the current page.
@@ -39,6 +41,7 @@ function includeHTML() {
     }
 }
 
+
 /**
  * Displays the user's initials in the UI after content is loaded.
  */
@@ -49,6 +52,7 @@ function displayUserInitials() {
         userIcon.textContent = currentUserInitial || 'G';
     }
 }
+
 
 /**
  * Shows a toast notification with a provided message.
@@ -63,6 +67,7 @@ function showToast(message) {
     }, 3000);
 }
 
+
 /**
  * Logs in a user by validating email and password.
  * @param {Event} event - The form submit event.
@@ -75,6 +80,7 @@ function logIn(event) {
 
     validateEmailAndPassword(email, password, responseMessage);
 }
+
 
 /**
  * Validates the email and password input.
@@ -99,6 +105,7 @@ function validateEmailAndPassword(email, password, responseMessage) {
         });
 }
 
+
 /**
  * Handles the response from the email and password validation.
  * @param {object|null} user - The user object or null if not found.
@@ -119,6 +126,7 @@ function handleLoginResponse(user, email, password, responseMessage) {
     }
 }
 
+
 /**
  * Redirects the user to the summary page after a short delay.
  */
@@ -127,6 +135,7 @@ function redirectToSummary() {
         window.location.href = 'summary.html';
     }, 1500);
 }
+
 
 /**
  * Extracts initials from a user's name or email.
@@ -142,6 +151,7 @@ function getInitials(nameOrEmail) {
         return nameOrEmail.charAt(0).toUpperCase();
     }
 }
+
 
 /**
  * Logs in as a guest.
@@ -163,6 +173,7 @@ async function guestLogin() {
     showToast('Login successful! Redirecting...');
 }
 
+
 /**
  * Displays a greeting template on smaller devices.
  */
@@ -172,6 +183,7 @@ async function greetingTemplate() {
     document.getElementById('sidefoot').classList.add('dnone');
     document.getElementById('buttonLoginForGreeting').classList.add('d-none');
 }
+
 
 /**
  * Checks if an email exists in the Firebase database.
@@ -186,6 +198,7 @@ async function isEmailExists(email) {
         });
 }
 
+
 /**
  * Fetches user data from Firebase based on the provided email.
  * @param {string} email - The email of the user.
@@ -199,6 +212,7 @@ async function fetchUserData(email) {
             return user ? { ...user[1], id: user[0] } : null;
         });
 }
+
 
 /**
  * Toggles the visibility of the password input field.

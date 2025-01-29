@@ -1,12 +1,14 @@
 let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks.json"; 
 let closestDate = null;
 
+
 /**
  * Navigates to the "To-Do" section.
  */
 function navigateToToDo() {
     window.location.href = "board.html";
 }
+
 
 /**
  * Updates the greeting message based on the current time of day.
@@ -26,6 +28,7 @@ function updateGreeting() {
         greetingElement.textContent = "Good Evening";
     }
 }
+
 
 /**
  * Updates the user greeting with their full name or sets it to 'Guest' if no user is logged in.
@@ -47,6 +50,7 @@ function updateUserGreeting(isGuest, firstName, lastName) {
     }
 }
 
+
 /**
  * Displays the full name of the user, if available.
  * Retrieves the name from localStorage and inserts it into the designated element.
@@ -59,6 +63,7 @@ function displayFullName() {
         nameElement.textContent = fullName ? fullName : "Guest";
     }
 }
+
 
 /**
  * Loads the summary data for tasks and updates the UI with the relevant information.
@@ -89,6 +94,7 @@ async function loadSummaryData() {
     }
 }
 
+
 /**
  * Updates the summary metrics for tasks.
  * @param {object} tasks - The tasks retrieved from Firebase.
@@ -97,6 +103,7 @@ function updateSummaryMetrics(tasks) {
     let counts = countTasksByColumn(tasks);
     setSummaryCounts(counts);
 }
+
 
 /**
  * Counts tasks by their column and priority.
@@ -110,6 +117,7 @@ function countTasksByColumn(tasks) {
     }
     return counts;
 }
+
 
 /**
  * Initializes the counts object for task metrics.
@@ -126,6 +134,7 @@ function initializeCounts() {
     };
 }
 
+
 /**
  * Processes all tasks in a category and updates the counts.
  * @param {object} categoryTasks - The tasks in a specific category.
@@ -139,6 +148,7 @@ function processCategoryTasks(categoryTasks, counts) {
         updateUrgentCount(task, counts);
     }
 }
+
 
 /**
  * Updates counts based on the task's column.
@@ -162,6 +172,7 @@ function updateColumnCounts(task, counts) {
     }
 }
 
+
 /**
  * Updates the urgent count if the task is marked as urgent.
  * @param {object} task - A single task object.
@@ -172,6 +183,7 @@ function updateUrgentCount(task, counts) {
         counts.urgent++;
     }
 }
+
 
 /**
  * Updates the summary counts in the UI if elements are available.
@@ -197,6 +209,7 @@ function setSummaryCounts(counts) {
     }
 }
 
+
 /**
  * Updates the urgent task count in the UI.
  * @param {Array} urgentTasks - The urgent tasks.
@@ -205,6 +218,7 @@ function updateUrgentTaskCount(urgentTasks) {
     let urgentCount = urgentTasks.length;
     document.querySelector(".urgentnmb").textContent = urgentCount;
 }
+
 
 /**
  * Updates the next deadline in the UI.
@@ -225,6 +239,7 @@ function updateNextDeadline(closestDate) {
     }
 }
 
+
 /**
  * Updates the urgent task count and next deadline in the UI if elements are available.
  * @param {object} tasks - The tasks retrieved from Firebase.
@@ -240,6 +255,7 @@ function updateUrgentTaskDate(tasks) {
         updateNextDeadline(closestDate);
     }
 }
+
 
 /**
  * Finds all urgent tasks.
@@ -259,6 +275,7 @@ function findUrgentTasks(tasks) {
     }
     return urgentTasks;
 }
+
 
 /**
  * Finds the closest due date from an array of tasks.
@@ -294,6 +311,7 @@ function findClosestDate(tasks) {
     return closestDate;
 }
 
+
 /**
  * Updates the upcoming deadline in the UI.
  * @param {object} tasks - The tasks retrieved from Firebase.
@@ -314,6 +332,7 @@ function updateUpcomingDeadline(tasks) {
     }
 }
 
+
 /**
  * Initializes the application when the page is fully loaded.
  */
@@ -323,6 +342,7 @@ window.onload = function () {
     updateGreeting();
     displayFullName();
 };
+
 
 /**
  * Redirects the user to the board page after a short delay.

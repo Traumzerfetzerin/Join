@@ -110,6 +110,7 @@ async function updateTaskUI(task, taskId, column, columns) {
     }
 }
 
+
 /**
  * Moves a task to a new column and ensures contacts are preserved.
  * @param {string} taskId - The ID of the task.

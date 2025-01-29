@@ -22,7 +22,6 @@ function displayAddContactButtons() {
 }
 
 
-
 /**
 * Generates the HTML for the large add contact button.
 * @returns {string} - HTML string for the large add contact button.
@@ -33,7 +32,7 @@ function generateAddButtonLargeHTML() {
             <span>Add New Contact</span>
             <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
         </div>`;
- }
+}
  
  
  /**
@@ -45,7 +44,7 @@ function generateAddButtonLargeHTML() {
         <div class="add-contact-icon" id="add-contact-icon">
             <img src="../Assets/personAdd.svg" alt="Add Contact">
         </div>`;
- }
+}
 
 
 /**

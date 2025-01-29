@@ -60,6 +60,7 @@ async function handleEditOverlaySave(taskId, category) {
     closeTaskOverlay();
 }
 
+
 /**
  * Combines all collected data into a single task object.
  * @returns {Object} - Task data including all properties.

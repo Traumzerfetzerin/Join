@@ -1,6 +1,10 @@
 let BASE_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
+/**
+ * Displays the initials of the logged-in user in the element with class "name".
+ * If no user is found, it defaults to "G".
+ */
 function displayFullName() {
     let fullName = localStorage.getItem('loggedInUserName');
     let nameElement = document.querySelector(".name");
@@ -10,7 +14,6 @@ function displayFullName() {
             let nameParts = fullName.split(' ');
             let firstLetter = nameParts[0].charAt(0).toUpperCase();
             let lastLetter = nameParts.length > 1 ? nameParts[1].charAt(0).toUpperCase() : '';
-
             nameElement.textContent = firstLetter + (lastLetter ? lastLetter : "");
         } else {
             nameElement.textContent = "G";
@@ -24,6 +27,11 @@ window.addEventListener("load", async function () {
 });
 
 
+/**
+ * Retrieves the logged-in user's name from localStorage and displays the initials in the element with ID "name_menu".
+ * If no user is found, it defaults to "G".
+ * Logs a warning if the element is not found and logs an error if retrieval fails.
+ */
 async function testIcon() {
     try {
         let userIcon = localStorage.getItem('loggedInUserName');
@@ -34,16 +42,15 @@ async function testIcon() {
                 let nameParts = userIcon.split(' ');
                 let firstLetter = nameParts[0].charAt(0).toUpperCase();
                 let lastLetter = nameParts.length > 1 ? nameParts[1].charAt(0).toUpperCase() : '';
-
                 nameMenu.innerHTML = firstLetter + (lastLetter ? lastLetter : "");
             } else {
                 nameMenu.innerHTML = "G";
             }
         } else {
-            console.warn("Element mit der ID 'name_menu' wurde nicht gefunden.");
+            console.warn("Element with ID 'name_menu' was not found.");
         }
     } catch (error) {
-        console.error("Fehler beim Abrufen des Benutzernamens:", error);
+        console.error("Error retrieving the username:", error);
     }
 }
 

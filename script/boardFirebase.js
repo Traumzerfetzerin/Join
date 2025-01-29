@@ -1,6 +1,7 @@
 let TASK_URL = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks";
 let allContacts = [];
 
+
 /**
  * Saves a task to a specified category in the database.
  * @param {string} taskId - The ID of the task to save.
@@ -94,6 +95,7 @@ async function sendTaskToDatabase(taskId, category, taskData) {
     );
 }
 
+
 /**
  * Validates the response from the database.
  * @param {Response} response - The response from the database.
@@ -132,7 +134,6 @@ async function fetchTasks(category, taskId) {
 }
 
 
-
 /**
  * Fetches a single task from Firebase by category and task ID.
  * @param {string} category - Task category.
@@ -155,6 +156,7 @@ async function fetchSingleTask(category, taskId, nameToIdMap) {
 
     return task;
 }
+
 
 /**
  * Fetches all tasks from Firebase and processes their contacts.
@@ -202,6 +204,7 @@ async function fetchTaskContacts(contacts, nameToIdMap) {
     );
 
 }
+
 
 /**
  * Deletes a task from Firebase.

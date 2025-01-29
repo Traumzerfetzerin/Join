@@ -68,6 +68,7 @@ async function fetchEditContacts() {
     }
 }
 
+
 /**
  * Updates the contact dropdown and synchronizes contact icons.
  * @param {Object} allContacts - All available contacts.
@@ -78,6 +79,7 @@ function updateContacts(allContacts, taskContacts) {
     updateContactDropdown(contactsList, taskContacts);
     syncContactIcons(taskContacts);
 }
+
 
 /**
  * Updates the overlay action buttons.
@@ -126,6 +128,11 @@ function setTaskDueDate(dueDate) {
 }
 
 
+/**
+ * Sets the priority for a task and updates the corresponding UI elements.
+ * 
+ * @param {string} prio - The priority level of the task.
+ */
 function setTaskPriority(prio) {
     let editPrioContainer = document.querySelector('#prioOverlayEdit');
     let normalPrioContainer = document.querySelector('#prioOverlay');
@@ -186,6 +193,11 @@ function toggleEditDropdown() {
 }
 
 
+/**
+ * Displays the assigned contacts as icons in the designated container.
+ * 
+ * @param {Array} assignedContacts - An array of assigned contact objects.
+ */
 function displayAssignedContacts(assignedContacts) {
     let container = document.getElementById("contact-icons-container");
     if (!container) {
@@ -225,6 +237,12 @@ function fillSubtasks(subtasks) {
 }
 
 
+/**
+ * Loads a task into the overlay for editing.
+ * 
+ * @param {string} taskId - The ID of the task to be loaded.
+ * @param {string} category - The category of the task.
+ */
 function loadTaskToOverlay(taskId, category) {
     let task = taskData[category][taskId];
     if (!task) {
@@ -254,12 +272,14 @@ function closeEditWindow() {
     closeTaskOverlay();
 }
 
+
 /**
  * Refreshes the page or updates the UI dynamically.
  */
 function refreshPageOrUpdateUI() {
     location.reload();
 }
+
 
 /**
  * Directly closes the edit overlay without relying on an event.
@@ -281,6 +301,7 @@ function resetPriorityButtons() {
     });
     selectedPrio = null;
 }
+
 
 /**
  * Selects a priority option.

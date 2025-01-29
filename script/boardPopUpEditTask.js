@@ -14,7 +14,7 @@ async function editTask(taskId, category) {
 
 
     if (task.contacts && task.contacts.length > 0) {
-        syncContactIcons(task.contacts);
+        await syncContactIcons(task.contacts);
     } else {
         console.error("No contacts found for the task.");
     }

@@ -71,6 +71,7 @@ async function updateOverlayContent(category, task) {
     await updateOverlayContacts(task.contacts); 
 }
 
+
 /**
  * Retrieves relevant contacts based on the provided contact IDs.
  * @param {Array} contactIds - List of contact IDs assigned to the task.
@@ -97,6 +98,7 @@ async function getRelevantContacts(contactIds) {
 
     return relevantContacts;
 }
+
 
 /**
  * Updates the contact display in the overlay after drag & drop.
@@ -171,6 +173,7 @@ function resetPriority() {
     document.getElementById('medium').classList.remove('active');
     document.getElementById('low').classList.remove('active');
 }
+
 
 /**
  * Toggles the priority edit mode.

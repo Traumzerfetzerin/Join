@@ -62,7 +62,6 @@ async function deleteSubtask(taskId, category, subtaskIndex) {
 }
 
 
-
 /**
  * Updates the UI of the subtask section in the overlay.
  * @param {string} taskId - The ID of the task.

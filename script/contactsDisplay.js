@@ -15,6 +15,7 @@ async function loadContacts() {
     }
 }
 
+
 /**
  * Displays contacts on the page.
  */
