@@ -2,41 +2,17 @@
     display: none;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-}
-
-body {
-    margin: 0;
-    height: 100vh;
-}
-
 .content-wrapper {
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    /* Full viewport height */
-    position: relative;
     flex-direction: column;
     overflow: auto;
-    /* Enable scrolling inside this wrapper */
     gap: 10px;
-}
-
-#login-logoContainer {
-    position: absolute;
-    /* Make sure it's absolutely positioned */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3000;
-    /* Higher z-index to stay on top */
-    animation: move-logo 1.5s ease forwards;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .joinLogo img {
@@ -50,16 +26,16 @@ body {
     }
 
     100% {
-        transform: translate(-50vw, -50vh) scale(1);
+        transform: translate(-160%, -160%) scale(1);
     }
 }
 
-.signUp-button span {
+/* .signUp-button span {
     text-decoration: none;
     font-size: 18px;
     color: rgb(16, 14, 14);
     padding-right: 30px;
-}
+} */
 
 /* Main container styling */
 .login-joinContainer {
@@ -89,8 +65,8 @@ body {
 .login-signup-button {
     order: -1;
     margin-top: 20px;
-    margin-left: auto;
-    margin-right: 3%;
+    margin-left: 50%;
+    margin-right: auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -98,15 +74,17 @@ body {
     gap: 5px;
 }
 
-/* Prevent the button content from distorting */
 .login-signup-button span {
     white-space: nowrap;
-    /* Prevents the text from wrapping */
 }
 
-.login-signup-button button {
-    width: 105px;
+.login-signup-button a {
+    text-decoration: none;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .input-group {
     padding-bottom: 20px;
@@ -120,7 +98,6 @@ body {
     border-radius: 15px;
     border: 1px solid #dddddd;
     width: 100%;
-    /* color: #f6f7f8; */
     font-size: 16px;
 }
 
@@ -155,6 +132,9 @@ body {
     font-size: medium;
     font-weight: 600;
     box-shadow: none;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .login-button:hover {
@@ -193,7 +173,6 @@ body {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    /* Prevent the icon from blocking clicks */
 }
 
 .icon img {
@@ -204,9 +183,7 @@ body {
 .login-button.guest-btn:hover {
     background-color: transparent;
     border: 2px solid #3498db;
-    /*  Blue border */
     color: #3498db;
-    /* White text on hover */
 }
 
 .joinLogo {
@@ -230,62 +207,37 @@ body {
     text-decoration: none;
 }
 
-/* Toast Styles */
 .toast {
     visibility: hidden;
-    /* Hidden by default */
     min-width: 150px;
-    /* Minimum width */
     min-height: 80px;
     background-color: #2A3647;
     color: #f4f4f4;
-    /* White text */
     text-align: center;
-    /* Center text */
     border-radius: 15px;
-    /* Rounded corners */
     padding: 15px;
-    /* Padding inside the toast */
     position: fixed;
-    /* Fixed position */
     z-index: 2001;
-    /* On top of other elements */
     right: 0;
-    /* Start on the right */
     top: 50%;
-    /* Center vertically */
     transform: translate(100%, -80%);
-    /* Start hidden on the right */
     opacity: 0;
-    /* Start invisible */
     transition: transform 0.5s ease, opacity 0.5s ease;
-    /* Smooth transition */
 }
 
-/* Show the toast with sliding in effect */
 .toast.show {
     visibility: visible;
     opacity: 1;
     transform: translate(-90%, -90%);
-    /* Move to the center of the screen */
 }
 
-/* Hide the toast with sliding out effect */
 .toast.hide {
     transform: translate(100%, -80%);
-    /* Slide out to the right */
     opacity: 0;
-    /* Fade out */
 }
 
-/* .legalPolicy {
-    margin-top: 10px;
-    display: flex;
-    gap: 30px;
-    margin-bottom: 10px;
-} */
-
 .legalPolicy a {
+    text-decoration: none;
     color: lightgray !important;
 }
 
@@ -293,14 +245,12 @@ body {
     color: #3498db !important;
 }
 
-/* Toast types: success and error */
 .toast.success {
     background-color: #2A3647;
 }
 
 .toast.error {
     background-color: #dc3545;
-    /* Red for error */
 }
 
 .User-Guest {
