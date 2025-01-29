@@ -6,12 +6,29 @@
 async function enableEditMode(task, category) {
     hideElement('.priority-title');
     if (!task || !task.dueDate) return console.error("Task data is missing or dueDate not found:", task);
+    
     setEditTaskDetails(task);
+    
     let contacts = await fetchEditContacts();
-    if (contacts) updateContacts(contacts, task.contacts || []);
+    console.log("Fetched Contacts:", contacts); 
+
+    if (Array.isArray(contacts)) { 
+        updateContacts(contacts, task.contacts || []);
+
+        let assignedContacts = (task.contacts || [])
+            .map(id => contacts.find(contact => contact.id === id)) 
+            .filter(c => c);
+
+        console.log("Assigned Contacts:", assignedContacts); 
+        displayAssignedContacts(assignedContacts);
+    } else {
+        console.error("fetchEditContacts did not return an array:", contacts);
+    }
+
     renderSubtasksInEditMode(task, category);
     updateOverlayActions(task.id, category);
 }
+
 
 /**
  * Hides an HTML element by setting its display to 'none'.
@@ -35,12 +52,21 @@ function setEditTaskDetails(task) {
 }
 
 /**
- * Fetches contact data from the database.
- * @returns {Promise<Object>} The contact data.
+ * Fetches contacts from Firebase and converts them into an array.
+ * @returns {Promise<Array>} - Array of contact objects.
  */
 async function fetchEditContacts() {
-    let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
-    return await response.json();
+    try {
+        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
+        let contactsData = await response.json();
+        
+        if (!contactsData) return [];
+        
+        return Object.values(contactsData); 
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+        return [];
+    }
 }
 
 /**
@@ -161,20 +187,31 @@ function toggleEditDropdown() {
 }
 
 
-/**
- * Displays assigned contacts as icons below the dropdown.
- * @param {Array} assignedContacts - Array of contacts assigned to the task.
- */
 function displayAssignedContacts(assignedContacts) {
+    console.log("displayAssignedContacts wurde aufgerufen mit:", assignedContacts);
+
     let container = document.getElementById("contact-icons-container");
-    container.innerHTML = "";
-    let iconsHTML = assignedContacts.map(contact => {
-        return `<div class="contact-icon" style="background-color: ${contact.color};">
-                    ${contact.initials}
-                </div>`;
-    }).join("");
+    if (!container) {
+        console.error("Error: contact-icons-container not found!");
+        return;
+    }
+
+    if (!assignedContacts || assignedContacts.length === 0) {
+        container.innerHTML = "<p>No contacts assigned</p>";
+        return;
+    }
+
+    let iconsHTML = assignedContacts
+        .filter(contact => contact && contact.name)
+        .map(contact => `
+            <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
+                ${contact.name ? getInitials(contact.name) : "??"}
+            </div>
+        `).join("");
+
     container.innerHTML = iconsHTML;
 }
+
 
 /**
  * Fills the subtasks in the edit overlay.

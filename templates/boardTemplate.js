@@ -220,16 +220,19 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
                 }).join('')}
             </div>
             <div id="contact-icons-container" class="contact-icons">
-                ${assignedContacts.map(contact => {
-                    let initials = contact.initials || 
-                        contact.name.split(' ').map(n => n[0]).join('').toUpperCase();
-                    return `
-                        <div class="contact-icon" style="background-color: ${contact.color || '#ccc'};">
-                            ${initials}
-                        </div>
-                    `;
-                }).join('')}
+    ${assignedContacts.length > 0 ? assignedContacts.map(contact => {
+        let initials = contact.initials || 
+            (contact.name.includes(' ') ? 
+            contact.name.split(' ').map(n => n[0]).join('') : 
+            contact.name.substring(0, 2)).toUpperCase();
+        return `
+            <div class="contact-icon" style="background-color: ${contact.color || '#ccc'};">
+                ${initials}
             </div>
+        `;
+    }).join('') : '<p>No contacts assigned</p>'}
+</div>
+
         </div>
     `;
 }

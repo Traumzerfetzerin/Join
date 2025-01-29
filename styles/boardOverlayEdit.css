@@ -32,6 +32,10 @@
     justify-content: space-around;
 }
 
+#subtask-edit-entry {
+    width: 428px;
+}
+
 
 #edit-task-description {
     height: 150px;
@@ -317,5 +321,4 @@ button[onclick="toggleEditDropdown()"]:hover {
 #subtaskTextEdit {
     display: flex;
     justify-content: center;
-    width: 100%;
 }

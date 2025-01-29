@@ -49,7 +49,7 @@ async function toggleSubtaskCompletion(taskId, subtaskIndex) {
 
     try {
         await fetch(`${TASK_URL}/${task.category}/${taskId}/subtasks.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(task.subtasks),
         });

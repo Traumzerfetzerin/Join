@@ -252,7 +252,7 @@ function addNewSubtask(taskId, category) {
     let subtaskHTML = /*HTML*/`
         <li id="subtaskDiv_${subtaskIndex}" class="subtask-item" id="subtaskTextEdit">
             <div class="testForLi">
-                <ul>•<span class="editSubtaskText" contenteditable="true">${subtaskText}</span></ul>
+                <ul id="subtask-edit-entry">•<span class="editSubtaskText" contenteditable="true">${subtaskText}</span></ul>
                 <div class="subtask-icons">
                     <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
                         onclick="showSubtaskMarker(${subtaskIndex})">

@@ -85,7 +85,7 @@ async function sendTaskToDatabase(taskId, category, taskData) {
     return await fetch(
         `${TASK_URL}/${encodeURIComponent(category)}/${encodeURIComponent(taskId)}.json`,
         {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -346,7 +346,7 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
 async function updateTaskInDatabase(category, taskId, updatedTask) {
     let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks/${category}/${taskId}.json`;
     let response = await fetch(url, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTask),
     });

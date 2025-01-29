@@ -68,7 +68,38 @@ async function updateOverlayContent(category, task) {
         overlayDetails.innerHTML = overlayHtml;
     }
 
-    await updateOverlayContacts(task.contacts); // Kontakte sofort aktualisieren
+    await updateOverlayContacts(task.contacts); 
+}
+
+/**
+ * Retrieves relevant contacts based on the provided contact IDs.
+ * @param {Array} contactIds - List of contact IDs assigned to the task.
+ * @returns {Promise<Array>} - Array of relevant contact objects.
+ */
+async function getRelevantContacts(contactIds) {
+    if (!contactIds || contactIds.length === 0) return [];
+
+    let allContacts = await fetchContactsFromFirebase();
+    
+    if (!allContacts || typeof allContacts !== "object") {
+        console.error("fetchContactsFromFirebase did not return a valid object:", allContacts);
+        return [];
+    }
+
+    let contactMap = {};
+    for (let contact of Object.values(allContacts)) { 
+        contactMap[contact.id] = contact;
+    }
+
+    let relevantContacts = contactIds
+        .map(id => contactMap[id])
+        .filter(contact => contact);
+
+    console.log("Fetched Contacts for Overlay:", allContacts);
+    console.log("Assigned Contact IDs:", contactIds);
+    console.log("Relevant Contacts for Display:", relevantContacts);
+
+    return relevantContacts;
 }
 
 /**
@@ -77,24 +108,22 @@ async function updateOverlayContent(category, task) {
  * @param {Array} contactIds - List of contact IDs assigned to the task.
  */
 async function updateOverlayContacts(contactIds) {
-    if (!contactIds || contactIds.length === 0) return;
-
-    let allContacts = await fetchContactsFromFirebase(); // Kontakte aus Firebase laden
-    let relevantContacts = contactIds.map(id => 
-        allContacts.find(contact => contact.id === id) || { id, name: "Unknown" }
-    );
-
     let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (contactIconsContainer) {
-        contactIconsContainer.innerHTML = relevantContacts.map(contact => `
-            <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
-                ${contact.name || "Unknown"}
-            </div>
-        `).join('');
+    if (!contactIconsContainer) {
+        console.error("Error: contact-icons-container not found!");
+        return;
     }
+
+    let relevantContacts = await getRelevantContacts(contactIds);
+    
+    contactIconsContainer.innerHTML = relevantContacts.map(contact => `
+        <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
+            ${getInitials(contact.name)}
+        </div>
+    `).join('');
+
+    console.log("Updated contact-icons-container:", contactIconsContainer.innerHTML);
 }
-
-
 
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -245,7 +274,7 @@ async function populateTasksWithContacts(tasks) {
 async function syncSubtasksWithFirebase(taskId, subtasks, category) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(subtasks)
         });
@@ -267,7 +296,7 @@ async function syncSubtasksWithFirebase(taskId, subtasks, category) {
 async function updateSubtasksInFirebase(taskId, subtasks, category) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(subtasks)
         });

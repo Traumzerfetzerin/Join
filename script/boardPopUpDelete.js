@@ -108,7 +108,7 @@ function updateSubtaskUI(taskId, category) {
  */
 async function updateSubtasksInFirebase(taskId, category, subtasks) {
     return await fetch(`${TASK_URL}/${category}/${taskId}/subtasks.json`, {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(subtasks),
     });

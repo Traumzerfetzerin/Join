@@ -4,23 +4,33 @@
  * @param {Array} contactIds - An array of contact IDs.
  */
 async function syncContactIcons(contactIds) {
-    if (!contactIds || contactIds.length === 0) return;
+    if (!contactIds || contactIds.length === 0) {
+        console.log("Keine Kontakt-IDs vorhanden:", contactIds);
+        return;
+    }
 
-    let allContacts = await fetchContactsFromFirebase(); 
+    let allContacts = await fetchContactsFromFirebase();
+    console.log("Geladene Kontakte:", allContacts);
+
     let contactIconsContainer = document.getElementById('contact-icons-container');
+    if (!contactIconsContainer) {
+        console.log("Fehler: contact-icons-container nicht gefunden!");
+        return;
+    }
 
     let relevantContacts = contactIds.map(id => 
         allContacts.find(contact => contact.id === id) || { id, name: "Unknown" }
     );
 
-    if (contactIconsContainer) {
-        contactIconsContainer.innerHTML = relevantContacts.map(contact => `
-            <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
-                ${contact.name || "Unknown"}
-            </div>
-        `).join('');
-    }
+    console.log("Relevante Kontakte für Anzeige:", relevantContacts);
+
+    contactIconsContainer.innerHTML = relevantContacts.map(contact => `
+        <div class="contact-icon" style="background-color: ${contact.color || '#ccc'}">
+            ${contact.name || "Unknown"}
+        </div>
+    `).join('');
 }
+
 
 
 /**
@@ -36,45 +46,68 @@ function normalizeContactIds(contactIds) {
 }
 
 /**
- * Fetches all contacts from Firebase.
- * @returns {Promise<Array>} - Array of contact objects.
+ * Fetches contacts from Firebase and maps them into an object for easy lookup.
+ * @returns {Promise<Object>} - A map of contact IDs to contact details.
  */
 async function fetchContacts() {
     try {
         let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
         let contactsData = await response.json();
-        return contactsData ? Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] })) : [];
+        let contactMap = {};
+        for (let key in contactsData) {
+            let contact = contactsData[key];
+            contactMap[contact.id] = contact; 
+        }
+        return contactMap;
     } catch (error) {
         console.error("Error fetching contacts:", error);
-        return [];
+        return {};
     }
 }
 
 /**
  * Updates the contact icons displayed in the designated container, ensuring the overlay is loaded.
- * @param {Array} contactIds - List of contact IDs.
- * @param {Array} contacts - List of all contacts.
+ * @param {Array} contactIds - List of contact IDs assigned to a task.
  */
-function updateContactIcons(contactIds, contacts) {
+async function updateContactIcons(contactIds) {
+    let contacts = await fetchContacts();
     let contactIconsContainer = document.getElementById('contact-icons-container');
-    if (!contactIconsContainer) return;
     
-    let assignedContacts = contacts.filter(contact => contactIds.includes(contact.id) || contactIds.includes(contact.name));
-    contactIconsContainer.innerHTML = assignedContacts.map(createContactIcon).join('');
+    if (!contactIconsContainer) return;
+    contactIconsContainer.innerHTML = '';
+
+    let assignedContacts = contactIds
+        .map(id => contacts[id])
+        .filter(contact => contact); 
+
+    contactIconsContainer.innerHTML = assignedContacts
+        .map(contact => createContactIcon(contact))
+        .join('');
 }
 
 /**
- * Creates a contact icon HTML string.
- * @param {Object} contact - Contact object.
- * @returns {string} - HTML string for contact icon.
+ * Extracts initials from a full name.
+ * @param {string} name - The full name of the contact.
+ * @returns {string} - The initials of the name.
+ */
+function getInitials(name) {
+    if (!name) return "U"; 
+    return name.split(' ')
+        .map(part => part[0])
+        .join('')
+        .toUpperCase()
+        .substring(0, 2);
+}
+
+
+/**
+ * Generates a contact icon HTML string.
+ * @param {Object} contact - Contact object containing name and color.
+ * @returns {string} - HTML string for the contact icon.
  */
 function createContactIcon(contact) {
-    if (!contact || !contact.name) return "";
-    
-    let initials = contact.name.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
-    let bgColor = contact.color || getRandomColor();
-    
-    return `<div class="contact-icon" style="background-color: ${bgColor};">${initials}</div>`;
+    let initials = getInitials(contact.name);
+    return `<div class="contact-icon" style="background-color: ${contact.color}">${initials}</div>`;
 }
 
 

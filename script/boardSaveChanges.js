@@ -119,7 +119,7 @@ async function saveChanges(taskId, category) {
 async function updateTaskInFirebase(taskId, category, taskData) {
     try {
         let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`, {
-            method: "PUT",
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(taskData),
         });
