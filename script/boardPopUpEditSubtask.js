@@ -334,6 +334,7 @@ function showSubtaskMarker(index) {
     }
 }
 
+
 function hideSubtaskMarker(index) {
     let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
     let markerElement = document.getElementById(`subtaskMarker_${index}`);

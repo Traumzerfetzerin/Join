@@ -4,7 +4,7 @@
  * @event keyup - Triggers when a key is released on the keyboard.
  * @param {KeyboardEvent} event - The keyup event object.
  */
-let input = document.getElementById('subtaskSelect');
+let input = document.getElementById('subtaskSelect', 'newSubtaskInput');
 document.addEventListener("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
