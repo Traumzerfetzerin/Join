@@ -38,7 +38,6 @@ function toggleElementVisibility(selector, isVisible) {
     if (element) {
         element.style.display = isVisible ? 'block' : 'none';
     } else {
-        console.warn(`Element with selector "${selector}" not found.`);
     }
 }
 
