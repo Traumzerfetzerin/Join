@@ -39,7 +39,7 @@
     border-radius: 10px;
     cursor: pointer;
     width: 220px;
-    display: flex;
+    display: flex !important;
     justify-content: space-around;
     align-items: center;
     z-index: 2;
