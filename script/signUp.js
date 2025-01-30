@@ -24,8 +24,8 @@ function processSignUp(name, email, password, confirmPassword) {
     isEmailExists(email)
         .then(exists => {
             if (exists) return handleSignUpError('Email already exists');
-            if (!validatePassword(password)) return handleSignUpError('Password must be at least 6 characters, contain an uppercase letter and a number');
-            if (password !== confirmPassword) return handleSignUpError('Passwords do not match');
+            if (!validatePassword(password)) return handleSignUpError('Password must be at least 6 characters, contain an uppercase letter and a number', true);
+            if (password !== confirmPassword) return handleSignUpError('Passwords do not match', true);
             storeUserData(name, email, password);
         })
         .catch(error => showToast('Error checking email: ' + error));
@@ -33,14 +33,29 @@ function processSignUp(name, email, password, confirmPassword) {
 
 
 /**
- * Handles sign-up errors by displaying a toast and clearing the form.
+ * Handles sign-up errors by displaying a toast.
  * @param {string} message - The error message to display.
+ * @param {boolean} clearPasswords - Whether to clear the password fields.
  */
-function handleSignUpError(message) {
+function handleSignUpError(message, clearPasswords = false) {
     showToast(message);
-    clearForm();
+    if (clearPasswords) {
+        clearErrorFields();
+    }
 }
 
+
+/**
+ * Clears specific input fields related to errors in the sign-up form.
+ */
+function clearErrorFields() {
+    let passwordField = document.getElementById('password');
+    let confirmPasswordField = document.getElementById('confirm-password');
+    if (passwordField && confirmPasswordField) {
+        passwordField.value = '';
+        confirmPasswordField.value = '';
+    }
+}
 
 /**
  * Stores user data in Firebase Realtime Database.
@@ -90,6 +105,15 @@ function validatePassword(password) {
     return re.test(password);
 }
 
+
+// Add event listeners to the password input field
+document.getElementById('password').addEventListener('click', function() {
+    document.getElementById('password-hint').style.display = 'block';
+});
+
+document.getElementById('password').addEventListener('blur', function() {
+    document.getElementById('password-hint').style.display = 'none';
+});
 
 /**
  * Saves user data to Firebase Realtime Database.
@@ -149,6 +173,21 @@ window.onload = function () {
     clearForm();
     initializeSignUpButton();
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    let passwordField = document.getElementById('password');
+    let passwordHint = document.getElementById('password-hint');
+    
+    if (passwordField && passwordHint) {
+        passwordField.addEventListener('focus', function() {
+            passwordHint.style.display = 'block';
+        });
+
+        passwordField.addEventListener('blur', function() {
+            passwordHint.style.display = 'none';
+        });
+    }
+});
 
 
 /**

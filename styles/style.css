@@ -1,13 +1,8 @@
-html, body {
+body {
     margin: 0;
     padding: 0;
     background-color: #F5F5F5;
-    min-width: 320px;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-width: 1920px;
 }
 
 /* Alle Style-Informationen werden mit berücksichtigt, *= zählt für alles*/

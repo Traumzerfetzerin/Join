@@ -164,8 +164,8 @@ function generateOverlayContactList(contacts) {
  */
 function generateSubtaskList(task) {
     if (!task.id) {
-        console.error("Task ID is undefined for the following task:", task);
-        return "<li>No subtasks available</li>";
+        console.error("Task ID is undefined. Adding temporary ID.", task);
+        task.id = `temp-${Math.random().toString(36).substr(2, 9)}`;
     }
 
     return task.subtasks && task.subtasks.length

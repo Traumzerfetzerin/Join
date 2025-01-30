@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="../styles/login.css">
     <link rel="stylesheet" href="../styles/responsive/loginResponsive.css">
     <link rel="stylesheet" href="../styles/responsive/legalNoticeResponsive.css">
-    <script src="../script/signUp.js"></script>
-    <script src="../script/contacts.js"></script>
 
 </head>
 <body>
@@ -42,11 +40,12 @@
                     </span>
                 </div>
                 
-                <div class="input-group">                
+                <div class="input-group">
                     <input type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password">
                     <span class="icon" id="togglePasswordIcon" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
                         <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
                     </span>
+                    <p id="password-hint" class="password-hint">Password must be at least 6 characters, contain an uppercase letter and a number</p>
                 </div>
                 
                 <div class="input-group">                
@@ -74,6 +73,7 @@
     </div>
     <div id="toast" class="toast"></div>
 
-    
+    <script src="../script/signUp.js"></script>
+    <script src="../script/contacts.js"></script>    
 </body>
 </html>
