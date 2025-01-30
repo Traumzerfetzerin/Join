@@ -3,6 +3,26 @@
         top: 12%;
         left: 17%;
     }
+
+    .content-wrapper {
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        overflow: auto;
+        gap: 10px;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-top: 10%;
+    }
+}
+
+@media (max-width: 1024px) {
+    #login-logoContainer {
+        top: 30%;
+    }
 }
 
 @media (max-width: 980px) {
@@ -35,11 +55,6 @@
         100% {
             transform: translate(-55vw, -20vh) scale(1);
         }
-    }
-
-    .joinLogoImg {
-        top: 200px;
-        position: absolute;
     }
 
     #login-logoContainer {
@@ -203,8 +218,12 @@
 
 @media (max-width: 540px) {
     #login-logoContainer {
-        top: 25% !important;
+        top: 11% !important;
         left: 45% !important;
+    }
+
+    .login-joinContainer {
+        margin-top: 30px;
     }
 }
 
@@ -243,7 +262,7 @@
     }
 
     #login-logoContainer {
-        top: 25% !important;
+        top: 15% !important;
         left: 45% !important;
     }
 }
@@ -307,7 +326,6 @@
 
     .legalPolicy {
         display: flex;
-        gap: px;
         margin-bottom: 20px;
         order: 2;
         margin-top: 0;
@@ -344,5 +362,16 @@
 
     .login-joinContainer {
         width: 100% !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .legalPolicy {
+        flex-direction: column;
+        margin-right: 20% !important;
+    }
+
+    .login-joinContainer {
+        right: 3%;
     }
 }

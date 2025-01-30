@@ -6,13 +6,14 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
-    flex: 1;
+    flex-direction: column;
+    left: auto;
 }
 
 #signup-logoContainer {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 40%;
+    left: 45%;
     transform: translate(-50%, -50%);
     z-index: 3000;
     animation: move-logo 1.5s ease forwards;
@@ -56,17 +57,6 @@
     text-decoration-thickness: 2px;
 }
 
-/* .go-to-login {
-    position: absolute;
-    top: 70px;
-    left: 20px;
-}
-
-.go-to-login img {
-    width: 24px;
-    height: auto;
-} */
-
 .go-to-login {
     margin-left: auto;
     height: 32px;
@@ -87,9 +77,9 @@
 
 .input-group {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 15px; 
+    margin-bottom: 15px;
     position: relative;
 }
 
@@ -119,7 +109,6 @@
 .input-group .icon {
     position: absolute;
     right: 10px;
-    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
 }

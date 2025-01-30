@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +14,13 @@
     <link rel="stylesheet" href="../styles/responsive/legalNoticeResponsive.css">
 
 </head>
+
 <body>
     <div class="join">
         <div class="joinLogo" id="signup-logoContainer">
             <img class="joinLogoImg" src="../Assets/joinLogo.svg" alt="Join Logo">
         </div>
-       
+
         <div class="signup-joinContainer">
             <div class="go-to-login">
                 <a href="../html/login.html">
@@ -39,41 +41,49 @@
                         <img id="passwordImg" src="../Assets/mail.svg" alt="">
                     </span>
                 </div>
-                
+
                 <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="Password" required autocomplete="new-password">
-                    <span class="icon" id="togglePasswordIcon" onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
-                        <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
+                    <input type="password" id="password" name="password" placeholder="Password" required
+                        autocomplete="new-password">
+                    <span class="icon" id="togglePasswordIcon"
+                        onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
+                        <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password"
+                            style="cursor: pointer;">
                     </span>
-                    <p id="password-hint" class="password-hint">Password must be at least 6 characters, contain an uppercase letter and a number</p>
+                    <p id="password-hint" class="password-hint">Password must be at least 6 characters, contain an
+                        uppercase letter and a number</p>
                 </div>
-                
-                <div class="input-group">                
-                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required autocomplete="new-password">
-                    <span class="icon" id="toggleConfirmPasswordIcon" onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
-                        <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password" style="cursor: pointer;">
+
+                <div class="input-group">
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password"
+                        required autocomplete="new-password">
+                    <span class="icon" id="toggleConfirmPasswordIcon"
+                        onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
+                        <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password"
+                            style="cursor: pointer;">
                     </span>
                 </div>
                 <div class="checkbox-group">
                     <input type="checkbox" id="terms-checkbox" name="terms-checkbox" required>
-                    <span for="terms-checkbox">  I accept the <a href="../html/policy.html">Privacy Policy</a></span>
+                    <span for="terms-checkbox"> I accept the <a href="../html/policy.html">Privacy Policy</a></span>
                 </div>
-                
+
                 <div class="signup-button">
                     <button type="submit" id="signup-btn" class="btn" disabled>Sign up</button>
                     <p id="response-message" class="response-message"></p>
                 </div>
-                
+
             </form>
         </div>
-    </div>
-    <div id="sidefoot" class="legalPolicy">
-        <a class="sidebartext widget" href="../html/policy.html">Privacy Policy</a>        
-        <a class="sidebartext widget" href="../html/legalNotice.html">Legal Notice</a>        
+        <div id="sidefoot" class="legalPolicy">
+            <a class="sidebartext widget" href="../html/policy.html">Privacy Policy</a>
+            <a class="sidebartext widget" href="../html/legalNotice.html">Legal Notice</a>
+        </div>
     </div>
     <div id="toast" class="toast"></div>
 
     <script src="../script/signUp.js"></script>
-    <script src="../script/contacts.js"></script>    
+    <script src="../script/contacts.js"></script>
 </body>
+
 </html>

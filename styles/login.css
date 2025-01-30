@@ -31,13 +31,6 @@
     }
 }
 
-/* .signUp-button span {
-    text-decoration: none;
-    font-size: 18px;
-    color: rgb(16, 14, 14);
-    padding-right: 30px;
-} */
-
 /* Main container styling */
 .login-joinContainer {
     background-color: white;
@@ -85,7 +78,6 @@
     align-items: center;
     justify-content: center;
 }
-
 
 .input-group {
     padding-bottom: 20px;
