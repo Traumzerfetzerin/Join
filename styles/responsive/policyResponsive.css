@@ -48,9 +48,9 @@
     }
 }
 
-@media (max-width: 770px) {
+@media (max-width: 540px) {
     #sidebar {
-        bottom: 180px;
+        bottom: 0 !important;
     }
 }
 
@@ -60,14 +60,20 @@
     }
 }
 
-@media (max-width: 415px) {
-    #sidebar {
-        bottom: 50px;
-    }
-}
-
 @media (max-width: 390px) {
     #sidebar {
         bottom: 0;
+    }
+}
+
+@media (max-width: 345px) {
+    #sidebar {
+        bottom: 35px !important;
+    }
+}
+
+@media (max-width: 345px) {
+    #sidebar {
+        bottom: 0 !important;
     }
 }
