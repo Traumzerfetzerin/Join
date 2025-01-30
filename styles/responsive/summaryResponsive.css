@@ -1,8 +1,16 @@
 @media (max-width: 1290px) {
+    .titeljoin {
+        left: 250px;
+        top: 13%;
+    }
 
     .titeljoin,
     .details {
         left: 250px;
+    }
+
+    .details {
+        top: 20%;
     }
 
     .goodmorning {
@@ -33,6 +41,7 @@
     .summarynmb {
         line-height: 98.8px;
     }
+
     .pencil {
         height: 110px;
     }
@@ -55,6 +64,10 @@
 }
 
 @media (max-width: 760px) {
+    .details {
+        left: 75px;
+        top: 25%;
+    }
 
     .titeljoin,
     .details {
@@ -96,6 +109,7 @@
 
     .details {
         left: 30%;
+        top: 35%;
     }
 
     .urgent,
@@ -155,6 +169,39 @@
     .undertask {
         height: 95px;
         padding-bottom: 0;
+    }
+}
+
+@media (max-width: 540px) {
+    .details {
+        left: 30%;
+        top: 35%;
+    }
+}
+
+@media (max-width: 430px) {
+    .details {
+        top: 35%;
+    }
+}
+
+
+
+@media (max-width: 375px) {
+    .mobile_headerNav {
+        height: 150px;
+        left: 48%;
+        top: 65px !important;
+    }
+
+    .titeljoin {
+        left: 10%;
+        top: 90px;
+    }
+
+    .details {
+        left: 25%;
+        top: 35%;
     }
 }
 
