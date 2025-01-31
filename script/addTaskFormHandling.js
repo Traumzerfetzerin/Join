@@ -4,7 +4,15 @@
 function calculateDueDate() {
     let duoDate = new Date();
     let formattedDate = duoDate.toISOString().split('T')[0];
-    document.getElementById('dueDate').setAttribute('min', formattedDate);
+    let dueDateInput = document.getElementById('dueDate');
+
+    dueDateInput.setAttribute('min', formattedDate);
+
+    if (dueDateInput.showPicker) {
+        dueDateInput.showPicker();
+    } else {
+        console.log("Dieser Browser unterstützt showPicker() nicht.");
+    }
 }
 
 
