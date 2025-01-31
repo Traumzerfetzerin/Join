@@ -71,9 +71,11 @@ async function createTasks(event) {
     console.log("askData directly after collectTaskData():", JSON.stringify(taskData, null, 2));
     let isValid = await validateTaskData(taskData);
     if (!isValid) {
+        await loadContactsForDropdown();
         console.error("Task data validation failed.");
         return;
     }
+
     try {
         console.log("🔥 Task data BEFORE sending to Firebase:", JSON.stringify(taskData, null, 2));
         let taskId = await sendTaskToFirebase(taskData, taskData.category);
@@ -87,9 +89,9 @@ async function createTasks(event) {
         return;
     }
     await popUpAddTask();
-    await clearTasks(); // Erst jetzt die Felder leeren!
+    await clearTasks();
     await changeToBoard();
- }
+}
 
 
 /**

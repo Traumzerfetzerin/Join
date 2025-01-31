@@ -11,22 +11,22 @@ let selectedContacts = [];
  */
 async function loadContactsForDropdown() {
     try {
-        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app//contacts.json');
+        console.log("Starting to load contacts...");
+        let response = await fetch('https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json');
         let contactsData = await response.json();
+
+        console.log("Loaded data:", contactsData);
+
         if (contactsData) {
             contacts = Object.keys(contactsData).map(key => ({ id: key, ...contactsData[key] }));
+            console.log("Converted contacts:", contacts);
             populateCheckboxDropdown();
         } else {
-            console.log('No contacts found');
+            console.log("No contacts found");
         }
     } catch (error) {
-        console.error('Error fetching contacts:', error);
+        console.error("Error fetching contacts:", error);
     }
-
-    document.querySelectorAll('#assignTaskDropdown input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', updateAssignedContacts);
-    });
-
 }
 
 
