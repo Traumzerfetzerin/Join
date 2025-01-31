@@ -9,17 +9,21 @@
 function editSubtaskEdit(taskId, category, subtaskIndex) {
     let subtaskElement = getSubtaskElement(subtaskIndex);
     if (!subtaskElement) return;
-    let textElement = subtaskElement.querySelector('.editSubtaskText') || subtaskElement.querySelector('.subtask-text');
+    let textElement = subtaskElement.querySelector('.editSubtaskText');
     if (!textElement) {
-        console.error("Subtask text element not found for:", subtaskElement);
+        textElement = document.createElement("span");
+        textElement.classList.add("editSubtaskText");
+        subtaskElement.appendChild(textElement);
+    }
+    let currentText = textElement.innerText.trim();
+    if (!currentText) {
+        console.error("No text found in subtask element:", subtaskElement);
         return;
     }
-
-    let currentText = textElement.innerText;
     subtaskElement.classList.add('editing');
     textElement.style.display = 'none';
     createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText);
-}
+ }
 
 
 
@@ -74,12 +78,10 @@ function toggleExistingInput(subtaskElement, subtaskIndex, currentText) {
  */
 function createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText) {
     subtaskElement.innerHTML = generateEditSubtaskHTML(subtaskIndex, taskId, category, currentText);
-
     let saveButton = subtaskElement.querySelector('.save-subtask-button');
     let inputField = subtaskElement.querySelector(`#editSubtaskInput_${subtaskIndex}`);
-
     if (saveButton && inputField) {
-        saveButton.addEventListener('click', () => {
+        saveButton.onclick = function () {
             let updatedText = inputField.value.trim();
             if (updatedText) {
                 updateSubtaskElements(subtaskElement, inputField, updatedText);
@@ -87,11 +89,17 @@ function createEditInput(subtaskElement, subtaskIndex, taskId, category, current
             } else {
                 console.error("Subtask text cannot be empty.");
             }
-        });
+        };
+        inputField.onkeydown = function (event) {
+            if (event.key === "Enter") {
+                saveButton.click();
+            }
+        };
+        inputField.focus();
     } else {
         console.error(`Could not find input field or save button for subtask ${subtaskIndex}`);
     }
-}
+ }
 
 /**
  * Creates an input field for editing a subtask within the given subtask element.
@@ -184,32 +192,51 @@ function getSubtaskElement(subtaskIndex) {
     return subtaskElement;
 }
 
-
 /**
- * Updates the subtask elements by displaying the new text, hiding the input field, and updating icons.
- * 
- * @param {HTMLElement} subtaskElement - The subtask element that contains the text and icons.
- * @param {HTMLElement} inputField - The input field where the new text is entered.
- * @param {string} newText - The new text to display for the subtask.
- */
-function updateSubtaskElements(subtaskElement, inputField, newText) {
-    let subtaskTextElement = subtaskElement.querySelector('.editSubtaskText');
-    if (!subtaskTextElement) {
-        console.error("Subtask text element not found.");
-        return;
-    }
-    subtaskTextElement.innerText = newText;
-    subtaskTextElement.style.display = 'block';
-    subtaskElement.querySelector('.subtask-icons').style.display = 'flex';
-    inputField.style.display = 'none';
-
-    let saveButton = inputField.nextElementSibling;
-    if (saveButton) saveButton.style.display = 'none';
+* Updates the subtask elements by restoring the text and ensuring correct structure.
+*
+* @param {HTMLElement} subtaskElement - The subtask container element.
+* @param {HTMLElement} inputField - The input field where the new text is entered.
+* @param {string} newText - The updated text for the subtask.
+* @param {string} taskId - The ID of the task.
+* @param {string} category - The category of the task.
+* @param {number} index - The index of the subtask in the list.
+*/
+function updateSubtaskElements(subtaskElement, inputField, newText, taskId, category, index) {
+    if (!subtaskElement) return;
+    subtaskElement.innerHTML = generateSubtaskHTML(newText, taskId, category, index);
+    addSubtaskEventListeners(subtaskElement);
+    if (inputField) inputField.remove();
     subtaskElement.classList.remove('editing');
-    let deleteSubtask = subtaskElement.querySelector('.deleteSubtask');
-    if (deleteSubtask) deleteSubtask.style.display = 'none';
-}
-
+ }
+ 
+/**
+* Generates the HTML structure for a subtask.
+*
+* @param {string} subtaskText - The text of the subtask.
+* @param {string} taskId - The ID of the task.
+* @param {string} category - The category of the task.
+* @param {number} index - The index of the subtask.
+* @returns {string} - The HTML string for the subtask.
+*/
+function generateSubtaskHTML(subtaskText, taskId, category, index) {
+    return /*HTML*/`
+ <li id="subtaskDiv_${index}" class="subtask-item">
+ <div class="testForLi">
+ <ul id="subtask-edit-entry">
+                    •<span class="editSubtaskText" contenteditable="true">${subtaskText}</span>
+ </ul>
+ <div class="subtask-icons">
+ <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
+                         data-task-id="${taskId}" data-category="${category}" data-index="${index}">
+ <div class="seperatorSubtaskIcons"></div>
+ <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+                         data-task-id="${taskId}" data-category="${category}" data-index="${index}">
+ </div>    
+ </div>
+ </li>
+    `;
+ }
 
 /**
  * Saves the updated subtask text to the database.
@@ -236,36 +263,23 @@ async function saveSubtaskToDatabase(taskId, category, subtaskIndex, newText) {
 
 
 /**
- * Adds a new subtask to the task by creating a new subtask element and appending it to the subtask list.
- * 
- * @param {string} taskId - The ID of the task to which the subtask belongs.
- * @param {string} category - The category of the task.
- * @returns {void} - No return value.
- */
+* Adds a new subtask to the task by creating a new subtask element.
+*
+* @param {string} taskId - The ID of the task to which the subtask belongs.
+* @param {string} category - The category of the task.
+*/
 function addNewSubtask(taskId, category) {
     let newSubtaskInput = document.getElementById('newSubtaskInput');
     let subtaskText = newSubtaskInput.value.trim();
     if (subtaskText === "") return;
-
     let subtaskContainer = document.querySelector('.subtasks-list');
     let subtaskIndex = subtaskContainer.querySelectorAll('.subtask-item').length;
-    let subtaskHTML = /*HTML*/`
-        <li id="subtaskDiv_${subtaskIndex}" class="subtask-item" id="subtaskTextEdit">
-            <div class="testForLi">
-                <ul id="subtask-edit-entry">•<span class="editSubtaskText" contenteditable="true">${subtaskText}</span></ul>
-                <div class="subtask-icons">
-                    <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                        onclick="showSubtaskMarker(${subtaskIndex})">
-                        <div class="seperatorSubtaskIcons"></div>
-                    <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-                        onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex}')">
-                </div>    
-            </div>
-        </li>
-    `;
+    let subtaskHTML = generateSubtaskHTML(subtaskText, taskId, category, subtaskIndex);
     subtaskContainer.insertAdjacentHTML('beforeend', subtaskHTML);
+    let newSubtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
+    addSubtaskEventListeners(newSubtaskElement, taskId, category, subtaskIndex);
     newSubtaskInput.value = "";
-}
+ }
 
 
 
@@ -344,3 +358,29 @@ document.addEventListener('DOMContentLoaded', () => {
         saveBtn.addEventListener('click', () => hideSubtaskMarker(index));
     });
 });
+
+/**
+* Adds event listeners to the edit and delete buttons of a subtask.
+*
+* @param {HTMLElement} subtaskElement - The subtask container element.
+*/
+function addSubtaskEventListeners(subtaskElement) {
+    let editButton = subtaskElement.querySelector(".editSubtask");
+    let deleteButton = subtaskElement.querySelector(".deleteSubtask");
+    if (editButton) {
+        editButton.addEventListener("click", function () {
+            let taskId = editButton.getAttribute("data-task-id");
+            let category = editButton.getAttribute("data-category");
+            let index = parseInt(editButton.getAttribute("data-index"));
+            editSubtaskEdit(taskId, category, index);
+        });
+    }
+    if (deleteButton) {
+        deleteButton.addEventListener("click", function () {
+            let taskId = deleteButton.getAttribute("data-task-id");
+            let category = deleteButton.getAttribute("data-category");
+            let index = parseInt(deleteButton.getAttribute("data-index"));
+            deleteSubtask(taskId, category, index);
+        });
+    }
+ }

@@ -236,6 +236,14 @@ textarea {
     z-index: 1;
 }
 
+.createdSubtask {
+    height: 20px;
+}
+
+#editSubtasks input {
+    height: 20px;
+}
+
 .createdSubtask:hover img {
     display: inline;
 }

@@ -41,25 +41,32 @@ async function fetchAndPopulateContacts(selectedContacts = []) {
  * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
  */
 async function sendTaskToFirebase(preparedTaskData, category) {
+    console.log("📤 Sending task to Firebase WITHOUT ID:", JSON.stringify(preparedTaskData, null, 2));
     try {
         let response = await fetch(`${CREATETASK_URL}/${category}.json`, {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(preparedTaskData),
         });
-
         if (!response.ok) {
-            console.error("Failed to save task to Firebase:", response.statusText);
+            console.error("Firebase error:", response.statusText);
             return null;
         }
         let data = await response.json();
-        return data.name;
-
+        let taskId = data.name; 
+        let updatedData = { ...preparedTaskData, id: taskId };
+        await fetch(`${CREATETASK_URL}/${category}/${taskId}.json`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: taskId }),
+        });
+        console.log("Task ID successfully added in Firebase:", taskId);
+        return taskId;
     } catch (error) {
-        console.error("Error saving task to Firebase:", error);
+        console.error("Error in sendTaskToFirebase:", error);
         return null;
     }
-}
+ }
 
 
 /**
