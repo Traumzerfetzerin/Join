@@ -75,15 +75,24 @@ async function toggleSubtaskCompletion(taskId, subtaskIndex) {
  * @param {Object} task - The task object.
  */
 function progressBarfilling(taskId, category, progressPercentage, completed, total, task) {
-    let progressBarFill = document.querySelector(`#task-${taskId} .progress-bar-fill`);
-    if (progressBarFill) {
-        progressBarFill.style.width = `${progressPercentage}%`;
-        progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
-    }
+    let progressBarContainer = document.querySelector(`#task-${taskId} .progress-bar-container`);
+    
+    if (progressBarContainer) {
+        if (total > 0) {
+            progressBarContainer.style.display = "block";
+            let progressBarFill = progressBarContainer.querySelector(".progress-bar-fill");
+            if (progressBarFill) {
+                progressBarFill.style.width = `${progressPercentage}%`;
+                progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
+            }
 
-    let subtaskCounter = document.querySelector(`#task-${taskId} .progress-bar-container span`);
-    if (subtaskCounter) {
-        subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+            let subtaskCounter = progressBarContainer.querySelector("span");
+            if (subtaskCounter) {
+                subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+            }
+        } else {
+            progressBarContainer.remove(); // Entfernt die Progress Bar komplett
+        }
     }
 
     if (document.getElementById('taskOverlay').style.display === 'block') {
@@ -93,6 +102,7 @@ function progressBarfilling(taskId, category, progressPercentage, completed, tot
         }
     }
 }
+
 
 
 /**

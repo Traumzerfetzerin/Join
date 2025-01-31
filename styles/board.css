@@ -155,6 +155,7 @@ main {
 
 .task {
     min-width: 242px;
+    max-width: 242px;
     padding: 8px;
     gap: 10px;
     border-radius: 25px;
