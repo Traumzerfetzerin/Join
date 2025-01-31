@@ -23,8 +23,7 @@ function editSubtaskEdit(taskId, category, subtaskIndex) {
     subtaskElement.classList.add('editing');
     textElement.style.display = 'none';
     createEditInput(subtaskElement, subtaskIndex, taskId, category, currentText);
- }
-
+}
 
 
 /**
@@ -99,7 +98,8 @@ function createEditInput(subtaskElement, subtaskIndex, taskId, category, current
     } else {
         console.error(`Could not find input field or save button for subtask ${subtaskIndex}`);
     }
- }
+}
+
 
 /**
  * Creates an input field for editing a subtask within the given subtask element.
@@ -115,12 +115,14 @@ function generateEditSubtaskHTML(subtaskIndex, taskId, category, currentText) {
     <div class="edit-subtask-container">
         <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}">
         <img class="save-subtask-button"
-            src="/Assets/addTask/Property 1=check.svg" alt="Save">
-        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-            onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex}')">
+            src="/Assets/addTask/Property 1=check.svg" alt="Save subtask">
+        <img class="deleteSubtask" src="/Assets/addTask/Property 1=delete.svg" alt="Delete subtask"
+            onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex})">
     </div>
     `;
 }
+
+
 /**
  * Saves the edited subtask text, updates the UI, and saves the changes to the database.
  * 
@@ -192,6 +194,7 @@ function getSubtaskElement(subtaskIndex) {
     return subtaskElement;
 }
 
+
 /**
 * Updates the subtask elements by restoring the text and ensuring correct structure.
 *
@@ -208,8 +211,9 @@ function updateSubtaskElements(subtaskElement, inputField, newText, taskId, cate
     addSubtaskEventListeners(subtaskElement);
     if (inputField) inputField.remove();
     subtaskElement.classList.remove('editing');
- }
- 
+}
+
+
 /**
 * Generates the HTML structure for a subtask.
 *
@@ -222,21 +226,22 @@ function updateSubtaskElements(subtaskElement, inputField, newText, taskId, cate
 function generateSubtaskHTML(subtaskText, taskId, category, index) {
     return /*HTML*/`
  <li id="subtaskDiv_${index}" class="subtask-item">
- <div class="testForLi">
- <ul id="subtask-edit-entry">
-                    •<span class="editSubtaskText" contenteditable="true">${subtaskText}</span>
- </ul>
- <div class="subtask-icons">
- <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                         data-task-id="${taskId}" data-category="${category}" data-index="${index}">
- <div class="seperatorSubtaskIcons"></div>
- <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-                         data-task-id="${taskId}" data-category="${category}" data-index="${index}">
- </div>    
- </div>
+     <div class="testForLi">
+         <ul id="subtask-edit-entry">
+             •<span class="editSubtaskText" contenteditable="true">${subtaskText}</span>
+         </ul>
+         <div class="subtask-icons">
+             <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit" data-task-id="${taskId}"
+                 data-category="${category}" data-index="${index}">
+             <div class="seperatorSubtaskIcons"></div>
+             <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+                 data-task-id="${taskId}" data-category="${category}" data-index="${index}">
+         </div>
+     </div>
  </li>
     `;
- }
+}
+
 
 /**
  * Saves the updated subtask text to the database.
@@ -279,8 +284,7 @@ function addNewSubtask(taskId, category) {
     let newSubtaskElement = document.getElementById(`subtaskDiv_${subtaskIndex}`);
     addSubtaskEventListeners(newSubtaskElement, taskId, category, subtaskIndex);
     newSubtaskInput.value = "";
- }
-
+}
 
 
 /**
@@ -328,7 +332,7 @@ function renderSubtasksInEditMode(task, category) {
 function showSubtaskMarker(index) {
     let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
     let markerElement = document.getElementById(`subtaskMarker_${index}`);
-    
+
     if (subtaskElement && markerElement) {
         subtaskElement.classList.add('editing');
         markerElement.style.display = 'inline';
@@ -341,14 +345,14 @@ function showSubtaskMarker(index) {
 function hideSubtaskMarker(index) {
     let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
     let markerElement = document.getElementById(`subtaskMarker_${index}`);
-    
+
     if (subtaskElement && markerElement) {
         subtaskElement.classList.remove('editing');
         markerElement.style.display = 'none';
     }
 }
 
-// Event Listener hinzufügen für Edit- und Save-Buttons
+
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.editSubtask').forEach((editBtn, index) => {
         editBtn.addEventListener('click', () => showSubtaskMarker(index));
@@ -358,6 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveBtn.addEventListener('click', () => hideSubtaskMarker(index));
     });
 });
+
 
 /**
 * Adds event listeners to the edit and delete buttons of a subtask.
@@ -383,4 +388,4 @@ function addSubtaskEventListeners(subtaskElement) {
             deleteSubtask(taskId, category, index);
         });
     }
- }
+}
