@@ -79,7 +79,7 @@ function storeUserData(name, email, password) {
  */
 function redirectToLogin() {
     setTimeout(() => {
-        window.location.href = '/html/login.html';
+        window.location.href = 'login.html';
     }, 1500);
 }
 
@@ -107,11 +107,11 @@ function validatePassword(password) {
 
 
 // Add event listeners to the password input field
-document.getElementById('password').addEventListener('click', function() {
+document.getElementById('password').addEventListener('click', function () {
     document.getElementById('password-hint').style.display = 'block';
 });
 
-document.getElementById('password').addEventListener('blur', function() {
+document.getElementById('password').addEventListener('blur', function () {
     document.getElementById('password-hint').style.display = 'none';
 });
 
@@ -174,16 +174,16 @@ window.onload = function () {
     initializeSignUpButton();
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     let passwordField = document.getElementById('password');
     let passwordHint = document.getElementById('password-hint');
-    
+
     if (passwordField && passwordHint) {
-        passwordField.addEventListener('focus', function() {
+        passwordField.addEventListener('focus', function () {
             passwordHint.style.display = 'block';
         });
 
-        passwordField.addEventListener('blur', function() {
+        passwordField.addEventListener('blur', function () {
             passwordHint.style.display = 'none';
         });
     }
