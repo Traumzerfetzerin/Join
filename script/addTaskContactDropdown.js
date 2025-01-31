@@ -107,7 +107,20 @@ function createContactEntry(contact) {
     let entryContainer = generateDiv('entry-container');
     let nameContainer = createNameContainer(contact);
     let checkbox = createCheckbox(contact);
-    entryContainer.innerHTML = `${nameContainer.outerHTML}${checkbox.outerHTML}`;
+
+    let checkboxLabel = document.createElement('label');
+    checkboxLabel.setAttribute('for', checkbox.id);
+    checkboxLabel.innerHTML = `${nameContainer.outerHTML}`;
+
+    entryContainer.innerHTML = `${checkboxLabel.outerHTML}${checkbox.outerHTML}`;
+
+    entryContainer.addEventListener('click', function(event) {
+        if (event.target !== checkbox) {
+            checkbox.checked = !checkbox.checked;
+            updateAssignedContacts();
+        }
+    });
+
     return entryContainer;
 }
 
@@ -240,6 +253,8 @@ function toggleDropdown() {
         dropdownImg1.style.display = 'none';
         dropdownImg.style.display = 'block';
     }
+
+    updateAssignedContacts();
 }
 
 
@@ -260,4 +275,5 @@ document.addEventListener('click', function (event) {
         dropdownImg1.style.display = 'none';
         dropdownImg.style.display = 'block';
     }
+    updateAssignedContacts();
 });

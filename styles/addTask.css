@@ -422,12 +422,9 @@ textarea {
 .entry-container {
     display: flex;
     justify-content: space-between;
-    /* Space between name container and checkbox */
     align-items: center;
     padding: 5px 0;
-    /* Add some vertical padding */
     gap: 10px;
-    /* Space between elements */
     max-height: calc(40vh-100px);
 }
 
@@ -436,7 +433,7 @@ textarea {
     display: flex;
     align-items: center;
     gap: 10px;
-    /* Space between initials and name */
+    cursor: pointer;
 }
 
 /* Style for the initials */
@@ -448,10 +445,8 @@ textarea {
     justify-content: center;
     font-weight: bold;
     border-radius: 50%;
-    /* Circular shape */
     font-size: 14px;
     color: white;
-    /* Ensure text color contrasts with the background */
     text-transform: uppercase;
     background-color: #29ABE2;
 }
@@ -465,7 +460,6 @@ textarea {
 /* Style the checkbox */
 .entry-container input[type="checkbox"] {
     flex-shrink: 0;
-    /* Prevent shrinking */
     width: 16px;
     height: 16px;
 }
