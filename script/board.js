@@ -36,7 +36,6 @@ function loadTasks(tasks) {
     enableDragAndDrop(columns);
     renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
     resetFormFields();
-    initDragAndDrop();
 }
 
 
