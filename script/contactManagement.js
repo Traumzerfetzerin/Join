@@ -29,9 +29,10 @@ function handleDeleteContact() {
     if (currentContactId) {
         deleteContact(currentContactId);
     } else {
-        console.warn("No current contact selected for deletion.");
+        showToast("No contact selected for deletion.");
     }
 }
+
 
 
 /**
@@ -41,18 +42,74 @@ function handleDeleteContact() {
 async function deleteContact(contactId) {
     let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contactId}.json`;
     try {
-        let response = await fetch(url, {
-            method: 'DELETE'
-        });
+        let response = await fetch(url, { method: 'DELETE' });
         if (!response.ok) throw new Error('Network response was not ok');
+        removeContactFromAllTasks(contactId);
         showToast('Contact deleted successfully');
         closeContactOverlay();
         clearContactDetails();
         setTimeout(() => {
-            window.location.href = 'contacts.html'; 
+            window.location.href = 'contacts.html';
         }, 500);
     } catch (error) {
-        showToast('Error deleting contact: ' + error);
+        showToast('Error deleting contact: ' + error.message);
+    }
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    let deleteButtons = document.querySelectorAll(".delete-link, #delete-contact-button");
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener("click", handleDeleteContact);
+    });
+
+});
+
+
+/**
+ * Removes a deleted contact from all tasks in Firebase.
+ * @param {string} contactId - The ID of the deleted contact.
+ */
+async function removeContactFromAllTasks(contactId) {
+    let url = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks.json";
+    try {
+        let response = await fetch(url);
+        let tasks = await response.json();
+        if (!tasks) return;
+
+        let updates = {};
+        for (let taskId in tasks) {
+            if (tasks[taskId].contacts) {
+                let filteredContacts = tasks[taskId].contacts.filter(id => id !== contactId);
+                updates[`/Tasks/${taskId}/contacts`] = filteredContacts.length ? filteredContacts : null;
+            }
+        }
+
+        if (Object.keys(updates).length > 0) {
+            await saveUpdatedTasks(updates);
+        }
+    } catch (error) {
+        console.error("Error fetching tasks:", error);
+    }
+}
+
+/**
+ * Saves the updated tasks to Firebase.
+ * @param {Object} updates - The updates to be sent to Firebase.
+ */
+async function saveUpdatedTasks(updates) {
+    let url = "https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks.json";
+    try {
+        let response = await fetch(url.replace(".json", "/.json"), {
+            method: "PATCH",
+            body: JSON.stringify(updates),
+            headers: { "Content-Type": "application/json" }
+        });
+        if (!response.ok) throw new Error("Failed to update tasks");
+        console.log("Tasks updated successfully.");
+    } catch (error) {
+        console.error("Error updating tasks:", error);
     }
 }
 
