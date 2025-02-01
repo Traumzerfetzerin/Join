@@ -159,7 +159,6 @@ function generateOverlayContactList(contacts) {
 }
 
 
-
 /**
  * Generates the subtasks list HTML for the overlay.
  * @param {object} task - Task object containing subtasks.

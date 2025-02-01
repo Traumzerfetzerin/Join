@@ -152,8 +152,8 @@ function attachDotsIconListener(dotsIcon, smallOverlay) {
  * @param {object} contact - The contact object.
  */
 function attachEditAndDeleteListeners(contactId, contact) {
-    let editLink = document.querySelector('.edit-link');
-    let deleteLink = document.querySelector('.delete-link');
+    let editLink = document.querySelector(`#edit-link-${contactId}`);
+    let deleteLink = document.querySelector(`#delete-link-${contactId}`);
     let initialsColor = getRandomColor();
 
     if (editLink) {
@@ -228,18 +228,15 @@ function resetContactView() {
  * Opens the overlay and populates input fields with contact details and initials.
  * @param {object} contact - Contact object containing the details.
  */
-function openEditOverlay(contact) {
+function openEditOverlay(contact, initialsColor) {
     toggleElementVisibility('#contact-overlay', true);
 
     document.getElementById('edit-contact-name').value = contact.name || '';
     document.getElementById('edit-contact-email').value = contact.email || '';
     document.getElementById('edit-contact-phone').value = contact.phone || '';
     document.getElementById('contact-initials-overlay').textContent = getInitials(contact.name);
-    document.getElementById('contact-initials-overlay').style.backgroundColor = contact.color || getRandomColor();
+    document.getElementById('contact-initials-overlay').style.backgroundColor = initialsColor || getRandomColor();
 }
-
-
-
 
 
 // Close overlay event listener

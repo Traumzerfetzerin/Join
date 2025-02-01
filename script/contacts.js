@@ -188,7 +188,7 @@ document.getElementById('save-contact-button')?.addEventListener('click', async 
         await updateContactInFirebase(updatedContact);
         hideContactOverlayAndResetForm();
         updateContactDetailsAndReload(updatedContact);
-        
+
     } catch (error) {
         console.error('Error saving contact:', error);
     }
@@ -267,21 +267,21 @@ function handleOutsideClick(event) {
  */
 function handleEditLinkClick(event) {
     if (!currentContactId) {
-        showToast("Error: No contact selected for editing.", "error");
+        showToast("Fehler: Kein Kontakt zum Bearbeiten ausgewählt.", "error");
         return;
     }
 
     let contact = contacts.find(c => c.id === currentContactId);
     if (contact) {
-        openEditOverlay(contact);
+        let initialsColor = getRandomColor();
+        openEditOverlay(contact, initialsColor);
     } else {
-        console.warn(`Contact with ID ${currentContactId} not found.`);
+        console.warn(`Kontakt mit der ID ${currentContactId} nicht gefunden.`);
     }
 
-    let initialsColor = getRandomColor();
-    openEditOverlay(contact, initialsColor);
     closeSmallOverlay();
 }
+
 
 document.querySelectorAll('.edit-link').forEach(link => {
     link.addEventListener('click', handleEditLinkClick);
