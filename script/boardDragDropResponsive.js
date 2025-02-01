@@ -1,9 +1,10 @@
 /**
- * Enables drag-and-drop functionality for both mouse and touch events.
+ * Enables drag-and-drop functionality for both mouse and touch events and updates Firebase.
  */
 let draggedItem = null;
 let touchOffsetX = 0;
 let touchOffsetY = 0;
+let currentColumn = null;
 
 /**
  * Initializes event listeners for draggable elements.
@@ -24,17 +25,21 @@ function initDragAndDrop() {
  * Handles the drag start event.
  */
 function dragStart(event) {
-    draggedItem = event.target;
-    event.dataTransfer.setData("text", "");
-    setTimeout(() => event.target.classList.add("dragging"), 0);
+    draggedItem = event.target.closest(".task");
+    currentColumn = draggedItem.closest(".column");
+    event.dataTransfer.setData("text", draggedItem.outerHTML);
+    setTimeout(() => draggedItem.classList.add("dragging"), 0);
 }
 
 /**
  * Handles the drag end event.
  */
 function dragEnd() {
-    draggedItem.classList.remove("dragging");
-    draggedItem = null;
+    if (draggedItem) {
+        draggedItem.classList.remove("dragging");
+        draggedItem = null;
+        currentColumn = null;
+    }
 }
 
 /**
@@ -43,9 +48,11 @@ function dragEnd() {
 function touchStart(event) {
     event.preventDefault();
     let touch = event.touches[0];
-    draggedItem = event.target;
-    touchOffsetX = touch.clientX - draggedItem.getBoundingClientRect().left;
-    touchOffsetY = touch.clientY - draggedItem.getBoundingClientRect().top;
+    draggedItem = event.target.closest(".task");
+    currentColumn = draggedItem.closest(".column");
+    let rect = draggedItem.getBoundingClientRect();
+    touchOffsetX = touch.clientX - rect.left;
+    touchOffsetY = touch.clientY - rect.top;
     draggedItem.classList.add("dragging");
 }
 
@@ -56,20 +63,26 @@ function touchMove(event) {
     if (!draggedItem) return;
     event.preventDefault();
     let touch = event.touches[0];
-    draggedItem.style.position = "absolute";
+    draggedItem.style.position = "fixed";
     draggedItem.style.left = (touch.clientX - touchOffsetX) + "px";
     draggedItem.style.top = (touch.clientY - touchOffsetY) + "px";
+    let newColumn = document.elementFromPoint(touch.clientX, touch.clientY)?.closest(".column");
+    if (newColumn && newColumn !== currentColumn) {
+        currentColumn = newColumn;
+    }
 }
 
 /**
  * Handles the touch end event.
  */
 function touchEnd(event) {
-    draggedItem.style.position = "";
-    draggedItem.style.left = "";
-    draggedItem.style.top = "";
-    draggedItem.classList.remove("dragging");
+    if (draggedItem && currentColumn) {
+        currentColumn.innerHTML += draggedItem.outerHTML;
+        updateTaskColumn(draggedItem.id.replace("task-", ""), currentColumn.id);
+        draggedItem.remove();
+    }
     draggedItem = null;
+    currentColumn = null;
 }
 
 /**
@@ -92,28 +105,45 @@ function dragOver(event) {
 }
 
 /**
- * Handles the drop event.
+ * Handles the drop event and updates Firebase.
  */
 function drop(event) {
     event.preventDefault();
-    if (draggedItem) {
-        event.target.appendChild(draggedItem);
+    let column = event.target.closest(".column");
+    if (column && draggedItem) {
+        column.innerHTML += draggedItem.outerHTML;
+        updateTaskColumn(draggedItem.id.replace("task-", ""), column.id);
+        draggedItem.remove();
     }
+    dragEnd();
 }
 
 /**
- * Handles the touch drop event.
+ * Handles the touch drop event and updates Firebase.
  */
 function touchDrop(event) {
-    let column = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
-    if (column && column.classList.contains("column")) {
-        column.appendChild(draggedItem);
+    let column = document.elementFromPoint(event.changedTouches[0].clientX, event.changedTouches[0].clientY)?.closest(".column");
+    if (column && draggedItem) {
+        column.innerHTML += draggedItem.outerHTML;
+        updateTaskColumn(draggedItem.id.replace("task-", ""), column.id);
+        draggedItem.remove();
     }
-    draggedItem.style.position = "";
-    draggedItem.style.left = "";
-    draggedItem.style.top = "";
-    draggedItem.classList.remove("dragging");
-    draggedItem = null;
+    touchEnd();
+}
+
+/**
+ * Updates the task's column in Firebase.
+ */
+async function updateTaskColumn(taskId, columnId) {
+    let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks/User%20Story/${taskId}.json`;
+    let response = await fetch(url, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ column: columnId })
+    });
+    if (!response.ok) {
+        console.error("Firebase update failed", response.status);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {

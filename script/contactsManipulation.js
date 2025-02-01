@@ -202,17 +202,17 @@ function clearContactDetails() {
 }
 
 
-/**
- * Updates the contact details section with the updated contact information.
- * @param {object} contact - The updated contact object.
- */
-function updateContactDetailsSection(contact) {
-    updateElementContent('#contact-name', contact.name);
-    updateElementContent('#contact-email', contact.email);
-    updateElementContent('#contact-phone', contact.phone);
-    updateElementContent('#contact-initials', getInitials(contact.name));
-    setElementBackgroundColor('#contact-initials', getRandomColor());
-}
+// /**
+//  * Updates the contact details section with the updated contact information.
+//  * @param {object} contact - The updated contact object.
+//  */
+// function updateContactDetailsSection(contact) {
+//     updateElementContent('#contact-name', contact.name);
+//     updateElementContent('#contact-email', contact.email);
+//     updateElementContent('#contact-phone', contact.phone);
+//     updateElementContent('#contact-initials', getInitials(contact.name));
+//     setElementBackgroundColor('#contact-initials', getRandomColor());
+// }
 
 
 /**
