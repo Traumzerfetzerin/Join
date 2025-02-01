@@ -13,7 +13,7 @@ async function handleContactCreation(contact) {
         clearInputFields();
         hideOverlay();
         setTimeout(() => {
-            window.location.href = 'contacts.html'; 
+            window.location.href = 'contacts.html';
         }, 500);
     } catch (error) {
         console.error("Error saving contact:", error);
@@ -34,7 +34,6 @@ function handleDeleteContact() {
 }
 
 
-
 /**
  * Deletes a contact.
  * @param {string} contactId - ID of the contact to be deleted.
@@ -44,10 +43,12 @@ async function deleteContact(contactId) {
     try {
         let response = await fetch(url, { method: 'DELETE' });
         if (!response.ok) throw new Error('Network response was not ok');
+
         removeContactFromAllTasks(contactId);
         showToast('Contact deleted successfully');
         closeContactOverlay();
         clearContactDetails();
+
         setTimeout(() => {
             window.location.href = 'contacts.html';
         }, 500);
@@ -57,13 +58,16 @@ async function deleteContact(contactId) {
 }
 
 
+/**
+ * Waits until the DOM is fully loaded and adds event listeners 
+ * to all delete buttons.
+ */
 document.addEventListener("DOMContentLoaded", () => {
     let deleteButtons = document.querySelectorAll(".delete-link, #delete-contact-button");
-    
+
     deleteButtons.forEach(button => {
         button.addEventListener("click", handleDeleteContact);
     });
-
 });
 
 
@@ -94,6 +98,7 @@ async function removeContactFromAllTasks(contactId) {
     }
 }
 
+
 /**
  * Saves the updated tasks to Firebase.
  * @param {Object} updates - The updates to be sent to Firebase.
@@ -112,6 +117,7 @@ async function saveUpdatedTasks(updates) {
         console.error("Error updating tasks:", error);
     }
 }
+
 
 /** 
  * Saves or updates a contact in Firebase.
@@ -148,7 +154,6 @@ async function saveContactToFirebase(url, method, contact) {
     if (!response.ok) {
         throw new Error("Failed to save or update contact");
     }
-
     return await response.json();
 }
 
@@ -209,6 +214,7 @@ async function updateContactInFirebase(contact) {
 
         updateLocalContacts(contact);
         showToast('Contact updated successfully', 'success');
+
     } catch (error) {
         console.error('Error updating contact:', error);
         showToast('Error updating contact. Please try again.', 'error');

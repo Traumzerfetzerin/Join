@@ -46,6 +46,7 @@ function normalizeContactIds(contactIds) {
         : contactIds;
 }
 
+
 /**
  * Fetches contacts from Firebase and maps them into an object for easy lookup.
  * @returns {Promise<Object>} - A map of contact IDs to contact details.
@@ -66,6 +67,7 @@ async function fetchContacts() {
     }
 }
 
+
 /**
  * Updates the contact icons displayed in the designated container, ensuring the overlay is loaded.
  * @param {Array} contactIds - List of contact IDs assigned to a task.
@@ -85,6 +87,7 @@ async function updateContactIcons(contactIds) {
         .map(contact => createContactIcon(contact))
         .join('');
 }
+
 
 /**
  * Extracts initials from a full name.
@@ -151,6 +154,3 @@ function updateContactDropdown(allContacts, assignedContactIds) {
     let assignedContacts = allContacts.filter(contact => assignedContactIds.includes(contact.id));
     dropdownContainer.innerHTML = generateContactDropdownHTML(allContacts, assignedContacts, assignedContactIds);
 }
-
-
-

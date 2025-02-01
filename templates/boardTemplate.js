@@ -26,7 +26,7 @@ function getTaskBoardTemplate(category, task, taskId, contactList, taskClass, su
         </div>` : '';
 
     return /*HTML*/`
-        <div id="task-${taskId}" class="task draggable ${taskClass}" draggable="true"
+        <div id="task-${taskId}" class="cursorPointer task draggable ${taskClass}" draggable="true"
              onclick="showTaskOverlay('${category}', '${taskId}')">
             <h4 class="task-category ${categoryClass}">${category}</h4>
             <h3>${task.title || "No title"}</h3>
@@ -70,7 +70,7 @@ function getBoardOverlayTemplate(category, task) {
     let contactList = generateOverlayContactList(task.contacts);
     let subtasksList = generateSubtaskList(task);
 
-    return `
+    return /*HTML*/`
        <div class="board-overlay" data-task-id="${task.id}">
         <div class="overlay-header">
             <h2 id="task-category" class="task-category ${categoryClass}">${category}</h2>
