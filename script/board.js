@@ -35,8 +35,8 @@ function loadTasks(tasks) {
     checkEmptyColumns(columns);
     enableDragAndDrop(columns);
     renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
-    calculateDueDate();
     resetFormFields();
+    initDragAndDrop();
 }
 
 
