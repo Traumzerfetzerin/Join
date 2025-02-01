@@ -44,7 +44,7 @@
     }
 
     .add-contact-button {
-        display: none;
+        display: none !important;
     }
 
     .contact-item {
