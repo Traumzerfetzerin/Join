@@ -115,8 +115,8 @@ function generateEditSubtaskHTML(subtaskIndex, taskId, category, currentText) {
     <div class="edit-subtask-container">
         <input type="text" id="editSubtaskInput_${subtaskIndex}" class="edit-subtask-input" value="${currentText}">
         <img class="save-subtask-button"
-            src="/Assets/addTask/Property 1=check.svg" alt="Save subtask">
-        <img class="deleteSubtask" src="/Assets/addTask/Property 1=delete.svg" alt="Delete subtask"
+            src="../Assets/addTask/Property 1=check.svg" alt="Save subtask">
+        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete subtask"
             onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex})">
     </div>
     `;

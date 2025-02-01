@@ -254,7 +254,7 @@ function togglePasswordIcon(passwordInput, toggleIconElement) {
     if (!toggleIcon) return console.error('Image element not found');
     let isPassword = passwordInput.type === 'password';
     passwordInput.type = isPassword ? 'text' : 'password';
-    toggleIcon.src = isPassword ? '/Assets/visibility.svg' : '/Assets/visibility_off - Copy.svg';
+    toggleIcon.src = isPassword ? '../Assets/visibility.svg' : '../Assets/visibility_off - Copy.svg';
     toggleIcon.alt = isPassword ? 'Hide Password' : 'Show Password';
 }
 
