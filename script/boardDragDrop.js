@@ -130,3 +130,84 @@ async function moveTaskToColumn(taskId, newCategory) {
         updateOverlayContent(newCategory, task); 
     }
 }
+
+/**
+ * Sets up touch drag functionality for a task, enabling drag after holding for 2 seconds.
+ * @param {HTMLElement} task - The task element to apply touch drag functionality.
+ */
+function setupTouchDrag(task) {
+    let touchTimer;
+    let isDragging = false;
+
+    task.ontouchstart = e => {
+        touchTimer = setTimeout(() => {
+            isDragging = true;
+            task.classList.add("dragging");
+        }, 2000);
+    };
+
+    task.ontouchmove = e => {
+        if (isDragging) {
+            let touch = e.touches[0];
+            let event = new MouseEvent("mousemove", {
+                bubbles: true,
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            document.dispatchEvent(event);
+        }
+    };
+
+    task.ontouchend = () => {
+        clearTimeout(touchTimer);
+        task.classList.remove("dragging");
+        isDragging = false;
+    };
+}
+
+/**
+ * Handles touch drop event and moves task to new drop zone.
+ * @param {TouchEvent} e - The touch event.
+ * @param {HTMLElement} zone - The drop zone.
+ * @param {object} columns - Mapping of column names to DOM element IDs.
+ */
+function handleTouchDrop(e, zone, columns) {
+    let task = document.querySelector(".dragging");
+    if (!task) return;
+
+    let touch = e.changedTouches[0];
+    let targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+    let dropZone = targetElement.closest(".drop-zone");
+
+    if (dropZone) {
+        let newColumn = Object.keys(columns).find(key => columns[key] === dropZone.id);
+        if (!newColumn) return;
+        dropZone.innerHTML += task.outerHTML; // Vermeidet appendChild
+        task.remove(); // Entfernt das Original-Element
+        updateTaskColumn(task.id.replace("task-", ""), newColumn);
+    }
+}
+
+/**
+ * Adds touch event listeners to all draggable tasks.
+ */
+function enableTouchDrag(columns) {
+    let tasks = document.querySelectorAll(".draggable");
+    tasks.forEach(task => setupTouchDrag(task));
+
+    let zones = Object.values(columns).map(id => document.getElementById(id));
+    zones.forEach(zone => {
+        zone.ontouchend = e => handleTouchDrop(e, zone, columns);
+    });
+}
+
+// Ensure touch drag is enabled when drag-and-drop is initialized
+document.addEventListener("DOMContentLoaded", () => {
+    let columns = {
+        toDo: "toDoColumn",
+        inProgress: "inProgressColumn",
+        awaitFeedback: "awaitFeedbackColumn",
+        done: "doneColumn",
+    };
+    enableTouchDrag(columns);
+});
