@@ -188,7 +188,7 @@ document.getElementById('save-contact-button')?.addEventListener('click', async 
         await updateContactInFirebase(updatedContact);
         hideContactOverlayAndResetForm();
         updateContactDetailsAndReload(updatedContact);
-        currentContactId = null;
+        
     } catch (error) {
         console.error('Error saving contact:', error);
     }
@@ -199,9 +199,9 @@ document.getElementById('save-contact-button')?.addEventListener('click', async 
 * Resets the contact edit form fields.
 */
 function resetEditForm() {
-   document.getElementById('edit-contact-name').value = '';
-   document.getElementById('edit-contact-email').value = '';
-   document.getElementById('edit-contact-phone').value = '';
+    document.getElementById('edit-contact-name').value = '';
+    document.getElementById('edit-contact-email').value = '';
+    document.getElementById('edit-contact-phone').value = '';
 }
 
 
@@ -210,13 +210,13 @@ function resetEditForm() {
 * @param {object} contact - The updated contact object.
 */
 function updateContactDetailsSection(contact) {
-   document.getElementById('contact-name').textContent = contact.name;
-   document.getElementById('contact-email').textContent = contact.email;
-   document.getElementById('contact-phone').textContent = contact.phone;
-   document.getElementById('contact-initials').textContent = getInitials(contact.name);
+    document.getElementById('contact-name').textContent = contact.name;
+    document.getElementById('contact-email').textContent = contact.email;
+    document.getElementById('contact-phone').textContent = contact.phone;
+    // document.getElementById('contact-initials').textContent = getInitials(contact.name);
 
-   let initialsColor = getRandomColor();
-   document.getElementById('contact-initials').style.backgroundColor = initialsColor;
+    let initialsColor = getRandomColor();
+    document.getElementById('contact-initials').style.backgroundColor = initialsColor;
 }
 
 
@@ -226,12 +226,12 @@ function updateContactDetailsSection(contact) {
 * @param {string} [type='success'] - The type of the toast ('success' or 'error').
 */
 function showToast(message, type = 'success') {
-   let toast = document.getElementById('toast');
-   if (!toast) return;
+    let toast = document.getElementById('toast');
+    if (!toast) return;
 
-   toast.textContent = message;
-   toast.className = `toast show ${type}`;
-   setTimeout(() => toast.classList.remove('show'), 3000);
+    toast.textContent = message;
+    toast.className = `toast show ${type}`;
+    setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 
@@ -283,7 +283,7 @@ function handleEditLinkClick(event) {
     closeSmallOverlay();
 }
 
-    document.querySelectorAll('.edit-link').forEach(link => {
+document.querySelectorAll('.edit-link').forEach(link => {
     link.addEventListener('click', handleEditLinkClick);
 });
 

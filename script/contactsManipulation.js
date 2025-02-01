@@ -33,13 +33,13 @@ function generateAddButtonLargeHTML() {
             <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
         </div>`;
 }
- 
- 
- /**
- * Generates the HTML for the small add contact button.
- * @returns {string} - HTML string for the small add contact button.
- */
- function generateAddButtonSmallHTML() {
+
+
+/**
+* Generates the HTML for the small add contact button.
+* @returns {string} - HTML string for the small add contact button.
+*/
+function generateAddButtonSmallHTML() {
     return `
         <div class="add-contact-icon" id="add-contact-icon">
             <img src="../Assets/personAdd.svg" alt="Add Contact">
@@ -138,8 +138,8 @@ function attachDotsIconListener(dotsIcon, smallOverlay) {
     dotsIcon.onclick = (event) => {
         event.stopPropagation();
         if (smallOverlay) {
-            smallOverlay.style.display = smallOverlay.style.display === 'block' || smallOverlay.style.display === '' 
-                ? 'none' 
+            smallOverlay.style.display = smallOverlay.style.display === 'block' || smallOverlay.style.display === ''
+                ? 'none'
                 : 'flex';
         }
     };
@@ -229,13 +229,17 @@ function resetContactView() {
  * @param {object} contact - Contact object containing the details.
  */
 function openEditOverlay(contact) {
-        toggleElementVisibility('#contact-overlay', true);
-        document.getElementById('edit-contact-name').value = contact.name || '';
-        document.getElementById('edit-contact-email').value = contact.email || '';
-        document.getElementById('edit-contact-phone').value = contact.phone || '';
-        document.getElementById('contact-initials-overlay').textContent = getInitials(contact.name);
-        document.getElementById('contact-initials-overlay').style.backgroundColor = contact.color || getRandomColor();
-}    
+    toggleElementVisibility('#contact-overlay', true);
+
+    document.getElementById('edit-contact-name').value = contact.name || '';
+    document.getElementById('edit-contact-email').value = contact.email || '';
+    document.getElementById('edit-contact-phone').value = contact.phone || '';
+    document.getElementById('contact-initials-overlay').textContent = getInitials(contact.name);
+    document.getElementById('contact-initials-overlay').style.backgroundColor = contact.color || getRandomColor();
+}
+
+
+
 
 
 // Close overlay event listener
@@ -323,7 +327,7 @@ function attachContactClickListeners() {
 * @returns {string} - HTML string for the edit section.
 */
 function generateEditSectionHTML(currentContactId) {
-    return `
+    return /*HTML*/`
         <div class="editSection dNone" id="edit-section-small-contact">
             <a href="#" class="edit-link" onclick="handleEditLinkClick()">
                 <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon" class="icon"> Edit

@@ -176,13 +176,13 @@ textarea {
 #assignTaskDropdown {
     border: 1px solid #ccc;
     width: 100%;
-    max-width: auto;
     padding: 10px;
     overflow-y: scroll;
     position: absolute;
     background-color: #FFF;
     border-radius: 12px;
     z-index: 1;
+    height: 250px;
 }
 
 .seperator {
