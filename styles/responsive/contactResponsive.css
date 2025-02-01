@@ -162,7 +162,7 @@
 
     input[type="text"],
     input[type="email"],
-    input[type="tel"] {
+    input[type="number"] {
         width: 90%;
         padding-top: 20px;
         max-width: 250px;
@@ -256,7 +256,7 @@
 
     input[type="text"],
     input[type="email"],
-    input[type="tel"] {
+    input[type="number"] {
         width: 90%;
         padding-top: 20px;
         max-width: 200px;
