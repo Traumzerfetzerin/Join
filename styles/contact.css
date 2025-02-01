@@ -345,14 +345,15 @@
 .toast {
     visibility: hidden;
     min-width: 150px;
-    min-height: 40px;
-    color: white;
+    min-height: 80px;
+    background-color: #2A3647;
+    color: #f4f4f4;
     text-align: center;
     border-radius: 15px;
     padding: 15px;
     position: fixed;
-    z-index: 2000;
-    right: -30%;
+    z-index: 2001;
+    right: 0;
     top: 50%;
     transform: translate(100%, -80%);
     opacity: 0;
@@ -375,7 +376,7 @@
 }
 
 .toast.error {
-    background-color: #1a2b47;
+    background-color: #dc3545;
 }
 
 .edit-input {
