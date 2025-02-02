@@ -112,7 +112,6 @@ async function saveUpdatedTasks(updates) {
             headers: { "Content-Type": "application/json" }
         });
         if (!response.ok) throw new Error("Failed to update tasks");
-        console.log("Tasks updated successfully.");
     } catch (error) {
         console.error("Error updating tasks:", error);
     }

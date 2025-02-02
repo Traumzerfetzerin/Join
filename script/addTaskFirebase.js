@@ -41,7 +41,6 @@ async function fetchAndPopulateContacts(selectedContacts = []) {
  * @returns {Promise<string|null>} The generated task ID or null if an error occurred.
  */
 async function sendTaskToFirebase(preparedTaskData, category) {
-    console.log("📤 Sending task to Firebase WITHOUT ID:", JSON.stringify(preparedTaskData, null, 2));
     try {
         let response = await fetch(`${CREATETASK_URL}/${category}.json`, {
             method: "POST",
@@ -60,7 +59,6 @@ async function sendTaskToFirebase(preparedTaskData, category) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ id: taskId }),
         });
-        console.log("Task ID successfully added in Firebase:", taskId);
         return taskId;
     } catch (error) {
         console.error("Error in sendTaskToFirebase:", error);

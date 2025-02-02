@@ -76,7 +76,6 @@ async function resetTaskForm() {
 async function createTasks(event) {
     event.preventDefault();
     let taskData = collectTaskData();
-    console.log("askData directly after collectTaskData():", JSON.stringify(taskData, null, 2));
     let isValid = await validateTaskData(taskData);
     if (!isValid) {
         await loadContactsForDropdown();
@@ -85,13 +84,11 @@ async function createTasks(event) {
     }
 
     try {
-        console.log("🔥 Task data BEFORE sending to Firebase:", JSON.stringify(taskData, null, 2));
         let taskId = await sendTaskToFirebase(taskData, taskData.category);
         if (!taskId) {
             console.error("Task ID not generated, aborting.");
             return;
         }
-        console.log("Task successfully saved with ID:", taskId);
     } catch (error) {
         console.error("Error during task creation:", error);
         return;
