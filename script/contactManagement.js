@@ -203,6 +203,11 @@ async function updateContactInFirebase(contact) {
         return;
     }
 
+    let existingContact = contacts.find(c => c.id === contact.id);
+    if (existingContact && !contact.color) {
+        contact.color = existingContact.color;
+    }
+
     let url = buildFirebaseUrl(contact.id);
 
     try {
