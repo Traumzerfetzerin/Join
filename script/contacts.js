@@ -139,11 +139,14 @@ function validateUpdatedContact(updatedContact) {
  * @returns {object} - The updated contact object.
  */
 function getUpdatedContact() {
+    let existingContact = contacts.find(c => c.id === currentContactId);
+
     return {
         id: currentContactId,
         name: document.getElementById('edit-contact-name')?.value.trim(),
         email: document.getElementById('edit-contact-email')?.value.trim(),
         phone: document.getElementById('edit-contact-phone')?.value.trim(),
+        color: existingContact ? existingContact.color : "#CCCCCC"
     };
 }
 
@@ -213,11 +216,11 @@ function updateContactDetailsSection(contact) {
     document.getElementById('contact-name').textContent = contact.name;
     document.getElementById('contact-email').textContent = contact.email;
     document.getElementById('contact-phone').textContent = contact.phone;
-    // document.getElementById('contact-initials').textContent = getInitials(contact.name);
-
-    let initialsColor = getRandomColor();
-    document.getElementById('contact-initials').style.backgroundColor = initialsColor;
+    
+    let contactColor = contact.color || "#CCCCCC";
+    document.getElementById('contact-initials').style.backgroundColor = contactColor;
 }
+
 
 
 /**
@@ -273,7 +276,7 @@ function handleEditLinkClick(event) {
 
     let contact = contacts.find(c => c.id === currentContactId);
     if (contact) {
-        let initialsColor = getRandomColor();
+        let initialsColor = contact.color || getRandomColor();
         openEditOverlay(contact, initialsColor);
     } else {
         console.warn(`Kontakt mit der ID ${currentContactId} nicht gefunden.`);

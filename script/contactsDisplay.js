@@ -8,7 +8,11 @@ async function loadContacts() {
         let response = await fetch(databaseUrl);
         if (!response.ok) throw new Error("Failed to fetch contacts.");
         let data = await response.json();
-        contacts = data ? Object.keys(data).map(id => ({ id, ...data[id] })) : [];
+        contacts = data ? Object.keys(data).map(id => ({
+            id,
+            ...data[id],
+            color: data[id].color || "#CCCCCC" 
+        })) : [];
         displayContacts();
     } catch (error) {
         console.error("Error loading contacts:", error);
