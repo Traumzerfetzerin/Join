@@ -71,4 +71,8 @@
     #low {
         font-size: 15px;
     }
+
+    .taskBackground {
+        padding: 20px;
+    }
 }
