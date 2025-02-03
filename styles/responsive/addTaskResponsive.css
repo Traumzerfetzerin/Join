@@ -36,20 +36,16 @@
     }
 }
 
-@media (max-width: 710px) {
-    .taskSide {
-        overflow: scroll;
-        height: calc(100vh - 450px);
-    }
-}
-
-@media (max-width: 500px){
-    .taskSide {
-        height: calc(100vh - 400px);
-    }
-}
 
 @media (max-width: 440px) {
+    .mainSectionAddTask {
+        height: 70%;
+    }
+
+    .taskBothSide {
+        height: 700px;
+    }
+
     .h1Task {
         font-size: 30px;
         height: 30px;
@@ -58,7 +54,7 @@
 
     .taskSide {
         overflow: scroll;
-        height: calc(100vh - 420px);
+        height: calc(100vh - 355px);
     }
 
     .taskRightSide {
@@ -73,6 +69,7 @@
     #medium,
     #low {
         font-size: 15px;
+        height: 15px;
     }
 
     .taskBackground {

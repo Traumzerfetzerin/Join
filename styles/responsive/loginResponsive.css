@@ -1,9 +1,4 @@
-@media (min-width:30000px) {
-    #login-logoContainer {
-        top: 12%;
-        left: 17%;
-    }
-
+@media (min-width:1440px) {
     .content-wrapper {
         background-color: #f4f4f4;
         display: flex;
@@ -13,7 +8,7 @@
         overflow: auto;
         gap: 10px;
         width: 100%;
-        max-width: 1200px;
+        max-width: 1440px;
         margin: 0 auto;
         margin-top: 10%;
     }
@@ -22,14 +17,7 @@
 
 @media (max-width: 980px) {
     .login-joinContainer {
-        padding: 30px;
-        max-width: 400px;
-        margin-top: 70px;
-        height: auto !important;
-    }
-
-    .login-joinContainer h1 {
-        font-size: 40px;
+        margin-top: 20%;
     }
 
     .buttons {
@@ -52,12 +40,6 @@
         }
     }
 
-    #login-logoContainer {
-        top: 20%;
-        transform: translate(-50%, -20%);
-        left: 65%;
-    }
-
     .joinLogo img {
         width: 100px;
         height: 100px;
@@ -73,11 +55,6 @@
         padding-bottom: 10px;
     }
 
-    .input-group input {
-        font-size: 15px;
-        padding: 10px 150px;
-    }
-
     .buttons {
         flex-direction: column;
         gap: 8px;
@@ -89,11 +66,11 @@
         font-size: 15px;
     }
 
-    /* .toast {
+    .toast {
         min-width: 130px;
         right: 10px;
         transform: translate(10%, -80%);
-    } */
+    }
 
     .notice_link {
         margin-top: 40px;
@@ -122,21 +99,14 @@
         max-width: 150px;
         margin: 0 auto;
     }
+
+    #login-logoContainer {
+        top: 25% !important;
+        left: 60% !important;
+    }
 }
 
 @media (max-width: 780px) {
-    .login-joinContainer {
-        padding: 40px 20px;
-        width: 85%;
-        max-width: 400px;
-        height: auto;
-        margin-top: 155px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        position: relative;
-    }
 
     .joinLogo img {
         width: 70px;
@@ -145,18 +115,12 @@
 
     .login-joinContainer h1 {
         font-size: 32px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .input-group {
         width: 100%;
         padding-bottom: 10px;
-    }
-
-    .input-group input {
-        font-size: 15px;
-        padding: 10px 130px;
-        padding-left: 10px;
     }
 
     .buttons {
@@ -173,14 +137,6 @@
         padding: 12px 15px;
         font-size: 16px;
     }
-
-    /* .toast {
-        min-width: 140px;
-        font-size: 14px;
-        right: 10px;
-        transform: translate(10%, -75%);
-    } */
-
     .notice_link {
         margin-top: 15px;
         font-size: 12px;
@@ -193,87 +149,23 @@
     }
 
     .login-signup-button {
-        position: relative;
+        position: inherit;
         align-self: center;
-        margin-top: 10px;
-        margin-bottom: 0px;
-        margin-right: 60% !important;
         order: 0 !important;
-        width: 100% !important;
+        width: 52%;
+        padding: 0;
     }
 }
 
-
-@media (max-width: 650px) {
-    #login-logoContainer {
-        top: 23% !important;
-        left: 60% !important;
-    }
-}
-
-@media (max-width: 540px) {
-    #login-logoContainer {
-        top: 11% !important;
-        left: 45% !important;
-    }
-
-    .login-joinContainer {
-        margin-top: 30px;
-    }
-}
-
-@media (max-width: 500px) {
-    .login-joinContainer {
-        width: 90% !important;
-    }
-
-    #sidefootLoginSignUp {
-        margin: 0 !important;
-
-    }
-}
-
-@media (max-width: 480px) {
-    .login-joinContainer {
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 0;
-    }
-
-    .login-joinContainer h1 {
-        font-size: 28px;
-        margin-bottom: 0;
-    }
-}
-
-@media (max-width: 430px) {
-    .content-wrapper {
-        margin-top: 20%;
-        overflow: hidden;
-    }
-
-    #login-logoContainer {
-        top: 15% !important;
-        left: 45% !important;
-    }
-}
 
 @media (max-width: 415px) {
-    .login-joinContainer {
-        padding: 50px, 20px;
-        height: auto;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        margin-top: 110px;
-        overflow: hidden;
-    }
-
     .input-group {
         width: 100%;
         padding-bottom: 5px;
+    }
+
+    .login-joinContainer {
+        margin-top: 30%;
     }
 
     .input-group input {
@@ -291,23 +183,10 @@
         cursor: pointer;
     }
 
-    #login-logoContainer {
-        width: 50%;
-        height: 31%;
-        margin: 0 auto;
-        margin-bottom: 10px;
-    }
-
     .buttons {
         flex-direction: column;
         gap: 6px;
     }
-
-    /* .toast {
-        min-width: 100px;
-        right: 5px;
-        transform: translate(10%, -80%);
-    } */
 
     .notice_link {
         margin-top: 20px;
@@ -323,46 +202,10 @@
     }
 }
 
-@media (max-width: 375px) {
-    #login-logoContainer {
-        top: 13% !important;
-        left: 40% !important;
-    }
-
-    .content-wrapper {
-        background-color: #f4f4f4;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        overflow: hidden;
-        width: 100%;
-        max-width: 1200px;
-        margin: 0;
-    }
-
-    .login-signup-button {
-        position: relative;
-        align-self: center;
-        margin-top: 0;
-        margin-bottom: 0;
-        margin-right: 60% !important;
-        order: 0 !important;
-        padding: 0;
-        width: auto !important;
-    }
-
-    .login-joinContainer {
-        width: 100% !important;
-    }
-}
 
 @media (max-width: 320px) {
     .legalPolicy {
         flex-direction: column;
         margin-right: 20% !important;
-    }
-
-    .login-joinContainer {
-        right: 3%;
     }
 }

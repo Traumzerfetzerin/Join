@@ -2,20 +2,7 @@
     #main-content {
         margin-left: 0;
         margin-top: 95px;
-        margin-bottom: 90px;
-    }
-
-    .contact-list {
-        flex: 0 0 30%;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-        border-radius: 8px;
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        overflow-x: hidden;
-        overflow-y: auto;
-        cursor: pointer;
+        height: 80vh;
     }
 }
 
@@ -34,13 +21,8 @@
     }
 
     .contact-list {
-        width: 100%;
         flex: 1 0 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        height: auto;
-        height: calc(100vh - 160px);
+        height: calc(100vh - 175px);
     }
 
     .add-contact-button {
@@ -48,7 +30,6 @@
     }
 
     .contact-item {
-        width: 100%;
         padding: 10px 0;
         margin-left: 70px;
         border-width: 100%;
@@ -89,9 +70,22 @@
         bottom: 90px;
         right: 10%;
         padding: 8px;
+        position: fixed;
+        bottom: 90px;
+        right: 10%;
+        background-color: #2A3647;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 999;
     }
 
     .add-contact-icon img {
+        display: block;
         width: 40px;
         height: 40px;
     }

@@ -22,7 +22,7 @@
     display: flex;
     width: 100%;
     background-color: rgb(255, 255, 255);
-    height: 100vh;
+    height: 70vh;
 }
 
 .contact-list {
@@ -402,24 +402,10 @@
 
 .add-contact-icon {
     display: none;
-    position: fixed;
-    bottom: 90px;
-    right: 10%;
-    background-color: #2A3647;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 999;
 }
 
 .add-contact-icon img {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
+    display: none;
 }
 
 .dNone {

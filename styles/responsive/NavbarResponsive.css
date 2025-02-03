@@ -98,10 +98,6 @@
 }
 
 @media(max-width:860px) {
-    .sidelinks {
-        width: 60%;
-        padding: 0px 6px;
-    }
 
     #widget_1,
     #widget_2,
@@ -114,12 +110,6 @@
         gap: 12px;
         margin-left: 10px;
         padding: 1px;
-    }
-
-    .sidelinks a {
-        font-size: 18px;
-        padding: 4px;
-        border-radius: 6px;
     }
 }
 
@@ -141,14 +131,6 @@
     .headerImg {
         max-width: 50px;
         height: auto;
-    }
-
-    .sidelinks {
-        width: 50%;
-        padding: 0px 4px;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
     }
 
     .sidelinks a {

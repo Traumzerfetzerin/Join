@@ -26,7 +26,7 @@
         padding: 0;
         border-radius: 10px;
         margin: 0 auto;
-        top: calc(20vh - 20px);
+        top: calc(12vh - 20px);
         left: 15%;
         transform: none;
         overflow: hidden;
@@ -72,10 +72,6 @@
         justify-content: center;
         align-items: center;
         bottom: 100px;
-    }
-
-    .contacts-container {
-        height: 100vh;
     }
 
     #editSectionForToggle {
