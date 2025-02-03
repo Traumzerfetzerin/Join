@@ -240,6 +240,8 @@
 
     #upcomingDeadline p {
         width: 134px;
+        position: absolute;
+        top: 0;
     }
     
     .tasks {
