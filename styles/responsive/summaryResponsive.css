@@ -131,10 +131,10 @@
     }
 
     .checkpencil {
-        width: 255px;
+        width: 291px;
         height: 145px;
-        gap: 5px;
-        padding-left: 72px;
+        gap: 25px;
+        padding-left: 45px;
     }
 
     .pencil {
@@ -149,7 +149,7 @@
     .urgent {
         top: 85px;
         height: 100px;
-        width: 285px;
+        width: 314px;
         margin-left: 3px;
     }
 
@@ -176,12 +176,6 @@
     }
 }
 
-@media (max-width: 540px) {
-    .details {
-        left: 30%;
-        top: 35%;
-    }
-}
 
 @media (max-width: 430px) {
     .details {
@@ -200,7 +194,7 @@
 
     .checkpencil {
         height: 231px;
-        padding-left: 30%;
+        padding-left: 16%;
     }
 
     .pencil {
@@ -227,8 +221,8 @@
     .urgent {
         top: 120px;
         height: 70px;
-        width: 312px;
-        margin-left: 3px;
+        width: 327px;
+        margin-left: -3px;
     }
 
     .urgentnmb {
@@ -251,7 +245,7 @@
     .tasks {
         top: 200px;
         height: 74px;
-        width: 320px;
+        width: 323px;
         gap: 5px;
     }
 
