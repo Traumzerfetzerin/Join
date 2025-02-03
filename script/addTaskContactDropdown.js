@@ -214,12 +214,15 @@ function updateAssignedContacts() {
  * 
  * @returns {void}
  */
+let displayedCount = 4;
+
 function displaySelectedContacts() {
     let selectedContainer = document.getElementById('selectedContactsContainer');
     selectedContainer.innerHTML = '';
-    selectedContacts.forEach(contactName => {
-        let contact = contacts.find(c => c.name === contactName);
 
+    selectedContacts.slice(0, displayedCount).forEach(contactName => {
+        let contact = contacts.find(c => c.name === contactName);
+        
         if (contact) {
             let initialsSpan = createInitialsSpan(contact);
             let contactDiv = document.createElement('div');
@@ -228,7 +231,23 @@ function displaySelectedContacts() {
             selectedContainer.appendChild(contactDiv);
         }
     });
+
+    let remainingContacts = selectedContacts.length - displayedCount;
+    if (remainingContacts > 0) {
+        let showMoreCircle = document.createElement('div');
+        showMoreCircle.classList.add('show-more-circle');
+
+        showMoreCircle.textContent = `+${remainingContacts}`;
+        
+        showMoreCircle.addEventListener('click', function() {
+            displayedCount += 1;
+            displaySelectedContacts();
+        });
+
+        selectedContainer.appendChild(showMoreCircle);
+    }
 }
+
 
 
 /**
