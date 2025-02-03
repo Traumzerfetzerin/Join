@@ -59,6 +59,7 @@
 
     .titeljoin,
     .details {
+        height: 0;
         left: 140px;
     }
 }
@@ -130,8 +131,9 @@
     }
 
     .checkpencil {
-        width: 336px;
-        gap: 15px;
+        width: 255px;
+        gap: 25px;
+        padding-left: 72px;
     }
 
     .pencil {

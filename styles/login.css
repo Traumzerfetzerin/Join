@@ -108,7 +108,6 @@
     padding-left: 1em;
 }
 
-/* Button styles */
 .buttons {
     display: flex;
     justify-content: space-between;
@@ -212,7 +211,6 @@
     z-index: 2001;
     right: 0;
     top: 50%;
-    transform: translate(100%, -80%);
     opacity: 0;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
@@ -256,8 +254,6 @@
     width: 326px;
     height: 74px;
     position: absolute;
-    top: calc(50vh - 50px);
-    left: calc(50vw - -140px);
 }
 
 .toast p {

@@ -101,7 +101,7 @@ function validateEmail(email) {
  * @returns {boolean} True if valid, otherwise false.
  */
 function validatePassword(password) {
-    let re = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    let re = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+{}\[\]:;<>,.?/~`-]{6,}$/;
     return re.test(password);
 }
 

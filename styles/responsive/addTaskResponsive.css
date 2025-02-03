@@ -8,7 +8,7 @@
 
     .taskSide {
         overflow: scroll;
-        height: calc(100vh - 480px);
+        height: calc(100vh - 410px);
     }
 
     .taskBothSide {
@@ -21,13 +21,14 @@
 
     .requiredAndButtons {
         flex-direction: column;
-        top: 0;
+        top: 10%;
     }
 }
 
 @media (max-width: 990px) {
     .mainSectionAddTask {
         margin-left: 0px;
+        height: 800px;
     }
 
     .sidelinks {
@@ -50,7 +51,9 @@
 
 @media (max-width: 440px) {
     .h1Task {
-        font-size: 40px;
+        font-size: 30px;
+        height: 30px;
+        margin-bottom: 5px;
     }
 
     .taskSide {

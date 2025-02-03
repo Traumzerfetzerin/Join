@@ -70,3 +70,14 @@ function popUpAddTaskHTML() {
         <img src="../Assets/addTask/Icons.svg" alt="">
     </div>`;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".deleteSubtask").forEach(button => {
+        button.addEventListener("click", function () {
+            let taskId = this.getAttribute("data-task-id");
+            let category = this.getAttribute("data-category");
+            let index = parseInt(this.getAttribute("data-index"));
+            deleteSubtask(taskId, category, index);
+        });
+    });
+});

@@ -19,11 +19,6 @@
     }
 }
 
-@media (max-width: 1024px) {
-    #login-logoContainer {
-        top: 30%;
-    }
-}
 
 @media (max-width: 980px) {
     .login-joinContainer {
@@ -94,11 +89,11 @@
         font-size: 15px;
     }
 
-    .toast {
+    /* .toast {
         min-width: 130px;
         right: 10px;
         transform: translate(10%, -80%);
-    }
+    } */
 
     .notice_link {
         margin-top: 40px;
@@ -179,12 +174,12 @@
         font-size: 16px;
     }
 
-    .toast {
+    /* .toast {
         min-width: 140px;
         font-size: 14px;
         right: 10px;
         transform: translate(10%, -75%);
-    }
+    } */
 
     .notice_link {
         margin-top: 15px;
@@ -230,10 +225,6 @@
 @media (max-width: 500px) {
     .login-joinContainer {
         width: 90% !important;
-    }
-
-    .joinLogo {
-        top: 3390px;
     }
 
     #sidefootLoginSignUp {
@@ -312,11 +303,11 @@
         gap: 6px;
     }
 
-    .toast {
+    /* .toast {
         min-width: 100px;
         right: 5px;
         transform: translate(10%, -80%);
-    }
+    } */
 
     .notice_link {
         margin-top: 20px;

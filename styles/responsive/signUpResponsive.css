@@ -1,8 +1,5 @@
 @media (max-width: 1024px) {
-    .join {
-        height: auto;
-        top: 135px;
-    }
+
 
     #signup-logoContainer {
         top: 45%;
@@ -11,10 +8,7 @@
 }
 
 @media (max-width: 820px) {
-    .join {
-        height: auto;
-        top: auto;
-    }
+ 
 
     .signup-joinContainer {
         margin-top: 30% !important;
@@ -66,12 +60,6 @@
     }
 }
 
-/* @media (max-width: 820px) {
-    .join {
-        height: auto;
-        left: 22%;
-    }
-} */
 
 @media (max-width: 550px) {
     #signup-logoContainer {
