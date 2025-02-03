@@ -68,8 +68,8 @@
 
     .toast {
         min-width: 130px;
-        right: 10px;
-        transform: translate(10%, -80%);
+        right: 40px;
+        transform: translate(10%, -50%);
     }
 
     .notice_link {
