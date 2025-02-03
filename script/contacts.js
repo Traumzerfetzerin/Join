@@ -216,7 +216,7 @@ function updateContactDetailsSection(contact) {
     document.getElementById('contact-name').textContent = contact.name;
     document.getElementById('contact-email').textContent = contact.email;
     document.getElementById('contact-phone').textContent = contact.phone;
-    
+
     let contactColor = contact.color || "#CCCCCC";
     document.getElementById('contact-initials').style.backgroundColor = contactColor;
 }

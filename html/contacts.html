@@ -25,6 +25,8 @@
     <header w3-include-html="../templates/header.html"></header>
     <aside w3-include-html="../templates/navbarLoggedIn.html"></aside>
 
+    <div id="contactBackgroundOverlay" class="background-overlay dNone" onclick="closeContactOverlayBackground(event)"></div>
+
     <main id="main-content">
         <div id="toast" class="toast" aria-live="polite">Message</div>
 
@@ -48,7 +50,7 @@
                         <div>
                             <span class="contact-name" id="contact-name"></span>
                             <div class="editSection" id="editSectionForToggle">
-                                <a href="#" class="edit-link">
+                                <a href="#" class="edit-link" onclick="closeContactOverlay(event)">
                                     <img src="../Assets/edit_21dp_5F6368_FILL0_wght400_GRAD0_opsz20.svg" alt="Edit Icon"
                                         class="icon"> Edit
                                 </a>
@@ -118,7 +120,8 @@
                     </div>
                 </div>
                 <div class="contact-details-buttons">
-                    <button  id="delete-contact-button" class="contact-button" onclick="handleDeleteContact()">Delete</button>
+                    <button id="delete-contact-button" class="contact-button"
+                        onclick="handleDeleteContact()">Delete</button>
                     <button id="save-contact-button" class="contact-button">Save</button>
                 </div>
             </div>
@@ -130,11 +133,11 @@
         w3.includeHTML();
     </script>
     <script src="../script/contacts.js" defer></script>
-    <script src="../script/contactHelpers.js"></script>
-    <script src="../script/contactsOverlay.js"></script>
+    <script src="../script/contactHelpers.js" defer></script>
+    <script src="../script/contactsOverlay.js" defer></script>
     <script src="../script/contactsManipulation.js" defer></script>
-    <script src="../script/contactManagement.js"></script>
-    <script src="../script/contactsDisplay.js"></script>
+    <script src="../script/contactManagement.js" defer></script>
+    <script src="../script/contactsDisplay.js" defer></script>
 </body>
 
 </html>

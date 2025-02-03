@@ -10,7 +10,6 @@ function attachAddContactButtonListeners() {
             toggleOverlay('overlay');
         });
         showOverlayButton.setAttribute('data-event-added', 'true');
-    } else {
     }
 
     if (addContactIconButton && !addContactIconButton.hasAttribute('data-event-added')) {
@@ -18,22 +17,75 @@ function attachAddContactButtonListeners() {
             toggleOverlay('overlay');
         });
         addContactIconButton.setAttribute('data-event-added', 'true');
-    } else {
     }
 }
 
 
+/**
+ * Adds event listeners to buttons to open the contact overlay.
+ * Triggered when the DOM content is fully loaded.
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    // Add event listeners to the buttons for adding new contacts
+    attachAddContactButtonListeners();
+
+    // Add event listener for clicking on the background overlay
+    let contactBackgroundOverlay = document.getElementById('contactBackgroundOverlay');
+    if (contactBackgroundOverlay) {
+        contactBackgroundOverlay.addEventListener('click', closeContactOverlayBackground);
+    }
+});
+
+
+/**
+ * Toggles the visibility of the specified overlay and its background.
+ * @param {string} overlayId - The ID of the overlay element to be toggled.
+ */
 function toggleOverlay(overlayId) {
     let overlay = document.getElementById(overlayId);
-    if (overlay.style.display === 'block') {
-        overlay.style.display = 'none';
-    } else {
-        overlay.style.display = 'block';
+    let contactBackgroundOverlay = document.getElementById('contactBackgroundOverlay');
+
+    if (overlay) {
+        if (overlay.style.display === "none" || overlay.style.display === "") {
+            overlay.style.display = "block";
+            contactBackgroundOverlay.classList.remove('dNone');
+            contactBackgroundOverlay.style.display = "block";
+
+        } else {
+            overlay.style.display = "none";
+            contactBackgroundOverlay.classList.add('dNone');
+            contactBackgroundOverlay.style.display = "none";
+        }
     }
 }
 
 
-document.getElementById('overlay').addEventListener('click', function(event) {
+/**
+ * Closes the contact overlay and its background overlay when the background is clicked.
+ * @param {Event} event - The click event triggered when the background overlay is clicked.
+ */
+function closeContactOverlayBackground(event) {
+    document.getElementById('contact-overlay').style.display = "none";
+    let contactBackgroundOverlay = document.getElementById('contactBackgroundOverlay');
+    let overlay = document.getElementById('overlay');
+
+    if (event.target === contactBackgroundOverlay) {
+        if (overlay) {
+            overlay.style.display = "none";
+        }
+
+        contactBackgroundOverlay.classList.add('dNone');
+        contactBackgroundOverlay.style.display = "none";
+    }
+}
+
+
+/**
+ * Listens for a click event on the 'overlay' element and toggles its visibility
+ * when the click target is the overlay itself.
+ * @param {Event} event - The click event triggered on the overlay.
+ */
+document.getElementById('overlay').addEventListener('click', function (event) {
     if (event.target.id === 'overlay') {
         toggleOverlay('overlay');
     }

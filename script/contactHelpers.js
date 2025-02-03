@@ -84,7 +84,7 @@ function generateGroupedContactsHTML(groupedContacts) {
         groupedContacts[letter].forEach(contact => {
             html += generateContactHTML(contact);
         });
-        html += '</div>'; 
+        html += '</div>';
     });
 
     return html;
@@ -112,7 +112,7 @@ function getInitials(name) {
  * @returns {object} - Contains URL and method for the request.
  */
 function getFirebaseUrlAndMethod(contact) {
-    let firebaseUrl = contact.id 
+    let firebaseUrl = contact.id
         ? `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts/${contact.id}.json`
         : 'https://join-382-default-rtdb.europe-west1.firebasedatabase.app/contacts.json';
     let method = contact.id ? 'PUT' : 'POST';
@@ -152,7 +152,7 @@ async function fetchFromFirebase(firebaseUrl, method, contact) {
  */
 function updateLocalContacts(contact, data) {
     if (!contact.id) {
-        contact.id = data.name; 
+        contact.id = data.name;
         contacts.push(contact);
     } else {
         let index = contacts.findIndex(c => c.id === contact.id);

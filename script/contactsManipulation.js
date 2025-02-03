@@ -27,8 +27,8 @@ function displayAddContactButtons() {
 * @returns {string} - HTML string for the large add contact button.
 */
 function generateAddButtonLargeHTML() {
-    return `
-        <div class="add-contact-button" id="show-overlay">
+    return /*HTML*/`
+        <div class="add-contact-button" id="show-overlay" onclick="closeContactOverlay(event)">
             <span>Add New Contact</span>
             <img src="../Assets/personAdd.svg" alt="Add Contact" class="add-icon" />
         </div>`;
@@ -129,6 +129,7 @@ function resetSmallScreenUI() {
     if (smallOverlay) smallOverlay.style.display = 'none';
 }
 
+
 /**
  * Attaches the click listener to the dots icon to toggle the small overlay.
  */
@@ -217,6 +218,10 @@ function resetContactView() {
  */
 function openEditOverlay(contact, initialsColor) {
     toggleElementVisibility('#contact-overlay', true);
+
+    let contactBackgroundOverlay = document.getElementById('contactBackgroundOverlay');
+    contactBackgroundOverlay.classList.remove('dNone');
+    contactBackgroundOverlay.style.display = 'block';
 
     document.getElementById('edit-contact-name').value = contact.name || '';
     document.getElementById('edit-contact-email').value = contact.email || '';
