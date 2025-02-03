@@ -107,14 +107,14 @@
 }
 
 @media (max-width: 780px) {
-
-    .join-login {
-        margin-top: 15%;
-    }
     
     .joinLogo img {
         width: 70px;
         height: 70px;
+    }
+
+    .toast.show {
+        transform: translate(-70%, -70%);
     }
 
     .login-joinContainer h1 {
@@ -185,6 +185,12 @@
         font-size: 12px;
         margin: 5px auto;
         cursor: pointer;
+    }
+
+    .toast.show {
+        transform: translate(-15%, -205%);
+        width: 250px;
+        height: 20px;
     }
 
     .buttons {
