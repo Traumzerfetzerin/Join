@@ -111,6 +111,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .summaryimg {
@@ -302,9 +303,6 @@
     color: #2A3647;
 }
 
-.pencil {
-    position: relative;
-}
 
 .pencil:hover,
 .urgent:hover,
