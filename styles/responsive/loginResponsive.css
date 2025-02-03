@@ -45,6 +45,10 @@
         height: 100px;
     }
 
+    .join-login {
+        margin-top: 20%;
+    }
+
     .login-joinContainer h1 {
         font-size: 36px;
         margin-bottom: 20px;
@@ -120,6 +124,10 @@
     .login-joinContainer h1 {
         font-size: 32px;
         margin-bottom: 10px;
+    }
+
+    .join-login {
+        margin-top: 25%;
     }
 
     .input-group {
