@@ -9,8 +9,6 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    width: 100%;
-    margin-top: 10%;
 }
 
 .joinLogo img {
@@ -28,13 +26,14 @@
     }
 }
 
-/* Main container styling */
+.join-login {
+    margin-top: 20%;
+}
 .login-joinContainer {
     background-color: white;
-    padding: 50px;
+    padding: 30px;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    margin-top: 30%;
 }
 
 .login-joinContainer h1 {

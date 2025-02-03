@@ -12,8 +12,8 @@
 
 #signup-logoContainer {
     position: absolute;
-    top: 40%;
-    left: 45%;
+    top: 20%;
+    left: 20%;
     transform: translate(-50%, -50%);
     z-index: 3000;
     animation: move-logo 1.5s ease forwards;

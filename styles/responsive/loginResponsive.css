@@ -101,13 +101,17 @@
     }
 
     #login-logoContainer {
-        top: 25% !important;
-        left: 60% !important;
+        top: 23% !important;
+        left: 58% !important;
     }
 }
 
 @media (max-width: 780px) {
 
+    .join-login {
+        margin-top: 15%;
+    }
+    
     .joinLogo img {
         width: 70px;
         height: 70px;
