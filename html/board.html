@@ -49,13 +49,13 @@
 
     <main class="main-content">
         <div id="popUpTaskOnBoard" class="flex">
-            <div id="templateAddTask" class="d-none" onclick="closeTaskOnBoard()">
-                <div class="dialogBackground">
-                    <div class="taskBackground">
-                        <div class="flex-end"><img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard()"
-                                class="cursorPointer" src="../Assets/addTask/close.svg" alt=""></div>
-                        <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
-                        </section>
+            <div id="templateAddTask" class="d-none">
+                <div class="dialogBackground" onclick="closeTaskOnBoard(event)">
+                    <div class="taskBackground" onclick="dontClose(event)">
+                        <div class="flex-end">
+                            <img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard(event)" class="cursorPointer" src="../Assets/addTask/close.svg" alt="">
+                        </div>
+                        <section onclick="dontClose(event)" w3-include-html="../templates/addTaskTemplate.html"></section>
                     </div>
                 </div>
             </div>

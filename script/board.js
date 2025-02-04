@@ -47,7 +47,7 @@ function clearColumns() {
     columns.forEach(columnId => {
         let columnElement = document.getElementById(columnId);
         if (columnElement) {
-            columnElement.innerHTML = ""; 
+            columnElement.innerHTML = "";
         }
     });
 }
@@ -151,14 +151,16 @@ function updateProgressBar(taskId, progressPercentage) {
 * Shows the task form on the board.
 */
 function addTaskOnBoard() {
-   document.getElementById('templateAddTask').classList.remove('d-none');
+    document.getElementById('templateAddTask').classList.remove('d-none');
+    document.getElementById('popUpTaskOnBoard').classList.remove('d-none');
 }
 
 /**
 * Hides the task form on the board.
 */
-function closeTaskOnBoard() {
-   document.getElementById('templateAddTask').classList.add('d-none');
+function closeTaskOnBoard(event) {
+    event.stopPropagation();
+    document.getElementById('popUpTaskOnBoard').classList.add('d-none');
 }
 
 
@@ -167,7 +169,7 @@ function closeTaskOnBoard() {
 * @param {Event} event - The click event.
 */
 function dontClose(event) {
-   event.stopPropagation();
+    event.stopPropagation();
 }
 
 
