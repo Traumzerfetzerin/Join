@@ -123,8 +123,10 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML(() => {
-            renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
-            renderPrioButtons(".prioButtonsContainer", "normal")
+            setTimeout(() => {
+                renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
+                renderPrioButtons(".prioButtonsContainer", "normal");
+            }, 0);
         });
     </script>
     <script src="../script/board.js"></script>
