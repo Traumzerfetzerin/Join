@@ -90,7 +90,8 @@ function validateTaskData(task) {
 
 
 /**
- * Handles the save action for the edited task.
+ * Saves all changes made to a task, including updated subtasks, in Firebase.
+ * 
  * @param {string} taskId - The ID of the task being edited.
  * @param {string} category - The category of the task being edited.
  */
@@ -98,9 +99,8 @@ async function saveChanges(taskId, category) {
     let updatedTask = collectOverlayData();
     updatedTask.id = taskId;
     updatedTask.category = category;
-    updatedTask.prio = collectPriority();
-    updatedTask.contacts = collectContacts();
-    updatedTask.column = updatedTask.column || 'toDo';
+    updatedTask.subtasks = removeDuplicateSubtasks(updatedTask.subtasks);
+
     try {
         await updateTaskInDatabase(category, taskId, updatedTask);
         closeTaskOverlay();
@@ -110,6 +110,21 @@ async function saveChanges(taskId, category) {
     }
 }
 
+
+/**
+ * Removes duplicate subtasks based on their text content.
+ * 
+ * @param {Array} subtasks - List of subtasks to be filtered.
+ * @returns {Array} - Filtered list without duplicates.
+ */
+function removeDuplicateSubtasks(subtasks) {
+    let seen = new Set();
+    return subtasks.filter(subtask => {
+        let isDuplicate = seen.has(subtask.text);
+        seen.add(subtask.text);
+        return !isDuplicate;
+    });
+}
 
 /**
  * Updates task data in Firebase.

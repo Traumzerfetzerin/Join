@@ -124,14 +124,13 @@ function generateEditSubtaskHTML(subtaskIndex, taskId, category, currentText) {
 
 
 /**
- * Saves the edited subtask text, updates the UI, and saves the changes to the database.
+ * Saves the edited subtask text, updates the UI, and marks the subtask for saving.
  * 
  * @param {string} taskId - The ID of the task to which the subtask belongs.
  * @param {string} category - The category of the task.
  * @param {number} subtaskIndex - The index of the subtask being edited.
- * @returns {Promise<void>} - A promise that resolves when the subtask is saved to the database.
  */
-async function saveSubtaskEdit(taskId, category, subtaskIndex) {
+function saveSubtaskEdit(taskId, category, subtaskIndex) {
     let inputField = getInputField(subtaskIndex);
     if (!inputField) return;
 
@@ -143,7 +142,23 @@ async function saveSubtaskEdit(taskId, category, subtaskIndex) {
 
     updateSubtaskElements(subtaskElement, inputField, newText);
     subtaskElement.classList.remove('editing');
-    await saveSubtaskToDatabase(taskId, category, subtaskIndex, newText);
+
+    markSubtaskForSaving(taskId, category, subtaskIndex, newText);
+}
+
+/**
+ * Marks a subtask for saving by storing changes temporarily.
+ * 
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} newText - The updated subtask text.
+ */
+function markSubtaskForSaving(taskId, category, subtaskIndex, newText) {
+    let task = findTaskById(taskId, category);
+    if (!task || !task.subtasks || !task.subtasks[subtaskIndex]) return;
+
+    task.subtasks[subtaskIndex].text = newText;
 }
 
 
