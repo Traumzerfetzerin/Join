@@ -339,6 +339,28 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
     }
 }
 
+/**
+ * Retrieves the existing task and integrates existing information (column, subtask status) into the updated task.
+ * @param {string} category - Category of the task
+ * @param {string} taskId - ID of the task
+ * @param {object} updatedTask - The task data to be updated
+ * @returns {object} - The updated task data with retained information
+ */
+async function integrateExistingTaskData(category, taskId, updatedTask) {
+    let existingTask = await fetchTaskById(category, taskId);
+    if (existingTask) {
+        updatedTask.column = existingTask.column;
+        if (existingTask.subtasks && updatedTask.subtasks) {
+            updatedTask.subtasks = updatedTask.subtasks.map((subtask, index) => {
+                return {
+                    ...subtask,
+                    completed: existingTask.subtasks[index] ? existingTask.subtasks[index].completed : false
+                };
+            });
+        }
+    }
+    return updatedTask;
+}
 
 /**
  * Updates the task in the Firebase database.
@@ -347,6 +369,7 @@ async function deleteSubtaskFromFirebase(taskId, category, subtaskIndex) {
  * @param {object} updatedTask - Updated task data.
  */
 async function updateTaskInDatabase(category, taskId, updatedTask) {
+    updatedTask = await integrateExistingTaskData(category, taskId, updatedTask);
     let url = `https://join-382-default-rtdb.europe-west1.firebasedatabase.app/Tasks/${category}/${taskId}.json`;
     let response = await fetch(url, {
         method: "PUT",

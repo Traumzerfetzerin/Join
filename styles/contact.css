@@ -56,6 +56,11 @@
     padding: 10px 20px;
 }
 
+
+.contact-item:hover {
+    background-color: lightgrey;
+}
+
 .contact-group {
     width: 100%;
 }

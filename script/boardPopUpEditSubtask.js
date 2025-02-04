@@ -365,27 +365,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 /**
-* Adds event listeners to the edit and delete buttons of a subtask.
+* Adds event listeners to the edit and delete buttons of a subtask using event delegation.
 *
-* @param {HTMLElement} subtaskElement - The subtask container element.
+* @param {HTMLElement} subtaskContainer - The container element for all subtasks.
 */
-function addSubtaskEventListeners(subtaskElement) {
-    let editButton = subtaskElement.querySelector(".editSubtask");
-    let deleteButton = subtaskElement.querySelector(".deleteSubtask");
-    if (editButton) {
-        editButton.addEventListener("click", function () {
-            let taskId = editButton.getAttribute("data-task-id");
-            let category = editButton.getAttribute("data-category");
-            let index = parseInt(editButton.getAttribute("data-index"));
+function addSubtaskEventListeners(subtaskContainer) {
+    if (!subtaskContainer) return;
+    subtaskContainer.addEventListener("click", function(event) {
+        let target = event.target;
+
+        if (target.classList.contains("editSubtask")) {
+            let taskId = target.getAttribute("data-task-id");
+            let category = target.getAttribute("data-category");
+            let index = parseInt(target.getAttribute("data-index"));
             editSubtaskEdit(taskId, category, index);
-        });
-    }
-    if (deleteButton) {
-        deleteButton.addEventListener("click", function () {
-            let taskId = deleteButton.getAttribute("data-task-id");
-            let category = deleteButton.getAttribute("data-category");
-            let index = parseInt(deleteButton.getAttribute("data-index"));
+        }
+        if (target.classList.contains("deleteSubtask")) {
+            let taskId = target.getAttribute("data-task-id");
+            let category = target.getAttribute("data-category");
+            let index = parseInt(target.getAttribute("data-index"));
             deleteSubtask(taskId, category, index);
-        });
-    }
+        }
+    });
 }
