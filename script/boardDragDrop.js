@@ -1,36 +1,119 @@
 /**
- * Enables drag-and-drop functionality for tasks and updates their columns.
+ * Initializes drag-and-drop functionality for tasks.
  * @param {object} columns - Mapping of column names to DOM element IDs.
  */
 function enableDragAndDrop(columns) {
     let tasks = document.querySelectorAll(".draggable");
     let zones = Object.values(columns).map(id => document.getElementById(id));
 
-    tasks.forEach(task => {
-        task.ondragstart = e => {
-            e.dataTransfer.setData("taskId", task.id.replace("task-", ""));
-            e.dataTransfer.setData("category", getCategoryFromTaskId(task.id.replace("task-", "")));
-        };
-    });
+    tasks.forEach(task => setupDragEvents(task));
+    zones.forEach(zone => setupDropEvents(zone, columns));
+}
 
-    zones.forEach(zone => {
-        zone.ondrop = async e => {
-            e.preventDefault();
-            let taskId = e.dataTransfer.getData("taskId");
-            let category = e.dataTransfer.getData("category");
-            let newColumn = Object.keys(columns).find(key => columns[key] === zone.id);
-            if (!taskId || !category || !newColumn) return;
+/**
+ * Adds drag events to a task element.
+ * @param {HTMLElement} task - The task element.
+ */
+function setupDragEvents(task) {
+    task.ondragstart = e => startDrag(e, task);
+    task.ondragend = () => endDrag(task);
+}
 
-            let taskElement = document.getElementById(`task-${taskId}`);
+/**
+ * Handles the drag start event.
+ * @param {DragEvent} e - The drag event.
+ * @param {HTMLElement} task - The task being dragged.
+ */
+function startDrag(e, task) {
+    e.dataTransfer.setData("taskId", task.id.replace("task-", ""));
+    e.dataTransfer.setData("category", getCategoryFromTaskId(task.id.replace("task-", "")));
+    task.classList.add("dragging");
+    setTimeout(() => task.style.transition = "none", 0);
+}
 
-            if (taskElement && taskElement.parentNode) {
-                taskElement.parentNode.removeChild(taskElement);
-            }
+/**
+ * Handles the drag end event.
+ * @param {HTMLElement} task - The task being dragged.
+ */
+function endDrag(task) {
+    task.classList.remove("dragging");
+    task.style.transition = "";
+    resetTaskSize(task);
+}
 
-            zone.appendChild(taskElement);
-        };
-        zone.ondragover = e => e.preventDefault();
-    });
+/**
+ * Adds drop events to a column element.
+ * @param {HTMLElement} zone - The drop zone.
+ * @param {object} columns - Mapping of column names to DOM element IDs.
+ */
+function setupDropEvents(zone, columns) {
+    zone.ondrop = async e => handleDrop(e, zone, columns);
+    zone.ondragover = e => e.preventDefault();
+}
+
+/**
+ * Handles the drop event.
+ * @param {DragEvent} e - The drop event.
+ * @param {HTMLElement} zone - The drop target.
+ * @param {object} columns - Mapping of column names to DOM element IDs.
+ */
+async function handleDrop(e, zone, columns) {
+    e.preventDefault();
+    let taskId = e.dataTransfer.getData("taskId");
+    let category = e.dataTransfer.getData("category");
+    let newColumn = Object.keys(columns).find(key => columns[key] === zone.id);
+    if (!taskId || !category || !newColumn || category === newColumn) return;
+
+    let taskElement = document.getElementById(`task-${taskId}`);
+    if (!taskElement) return;
+
+    moveTaskToColumn(taskElement, zone);
+    await updateTaskColumn(taskId, category, newColumn, columns);
+}
+
+/**
+ * Moves a task element to a new column.
+ * @param {HTMLElement} taskElement - The task element.
+ * @param {HTMLElement} zone - The target drop zone.
+ */
+function moveTaskToColumn(taskElement, zone) {
+    taskElement.classList.remove("dragging");
+    taskElement.style.transition = "none";
+    taskElement.style.height = taskElement.offsetHeight + "px";
+    taskElement.style.width = taskElement.offsetWidth + "px";
+    taskElement.style.padding = "0"; // Setzt Padding zurück
+    taskElement.style.margin = "0"; // Entfernt Margin
+    zone.appendChild(taskElement);
+    resetTaskSize(taskElement);
+}
+
+/**
+ * Ensures the task retains its original size after drop.
+ * @param {HTMLElement} taskElement - The task element.
+ */
+function resetTaskSize(taskElement) {
+    setTimeout(() => {
+        taskElement.style.height = "auto";
+        taskElement.style.width = "100%";
+        taskElement.style.padding = ""; 
+        taskElement.style.margin = ""; 
+    }, 100);
+}
+
+/**
+ * Updates the task's column in the database.
+ * @param {string} taskId - The task ID.
+ * @param {string} oldCategory - The original category.
+ * @param {string} newCategory - The new category.
+ * @param {object} columns - Mapping of column names to DOM element IDs.
+ */
+async function updateTaskColumn(taskId, oldCategory, newCategory, columns) {
+    let task = findTaskInData(taskId);
+    if (!task) return;
+
+    task.column = newCategory;
+    await handleTaskDrop(task, taskId, oldCategory, newCategory, columns);
+    checkEmptyColumns(columns);
 }
 
 
