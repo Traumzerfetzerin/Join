@@ -17,29 +17,42 @@ document.addEventListener("DOMContentLoaded", function () {
  */
 function includeHTML() {
     let elements = document.getElementsByTagName("*");
+    processHTMLElements(elements);
+}
+
+/**
+ * Processes all elements in the document and loads external HTML if needed.
+ * @param {HTMLCollection} elements - The collection of HTML elements in the document.
+ */
+function processHTMLElements(elements) {
     for (let i = 0; i < elements.length; i++) {
         let element = elements[i];
         let file = element.getAttribute("w3-include-html");
         if (file) {
-            let xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    if (this.status == 200) {
-                        element.innerHTML = this.responseText;
-                    }
-                    if (this.status == 404) {
-                        element.innerHTML = "Page not found.";
-                    }
-                    element.removeAttribute("w3-include-html");
-                    displayUserInitials();
-                }
-            };
-            xhttp.open("GET", file, true);
-            xhttp.send();
+            loadExternalHTML(element, file);
             return;
         }
     }
 }
+
+/**
+ * Loads external HTML content into a given element.
+ * @param {HTMLElement} element - The element where the HTML content will be inserted.
+ * @param {string} file - The URL of the external HTML file.
+ */
+function loadExternalHTML(element, file) {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            element.innerHTML = this.status == 200 ? this.responseText : "Page not found.";
+            element.removeAttribute("w3-include-html");
+            displayUserInitials();
+        }
+    };
+    xhttp.open("GET", file, true);
+    xhttp.send();
+}
+
 
 
 /**
