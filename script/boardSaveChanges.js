@@ -29,11 +29,23 @@ function collectPriority() {
  * @returns {Array<Object>} - List of subtasks with text and completion status.
  */
 function collectBoardSubtasks() {
-    return Array.from(document.querySelectorAll('.subtasks-section .subtask-item')).map(subtask => ({
-        text: subtask.querySelector('.editSubtaskText')?.textContent.trim() || "",
-        completed: subtask.querySelector('.subtask-checkbox')?.checked || false
-    }));
+    return Array.from(document.querySelectorAll('.subtasks-section .subtask-item')).map(subtask => {
+        let textElement = subtask.querySelector('.editSubtaskText');
+        let inputElement = subtask.querySelector('.edit-subtask-input');
+
+        let text = inputElement && inputElement.value.trim() !== "" 
+            ? inputElement.value.trim() 
+            : textElement && textElement.textContent.trim() !== "" 
+                ? textElement.textContent.trim() 
+                : "";
+
+        return {
+            text: text,
+            completed: subtask.querySelector('.subtask-checkbox')?.checked || false
+        };
+    });
 }
+
 
 
 /**
