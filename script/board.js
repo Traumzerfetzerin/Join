@@ -95,6 +95,7 @@ function addTaskToColumn(task, category, taskId, columns) {
     syncContactIcons(task.contacts || []);
 }
 
+
 /**
  * Prepares the HTML representation of a task.
  * @param {object} task - Task object.
@@ -118,7 +119,6 @@ function prepareTaskHtml(task, category, taskId) {
         progress.completed
     );
 }
-
 
 
 /**

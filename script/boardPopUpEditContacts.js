@@ -28,9 +28,19 @@ async function syncContactIcons(contactIds) {
         allContactsArray.find(contact => contact.id === id) || { name: "Unknown", color: "#ccc" }
     );
 
-    contactIconsContainer.innerHTML = relevantContacts.map(contact => 
-        `<div class="contact-icon" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>`
+
+    let displayedContacts = relevantContacts.slice(0, 4);
+    let remainingContacts = relevantContacts.length - displayedContacts.length;
+
+    let iconsHTML = displayedContacts.map(contact => 
+        `<div class="contact-icon more-contacts" style="background-color: ${contact.color}">${getInitials(contact.name)}</div>`
     ).join('');
+
+    if (remainingContacts > 0) {
+        iconsHTML += `<div class="contact-icon more more-contacts">+${remainingContacts}</div>`;
+    }
+
+    contactIconsContainer.innerHTML = iconsHTML;
 }
 
 

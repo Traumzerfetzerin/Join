@@ -88,6 +88,7 @@ function createEditInput(subtaskElement, subtaskIndex, taskId, category, current
     setupEditSubtaskEventListeners(subtaskElement, saveButton, inputField, subtaskIndex, taskId, category);
 }
 
+
 /**
  * Sets up event listeners for the subtask input field and save button.
  * 
@@ -136,7 +137,7 @@ function generateEditSubtaskHTML(subtaskIndex, taskId, category, currentText) {
         <img class="save-subtask-button"
             src="../Assets/addTask/Property 1=check.svg" alt="Save subtask">
         <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete subtask"
-            onclick="deleteSubtask('${taskId}', '${category}', ${subtaskIndex})">
+            onclick="deleteSubtaskOnBoard('${taskId}', '${category}', ${subtaskIndex})">
     </div>
     `;
 }
