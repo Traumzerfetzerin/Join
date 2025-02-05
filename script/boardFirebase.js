@@ -260,36 +260,57 @@ async function fetchAllContacts() {
  * Fetches a single task by its category and ID.
  * @param {string} category - Task category.
  * @param {string} taskId - Task ID.
- * @returns {Object|null} - The task object if found, otherwise null.
+ * @returns {Promise<Object|null>} - The task object if found, otherwise null.
  */
 async function fetchTaskById(category, taskId) {
     try {
-        let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
-        let task = await response.json();
-        if (!task) {
-            console.error(`Task with ID ${taskId} not found!`);
-            return null;
-        }
+        let task = await fetchTaskData(category, taskId);
+        if (!task) return null;
 
-        let allContacts = await fetchAllContacts();
-        let nameToIdMap = createNameToIdMap(allContacts);
-
-        if (task.contacts) {
-            task.contacts = await Promise.all(
-                task.contacts.map(async (contactNameOrId) => {
-                    let contactId = nameToIdMap[contactNameOrId] || contactNameOrId;
-                    let contact = await fetchContactFromFirebase(contactId);
-                    return contact;
-                })
-            );
-        }
-
+        task.contacts = await processTaskContacts(task.contacts);
         return task;
     } catch (error) {
         console.error("Error fetching task by ID:", error);
         return null;
     }
 }
+
+/**
+ * Fetches task data from Firebase.
+ * @param {string} category - Task category.
+ * @param {string} taskId - Task ID.
+ * @returns {Promise<Object|null>} - The fetched task data or null if not found.
+ */
+async function fetchTaskData(category, taskId) {
+    let response = await fetch(`${TASK_URL}/${category}/${taskId}.json`);
+    let task = await response.json();
+
+    if (!task) {
+        console.error(`Task with ID ${taskId} not found!`);
+        return null;
+    }
+    return task;
+}
+
+/**
+ * Processes the contacts associated with a task.
+ * @param {Array} contacts - The list of contact names or IDs.
+ * @returns {Promise<Array>} - The processed list of contact objects.
+ */
+async function processTaskContacts(contacts) {
+    if (!contacts) return [];
+
+    let allContacts = await fetchAllContacts();
+    let nameToIdMap = createNameToIdMap(allContacts);
+
+    return Promise.all(
+        contacts.map(async (contactNameOrId) => {
+            let contactId = nameToIdMap[contactNameOrId] || contactNameOrId;
+            return fetchContactFromFirebase(contactId);
+        })
+    );
+}
+
 
 
 /**
