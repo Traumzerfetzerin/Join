@@ -99,7 +99,7 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     min-width: 80px;
 }
 
-#due-date-display{
+#due-date-display {
     font-weight: normal;
     display: flex;
     align-items: center;
@@ -114,7 +114,7 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 .prio-display {
     display: flex;
     align-items: center;
-    gap: 5px; 
+    gap: 5px;
     padding-right: 66%;
     padding-left: 37px;
 }
@@ -124,7 +124,7 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 }
 
 .priority-icon {
-    width: 16px; 
+    width: 16px;
     height: auto;
 }
 
@@ -199,7 +199,8 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 8px;;
+    margin-bottom: 8px;
+    ;
 }
 
 .subtask-checkbox {
@@ -313,4 +314,12 @@ body.no-interaction *:not(.overlay):not(.overlay *) {
 
 .no-scroll {
     overflow: hidden;
+}
+
+.more-contacts {
+    background-color: #007bff;
+    font-weight: bold;
+    border-radius: 50%;
+    color: white;
+    text-transform: uppercase;
 }

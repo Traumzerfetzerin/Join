@@ -31,7 +31,7 @@ main {
 /* SCROLLBAR */
 ::-webkit-scrollbar {
     width: 10px;
-    display: none;
+    opacity: 0;
 }
 
 ::-webkit-scrollbar-track {

@@ -20,8 +20,14 @@ function enableDragAndDrop(columns) {
             let category = e.dataTransfer.getData("category");
             let newColumn = Object.keys(columns).find(key => columns[key] === zone.id);
             if (!taskId || !category || !newColumn) return;
-            let task = findTaskInData(taskId);
-            if (task) await handleTaskDrop(task, taskId, category, newColumn, columns);
+
+            let taskElement = document.getElementById(`task-${taskId}`);
+
+            if (taskElement && taskElement.parentNode) {
+                taskElement.parentNode.removeChild(taskElement);
+            }
+
+            zone.appendChild(taskElement);
         };
         zone.ondragover = e => e.preventDefault();
     });
@@ -49,12 +55,10 @@ async function handleTaskDrop(task, taskId, category, newColumn, columns) {
         let overlay = document.getElementById("board-overlay-container");
         if (overlay && overlay.style.display === "block") {
             await updateOverlayContent(updatedTask.category, updatedTask);
-            await syncContactIcons(updatedTask.contacts); 
+            await syncContactIcons(updatedTask.contacts);
         }
     }
 }
-
-
 
 
 /**
@@ -124,10 +128,10 @@ async function moveTaskToColumn(taskId, newCategory) {
     task.column = newCategory;
 
     await updateTaskInDatabase(newCategory, taskId, task);
-    loadTasks(await fetchTasks()); 
+    loadTasks(await fetchTasks());
 
     if (document.getElementById("taskOverlay").style.display === "block") {
-        updateOverlayContent(newCategory, task); 
+        updateOverlayContent(newCategory, task);
     }
 }
 

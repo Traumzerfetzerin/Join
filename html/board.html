@@ -43,19 +43,19 @@
     <script src="../script/boardPopUpEditContacts.js" defer></script>
     <script src="../script/contactsDisplay.js" defer></script>
 
-    <body onload="initializeBoard()">
+<body onload="initializeBoard()">
     <aside w3-include-html="../templates/header.html"></aside>
     <aside w3-include-html="../templates/navbarLoggedIn.html"></aside>
 
     <main class="main-content">
         <div id="popUpTaskOnBoard" class="flex">
-            <div id="templateAddTask" class="d-none" onclick="closeTaskOnBoard()">
-                <div class="dialogBackground">
-                    <div class="taskBackground">
-                        <div class="flex-end"><img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard()"
-                                class="cursorPointer" src="../Assets/addTask/close.svg" alt=""></div>
-                        <section onclick="dontClose(event)" w3-include-html=" ../templates/addTaskTemplate.html">
-                        </section>
+            <div id="templateAddTask" class="d-none">
+                <div class="dialogBackground" onclick="closeTaskOnBoard(event)">
+                    <div class="taskBackground" onclick="dontClose(event)">
+                        <div class="flex-end">
+                            <img id="closeAddTaskOnBoard" onclick="closeTaskOnBoard(event)" class="cursorPointer" src="../Assets/addTask/close.svg" alt="">
+                        </div>
+                        <section onclick="dontClose(event)" w3-include-html="../templates/addTaskTemplate.html"></section>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,8 @@
                         <div class="searchbarBoard">
                             <input type="search" placeholder="Find task" id="boardSearchbar" oninput="filterTasks()">
                             <div class="seperatorSearchbar"></div>
-                            <img src="../Assets/board/magnifier.svg" alt="magnifier" class="input-icon" onclick="filterTasks()">
+                            <img src="../Assets/board/magnifier.svg" alt="magnifier" class="input-icon"
+                                onclick="filterTasks()">
                         </div>
                         <button id="buttonAddTask" type="submit" class="cursorPointer"
                             onclick="addTaskOnBoard(), loadContactsForDropdown()">Add task +</button>
@@ -87,14 +88,16 @@
                 </div>
                 <div class="column-wrapper">
                     <div class="column-title">In progress <img class="cursorPointer"
-                            src="../Assets/board/plusButton.svg" alt="plus button" onclick="addTaskOnBoard(), loadContactsForDropdown()">
+                            src="../Assets/board/plusButton.svg" alt="plus button"
+                            onclick="addTaskOnBoard(), loadContactsForDropdown()">
                     </div>
                     <div class="column" id="inProgressColumn">
                     </div>
                 </div>
                 <div class="column-wrapper">
                     <div class="column-title">Await feedback <img class="cursorPointer"
-                            src="../Assets/board/plusButton.svg" alt="plus button" onclick="addTaskOnBoard(), loadContactsForDropdown()">
+                            src="../Assets/board/plusButton.svg" alt="plus button"
+                            onclick="addTaskOnBoard(), loadContactsForDropdown()">
                     </div>
                     <div class="column" id="awaitFeedbackColumn">
                     </div>
@@ -106,22 +109,24 @@
             </div>
         </div>
         <div id="backgroundOverlay" class="background-overlay dNone" onclick="closeTaskOverlay(event)"></div>
-<div id="taskOverlay" class="overlay dNone">
-    <div class="overlay-content" onclick="event.stopPropagation()">
-        <div class="close-button-area">
-        <button class="close-button" onclick="closeTaskOverlay(event)"></button>
+        <div id="taskOverlay" class="overlay dNone">
+            <div class="overlay-content" onclick="event.stopPropagation()">
+                <div class="close-button-area">
+                    <button class="close-button" onclick="closeTaskOverlay(event)"></button>
+                </div>
+                <div id="overlayDetails"></div>
+            </div>
         </div>
-        <div id="overlayDetails"></div>
-    </div>
-</div>
     </main>
 
     <footer></footer>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <script>
         w3.includeHTML(() => {
-            renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
-            renderPrioButtons(".prioButtonsContainer", "normal")
+            setTimeout(() => {
+                renderPrioButtons(".prio-container #prioOverlayEdit", "overlay");
+                renderPrioButtons(".prioButtonsContainer", "normal");
+            }, 0);
         });
     </script>
     <script src="../script/board.js"></script>

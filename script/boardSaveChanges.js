@@ -80,18 +80,7 @@ function collectOverlayData() {
 
 
 /**
- * Validates the task data to ensure required fields are present.
- * @param {Object} task - Task data object.
- * @returns {boolean} - True if valid, otherwise false.
- */
-function validateTaskData(task) {
-    return task.title && task.description && task.dueDate;
-}
-
-
-/**
- * Saves all changes made to a task, including updated subtasks, in Firebase.
- * 
+ * Handles the save action for the edited task.
  * @param {string} taskId - The ID of the task being edited.
  * @param {string} category - The category of the task being edited.
  */

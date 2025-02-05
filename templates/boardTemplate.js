@@ -121,19 +121,33 @@ function getBoardOverlayTemplate(category, task) {
 
 
 /**
- * Generates the HTML for the contact list.
- * @param {Array} contacts - List of contacts assigned to the task.
- * @returns {string} - HTML string for the contact list.
+ * Generates a contact list with initials and a background color.
+ * Displays up to 4 contacts, adding a "+X" indicator if there are more.
+ *
+ * @param {Array} contacts - Array of contact objects with `name` and optional `color`.
+ * @returns {string} HTML string representing the contact list.
  */
 function generateContactList(contacts) {
     if (!contacts || contacts.length === 0) return "";
-    return contacts.map(function (contact) {
+    
+    let maxVisible = 4;
+    let visibleContacts = contacts.slice(0, maxVisible);
+    let hiddenCount = contacts.length - maxVisible;
+
+    let contactHTML = visibleContacts.map(function (contact) {
         let name = contact && contact.name ? contact.name : "Unknown";
         let initials = getInitials(name);
         let bgColor = contact.color || getRandomColor();
         return `<span class="contact-initial" style="background-color: ${bgColor};">${initials}</span>`;
     }).join('');
+
+    if (hiddenCount > 0) {
+        contactHTML += `<span class="contact-initial more-contacts">+${hiddenCount}</span>`;
+    }
+
+    return contactHTML;
 }
+
 
 
 /**
