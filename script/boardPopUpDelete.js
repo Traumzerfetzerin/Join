@@ -74,28 +74,34 @@ function updateSubtaskUI(taskId, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
 
-    subtaskContainer.innerHTML = '';
-
-    if (!task.subtasks || task.subtasks.length === 0) {
-        subtaskContainer.innerHTML = '<div>No subtasks available</div>';
-    } else {
-        task.subtasks.forEach((subtask, index) => {
-            let subtaskHTML = `
-            <div id="subtaskDiv_${index}" class="subtask-item">
-                <span class="editSubtaskText">${subtask.text}</span>
-                    <div class="subtask-icons">
-                            <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
-                             alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
-                             <div class="seperatorSubtaskIcons"></div>
-                            <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
-                             alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})"
-                    </div>
-            </div>
-            `;
-            subtaskContainer.innerHTML += subtaskHTML;
-        });
-    }
+    subtaskContainer.innerHTML = generateUpdatedSubtaskHTML(task, category);
 }
+
+/**
+ * Generates the HTML for the subtask section.
+ * @param {object} task - The task object containing subtasks.
+ * @param {string} category - The category of the task.
+ * @returns {string} The generated HTML for the subtask section.
+ */
+function generateUpdatedSubtaskHTML(task, category) {
+    if (!task.subtasks || task.subtasks.length === 0) {
+        return '<div>No subtasks available</div>';
+    }
+
+    return task.subtasks.map((subtask, index) => `
+        <div id="subtaskDiv_${index}" class="subtask-item">
+            <span class="editSubtaskText">${subtask.text}</span>
+            <div class="subtask-icons">
+                <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" 
+                     alt="Edit" onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                <div class="seperatorSubtaskIcons"></div>
+                <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" 
+                     alt="Delete" onclick="deleteSubtask('${task.id}', '${category}', ${index})">
+            </div>
+        </div>
+    `).join('');
+}
+
 
 
 /**
