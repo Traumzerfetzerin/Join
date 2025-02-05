@@ -79,26 +79,45 @@ function createEditInput(subtaskElement, subtaskIndex, taskId, category, current
     subtaskElement.innerHTML = generateEditSubtaskHTML(subtaskIndex, taskId, category, currentText);
     let saveButton = subtaskElement.querySelector('.save-subtask-button');
     let inputField = subtaskElement.querySelector(`#editSubtaskInput_${subtaskIndex}`);
-    if (saveButton && inputField) {
-        saveButton.onclick = function () {
-            let updatedText = inputField.value.trim();
-            if (updatedText) {
-                updateSubtaskElements(subtaskElement, inputField, updatedText);
-                saveSubtaskEdit(taskId, category, subtaskIndex, updatedText);
-            } else {
-                console.error("Subtask text cannot be empty.");
-            }
-        };
-        inputField.onkeydown = function (event) {
-            if (event.key === "Enter") {
-                saveButton.click();
-            }
-        };
-        inputField.focus();
-    } else {
+
+    if (!saveButton || !inputField) {
         console.error(`Could not find input field or save button for subtask ${subtaskIndex}`);
+        return;
     }
+
+    setupEditSubtaskEventListeners(subtaskElement, saveButton, inputField, subtaskIndex, taskId, category);
 }
+
+/**
+ * Sets up event listeners for the subtask input field and save button.
+ * 
+ * @param {HTMLElement} subtaskElement - The subtask element.
+ * @param {HTMLElement} saveButton - The button to save the edited subtask.
+ * @param {HTMLElement} inputField - The input field for editing the subtask.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ */
+function setupEditSubtaskEventListeners(subtaskElement, saveButton, inputField, subtaskIndex, taskId, category) {
+    saveButton.onclick = function () {
+        let updatedText = inputField.value.trim();
+        if (updatedText) {
+            updateSubtaskElements(subtaskElement, inputField, updatedText);
+            saveSubtaskEdit(taskId, category, subtaskIndex, updatedText);
+        } else {
+            console.error("Subtask text cannot be empty.");
+        }
+    };
+
+    inputField.onkeydown = function (event) {
+        if (event.key === "Enter") {
+            saveButton.click();
+        }
+    };
+
+    inputField.focus();
+}
+
 
 
 /**
@@ -307,40 +326,62 @@ function addNewSubtask(taskId, category) {
  * 
  * @param {Object} task - The task object containing subtasks to be rendered.
  * @param {string} category - The category of the task.
- * @returns {void} - No return value. The function modifies the DOM to display the subtasks.
  */
 function renderSubtasksInEditMode(task, category) {
     let subtaskContainer = document.querySelector('.subtasks-section .subtasks-list');
     if (!subtaskContainer) return;
 
-    subtaskContainer.innerHTML = /*HTML*/`
+    subtaskContainer.innerHTML = generateSubtaskInputHTML(task.id, category);
+    subtaskContainer.innerHTML += generateSubtaskListHTML(task, category);
+}
+
+/**
+ * Generates the HTML for the subtask input field.
+ * 
+ * @param {string} taskId - The ID of the task.
+ * @param {string} category - The category of the task.
+ * @returns {string} - The HTML string for the input field.
+ */
+function generateSubtaskInputHTML(taskId, category) {
+    return /*HTML*/`
         <div class="editSubtaskInput">
             <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
             <div class="seperatorSubtaskEditInput"></div>
-            <img id="addSubtaskButton" class="subtaskImg cursorPointer" src="../Assets/addTask/Property 1=add.svg"
-                alt="Add" onclick="addNewSubtask('${task.id}', '${category}')">
+            <img id="addSubtaskButton" class="subtaskImg cursorPointer" 
+                src="../Assets/addTask/Property 1=add.svg" alt="Add" 
+                onclick="addNewSubtask('${taskId}', '${category}')">
         </div>
     `;
+}
 
+/**
+ * Generates the HTML for the list of subtasks.
+ * 
+ * @param {Object} task - The task object containing subtasks.
+ * @param {string} category - The category of the task.
+ * @returns {string} - The HTML string for the subtask list.
+ */
+function generateSubtaskListHTML(task, category) {
     if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
-        subtaskContainer.innerHTML += "<div>No subtasks available</div>";
-    } else {
-        let subtasksHTML = task.subtasks.map((subtask, index) => /*HTML*/`
-            <li id="subtaskDiv_${index}" class="subtask-item">
-                <div class="testForLi">
-                    <ul>•<span class="editSubtaskText" contenteditable="true">${subtask.text}</span></ul>
-                    <div class="subtask-icons">
-                        <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                            onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
-                        <div class="seperatorSubtaskIcons"></div>
-                        <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-                            onclick="deleteSubtask('${task.id}', '${category}', ${index})">
-                    </div>    
-                </div>
-            </li>
-        `).join('');
-        subtaskContainer.innerHTML += `<ul>${subtasksHTML}</ul>`;
+        return "<div>No subtasks available</div>";
     }
+
+    let subtasksHTML = task.subtasks.map((subtask, index) => /*HTML*/`
+        <li id="subtaskDiv_${index}" class="subtask-item">
+            <div class="testForLi">
+                <ul>•<span class="editSubtaskText" contenteditable="true">${subtask.text}</span></ul>
+                <div class="subtask-icons">
+                    <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
+                        onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
+                    <div class="seperatorSubtaskIcons"></div>
+                    <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
+                        onclick="deleteSubtask('${task.id}', '${category}', ${index})">
+                </div>    
+            </div>
+        </li>
+    `).join('');
+
+    return `<ul>${subtasksHTML}</ul>`;
 }
 
 
