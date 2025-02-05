@@ -223,17 +223,18 @@ function generateContactDropdownHTML(allContacts, assignedContacts, assignedCont
                     .map(contact => {
                         let initials = contact.initials ||
                             contact.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                        const checkboxId = `checkbox-${contact.id}`;
                         return `
                         <div class="dropdown-entry">
-                            <div class="entry-wrapper">
+                            <label class="entry-wrapper cursorPointer" for="${checkboxId}">
                                 <div class="user-icon-edit" style="background-color: ${contact.color || '#ccc'};">
                                     ${initials}
                                 </div>
                                 <div class="user-name">${contact.name}</div>
-                                <input class="checkbox-overlay-edit" type="checkbox" value="${contact.id}" 
+                                <input class="checkbox-overlay-edit" type="checkbox" id="${checkboxId}" value="${contact.id}" 
                                     ${assignedContactIds.includes(contact.id) ? 'checked' : ''} 
                                     onclick="assignContact('${contact.id}')">
-                            </div>
+                            </label>
                         </div>
                     `;
                     })
