@@ -87,8 +87,9 @@ async function createTasks(event) {
         return;
     }
 
-    await finalizeTaskCreation();
+    await finalizeTaskCreationToBoard();
 }
+
 
 /**
  * Handles the case when task data validation fails.
@@ -98,10 +99,11 @@ async function handleInvalidTaskData() {
     console.error("Task data validation failed.");
 }
 
+
 /**
  * Finalizes the task creation process by updating the UI.
  */
-async function finalizeTaskCreation() {
+async function finalizeTaskCreationToBoard() {
     await popUpAddTask();
     await clearTasks();
     await changeToBoard();

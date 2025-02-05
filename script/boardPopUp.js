@@ -79,14 +79,14 @@ async function getRelevantContacts(contactIds) {
     if (!contactIds || contactIds.length === 0) return [];
 
     let allContacts = await fetchContactsFromFirebase();
-    
+
     if (!allContacts || typeof allContacts !== "object") {
         console.error("fetchContactsFromFirebase did not return a valid object:", allContacts);
         return [];
     }
 
     let contactMap = {};
-    for (let contact of Object.values(allContacts)) { 
+    for (let contact of Object.values(allContacts)) {
         contactMap[contact.id] = contact;
     }
 

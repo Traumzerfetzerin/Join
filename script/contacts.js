@@ -189,6 +189,12 @@ document.getElementById('save-contact-button')?.addEventListener('click', async 
 
     try {
         await updateContactInFirebase(updatedContact);
+
+        let contactBackgroundOverlay = document.getElementById('contactBackgroundOverlay');
+        if (contactBackgroundOverlay) {
+            contactBackgroundOverlay.style.display = 'none';
+        }
+
         hideContactOverlayAndResetForm();
         updateContactDetailsAndReload(updatedContact);
 
@@ -196,6 +202,7 @@ document.getElementById('save-contact-button')?.addEventListener('click', async 
         console.error('Error saving contact:', error);
     }
 });
+
 
 
 /**
