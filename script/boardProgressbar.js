@@ -75,34 +75,54 @@ async function toggleSubtaskCompletion(taskId, subtaskIndex) {
  * @param {Object} task - The task object.
  */
 function progressBarfilling(taskId, category, progressPercentage, completed, total, task) {
+    updateProgressBar(taskId, progressPercentage, completed, total);
+    updateOverlayIfVisible(category, task);
+}
+
+/**
+ * Updates the progress bar and subtask counter for a given task.
+ * @param {string} taskId - The ID of the task.
+ * @param {number} progressPercentage - The progress percentage.
+ * @param {number} completed - The number of completed subtasks.
+ * @param {number} total - The total number of subtasks.
+ */
+function updateProgressBar(taskId, progressPercentage, completed, total) {
     let progressBarContainer = document.querySelector(`#task-${taskId} .progress-bar-container`);
-    
-    if (progressBarContainer) {
-        if (total > 0) {
-            progressBarContainer.style.display = "block";
-            let progressBarFill = progressBarContainer.querySelector(".progress-bar-fill");
-            if (progressBarFill) {
-                progressBarFill.style.width = `${progressPercentage}%`;
-                progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
-            }
 
-            let subtaskCounter = progressBarContainer.querySelector("span");
-            if (subtaskCounter) {
-                subtaskCounter.textContent = `${completed}/${total} Subtasks`;
-            }
-        } else {
-            progressBarContainer.remove(); // Entfernt die Progress Bar komplett
+    if (!progressBarContainer) return;
+
+    if (total > 0) {
+        progressBarContainer.style.display = "block";
+        let progressBarFill = progressBarContainer.querySelector(".progress-bar-fill");
+
+        if (progressBarFill) {
+            progressBarFill.style.width = `${progressPercentage}%`;
+            progressBarFill.style.backgroundColor = progressPercentage === 0 ? "lightgray" : "blue";
         }
-    }
 
-    if (document.getElementById('taskOverlay').style.display === 'block') {
+        let subtaskCounter = progressBarContainer.querySelector("span");
+        if (subtaskCounter) {
+            subtaskCounter.textContent = `${completed}/${total} Subtasks`;
+        }
+    } else {
+        progressBarContainer.remove();
+    }
+}
+
+/**
+ * Updates the overlay content if the overlay is currently visible.
+ * @param {string} category - The category of the task.
+ * @param {Object} task - The task object.
+ */
+function updateOverlayIfVisible(category, task) {
+    let overlay = document.getElementById('taskOverlay');
+    if (overlay && overlay.style.display === 'block') {
         let overlayDetails = document.getElementById('overlayDetails');
         if (overlayDetails) {
             overlayDetails.innerHTML = getBoardOverlayTemplate(category, task);
         }
     }
 }
-
 
 
 /**
