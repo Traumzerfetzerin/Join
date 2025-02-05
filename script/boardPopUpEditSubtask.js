@@ -249,35 +249,6 @@ function updateSubtaskElements(subtaskElement, inputField, newText, taskId, cate
 
 
 /**
-* Generates the HTML structure for a subtask.
-*
-* @param {string} subtaskText - The text of the subtask.
-* @param {string} taskId - The ID of the task.
-* @param {string} category - The category of the task.
-* @param {number} index - The index of the subtask.
-* @returns {string} - The HTML string for the subtask.
-*/
-function generateSubtaskHTML(subtaskText, taskId, category, index) {
-    return /*HTML*/`
- <li id="subtaskDiv_${index}" class="subtask-item">
-     <div class="testForLi">
-         <ul id="subtask-edit-entry">
-             •<span class="editSubtaskText" contenteditable="true">${subtaskText}</span>
-         </ul>
-         <div class="subtask-icons">
-             <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit" data-task-id="${taskId}"
-                 data-category="${category}" data-index="${index}">
-             <div class="seperatorSubtaskIcons"></div>
-             <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-                 data-task-id="${taskId}" data-category="${category}" data-index="${index}">
-         </div>
-     </div>
- </li>
-    `;
-}
-
-
-/**
  * Saves the updated subtask text to the database.
  * 
  * @param {string} taskId - The ID of the task containing the subtask.
@@ -332,59 +303,15 @@ function renderSubtasksInEditMode(task, category) {
     if (!subtaskContainer) return;
 
     subtaskContainer.innerHTML = generateSubtaskInputHTML(task.id, category);
-    subtaskContainer.innerHTML += generateSubtaskListHTML(task, category);
+    subtaskContainer.innerHTML += generateSubtaskTemplate(task, category);
 }
+
 
 /**
- * Generates the HTML for the subtask input field.
+ * Displays the subtask marker when a subtask is being edited.
  * 
- * @param {string} taskId - The ID of the task.
- * @param {string} category - The category of the task.
- * @returns {string} - The HTML string for the input field.
+ * @param {number} index - The index of the subtask.
  */
-function generateSubtaskInputHTML(taskId, category) {
-    return /*HTML*/`
-        <div class="editSubtaskInput">
-            <input type="text" id="newSubtaskInput" placeholder="Add new subtask" autocomplete="off">
-            <div class="seperatorSubtaskEditInput"></div>
-            <img id="addSubtaskButton" class="subtaskImg cursorPointer" 
-                src="../Assets/addTask/Property 1=add.svg" alt="Add" 
-                onclick="addNewSubtask('${taskId}', '${category}')">
-        </div>
-    `;
-}
-
-/**
- * Generates the HTML for the list of subtasks.
- * 
- * @param {Object} task - The task object containing subtasks.
- * @param {string} category - The category of the task.
- * @returns {string} - The HTML string for the subtask list.
- */
-function generateSubtaskListHTML(task, category) {
-    if (!Array.isArray(task.subtasks) || task.subtasks.length === 0) {
-        return "<div>No subtasks available</div>";
-    }
-
-    let subtasksHTML = task.subtasks.map((subtask, index) => /*HTML*/`
-        <li id="subtaskDiv_${index}" class="subtask-item">
-            <div class="testForLi">
-                <ul>•<span class="editSubtaskText" contenteditable="true">${subtask.text}</span></ul>
-                <div class="subtask-icons">
-                    <img class="editSubtask" src="../Assets/addTask/Property 1=edit.svg" alt="Edit"
-                        onclick="editSubtaskEdit('${task.id}', '${category}', ${index})">
-                    <div class="seperatorSubtaskIcons"></div>
-                    <img class="deleteSubtask" src="../Assets/addTask/Property 1=delete.svg" alt="Delete"
-                        onclick="deleteSubtask('${task.id}', '${category}', ${index})">
-                </div>    
-            </div>
-        </li>
-    `).join('');
-
-    return `<ul>${subtasksHTML}</ul>`;
-}
-
-
 function showSubtaskMarker(index) {
     let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
     let markerElement = document.getElementById(`subtaskMarker_${index}`);
@@ -393,11 +320,15 @@ function showSubtaskMarker(index) {
         subtaskElement.classList.add('editing');
         markerElement.style.display = 'inline';
     } else {
-        console.error(`Subtask mit ID subtaskDiv_${index} nicht gefunden.`);
+        console.error(`Subtask with ID subtaskDiv_${index} not found.`);
     }
 }
 
-
+/**
+ * Hides the subtask marker when a subtask edit is completed.
+ * 
+ * @param {number} index - The index of the subtask.
+ */
 function hideSubtaskMarker(index) {
     let subtaskElement = document.getElementById(`subtaskDiv_${index}`);
     let markerElement = document.getElementById(`subtaskMarker_${index}`);
@@ -408,7 +339,9 @@ function hideSubtaskMarker(index) {
     }
 }
 
-
+/**
+ * Adds event listeners for showing and hiding subtask markers when editing.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.editSubtask').forEach((editBtn, index) => {
         editBtn.addEventListener('click', () => showSubtaskMarker(index));
@@ -418,6 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saveBtn.addEventListener('click', () => hideSubtaskMarker(index));
     });
 });
+
 
 
 /**
