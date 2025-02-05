@@ -168,12 +168,17 @@ function addTaskOnBoard() {
     document.getElementById('popUpTaskOnBoard').classList.remove('d-none');
 }
 
+
 /**
-* Hides the task form on the board.
-*/
+ * Closes the task popup on the board and clears all task-related fields.
+ * Stops the event propagation to prevent any further handling.
+ *
+ * @param {Event} event - The event object from the trigger.
+ */
 function closeTaskOnBoard(event) {
     event.stopPropagation();
     document.getElementById('popUpTaskOnBoard').classList.add('d-none');
+    clearTasks();
 }
 
 
