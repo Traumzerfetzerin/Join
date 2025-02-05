@@ -283,33 +283,64 @@ function findUrgentTasks(tasks) {
  * @returns {Date|null} - The closest due date or null if none exists.
  */
 function findClosestDate(tasks) {
-    let closestDate = null;
-
     if (!tasks || Object.keys(tasks).length === 0) {
         console.warn("No tasks available to process.");
         return null;
     }
+    return processTaskCategories(tasks);
+}
+
+/**
+ * Processes task categories and finds the closest due date.
+ * @param {object} tasks - The tasks grouped by categories.
+ * @returns {Date|null} - The closest due date or null if none exists.
+ */
+function processTaskCategories(tasks) {
+    let closestDate = null;
 
     for (let category in tasks) {
         let categoryTasks = tasks[category];
-        for (let taskId in categoryTasks) {
-            let task = categoryTasks[taskId];
+        closestDate = findCategoryClosestDate(categoryTasks, closestDate);
+    }
 
-            if (task.dueDate) {
-                let dueDate = new Date(task.dueDate.replace(/-/g, '/'));
-                
-                if (!isNaN(dueDate.getTime())) {
-                    if (!closestDate || dueDate < closestDate) {
-                        closestDate = dueDate;
-                    }
-                } else {
-                    console.warn("Invalid date format:", task.dueDate);
-                }
+    return closestDate;
+}
+
+/**
+ * Finds the closest due date within a task category.
+ * @param {object} categoryTasks - The tasks within a specific category.
+ * @param {Date|null} closestDate - The current closest due date.
+ * @returns {Date|null} - The updated closest due date.
+ */
+function findCategoryClosestDate(categoryTasks, closestDate) {
+    for (let taskId in categoryTasks) {
+        let task = categoryTasks[taskId];
+
+        if (task.dueDate) {
+            let dueDate = validateDueDate(task.dueDate);
+            if (dueDate && (!closestDate || dueDate < closestDate)) {
+                closestDate = dueDate;
             }
         }
     }
     return closestDate;
 }
+
+/**
+ * Validates and converts a due date string into a Date object.
+ * @param {string} dueDateString - The due date string from the task.
+ * @returns {Date|null} - A valid Date object or null if invalid.
+ */
+function validateDueDate(dueDateString) {
+    let dueDate = new Date(dueDateString.replace(/-/g, '/'));
+
+    if (isNaN(dueDate.getTime())) {
+        console.warn("Invalid date format:", dueDateString);
+        return null;
+    }
+    return dueDate;
+}
+
 
 
 /**
