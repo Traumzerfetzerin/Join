@@ -210,31 +210,57 @@ function setupTouchDrag(task) {
     let touchTimer;
     let isDragging = false;
 
-    task.ontouchstart = e => {
-        touchTimer = setTimeout(() => {
-            isDragging = true;
-            task.classList.add("dragging");
-        }, 2000);
-    };
+    task.ontouchstart = e => handleTouchStart(e, task, () => {
+        isDragging = true;
+        task.classList.add("dragging");
+    });
 
-    task.ontouchmove = e => {
-        if (isDragging) {
-            let touch = e.touches[0];
-            let event = new MouseEvent("mousemove", {
-                bubbles: true,
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            document.dispatchEvent(event);
-        }
-    };
+    task.ontouchmove = e => handleTouchMove(e, isDragging);
 
-    task.ontouchend = () => {
-        clearTimeout(touchTimer);
-        task.classList.remove("dragging");
+    task.ontouchend = () => handleTouchEnd(task, touchTimer, () => {
         isDragging = false;
-    };
+    });
 }
+
+/**
+ * Handles the touch start event and sets a timer for dragging.
+ * @param {TouchEvent} e - The touch event.
+ * @param {HTMLElement} task - The task element.
+ * @param {Function} onDragStart - Callback to trigger drag start.
+ */
+function handleTouchStart(e, task, onDragStart) {
+    touchTimer = setTimeout(() => onDragStart(), 2000);
+}
+
+/**
+ * Handles the touch move event and simulates a mouse move event.
+ * @param {TouchEvent} e - The touch event.
+ * @param {boolean} isDragging - Whether dragging is active.
+ */
+function handleTouchMove(e, isDragging) {
+    if (!isDragging) return;
+
+    let touch = e.touches[0];
+    let event = new MouseEvent("mousemove", {
+        bubbles: true,
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    });
+    document.dispatchEvent(event);
+}
+
+/**
+ * Handles the touch end event and resets drag state.
+ * @param {HTMLElement} task - The task element.
+ * @param {number} touchTimer - The timeout ID for touch hold.
+ * @param {Function} onDragEnd - Callback to trigger drag end.
+ */
+function handleTouchEnd(task, touchTimer, onDragEnd) {
+    clearTimeout(touchTimer);
+    task.classList.remove("dragging");
+    onDragEnd();
+}
+
 
 /**
  * Handles touch drop event and moves task to new drop zone.
