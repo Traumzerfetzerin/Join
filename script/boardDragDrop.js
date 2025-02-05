@@ -1,23 +1,25 @@
 /**
- * Initializes drag-and-drop functionality for tasks.
+ * Enables drag-and-drop functionality for tasks and updates their columns.
  * @param {object} columns - Mapping of column names to DOM element IDs.
  */
 function enableDragAndDrop(columns) {
     let tasks = document.querySelectorAll(".draggable");
     let zones = Object.values(columns).map(id => document.getElementById(id));
-
     tasks.forEach(task => setupDragEvents(task));
     zones.forEach(zone => setupDropEvents(zone, columns));
 }
 
 /**
- * Adds drag events to a task element.
+ * Sets up drag event listeners for a task.
  * @param {HTMLElement} task - The task element.
  */
 function setupDragEvents(task) {
-    task.ondragstart = e => startDrag(e, task);
-    task.ondragend = () => endDrag(task);
+    task.ondragstart = e => {
+        e.dataTransfer.setData("taskId", task.id.replace("task-", ""));
+        e.dataTransfer.setData("category", getCategoryFromTaskId(task.id.replace("task-", "")));
+    };
 }
+
 
 /**
  * Handles the drag start event.
@@ -42,8 +44,8 @@ function endDrag(task) {
 }
 
 /**
- * Adds drop events to a column element.
- * @param {HTMLElement} zone - The drop zone.
+ * Sets up drop event listeners for a column.
+ * @param {HTMLElement} zone - The drop zone element.
  * @param {object} columns - Mapping of column names to DOM element IDs.
  */
 function setupDropEvents(zone, columns) {
@@ -51,10 +53,11 @@ function setupDropEvents(zone, columns) {
     zone.ondragover = e => e.preventDefault();
 }
 
+
 /**
- * Handles the drop event.
+ * Handles the drop event and updates the task column.
  * @param {DragEvent} e - The drop event.
- * @param {HTMLElement} zone - The drop target.
+ * @param {HTMLElement} zone - The drop zone element.
  * @param {object} columns - Mapping of column names to DOM element IDs.
  */
 async function handleDrop(e, zone, columns) {
@@ -62,13 +65,9 @@ async function handleDrop(e, zone, columns) {
     let taskId = e.dataTransfer.getData("taskId");
     let category = e.dataTransfer.getData("category");
     let newColumn = Object.keys(columns).find(key => columns[key] === zone.id);
-    if (!taskId || !category || !newColumn || category === newColumn) return;
-
-    let taskElement = document.getElementById(`task-${taskId}`);
-    if (!taskElement) return;
-
-    moveTaskToColumn(taskElement, zone);
-    await updateTaskColumn(taskId, category, newColumn, columns);
+    if (!taskId || !category || !newColumn) return;
+    let task = findTaskInData(taskId);
+    if (task) await handleTaskDrop(task, taskId, category, newColumn, columns);
 }
 
 /**
@@ -160,7 +159,7 @@ function getCategoryFromTaskId(taskId) {
 
 
 /**
- * Updates the task UI by re-rendering the task in the specified column
+ * Updates the task UI by moving it to the specified column
  * and updating the overlay content if it is currently visible.
  * 
  * @param {Object} task - The task object containing all relevant details.
@@ -171,32 +170,17 @@ function getCategoryFromTaskId(taskId) {
  */
 async function updateTaskUI(task, taskId, column, columns) {
     let taskElement = document.getElementById(`task-${taskId}`);
-    if (taskElement) taskElement.remove();
-
+    if (!taskElement) return;
     let columnElement = document.getElementById(columns[column]);
-    if (columnElement) {
-        let subtasks = task.subtasks || [];
-        let taskHtml = getTaskBoardTemplate(
-            task.category,
-            task,
-            taskId,
-            generateContactList(task.contacts || []),
-            getTaskClass(task.title),
-            subtasks.length,
-            subtasks.filter(s => s.completed).length
-        );
-
-        columnElement.innerHTML += `<div id="task-${taskId}" class="task draggable" draggable="true">${taskHtml}</div>`;
-    }
+    if (!columnElement) return;
+    columnElement.append(taskElement);
     enableDragAndDrop(columns);
     checkEmptyColumns(columns);
-
     let overlay = document.getElementById("board-overlay-container");
     if (overlay && overlay.style.display === "block") {
         await updateOverlayContent(task.category, task);
     }
 }
-
 
 /**
  * Moves a task to a new column and ensures contacts are preserved.
