@@ -70,33 +70,43 @@ async function resetTaskForm() {
 
 
 /**
-* Handles the task creation process.
-* @param {Event} event - The event object from the form submission.
-*/
+ * Handles the task creation process.
+ * @param {Event} event - The event object from the form submission.
+ */
 async function createTasks(event) {
     event.preventDefault();
     let taskData = collectTaskData();
     let isValid = await validateTaskData(taskData);
-    if (!isValid) {
-        await loadContactsForDropdown();
-        console.error("Task data validation failed.");
-        return;
-    }
+    if (!isValid) return handleInvalidTaskData();
 
     try {
         let taskId = await sendTaskToFirebase(taskData, taskData.category);
-        if (!taskId) {
-            console.error("Task ID not generated, aborting.");
-            return;
-        }
+        if (!taskId) return console.error("Task ID not generated, aborting.");
     } catch (error) {
         console.error("Error during task creation:", error);
         return;
     }
+
+    await finalizeTaskCreation();
+}
+
+/**
+ * Handles the case when task data validation fails.
+ */
+async function handleInvalidTaskData() {
+    await loadContactsForDropdown();
+    console.error("Task data validation failed.");
+}
+
+/**
+ * Finalizes the task creation process by updating the UI.
+ */
+async function finalizeTaskCreation() {
     await popUpAddTask();
     await clearTasks();
     await changeToBoard();
 }
+
 
 
 /**
