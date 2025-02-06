@@ -237,9 +237,9 @@ function togglePasswordVisibility(inputId, toggleIconId) {
     let toggleIcon = document.getElementById(toggleIconId);
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
-        toggleIcon.src = '/Assets/visibility.svg';
+        toggleIcon.src = '../Assets/visibility.svg';
     } else {
         passwordInput.type = 'password';
-        toggleIcon.src = '/Assets/visibility_off - Copy.svg';
+        toggleIcon.src = '../Assets/visibility_off - Copy.svg';
     }
 }

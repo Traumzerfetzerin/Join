@@ -96,6 +96,10 @@
     cursor: pointer;
 }
 
+#passwordImg {
+    cursor: default;
+}
+
 .checkbox {
     padding-bottom: 1em;
     padding-left: 1em;
