@@ -22,20 +22,6 @@
   transform: scale(1.0) !important;
 }
 
-body,
-html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  height: 100%;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-}
 
 .main-content {
   margin-left: 240px;

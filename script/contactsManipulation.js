@@ -52,6 +52,9 @@ function generateAddButtonSmallHTML() {
  * @param {string} contactId - The ID of the contact to display.
  */
 function showContactDetails(contactId) {
+    document.querySelectorAll('.contact-item').forEach(item => {
+        item.classList.remove('selected-contact');
+    });
     if (currentContactId === contactId) {
         toggleElementVisibility('#contact-details', false);
         currentContactId = null;
@@ -64,6 +67,11 @@ function showContactDetails(contactId) {
         updateContactDetailsUI(contact);
         handleSmallScreenAdjustments();
         attachEditAndDeleteListeners(contactId, contact);
+
+        let selectedContactElement = document.querySelector(`.contact-item[data-id="${contactId}"]`);
+        if (selectedContactElement) {
+            selectedContactElement.classList.add('selected-contact');
+        }
     }
 }
 

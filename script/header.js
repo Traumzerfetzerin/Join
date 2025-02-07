@@ -46,8 +46,6 @@ async function testIcon() {
             } else {
                 nameMenu.innerHTML = "G";
             }
-        } else {
-            console.warn("Element with ID 'name_menu' was not found.");
         }
     } catch (error) {
         console.error("Error retrieving the username:", error);

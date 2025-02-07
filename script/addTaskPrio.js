@@ -37,9 +37,7 @@ function activatePrioButton(priority, containerSelector) {
         let img = activeButton.querySelector("img");
         let activeOption = prioOptions.find(opt => opt.class === priority);
         if (img && activeOption) img.src = activeOption.activeSrc;
-    } else {
-        console.warn(`No button found for priority: ${priority} in ${containerSelector} context`);
-    }
+    } 
 
     selectedPrio = priority;
 }

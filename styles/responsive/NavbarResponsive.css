@@ -61,8 +61,6 @@
     }
 
     .sidelinks a {
-        display: flex;
-        flex-direction: column;
         padding: 10px;
         border-radius: 10px;
     }
@@ -138,6 +136,7 @@
         padding: 4px;
         border-radius: 6px;
         width: 100px;
+        flex-direction: column;
     }
 
     #widget_1,
@@ -195,18 +194,8 @@
         height: 150px;
     }
 
-    .sidelinks {
-        width: 45%;
-        padding: 0 2px;
-    }
-
-    .sidelinks a {
-        font-size: 14px;
-        padding: 2px;
-        width: 65px;
-    }
-
     .sidebarimg {
-        max-width: 12px;
+        max-width: 18px;
     }
+
 }

@@ -200,7 +200,6 @@ window.onload = function () {
 async function fetchContactFromFirebase(contactId) {
     try {
         if (!contactId || typeof contactId !== "string" || contactId.trim() === "") {
-            console.warn("Invalid contactId provided:", contactId);
             return { name: "Unknown" };
         }
 

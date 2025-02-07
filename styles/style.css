@@ -1,9 +1,15 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #F5F5F5;
     max-width: 1920px;
+    -ms-overflow-style: none;
 }
+
+html {
+    scrollbar-width: none;
+    /* Versteckt die Scrollbar */
+}
+
 
 /* Alle Style-Informationen werden mit berücksichtigt, *= zählt für alles*/
 * {
@@ -30,14 +36,17 @@ main {
 
 /* SCROLLBAR */
 ::-webkit-scrollbar {
-    width: 10px;
-    opacity: 0;
+    width: 0px;
 }
 
 ::-webkit-scrollbar-track {
-    background: none;
-    border: none;
+    background: transparent;
 }
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
 
 .cursorPointer {
     cursor: pointer;

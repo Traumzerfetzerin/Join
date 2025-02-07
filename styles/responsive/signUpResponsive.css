@@ -1,6 +1,5 @@
-
 @media (max-width: 820px) {
- 
+
 
     .signup-joinContainer {
         margin-top: 15% !important;
@@ -11,8 +10,8 @@
 @media (max-width: 980px) {
 
     #signup-logoContainer {
-        top: 23% !important;
-        left: 58% !important;
+        /* top: 23% !important; */
+        left: 80% !important;
     }
 
     .signup-joinContainer h1 {
@@ -30,10 +29,15 @@
     #sidefoot {
         margin-top: 20px !important;
     }
+
+    #signup-logoContainer {
+        top: 18% !important;
+        left: 67% !important;
+    }
 }
 
 @media (max-width: 480px) {
- 
+
 
     .signup-joinContainer {
         padding: 20px;
@@ -53,10 +57,10 @@
         padding: 8px 15px;
     }
 
-    #signup-logoContainer img {
+    /* #signup-logoContainer img {
         width: 70px;
         height: 70px;
-    }
+    } */
 
     .go-to-login {
         top: 10px;

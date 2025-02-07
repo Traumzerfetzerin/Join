@@ -350,3 +350,7 @@
 .undertask:hover .tasktext {
     color: white;
 }
+
+.input-error {
+    border-color: red;
+}

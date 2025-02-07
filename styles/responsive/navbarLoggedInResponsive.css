@@ -20,3 +20,14 @@
         justify-content: inherit;
     }
 }
+
+@media (max-width: 550px) {
+
+    #widget_1,
+    #widget_2,
+    #widget_3,
+    #widget_4 {
+        margin: -4px;
+        gap: 2px;
+    }
+}

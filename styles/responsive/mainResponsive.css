@@ -145,19 +145,6 @@
         height: auto;
     }
 
-    .sidelinks {
-        width: 50%;
-        padding: 0px 4px;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .sidelinks a {
-        font-size: 14px;
-        padding: 4px;
-        border-radius: 6px;
-    }
 
     #widget_1,
     #widget_2,
@@ -212,16 +199,6 @@
 
     .mobile_headerNav {
         height: 150px;
-    }
-
-    .sidelinks {
-        width: 45%;
-        padding: 0 2px;
-    }
-
-    .sidelinks a {
-        font-size: 14px;
-        padding: 2px;
     }
 
     .sidebarimg {

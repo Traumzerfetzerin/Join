@@ -3,7 +3,6 @@
 }
 
 .content-wrapper {
-    background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,9 +48,9 @@
 }
 
 .login-signup-button {
-    position: absolute;
-    top: 2%;
-    right: 4%;
+    position: fixed;
+    transform: translate(100%, -400%);
+    z-index: 3000;
     order: -1;
     display: flex;
     align-items: center;
@@ -171,9 +170,10 @@
 
 
 #login-logoContainer {
-    position: absolute;
+    position: fixed;
+    /* position: absolute;
     top: 20%;
-    left: 20%;
+    left: 20%; */
     transform: translate(-50%, -50%);
     z-index: 3000;
     animation: move-logo 1.5s ease forwards;

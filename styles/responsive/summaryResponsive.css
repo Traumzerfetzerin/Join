@@ -184,8 +184,7 @@
 }
 
 
-
-@media (max-width: 400px) {
+@media (max-width: 420px) {
     .mobile_headerNav {
         height: 150px;
         left: 48%;
@@ -194,8 +193,8 @@
 
     .checkpencil {
         height: 231px;
-        padding-left: 16%;
-        width: 278px;
+        padding-left: 34%;
+        width: 245px;
     }
 
     .pencil {
@@ -285,3 +284,42 @@
         left: 5%;
     }
 }
+
+
+@media (max-width: 399px) {
+
+    .pencil {
+        width: 130px;
+    }
+
+    #summaryimgTodo {
+        height: 28px;
+        width: 33px;
+    }
+
+    #summaryimgDone {
+        height: 28px;
+        width: 33px;
+    }
+
+    .urgentimg {
+        height: 28px;
+        width: 33px;
+    }
+
+    .urgent {
+        width: 285px;
+        margin-left: 13px;
+    }
+
+    #upcomingDeadline p {
+        width: 87px;
+        top: -18%;
+    }
+
+    .tasks {
+        width: 280px;
+        left: -23%;
+    }
+}
+
