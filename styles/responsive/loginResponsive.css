@@ -99,7 +99,7 @@
 }
 
 @media (max-width: 780px) {
-    
+
     .joinLogo img {
         width: 70px;
         height: 70px;
@@ -133,6 +133,7 @@
         padding: 12px 15px;
         font-size: 16px;
     }
+
     .notice_link {
         margin-top: 15px;
         font-size: 12px;
@@ -204,5 +205,8 @@
     .legalPolicy {
         flex-direction: column;
         margin-right: 20% !important;
+        top: -13px;
+        position: relative;
+        gap: 0;
     }
 }
