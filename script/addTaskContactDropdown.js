@@ -216,35 +216,48 @@ function updateAssignedContacts() {
  */
 let displayedCount = 4;
 
+/**
+ * Renders the selected contacts into the container.
+ */
 function displaySelectedContacts() {
     let selectedContainer = document.getElementById('selectedContactsContainer');
     selectedContainer.innerHTML = '';
+    renderSelectedContacts(selectedContainer);
+    renderShowMoreCircle(selectedContainer);
+}
 
+/**
+ * Creates and appends selected contacts to the container.
+ * @param {HTMLElement} container - The container to append selected contacts.
+ */
+function renderSelectedContacts(container) {
     selectedContacts.slice(0, displayedCount).forEach(contactName => {
         let contact = contacts.find(c => c.name === contactName);
-        
         if (contact) {
             let initialsSpan = createInitialsSpan(contact);
             let contactDiv = document.createElement('div');
             contactDiv.classList.add('selected-contact');
             contactDiv.appendChild(initialsSpan);
-            selectedContainer.appendChild(contactDiv);
+            container.appendChild(contactDiv);
         }
     });
+}
 
+/**
+ * Creates and appends the 'show more' circle if necessary.
+ * @param {HTMLElement} container - The container to append the show more circle.
+ */
+function renderShowMoreCircle(container) {
     let remainingContacts = selectedContacts.length - displayedCount;
     if (remainingContacts > 0) {
         let showMoreCircle = document.createElement('div');
         showMoreCircle.classList.add('show-more-circle');
-
         showMoreCircle.textContent = `+${remainingContacts}`;
-        
         showMoreCircle.addEventListener('click', function() {
             displayedCount += 1;
             displaySelectedContacts();
         });
-
-        selectedContainer.appendChild(showMoreCircle);
+        container.appendChild(showMoreCircle);
     }
 }
 
