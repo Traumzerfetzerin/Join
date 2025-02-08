@@ -63,8 +63,8 @@
         background-color: lightgrey;
     }
 
-    .toast.show {
-        transform: translate(-50%, -50%);
+    .toast {
+        
     }
 
     #dots-icon {
@@ -182,10 +182,6 @@
 
 @media(max-width:400px) {
 
-    .toast.show {
-        transform: translate(-50%, -50%);
-    }
-    
     .contactOverlayRight input[type="text"],
     .contactOverlayRight input[type="email"],
     .contactOverlayRight input[type="number"] {

@@ -197,26 +197,28 @@
 }
 
 .toast {
-    visibility: hidden;
-    min-width: 150px;
-    min-height: 80px;
-    background-color: #2A3647;
-    color: #f4f4f4;
-    text-align: center;
-    border-radius: 15px;
-    padding: 15px;
     position: fixed;
-    z-index: 2001;
-    right: 0;
-    top: 50%;
+    top: 40%;
+    left: 50%;
+    width: 300px; 
+    height: 100px;
+    max-width: 90%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    visibility: hidden;
     opacity: 0;
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .toast.show {
     visibility: visible;
     opacity: 1;
-    transform: translate(-160%, -150%);
 }
 
 .toast.hide {
@@ -244,14 +246,6 @@
 .User-Guest {
     display: flex;
     justify-content: center;
-}
-
-.toast {
-    background-color: #2a3647;
-    border-radius: 20px;
-    width: 326px;
-    height: 74px;
-    position: absolute;
 }
 
 .toast p {
