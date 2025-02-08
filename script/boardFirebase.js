@@ -180,12 +180,7 @@ async function fetchAllTasks(nameToIdMap) {
         }
         taskData = data;
         loadTasks(data);
-
-        return data;
-    } else {
-        console.log("No tasks found.");
-        return null;
-    }
+};
 }
 
 

@@ -2,7 +2,6 @@
  * Validates the sign-up form and handles user registration.
  */
 function validateSignUp(event) {
-    console.log("validateSignUp triggered");
     if (event) event.preventDefault();
     clearErrors();
     let errorMessage = "";
@@ -141,8 +140,6 @@ window.onload = function () {
  */
 document.addEventListener("DOMContentLoaded", () => {
     let signupButton = document.getElementById("signup-btn");
-
-        console.log("Signup button found, adding event listener");
         signupButton.disabled = false;
         signupButton.addEventListener("click", validateSignUp);
 });

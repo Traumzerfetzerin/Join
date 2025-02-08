@@ -7,12 +7,7 @@ function calculateDueDate() {
     let dueDateInput = document.getElementById('dueDate');
 
     dueDateInput.setAttribute('min', formattedDate);
-
-    if (dueDateInput.showPicker) {
-        dueDateInput.showPicker();
-    } else {
-        console.log("Dieser Browser unterstützt showPicker() nicht.");
-    }
+    dueDateInput.showPicker();
 }
 
 

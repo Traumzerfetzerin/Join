@@ -42,8 +42,7 @@
     justify-content: space-around;
     align-items: center;
     z-index: 2;
-    /* width: 100%; */
-
+    width: 95%;
 }
 
 #add-contact-button {
