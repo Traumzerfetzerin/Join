@@ -243,6 +243,7 @@ function openEditOverlay(contact, initialsColor) {
 document.getElementById('close-contact-overlay')?.addEventListener('click', (event) => {
     event.preventDefault();
     toggleElementVisibility('#contact-overlay', false);
+    document.getElementById('contactBackgroundOverlay').classList.add('dNone');
 });
 
 
