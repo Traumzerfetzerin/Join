@@ -27,7 +27,7 @@
                 </a>
             </div>
             <h1>Sign up</h1>
-            <form id="join-form" onsubmit="validateSignUp(event);">
+            <form id="join-form">
                 <div class="input-group">
                     <input type="name" id="name" name="name" placeholder="Name" required autocomplete="on">
                     <span class="icon">
@@ -46,10 +46,9 @@
                         autocomplete="new-password">
                     <span class="icon" id="togglePasswordIcon"
                         onclick="togglePasswordVisibility('password', 'togglePasswordIcon')">
-                        <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password"
-                            style="cursor: pointer;">
                     </span>
-                    <p id="password-hint" class="password-hint">Password must be at least 6 characters, contain an uppercase letter, a number, and at least one special character from !@#$%^&*()_+{}[]:;<>,.?/~`-.</p>
+                    <p id="password-hint" class="password-hint">Password must be at least 6 characters, contain an uppercase letter, 
+                        a number, and at least one special character from !@#$%^&*()_+{}[]:;<>,.?/~`-.</p>
                 </div>
 
                 <div class="input-group">
@@ -57,8 +56,6 @@
                         required autocomplete="new-password">
                     <span class="icon" id="toggleConfirmPasswordIcon"
                         onclick="togglePasswordVisibility('confirm-password', 'toggleConfirmPasswordIcon')">
-                        <img class="cursorPointer" src="../Assets/visibility_off - Copy.svg" alt="Show Password"
-                            style="cursor: pointer;">
                     </span>
                 </div>
                 <div class="checkbox-group">
@@ -81,6 +78,7 @@
     <div id="toast" class="toast"></div>
 
     <script src="../script/signUp.js"></script>
+    <script src="../script/signUpValidation.js"></script>
     <script src="../script/contacts.js" defer></script>
 </body>
 
