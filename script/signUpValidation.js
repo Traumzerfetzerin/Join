@@ -7,7 +7,7 @@ function validateSignUp(event) {
     let errorMessage = "";
     if (!validateName()) errorMessage = "Name is required";
     else if (!validateEmailField()) errorMessage = "Invalid email format";
-    else if (!validatePasswordField()) errorMessage = "Password must be at least 6 characters, contain an uppercase letter, a number, and at least one special character from !@#$%^&*()_+{}[]:;<>,.?/~`-.'";
+    else if (!validatePasswordField()) errorMessage = "Password must be at least 6 characters, contain an uppercase letter, a number, and at least one special character";
     else if (!validatePasswordMatch()) errorMessage = "Passwords do not match";
     else if (!validateTerms()) errorMessage = "You must accept the Privacy Policy";
     
