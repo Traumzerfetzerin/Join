@@ -162,10 +162,14 @@ main {
     background-color: white;
     margin-bottom: 20px;
     height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
 }
 
 .column:hover {
     background-color: #e0e0e0;
+    border-radius: 12px;
 }
 
 #clearButton {
